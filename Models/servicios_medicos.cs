@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
+
+#nullable disable
+
+namespace HospitalSalvador.Models
+{
+    public partial class servicios_medicos
+    {
+        [Key]
+        public int serviciosID { get; set; }
+        [Key]
+        public int medicosID { get; set; }
+
+        [ForeignKey(nameof(serviciosID))]
+        [InverseProperty("servicios_medicos")]
+        public virtual servicios servicios { get; set; }
+    }
+}

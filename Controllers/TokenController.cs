@@ -74,10 +74,11 @@ namespace HospitalSalvador.Controllers
         private async Task<IActionResult> GenerateNewToken(TokenRequestDTO model, bool mobile= false, bool CodVerificacionUser = false)
         {
             // check if there's an user with the given username
-            var user = await _userManager.FindByNameAsync(model.Email);
-            if (CodVerificacionUser)
-                model.Password = _configuration["Authorization:PatientPassword"]; // cuz it's a patient
+            var user = await _userManager.FindByNameAsync(model.UserCredential) ?? await _userManager.FindByEmailAsync(model.UserCredential);
 
+          /*  if (CodVerificacionUser)
+                model.Password = _configuration["Authorization:PatientPassword"]; // cuz it's a patient
+*/
             // Validate credentials
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -205,7 +206,6 @@ namespace HospitalSalvador.Controllers
                     t.ClientId == _configuration["Authorization:ClientId"]
                     && t.Value == model.RefreshToken.ToString());
 
-
                 if (rt == null)
                 {
                     // refresh token not found or invalid (or invalid clientId)
@@ -247,7 +247,9 @@ namespace HospitalSalvador.Controllers
                 return Ok(new { authToken = response });
 
             }
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
 
                 return new UnauthorizedResult();
@@ -299,7 +301,9 @@ namespace HospitalSalvador.Controllers
 
             }
 
+#pragma warning disable CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             catch (Exception ex)
+#pragma warning restore CS0168 // La variable 'ex' se ha declarado pero nunca se usa
             {
                 return BadRequest();
             }

@@ -18,19 +18,27 @@ namespace HospitalSalvador.Models.DTO
 
 
         [StringLength(2)]
+#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public string? tipo_contacto { get; set; }
+#pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public int? serviciosID { get; set; }
         
         public string servicio_descrip { get; set; }
 
         [StringLength(8)]
+#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public string? cod_verificacionID { get; set; }
+#pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public int? pacientesID { get; set; }
 
         public string paciente_nombre { get; set; }
+#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public string? paciente_apellido { get; set; }
+#pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public string paciente_nombre_tutor { get; set; }
+#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public string? paciente_apellido_tutor { get; set; }
+#pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
 
         [Column(TypeName = "text")]
         public string nota { get; set; }
@@ -55,7 +63,7 @@ namespace HospitalSalvador.Models.DTO
         public decimal pago { get; set; }
         public int especialidadesID { get; set; }
         public string especialidad_descrip { get; set; }
-        public int? consultorio { get; set; }
+        public int consultorio { get; set; }
 
 
     }

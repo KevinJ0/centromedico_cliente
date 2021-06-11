@@ -25,6 +25,6 @@ namespace HospitalSalvador.Models.DTO
         public string ProfilePhoto { get; set; }
         public string telefono1_contact { get; set; }
         public string telefono2_contact { get; set; }
-        public List<especialidades> especialidades { get; set; }
+        public List<string> especialidades { get; set; }
     }
 }

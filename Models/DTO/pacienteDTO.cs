@@ -7,6 +7,7 @@ namespace HospitalSalvador.Models.DTO
 {
     public partial class pacienteDTO
     {
+        bool menor;
 
         [Required]
         [StringLength(40)]
@@ -34,7 +35,10 @@ namespace HospitalSalvador.Models.DTO
         {
             get; set;
         }
-        public bool menor_un_año { get; set; }
+        public bool menor_un_año { get {
+
+                return menor;
+            } }
         public string MyIdentityUserID { get; set; }
 
     }

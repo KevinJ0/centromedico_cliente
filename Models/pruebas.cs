@@ -29,6 +29,7 @@ namespace HospitalSalvador.Models
         [Column(TypeName = "money")]
         public decimal total { get; set; }
         public int? segurosID { get; set; }
+        public bool estado { get; set; }
 
         [ForeignKey(nameof(analisisID))]
         [InverseProperty("pruebas")]

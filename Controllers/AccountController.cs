@@ -46,14 +46,20 @@ namespace HospitalSalvador.Controllers
         }
 
         [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO formdata) 
+        public async Task<IActionResult> Register([FromBody] RegisterDTO formdata)
         {
             // Will hold all the errors related to registration
             List<string> errorList = new List<string>();
-
+            IdentityRole identityRole;
             var user = _mapper.Map<MyIdentityUser>(formdata);
-            user.SecurityStamp = Guid.NewGuid().ToString();
+            if (user.Email == null)
+            {
+                user.Email = formdata.UserCredential + "@hospital.com";
+                identityRole = new IdentityRole { Name = "Client" };
+                await _roleManager.CreateAsync(identityRole);
+            }
 
+            user.SecurityStamp = Guid.NewGuid().ToString();
 
             var result = await _userManager.CreateAsync(user, formdata.Password);
 
@@ -61,19 +67,25 @@ namespace HospitalSalvador.Controllers
             {
 
                 // get user Role
-               IdentityRole identityRole = new IdentityRole { Name = formdata.RoleName };
+               identityRole = new IdentityRole { Name = formdata.RoleName };
                 await _roleManager.CreateAsync(identityRole);
                 await _userManager.AddToRoleAsync(user, formdata.RoleName);
-                 
-                return Ok(new {username = user.UserName, 
-                    email = user.Email, status = 1, message = "Registration Successful" });
+                await _userManager.AddToRoleAsync(user, "Client");
+
+                return Ok(new
+                {
+                    username = user.UserName,
+                    email = user.Email,
+                    status = 1,
+                    message = "Registration Successful"
+                });
 
             }
-            else 
+            else
             {
                 foreach (var error in result.Errors)
                 {
-                    ModelState.AddModelError("", error.Description);
+                    //ModelState.AddModelError("", error.Description);
                     errorList.Add(error.Description);
                 }
             }
@@ -85,7 +97,7 @@ namespace HospitalSalvador.Controllers
 
         // Login Method
         [HttpPost("[action]")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO formdata) 
+        public async Task<IActionResult> Login([FromBody] LoginDTO formdata)
         {
             // Get the User from Database
             var user = await _userManager.FindByEmailAsync(formdata.Email);
@@ -94,10 +106,10 @@ namespace HospitalSalvador.Controllers
 
             double tokenExpiryTime = Convert.ToDouble(_configuration["Authorization:ExpireTime"]);
 
-            if (user != null &&  await _userManager.CheckPasswordAsync(user, formdata.Password))
+            if (user != null && await _userManager.CheckPasswordAsync(user, formdata.Password))
             {
-        
-               
+
+
                 // get user Role
                 /*IdentityRole identityRole = new IdentityRole { Name = "Admin" };
                 await _roleManager.CreateAsync(identityRole);
@@ -129,7 +141,7 @@ namespace HospitalSalvador.Controllers
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
 
-                return Ok(new {token = tokenHandler.WriteToken(token), expiration = token.ValidTo, username = user.UserName, userRole = roles.FirstOrDefault() });
+                return Ok(new { token = tokenHandler.WriteToken(token), expiration = token.ValidTo, username = user.UserName, userRole = roles.FirstOrDefault() });
 
             }
 
@@ -139,7 +151,7 @@ namespace HospitalSalvador.Controllers
 
         }
 
-        
+
 
 
 

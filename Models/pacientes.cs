@@ -16,8 +16,12 @@ namespace HospitalSalvador.Models
         {
             citas = new HashSet<citas>();
         }
+#pragma warning disable CS0169 // El campo 'pacientes._fechaNacimiento' nunca se usa
         private DateTime _fechaNacimiento;
+#pragma warning restore CS0169 // El campo 'pacientes._fechaNacimiento' nunca se usa
+#pragma warning disable CS0169 // El campo 'pacientes._edad' nunca se usa
         int? _edad;
+#pragma warning restore CS0169 // El campo 'pacientes._edad' nunca se usa
         
         public bool isUnderAge()
         {
@@ -55,7 +59,8 @@ namespace HospitalSalvador.Models
         public int? edad {get;set;}
         public bool menor_un_año { get; set; }
         public string MyIdentityUserID { get; set; }
-
+        public bool doc_identitad_verificado { get; set; }
+        
         [InverseProperty("pacientes")]
         public virtual ICollection<citas> citas { get; set; }
         [ForeignKey(nameof(MyIdentityUserID))]

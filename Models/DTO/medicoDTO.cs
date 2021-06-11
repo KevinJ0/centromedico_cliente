@@ -45,6 +45,12 @@ namespace HospitalSalvador.Models.DTO
         [Required]
         public bool? estado { get; set; }
         public string ProfilePhoto { get; set; }
+        public List<string> especialidades { get; set; }
+        public List<string> seguros { get; set; }
+        public List<string> servicios { get; set; }
+        //public virtual horarios_medicos horarios_medicos { get; set; }
 
+        public Dictionary<string, string> horarios {get; set;}
     }
+   
 }

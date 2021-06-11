@@ -9,9 +9,17 @@ using System.Threading.Tasks;
 
 namespace HospitalSalvador
 {
-    public class MappingProfile: Profile
+    public class MappingProfile : Profile
     {
-        public MappingProfile() {
+
+
+        public MappingProfile()
+        {
+
+            CreateMap<pruebas, pruebaDTO>()
+                .ForMember(dest => dest.descrip, opt => opt.MapFrom(src => src.analisis.descrip));
+
+            CreateMap<pruebaDTO, pruebas>();
 
             CreateMap<citas, citaDTO>()
                 .ForMember(dest => dest.medico_nombre, opt => opt.MapFrom(src => src.medicos.nombre))
@@ -23,20 +31,29 @@ namespace HospitalSalvador
                 .ForMember(dest => dest.servicio_descrip, opt => opt.MapFrom(src => src.servicios.descrip))
                 .ForMember(dest => dest.seguro_descrip, opt => opt.MapFrom(src => src.seguros.descrip))
                 .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
-         
+
 
             CreateMap<pacientes, pacienteDTO>();
             CreateMap<pacienteDTO, pacientes>();
             CreateMap<citaCreateDTO, pacientes>();
             CreateMap<RegisterDTO, MyIdentityUser>()
-               .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+               .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.UserCredential));
 
             CreateMap<medicos, medico_directorioDTO>()
-                .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src => 
-                    src.especialidades_medicos.Select(x => x.especialidades).ToList()
-                    ));
+                .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
+                    src.especialidades_medicos.Select(x => x.especialidades.descrip).ToList()));
 
 
+            CreateMap<medicos, medicoDTO>()
+         .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
+             src.especialidades_medicos.Select(x => x.especialidades.descrip).ToList()
+             )).ForMember(dest => dest.seguros, opt => opt.MapFrom(src =>
+            src.cobertura_medicos.Select(x => x.seguros.descrip).ToList()
+            )).ForMember(dest => dest.servicios, opt => opt.MapFrom(src =>
+            src.servicios_medicos.Where(x=> x.medicos.ID == src.ID ).Select(x=> x.servicios.descrip).ToList()
+            ));
         }
+
+
     }
 }

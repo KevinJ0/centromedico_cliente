@@ -51,7 +51,7 @@ namespace HospitalSalvador.Models
         public int especialidadesID { get; set; }
         [Required]
         public bool? estado { get; set; }
-        public int? consultorio { get; set; }
+        public int consultorio { get; set; }
 
         [ForeignKey(nameof(especialidadesID))]
         [InverseProperty("citas")]

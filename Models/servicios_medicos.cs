@@ -18,5 +18,8 @@ namespace HospitalSalvador.Models
         [ForeignKey(nameof(serviciosID))]
         [InverseProperty("servicios_medicos")]
         public virtual servicios servicios { get; set; }
+        [ForeignKey(nameof(medicosID))]
+        [InverseProperty("servicios_medicos")]
+        public virtual medicos medicos{ get; set; }
     }
 }

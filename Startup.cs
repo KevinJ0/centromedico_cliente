@@ -1,6 +1,9 @@
+using Amazon.Runtime;
+using Amazon.S3;
 using AutoMapper;
 using HospitalSalvador.Context;
 using HospitalSalvador.Models;
+using HospitalSalvador.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -30,6 +33,13 @@ namespace HospitalSalvador
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+           /* var awsOption = Configuration.GetAWSOptions();
+            awsOption.Credentials = new BasicAWSCredentials("AKIA4EC4NUOIJ452PENJ", "MaVkjL8Mf0l96QYLrcerdMmVR4wpPO6fqDjJ0lGL");
+            services.AddDefaultAWSOptions(awsOption);
+*/
+            services.AddSingleton<IS3Service, S3Service>();
+            services.AddAWSService<IAmazonS3>();
+
             services.AddControllersWithViews();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
@@ -74,9 +84,6 @@ namespace HospitalSalvador
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
-
-                options.User.RequireUniqueEmail = true;
-                options.SignIn.RequireConfirmedEmail = true;
             }).AddEntityFrameworkStores<MyDbContext>().
                  AddDefaultTokenProviders(); ;
 
@@ -114,17 +121,17 @@ namespace HospitalSalvador
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
+            /*if (env.IsDevelopment())
+            {*/
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-            app.UseCors("EnableCORS");
+                /*      }
+                   else
+                {
+                       app.UseExceptionHandler("/Error");
+                       // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                       app.UseHsts();
+                   }*/
+                app.UseCors("EnableCORS");
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

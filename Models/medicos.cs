@@ -36,6 +36,7 @@ namespace HospitalSalvador.Models
         [StringLength(30)]
         public string nombre { get; set; }
         [StringLength(40)]
+        [Required]
         public string apellido { get; set; }
         [Required]
         [StringLength(1)]
@@ -54,7 +55,7 @@ namespace HospitalSalvador.Models
         public string telefono1 { get; set; }
         [StringLength(10)]
         public string telefono2 { get; set; }
-        public int? consultorio { get; set; }
+        public int consultorio { get; set; }
         [Required]
         public bool? estado { get; set; }
         public string ProfilePhoto { get; set; }
@@ -84,5 +85,9 @@ namespace HospitalSalvador.Models
         public virtual ICollection<resultados> resultados { get; set; }
         [InverseProperty("medicos")]
         public virtual ICollection<secretarias_medicos> secretarias_medicos { get; set; }
+        [InverseProperty("medicos")]
+        public virtual ICollection<servicios_medicos> servicios_medicos { get; set; }
+
+
     }
 }

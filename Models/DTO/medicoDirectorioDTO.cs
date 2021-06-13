@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HospitalSalvador.Models.DTO
 {
-    public class medico_directorioDTO
+    public class medicoDirectorioDTO
     {
 
         public int ID { get; set; }

@@ -42,10 +42,22 @@ namespace HospitalSalvador.Controllers
             _mapper = mapper;
         }
 
-
-        // GET api/<medicosController>/5
+        /// <summary>
+        /// Método que devuelve al médico por el Id con los datos de interes para el usuario.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /medicos/{id}
+        ///
+        /// </remarks>
+        /// <param name="Id"></param>
+        /// <returns>medicoDTO</returns>
+        /// <response code="200">Se encontró el médico solicitado y es devuelvo.</response>  
+        /// <response code="204">Este médico no tiene los datos requeridos para ser devuelto.</response>  
+        /// <response code="500">Error interno del servidor</response>  
         [HttpGet("{id}")]
-        public async Task<ActionResult<medicoDTO>> get_medico(int Id)
+        public async Task<ActionResult<medicoDTO>> get_medico([FromQuery] int Id)
         {
 
             var horarios = await _db.horarios_medicos.FirstOrDefaultAsync(x => x.medicosID == Id);
@@ -79,6 +91,38 @@ namespace HospitalSalvador.Controllers
             _medicoDTO.horarios = schedulelst;
 
             return _medicoDTO;
+        }
+
+
+        /// <summary>
+        /// Método que devuelve un lista de médicos según los parametros de filtro que se especifique.
+        /// Se necesita al menos 1 parametro para realizar el filtro.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /medicos?nombre=paola?especialidadID=1?seguroID=1
+        ///      
+        /// </remarks>
+        /// <param name="nombre"></param>
+        /// <param name="especialidadID"></param>
+        /// <param name="seguroID"></param>
+        /// <returns>List of medico_directorioDTO</returns>
+        /// <response code="200">Devuelve la lista de médicos.</response>  
+        /// <response code="204">No encontró ningún médico con estos parametros.</response>  
+        [HttpGet]
+        public async Task<ActionResult<List<medicoDirectorioDTO>>> filter_medicos([FromQuery] string nombre = "", string especialidadID = "", string seguroID = "")
+        {
+            List<medicoDirectorioDTO> medicoslst = await _db.medicos
+                .Where(m => m.estado == true)
+                .Where(x => x.especialidades_medicos.Where(p => p.especialidadesID.ToString().Contains(especialidadID)).Any())
+                .Where(x => x.cobertura_medicos.Where(p => p.segurosID.ToString().Contains(seguroID)).Any())
+                .Where(x => (x.nombre + x.apellido).Contains(nombre))
+                .ProjectTo<medicoDirectorioDTO>(_mapper.ConfigurationProvider).ToListAsync();
+            if (!medicoslst.Any())
+                return NoContent();
+
+            return medicoslst;
         }
 
         private string getSunday(horarios_medicos horarios)
@@ -173,8 +217,6 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-
-
         private string getMonday(horarios_medicos horarios)
         {
             if (horarios.monday_from != null && horarios.monday_until != null)
@@ -204,33 +246,6 @@ namespace HospitalSalvador.Controllers
             _time = WDEndH.ToString();
             _hours = _hours + " - " + Convert.ToDateTime(_time).ToString("hh:mm:sstt");
             return _hours;
-        }
-
-
-        [HttpGet]
-        public async Task<List<medico_directorioDTO>> get_medicos([FromQuery] string nombre = "", string especialidadID = "", string seguroID = "")
-        {
-            List<medico_directorioDTO> medicoslst = await _db.medicos
-                .Where(m => m.estado == true)
-                .Where(x => x.especialidades_medicos.Where(p => p.especialidadesID.ToString().Contains(especialidadID)).Any())
-                .Where(x => x.cobertura_medicos.Where(p => p.segurosID.ToString().Contains(seguroID)).Any())
-                .Where(x => (x.nombre + x.apellido).Contains(nombre))
-                .ProjectTo<medico_directorioDTO>(_mapper.ConfigurationProvider).ToListAsync();
-
-            return medicoslst;
-        }
-
-
-        // PUT api/<medicosController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<medicosController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

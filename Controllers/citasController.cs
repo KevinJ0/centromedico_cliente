@@ -44,6 +44,92 @@ namespace HospitalSalvador.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Método que devuelve los datos para llenar el formulario con los datos del médico selecto.
+        /// Este método trae los seguros, especialidades y horarios disponibles con los que trabaja el médico solicitado.
+        /// En caso de que el médico no tenga algunos de los mencionados requisitos válidos, se procederá a devolver un BadRequest.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /citas/getNewCita?medicoID=2
+        ///      
+        /// Sample response:
+        ///
+        ///     {
+        ///         "medico": {
+        ///             "id": 1,
+        ///             "nombre": "Paola",
+        ///             "apellido": "Rodriguez Sarmientos                    "
+        ///         },
+        ///         "seguros": [
+        ///             {
+        ///                 "descrip": "Privado",
+        ///               "segurosID": 1
+        ///         },
+        ///             {
+        ///                 "descrip": "Humano                                                      ",
+        ///                 "segurosID": 2
+        ///         },
+        ///             {
+        ///         "descrip": "ARS                                                         ",
+        ///                 "segurosID": 5
+        ///         }
+        ///         ],
+        ///         "especialidades": [
+        ///             {
+        ///                 "id": 1,
+        ///                 "descrip": "Alergiología"
+        ///         },
+        ///             {
+        ///         "id": 6,
+        ///                 "descrip": "Ginecología"
+        ///         }
+        ///         ],
+        ///         "servicios": [
+        ///             {
+        ///                 "id": 1,
+        ///                 "descrip": "Consulta                                "
+        ///         },
+        ///             {
+        ///         "id": 2,
+        ///                 "descrip": "Solicitud de receta médica              "
+        ///         },
+        ///             {
+        ///         "id": 3,
+        ///                 "descrip": "Consulta de seguimiento                 "
+        ///         }
+        ///         ],
+        ///         "diasLaborables": [
+        ///             "2021-06-11T00:00:00-07:00",
+        ///             "2021-06-12T00:00:00-07:00",
+        ///             "2021-06-14T00:00:00-07:00",
+        ///             "2021-06-15T00:00:00-07:00",
+        ///             "2021-06-16T00:00:00-07:00",
+        ///             "2021-06-17T00:00:00-07:00",
+        ///             "2021-06-18T00:00:00-07:00",
+        ///             "2021-06-19T00:00:00-07:00",
+        ///             "2021-06-21T00:00:00-07:00",
+        ///             "2021-06-22T00:00:00-07:00",
+        ///             "2021-06-23T00:00:00-07:00",
+        ///             "2021-06-24T00:00:00-07:00",
+        ///             "2021-06-25T00:00:00-07:00",
+        ///             "2021-06-26T00:00:00-07:00",
+        ///             "2021-06-28T00:00:00-07:00",
+        ///             "2021-07-10T00:00:00-07:00"
+        ///         ],
+        ///         "horasDisponibles": [
+        ///             "2021-06-11T16:40:00-07:00",
+        ///             "2021-06-11T16:40:00-07:30",
+        ///             "2021-06-11T16:40:00-08:00",
+        ///             "2021-06-11T16:40:00-08:30",
+        ///         ]
+        ///     }
+        ///      
+        /// </remarks>
+        /// <param name="medicoID"></param>
+        /// <returns>Annonymous Object</returns>
+        /// <response code="400">Hubo un problema con los datos del médico solicitado.</response>  
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         [HttpGet("[action]")]
         public async Task<ActionResult<Object>> getNewCitaAsync(int medicoID)
@@ -83,7 +169,7 @@ namespace HospitalSalvador.Controllers
 
             if (!availableDaylst.Any())
                 return BadRequest(new { NoScheduleAvailable = "No hay horario disponible para una cita con este médico 😅." });
-            
+
             if (servicioslst == null)
                 return BadRequest(new { InvalidServicio = "El doctor(a) seleccionado no tiene ningún servicios asignado." });
 
@@ -105,7 +191,20 @@ namespace HospitalSalvador.Controllers
                 });
         }
 
-        //via codigo de verificacion
+        /// <summary>
+        /// Devuelve una lista de citaDTO apartir de un código de verificación que se suministra.
+        /// Las citas devuelta están vínculadas al código de verificación y deben de estár en estado de espera por atender.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /citas/getCitasListByCv?codVerificacion=ESRTYY
+        ///      
+        /// </remarks>
+        /// <param name="codVerificacion"></param>
+        /// <returns>List of citaDTO</returns>
+        /// <response code="204">No hay ninguna cita vículada con este código.</response>  
+        /// <response code="400">Código invalido</response>  
         [HttpGet("[action]")]
         public async Task<ActionResult<List<citaDTO>>> getCitasListByCvAsync(string codVerificacion)
         {
@@ -123,10 +222,22 @@ namespace HospitalSalvador.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Error = e.StackTrace + "Error al intentar acceder a la información, por favor intente más tarde." });
+                return BadRequest(new { Error = e.StackTrace + "Error al intentar acceder a la información." });
             }
         }
 
+        /// <summary>
+        /// Devuelve las citas vículadas con el usuario registrado. Estas pueden ser las citas que son para esta misma persona
+        /// ó para un menor de edad y este.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /citas/getCitasList
+        ///      
+        /// </remarks>
+        /// <returns>List of citaDTO</returns>
+        /// <response code="204">No hay ninguna cita vículada con este usuario.</response>  
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         [HttpGet("[action]")]
         public async Task<ActionResult<List<citaDTO>>> getCitasListAsync()
@@ -148,10 +259,22 @@ namespace HospitalSalvador.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(new { Error = e.StackTrace + "Error al intentar acceder a la información, por favor intente más tarde." });
+                throw new Exception("Error al intentar acceder a la información, por favor intente más tarde." + e.StackTrace);
             }
         }
 
+        /// <summary>
+        /// Crea una cita y devuelve el un citaResultDTO para mostrar el ticket al usuario.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /citas/createCita
+        ///      
+        /// </remarks>
+        /// <param name="formdata"></param>
+        /// <returns>citaResultDTO</returns>
+        /// <response code="400">Los datos suministrados son invalidos.</response>  
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         [HttpPost("[action]")]
         public async Task<ActionResult<citaResultDTO>> createCitaAsync(citaCreateDTO formdata)
@@ -337,9 +460,27 @@ namespace HospitalSalvador.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Método que devuelve el costo y destalles de la consulta de un médico.
+        /// Todos los parametro deben de ser validos para poder procesar la respuesta.
+        /// En caso de que se solicite los datos para los no asegurados o privados es requerido que el ID del seguro sea 1.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /citas/getCoberturas?especialidadID=1&amp;servicioID=1&amp;medicoID=2&amp;seguroID=2
+        ///      
+        /// </remarks>
+        /// <param name="especialidadID"></param>
+        /// <param name="seguroID"></param>
+        /// <param name="servicioID"></param>
+        /// <param name="medicoID"></param>
+        /// <returns>costoServicio</returns>
+        /// <response code="204">No hay cobertura disponibles con estos parametros.</response>
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<ActionResult<Object>> getCoberturasAsync(int especialidadID, int servicioID, int medicoID, int seguroID)
+        public async Task<ActionResult<costoServicio>> getCoberturasAsync(int especialidadID, int servicioID, int medicoID, int seguroID)
         {
             try
             {
@@ -368,16 +509,6 @@ namespace HospitalSalvador.Controllers
             }
         }
 
-        private bool citaExists(MyIdentityUser user)
-        {
-
-            if (_db.citas.FirstOrDefault(x => x.pacientes.MyIdentityUsers == user && x.estado == true) != null)
-            {
-                return true;
-            }
-
-            return false;
-        }
 
         private async Task<List<DateTime>> getNextWorkTimeListAsync(int medicoID)
         {
@@ -403,14 +534,46 @@ namespace HospitalSalvador.Controllers
 
                 if (dateLimit > 0)
                     return null;
-
             }
             return timelst;
         }
 
+        /// <summary>
+        /// Devuelve una lista de los horarios disponibles de este médico, tomando como referencia 
+        /// el día que se le suministra. Retorna null si el médico no labora ese día.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     GET /citas/ValidateDate?fecha_hora=2021-06-21T08:00:00&amp;medicoID=1
+        ///      
+        /// </remarks>
+        /// <param name="fecha_hora"></param>
+        /// <param name="medicoID"></param>
+        /// <returns>List of DateTime</returns>
+        /// <response code="204">No hay horarios disponibles para hacer consultas este día.</response>  
+        /// <response code="400">El médico no labora este día.</response>  
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<List<DateTime>> getAvailableTimeListAsync(DateTime fecha_hora, int medicoID)
+        public async Task<ActionResult<List<DateTime>>> getTimeListAsync(DateTime fecha_hora, int medicoID)
+        {
+            //get the  appointment list schedule of this doctor
+            var dateTimelst = await getAvailableTimeListAsync(fecha_hora, medicoID);
+
+            if (dateTimelst == null)
+                return BadRequest(new { NonWorkingDayError = "Este médico no labora el día escogido: "+ fecha_hora.Date.ToShortDateString() });
+            else if (!dateTimelst.Any())
+                return NoContent();
+            
+          //  List<TimeSpan> timelst = new List<TimeSpan>();
+
+         //   foreach (var item in dateTimelst)
+         //       timelst.Add(item.TimeOfDay);
+
+            return dateTimelst;
+        }
+
+        private async Task<List<DateTime>> getAvailableTimeListAsync(DateTime fecha_hora, int medicoID)
         {
             //get the last appointment list schedule of this doctor
             horarios_medicosDTO doctorWorkSchedule = getWorkDaySchedule(fecha_hora.DayOfWeek, medicoID);
@@ -468,9 +631,13 @@ namespace HospitalSalvador.Controllers
             return availableDaylst;
         }
 
-        [HttpGet("[action]")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<validationResponse> ValidateAvailableTimeAsync(DateTime fecha_hora, int medicoID)
+        /// <summary>
+        /// Método que valida si la fecha y hora suministradas están disponibles en la base de datos. 
+        /// </summary>
+        /// <param name="fecha_hora"></param>
+        /// <param name="medicoID"></param>
+        /// <returns>validationResponse</returns>
+        private async Task<validationResponse> ValidateAvailableTimeAsync(DateTime fecha_hora, int medicoID)
         {
 
             var availableTimelst = await getAvailableTimeListAsync(fecha_hora, medicoID);
@@ -638,22 +805,15 @@ namespace HospitalSalvador.Controllers
             return newCod;
         }
 
-        [HttpPost("[action]")]
-        public pacientes getPacienteByCV(string cod_vr)
+        private bool citaExists(MyIdentityUser user)
         {
 
-            var _citaID = _db.cod_verificacion.FirstOrDefault(c => c.value == cod_vr);
-            pacientes paciente = null;
+            if (_db.citas.FirstOrDefault(x => x.pacientes.MyIdentityUsers == user && x.estado == true) != null)
+            {
+                return true;
+            }
 
-            if (_citaID != null)
-                paciente = _db.citas
-                 .Include("pacientes")
-                 .FirstOrDefault(x => x.ID == _citaID.citasID && x.estado == true).pacientes;
-            else
-                throw new ArgumentException("El código de verificación no es valido.");
-
-            return paciente;
-
+            return false;
         }
 
         private citaValidationResponse validateAndSetData(citaCreateDTO formdata)
@@ -727,8 +887,7 @@ namespace HospitalSalvador.Controllers
             };
         }
 
-
-        public citaValidationResponse validateBirth(citaCreateDTO formdata)
+        private citaValidationResponse validateBirth(citaCreateDTO formdata)
         {
             DateTime fechaNacimiento = formdata.fecha_nacimiento;
             int lessPermititted = DateTime.Compare(fechaNacimiento, new DateTime(1910, 1, 1));
@@ -770,7 +929,7 @@ namespace HospitalSalvador.Controllers
         }
         public string errorMessage { get; set; }
     }
-    internal class costoServicio
+    public class costoServicio
     {
         public decimal porciento { get; set; }
         public decimal cobertura { get; set; }

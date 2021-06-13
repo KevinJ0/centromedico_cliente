@@ -5,7 +5,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -45,6 +44,24 @@ namespace HospitalSalvador.Controllers
 
         }
 
+        /// <summary>
+        /// Método que crea un usuario con el rol de Client por defecto y
+        /// recibe por parametro el nombre de un rol que deseas agregar al usuario.
+        /// </summary>
+        /// <remarks>
+        /// Sample response:
+        ///
+        ///     POST /Account/Register
+        ///      {
+        ///         username = UserName,
+        ///         email = Email,
+        ///         status = 1,
+        ///         message = "Registration Successful"
+        ///      }
+        /// </remarks>
+        /// <param name="formdata"></param>
+        /// <returns>citaResultDTO</returns>
+        /// <response code="400">Los datos suministrados son invalidos.</response>
         [HttpPost("[action]")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO formdata)
         {
@@ -93,67 +110,6 @@ namespace HospitalSalvador.Controllers
             return BadRequest(new JsonResult(errorList));
 
         }
-
-
-        // Login Method
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Login([FromBody] LoginDTO formdata)
-        {
-            // Get the User from Database
-            var user = await _userManager.FindByEmailAsync(formdata.Email);
-
-            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authorization:LlaveSecreta"]));
-
-            double tokenExpiryTime = Convert.ToDouble(_configuration["Authorization:ExpireTime"]);
-
-            if (user != null && await _userManager.CheckPasswordAsync(user, formdata.Password))
-            {
-
-
-                // get user Role
-                /*IdentityRole identityRole = new IdentityRole { Name = "Admin" };
-                await _roleManager.CreateAsync(identityRole);
-                var role = _roleManager.Roles.FirstOrDefault(x => x.Name == "Admin");
-                await _userManager.AddToRoleAsync(user, role.Name);
-                */
-
-                var roles = await _userManager.GetRolesAsync(user);
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(new Claim[]
-                    {
-                        new Claim(JwtRegisteredClaimNames.Sub, formdata.Email),
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                        new Claim(ClaimTypes.NameIdentifier, user.Id),
-                        new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
-                        new Claim("LoggedOn", DateTime.Now.ToString()),
-
-                     }),
-
-                    SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
-                    Issuer = _configuration["Authorization:Issuer"],
-                    Audience = _configuration["Authorization:Audience"],
-                    Expires = DateTime.UtcNow.AddMinutes(tokenExpiryTime)
-                };
-
-                // Generate Token
-
-                var token = tokenHandler.CreateToken(tokenDescriptor);
-
-                return Ok(new { token = tokenHandler.WriteToken(token), expiration = token.ValidTo, username = user.UserName, userRole = roles.FirstOrDefault() });
-
-            }
-
-            // return error
-            ModelState.AddModelError("", "Username/Password was not Found");
-            return Unauthorized(new { LoginError = "Please Check the Login Credentials - Ivalid Username/Password was entered" });
-
-        }
-
-
-
-
 
     }
 }

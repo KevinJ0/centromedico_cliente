@@ -39,7 +39,7 @@ namespace HospitalSalvador
             CreateMap<RegisterDTO, MyIdentityUser>()
                .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.UserCredential));
 
-            CreateMap<medicos, medico_directorioDTO>()
+            CreateMap<medicos, medicoDirectorioDTO>()
                 .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
                     src.especialidades_medicos.Select(x => x.especialidades.descrip).ToList()));
 

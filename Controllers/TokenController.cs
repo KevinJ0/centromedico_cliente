@@ -27,10 +27,10 @@ namespace HospitalSalvador.Controllers
         private readonly IConfiguration _configuration;
 
 
-        public TokenController(RoleManager<IdentityRole> roleManager, 
-            IConfiguration configuration, UserManager<MyIdentityUser> userManager, 
+        public TokenController(RoleManager<IdentityRole> roleManager,
+            IConfiguration configuration, UserManager<MyIdentityUser> userManager,
             token token, MyDbContext db)
-        { 
+        {
             _userManager = userManager;
             _configuration = configuration;
             _token = token;
@@ -38,10 +38,30 @@ namespace HospitalSalvador.Controllers
             _db = db;
         }
 
+
+        /// <summary>
+        /// Recibe un TokenRequestDTO, comprueba el GrantType (password o refreshToken) y llama al método pertinente.
+        /// Se devuelve un tokenResponseDTO con el token, resfresh token y las credenciales del usuario (en caso de logging).
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Auth
+        ///     {
+        ///        "UserCredential":"jose@gmail.com", 
+        ///        "password":"12345", 
+        ///        "granttype":"password" 
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <returns>TokenResponseDTO</returns>
+        /// <response code="400">Si las credenciales no son validas.</response>  
+        /// <response code="500">Se recibió un payload invalido.</response>  
         [HttpPost("[action]")]
         public async Task<IActionResult> Auth([FromBody] TokenRequestDTO model) // granttype = "refresh_token"
         {
-            // We will return Generic 500 HTTP Server Status Error
+            // I will return Generic 500 HTTP Server Status Error
             // If we receive an invalid payload
             if (model == null)
             {
@@ -58,27 +78,35 @@ namespace HospitalSalvador.Controllers
                     return await GenerateNewToken(model, mobile: true);
                 case "refresh_token_mobile":
                     return await RefreshToken(model, mobile: true);
-                case "cod_verificacion":
-                    return await GenerateNewToken(model, CodVerificacionUser: true);
-                case "cod_verificacion_mobile":
-                    return await GenerateNewToken(model, mobile: true, CodVerificacionUser: true);
                 default:
-                    // not supported - return a HTTP 401 (Unauthorized)
-                    return new UnauthorizedResult();
+                    return new BadRequestResult();
             }
 
         }
 
-
-        // Method to Create New JWT and Refresh Token
-        private async Task<IActionResult> GenerateNewToken(TokenRequestDTO model, bool mobile= false, bool CodVerificacionUser = false)
+        /// <summary>
+        /// Método que crea un New JWT y refresca el token.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Auth
+        ///     {
+        ///        "UserCredential":"jose@gmail.com", 
+        ///        "password":"12345", 
+        ///        "granttype":"password" 
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <param name="mobile"></param>
+        /// <response code="200">Operación exitosa, devuelve un TokenResponseDTO con el Token y refresh token incluido.</response>
+        /// <response code="401">Si las credenciales no son validas.</response>  
+        private async Task<IActionResult> GenerateNewToken(TokenRequestDTO model, bool mobile = false)
         {
             // check if there's an user with the given username
             var user = await _userManager.FindByNameAsync(model.UserCredential) ?? await _userManager.FindByEmailAsync(model.UserCredential);
 
-          /*  if (CodVerificacionUser)
-                model.Password = _configuration["Authorization:PatientPassword"]; // cuz it's a patient
-*/
             // Validate credentials
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
@@ -95,7 +123,6 @@ namespace HospitalSalvador.Controllers
                     {
                         _db.token.Remove(oldrt);
                     }
-
                 }
 
                 // Add new refresh token to Database
@@ -135,7 +162,7 @@ namespace HospitalSalvador.Controllers
             var roles = await _userManager.GetRolesAsync(user);
             var tokenHandler = new JwtSecurityTokenHandler();
 
-            
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
@@ -258,10 +285,17 @@ namespace HospitalSalvador.Controllers
 
 
 
-
-
-
-
+        /// <summary>
+        /// Método que cierra todas las sessiones de un usuario en diferentes dispositivos.
+        /// </summary>
+        /// <remarks>
+        /// ¡Aun no implementado!
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <response code="204">La operación se completó y no hay refresh token registrado a este usuario.</response>
+        /// <response code="401">Refresh token not found or invalid (or invalid clientId)</response>  
+        /// <response code="401">UserId not found or invalid</response>  
+        /// <response code="401">Token refresh is expired</response>  
         [HttpPost, Authorize]
         [Route("revoke")]
         public IActionResult Revoke(TokenRequestDTO model)
@@ -288,7 +322,7 @@ namespace HospitalSalvador.Controllers
                 }
 
                 // check if there's an user with the refresh token's userId
-                 var user = _db.MyIdentityUsers.SingleOrDefault(u => u.UserName == rt.User.UserName);
+                var user = _db.MyIdentityUsers.SingleOrDefault(u => u.UserName == rt.User.UserName);
 
                 if (user == null)
                 {
@@ -311,5 +345,5 @@ namespace HospitalSalvador.Controllers
             return NoContent();
 
         }
-    }    
+    }
 }

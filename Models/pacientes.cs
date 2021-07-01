@@ -23,14 +23,6 @@ namespace HospitalSalvador.Models
         int? _edad;
 #pragma warning restore CS0169 // El campo 'pacientes._edad' nunca se usa
         
-        public bool isUnderAge()
-        {
-
-            if (edad < 18) return true;
-
-            return false;
-        }
-
         [Key]
         public int ID { get; set; }
         [Required]
@@ -56,7 +48,7 @@ namespace HospitalSalvador.Models
         public string telefono { get; set; }
         [StringLength(15)]
         public string doc_identidad_tutor { get; set; }
-        public int? edad {get;set;}
+      //  public int? edad {get;set;}
         public bool menor_un_año { get; set; }
         public string MyIdentityUserID { get; set; }
         public bool doc_identitad_verificado { get; set; }

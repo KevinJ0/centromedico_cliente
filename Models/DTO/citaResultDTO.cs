@@ -11,7 +11,6 @@ namespace HospitalSalvador.Models.DTO
     public class citaResultDTO
     {
 
-
         [StringLength(8)]
         public string cod_verificacion { get; set; }    
         public string servicio { get; set; }
@@ -20,7 +19,7 @@ namespace HospitalSalvador.Models.DTO
         public DateTime fecha_hora { get; set; }
 
         public string medico_nombre_apellido { get; set; }
-        public string especialidad { get; set; }
+       // public string especialidad { get; set; }
         public string seguro { get; set; }
         [Column(TypeName = "money")]
         public decimal pago { get; set; }

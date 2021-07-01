@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HospitalSalvador.Models
 {
     [Index(nameof(cod_verificacionID), Name = "IX_citas_cod_verificacionID")]
-    [Index(nameof(especialidadesID), Name = "IX_citas_especialidadesID")]
+   // [Index(nameof(especialidadesID), Name = "IX_citas_especialidadesID")]
     [Index(nameof(medicosID), Name = "IX_citas_medicosID")]
     [Index(nameof(pacientesID), Name = "IX_citas_pacientesID")]
     [Index(nameof(secretariasID), Name = "IX_citas_secretariasID")]
@@ -48,14 +48,14 @@ namespace HospitalSalvador.Models
         public decimal descuento { get; set; }
         [Column(TypeName = "money")]
         public decimal pago { get; set; }
-        public int especialidadesID { get; set; }
+        //public int especialidadesID { get; set; }
         [Required]
         public bool? estado { get; set; }
         public int consultorio { get; set; }
 
-        [ForeignKey(nameof(especialidadesID))]
+       /* [ForeignKey(nameof(especialidadesID))]
         [InverseProperty("citas")]
-        public virtual especialidades especialidades { get; set; }
+        public virtual especialidades especialidades { get; set; }*/ 
         [ForeignKey(nameof(medicosID))]
         [InverseProperty("citas")]
         public virtual medicos medicos { get; set; }

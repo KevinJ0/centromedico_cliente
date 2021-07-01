@@ -1,7 +1,7 @@
-footer{
-
-    padding: clamp(0.6rem, 5vw, 4rem);
+footer {
+  padding: clamp(0.6rem, 5vw, 4rem);
 }
+
 .footer-container {
   overflow: hidden;
   /* margin-top: 250px; */
@@ -12,7 +12,7 @@ footer{
   padding-top: 2rem;
 }
 .footer-logo {
-    width: clamp(12rem, 50vw, 20rem);
+  width: clamp(12rem, 50vw, 20rem);
 }
 .row {
   display: grid;

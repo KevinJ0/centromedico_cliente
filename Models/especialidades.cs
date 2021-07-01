@@ -12,8 +12,8 @@ namespace HospitalSalvador.Models
     {
         public especialidades()
         {
-            citas = new HashSet<citas>();
-            especialidades_medicos = new HashSet<especialidades_medicos>();
+          //  citas = new HashSet<citas>();
+        //    especialidades_medicos = new HashSet<especialidades_medicos>();
         }
 
         [Key]
@@ -24,10 +24,10 @@ namespace HospitalSalvador.Models
         [Required]
         public bool? estado { get; set; }
 
-        [InverseProperty("especialidades")]
-        public virtual ICollection<cobertura_medicos> cobertura_medicos { get; set; }
-        [InverseProperty("especialidades")]
-        public virtual ICollection<citas> citas { get; set; }
+     /*   [InverseProperty("especialidades")]
+        public virtual ICollection<cobertura_medicos> cobertura_medicos { get; set; }*/
+/*        [InverseProperty("especialidades")]
+        public virtual ICollection<citas> citas { get; set; }*/
         [InverseProperty("especialidades")]
         public virtual ICollection<especialidades_medicos> especialidades_medicos { get; set; }
     }

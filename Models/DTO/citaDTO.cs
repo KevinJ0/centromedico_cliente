@@ -61,8 +61,8 @@ namespace HospitalSalvador.Models.DTO
         public decimal descuento { get; set; }
         [Column(TypeName = "money")]
         public decimal pago { get; set; }
-        public int especialidadesID { get; set; }
-        public string especialidad_descrip { get; set; }
+      /*public int especialidadesID { get; set; }
+        public string especialidad_descrip { get; set; }*/
         public int consultorio { get; set; }
 
 

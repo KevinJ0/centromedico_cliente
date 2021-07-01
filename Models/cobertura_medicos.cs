@@ -17,13 +17,13 @@ namespace HospitalSalvador.Models
         [Key]
         public int segurosID { get; set; }
         public int serviciosID { get; set; }
-        public int? especialidadesID { get; set; }
+       // public int? especialidadesID { get; set; }
         [Column(TypeName = "money")]
         public decimal pago { get; set; }
 
-        [ForeignKey(nameof(especialidadesID))]
+       /* [ForeignKey(nameof(especialidadesID))]
         [InverseProperty("cobertura_medicos")]
-        public virtual especialidades especialidades { get; set; }
+        public virtual especialidades especialidades { get; set; }*/
         [ForeignKey(nameof(medicosID))]
         [InverseProperty("cobertura_medicos")]
         public virtual medicos medicos { get; set; }

@@ -132,11 +132,11 @@ namespace HospitalSalvador.Context
 
                 entity.Property(e => e.tipo_contacto).IsFixedLength(true);
 
-                entity.HasOne(d => d.especialidades)
+             /*   entity.HasOne(d => d.especialidades)
                     .WithMany(p => p.citas)
                     .HasForeignKey(d => d.especialidadesID)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_citas_especialidades");
+                    .HasConstraintName("FK_citas_especialidades");*/
 
                 entity.HasOne(d => d.medicos)
                     .WithMany(p => p.citas)
@@ -218,11 +218,11 @@ namespace HospitalSalvador.Context
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_coberturaMedicos_seguros");
 
-                entity.HasOne(d => d.especialidades)
+            /*    entity.HasOne(d => d.especialidades)
                     .WithMany(p => p.cobertura_medicos)
                     .HasForeignKey(d => d.especialidadesID)
                     .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("FK_coberturaMedicos_especialidades");
+                    .HasConstraintName("FK_coberturaMedicos_especialidades");*/
             });
 
 

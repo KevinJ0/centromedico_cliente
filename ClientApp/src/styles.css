@@ -1,12 +1,32 @@
 /* You can add global styles to this file, and also import other style files */
-
-/* Provide sufficient contrast against white background */
-:root{
-
-  --primary-color: hsl(210, 100%, 56%);
-
+/* This is a tag that I need to override some of its properties */
+.mat-card-header-text {
+  margin: 0 !important;
 }
 
+
+
+/* ----------------- */
+
+*{
+  box-sizing:  border-box;
+}
+
+:root {
+  --primary-color: hsl(210, 100%, 56%);
+}
+
+app-root{
+  min-height: 100vh;
+      display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+}
+main{
+  
+  /* align-self: flex-start; */
+}
 a {
   color: #0366d6;
 }
@@ -20,7 +40,7 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
-p{
 
-  margin-bottom: 0 !important;
-}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

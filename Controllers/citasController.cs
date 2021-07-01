@@ -60,7 +60,7 @@ namespace HospitalSalvador.Controllers
         ///         "medico": {
         ///             "id": 1,
         ///             "nombre": "Paola",
-        ///             "apellido": "Rodriguez Sarmientos                    "
+        ///             "apellido": "Rodriguez Sarmientos"
         ///         },
         ///         "seguros": [
         ///             {
@@ -68,11 +68,11 @@ namespace HospitalSalvador.Controllers
         ///               "segurosID": 1
         ///         },
         ///             {
-        ///                 "descrip": "Humano                                                      ",
+        ///                 "descrip": "Humano",
         ///                 "segurosID": 2
         ///         },
         ///             {
-        ///         "descrip": "ARS                                                         ",
+        ///         "descrip": "ARS",
         ///                 "segurosID": 5
         ///         }
         ///         ],
@@ -89,15 +89,15 @@ namespace HospitalSalvador.Controllers
         ///         "servicios": [
         ///             {
         ///                 "id": 1,
-        ///                 "descrip": "Consulta                                "
+        ///                 "descrip": "Consulta"
         ///         },
         ///             {
         ///         "id": 2,
-        ///                 "descrip": "Solicitud de receta médica              "
+        ///                 "descrip": "Solicitud de receta médica"
         ///         },
         ///             {
         ///         "id": 3,
-        ///                 "descrip": "Consulta de seguimiento                 "
+        ///                 "descrip": "Consulta de seguimiento"
         ///         }
         ///         ],
         ///         "diasLaborables": [
@@ -144,10 +144,10 @@ namespace HospitalSalvador.Controllers
                 .ToListAsync();
 
 
-            var especialidadeslst = await _db.especialidades_medicos
+           /* var especialidadeslst = await _db.especialidades_medicos
                 .Where(x => x.medicosID == medicoID)
                 .Select(x => new { x.especialidades.ID, x.especialidades.descrip })
-                .ToListAsync();
+                .ToListAsync();*/
 
             var servicioslst = await _db.servicios_medicos
                 .Where(x => x.medicosID == medicoID)
@@ -164,8 +164,8 @@ namespace HospitalSalvador.Controllers
             if (coberturaslst == null)
                 return BadRequest(new { InvalidCobertura = "El doctor(a) seleccionado no tiene ninguna cobertura" });
 
-            if (especialidadeslst == null)
-                return BadRequest(new { InvalidEspecialidad = "El doctor(a) seleccionado no tiene ninguna especialidad asignada." });
+         //  if (especialidadeslst == null)
+        //        return BadRequest(new { InvalidEspecialidad = "El doctor(a) seleccionado no tiene ninguna especialidad asignada." });
 
             if (!availableDaylst.Any())
                 return BadRequest(new { NoScheduleAvailable = "No hay horario disponible para una cita con este médico 😅." });
@@ -184,7 +184,7 @@ namespace HospitalSalvador.Controllers
                         apellido = medico.apellido,
                     },
                     seguros = coberturaslst,
-                    especialidades = especialidadeslst,
+                    //especialidades = especialidadeslst,
                     servicios = servicioslst,
                     diasLaborables = availableDaylst,
                     horasDisponibles = availableTimelst
@@ -279,76 +279,31 @@ namespace HospitalSalvador.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult<citaResultDTO>> createCitaAsync(citaCreateDTO formdata)
         {
-
             pacientes paciente = null;
             citas cita;
             horarios_medicos_reservados hora_reserv;
             string codVer;
-
             string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             MyIdentityUser user = await _userManager.FindByNameAsync(userName);
 
             try
             {
                 //Validate incoming data
-                citaValidationResponse dataResponse = validateAndSetData(formdata);
-
-                if (!dataResponse.successful)
-                    return BadRequest(new { ErrorDataInput = dataResponse.errorMessage });
-                else
-                    formdata = dataResponse.citaCreateDTO;
-
-
                 medicos medico = await _db.medicos.FindAsync(formdata.medicosID);
-                if (medico == null)
-                    return BadRequest(new { InvalidDoctor = "El doctor seleccionado no se encuentra habilitado en estos momentos." });
-
                 seguros seguro = await _db.seguros.FindAsync(formdata.segurosID);
-                if (formdata.segurosID == null)
-                    seguro = await _db.seguros.FindAsync(1); //1 by default is NoneInsurace
-                else if (seguro == null)
-                    return BadRequest(new { InvalidSeguro = "El seguro seleccionado no se encuentra en la base de datos." });
-
-                especialidades especialidad = await _db.especialidades.FindAsync(formdata.especialidadesID);
-                if (especialidad == null)
-                    return BadRequest(new { InvalidEspecialidad = "La especialidad seleccionada no se encuentra en la base de datos." });
-
+                /* especialidades especialidad = await _db.especialidades.FindAsync(formdata.especialidadesID);
+                 if (especialidad == null)
+                     return BadRequest(new { InvalidEspecialidad = "La especialidad seleccionada no se encuentra en la base de datos." });*/
                 servicios servicio = await _db.servicios.FindAsync(formdata.serviciosID);
-                if (servicio == null)
-                    return BadRequest(new { InvalidServicio = "El servicio seleccionado no se encuentra en la base de datos." });
-
                 var cobertura = await _db.cobertura_medicos.FirstOrDefaultAsync(x =>
-                    x.especialidadesID == formdata.especialidadesID &&
+                  //  x.especialidadesID == formdata.especialidadesID &&
                     x.medicosID == formdata.medicosID &&
                     x.segurosID == formdata.segurosID &&
                     x.serviciosID == formdata.serviciosID);
-
-                if (cobertura == null)
-                {
-                    //sin seguro
-                    cobertura = await _db.cobertura_medicos.FirstOrDefaultAsync(x =>
-                    x.especialidadesID == formdata.especialidadesID &&
-                    x.medicosID == formdata.medicosID &&
-                    x.serviciosID == formdata.serviciosID &&
-                    x.segurosID == seguro.ID); //1 reperesenta el registro de no Seguro.
-
-                    if (cobertura == null)
-                        return BadRequest(new { CoberturaError = "Ha ocurrido un error al tratar de especificar el cobertura del servicio" });
-                }
-
-
-                //Determinar si la hora de la cita está disponible
-                if (formdata.fecha_hora < DateTime.Now || formdata.fecha_hora > DateTime.Now.AddDays(30))
-                    return BadRequest(new { NoDateError = "El día suministrado no está en el rango de fecha disponible" });
-
+              
                 hora_reserv = await _db.horarios_medicos_reservados.FirstOrDefaultAsync(h => h.fecha_hora == formdata.fecha_hora && h.medicosID == formdata.medicosID);
-                if (hora_reserv != null)
-                    return BadRequest(new { DateTimeReservedError = "La fecha y hora para la cita programada está reservada, intente con otra por favor." });
-
                 validationResponse AvailableTime = await ValidateAvailableTimeAsync(formdata.fecha_hora, formdata.medicosID);
-
-                if (!AvailableTime.successful)
-                    return BadRequest(new { DateTimeError = AvailableTime.errorMessage });
+                citaValidationResponse dataResponse = validateAndSetData(formdata);
 
 
                 //Determine if there's an appoiment already
@@ -359,7 +314,48 @@ namespace HospitalSalvador.Controllers
 
                 codVer = citaExists(user) ? getCV(user) : generateCV(medico);
 
-                if (formdata.appoiment_type == (int)appointment.me && _db.citas.Where(x => x.medicos == medico && x.pacientes == paciente && x.estado == true && x.especialidades == especialidad).Any())
+                //Validate data
+                //Determinar si la hora de la cita está disponible
+                if (formdata.fecha_hora < DateTime.Now || formdata.fecha_hora > DateTime.Now.AddDays(30))
+                    return BadRequest(new { NoDateError = "El día suministrado no está en el rango de fecha disponible" });
+                
+                if (medico == null)
+                    return BadRequest(new { InvalidDoctor = "El doctor seleccionado no se encuentra habilitado en estos momentos." });
+
+                if (!dataResponse.successful)
+                    return BadRequest(new { ErrorDataInput = dataResponse.errorMessage });
+                else
+                    formdata = dataResponse.citaCreateDTO;
+
+                if (formdata.segurosID == null)
+                    seguro = await _db.seguros.FindAsync(1); //1 by default is NoneInsurace
+                else if (seguro == null)
+                    return BadRequest(new { InvalidSeguro = "El seguro seleccionado no se encuentra en la base de datos." });
+
+                if (servicio == null)
+                    return BadRequest(new { InvalidServicio = "El servicio seleccionado no se encuentra en la base de datos." });
+
+                if (cobertura == null)
+                {
+                    //sin seguro
+                    cobertura = await _db.cobertura_medicos.FirstOrDefaultAsync(x =>
+                    //x.especialidadesID == formdata.especialidadesID &&
+                    x.medicosID == formdata.medicosID &&
+                    x.serviciosID == formdata.serviciosID &&
+                    x.segurosID == seguro.ID); //1 reperesenta el registro de no Seguro/Privado.
+
+                    if (cobertura == null)
+                        return BadRequest(new { CoberturaError = "Ha ocurrido un error al tratar de especificar el cobertura del servicio" });
+                }
+
+                if (hora_reserv != null)
+                    return BadRequest(new { DateTimeReservedError = "La fecha y hora para la cita programada está reservada, intente con otra por favor." });
+                
+                if (!AvailableTime.successful)
+                    return BadRequest(new { DateTimeError = AvailableTime.errorMessage });
+
+               // if (formdata.appoiment_type == (int)appointment.me && _db.citas.Where(x => x.medicos == medico && x.pacientes == paciente && x.estado == true /*&& x.especialidades == especialidad*/).Any())
+                    if ( _db.citas.Where(x => x.medicos == medico && x.pacientes.MyIdentityUsers == user && x.estado == true).Any())
                     return BadRequest(new { DuplicatedAppointmentError = "Ya hay una cita programada con este doctor(a)" });
 
 
@@ -400,7 +396,7 @@ namespace HospitalSalvador.Controllers
                     medicos = medico,
                     seguros = seguro,
                     servicios = servicio,
-                    especialidades = especialidad,
+                    //especialidades = especialidad,
                     consultorio = medico.consultorio,
                     cobertura = _cobertura,
                     pago = cobertura.pago,
@@ -440,7 +436,7 @@ namespace HospitalSalvador.Controllers
                     consultorio = cita.consultorio,
                     fecha_hora = cita.fecha_hora,
                     medico_nombre_apellido = (medico.nombre + " " + medico.apellido).Trim(),
-                    especialidad = especialidad.descrip,
+                    //especialidad = especialidad.descrip,
                     seguro = seguro.descrip,
                     pago = cobertura.pago,
                     cobertura = _cobertura,
@@ -472,7 +468,6 @@ namespace HospitalSalvador.Controllers
         ///     GET /citas/getCoberturas?especialidadID=1&amp;servicioID=1&amp;medicoID=2&amp;seguroID=2
         ///      
         /// </remarks>
-        /// <param name="especialidadID"></param>
         /// <param name="seguroID"></param>
         /// <param name="servicioID"></param>
         /// <param name="medicoID"></param>
@@ -480,13 +475,13 @@ namespace HospitalSalvador.Controllers
         /// <response code="204">No hay cobertura disponibles con estos parametros.</response>
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<ActionResult<costoServicio>> getCoberturasAsync(int especialidadID, int servicioID, int medicoID, int seguroID)
+        public async Task<ActionResult<costoServicio>> getCoberturasAsync( int servicioID, int medicoID, int seguroID)
         {
             try
             {
 
                 var cobertura = await _db.cobertura_medicos.FirstAsync(x =>
-                       x.especialidadesID == especialidadID &&
+                       //x.especialidadesID == especialidadID &&
                        x.medicosID == medicoID &&
                        x.segurosID == seguroID &&
                        x.serviciosID == servicioID);

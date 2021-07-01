@@ -1,0 +1,208 @@
+main {
+  max-width: 1600px;
+  margin: auto;
+  padding: 3rem clamp(0.5rem, 4vw, 6rem);
+}
+
+.doctor-container {
+  grid-auto-flow: column;
+  margin: 1rem 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  width: 100%;
+  gap: clamp(5px, 1vw, 1rem);
+}
+
+.form-doctor-filter {
+  height: fit-content;
+}
+mat-form-field {
+  width: 100%;
+}
+.radio-group {
+  margin: 10px 0;
+  margin-bottom: 1.34375em;
+
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 1rem;
+}
+mat-selection-list {
+  overflow: auto;
+  height: auto;
+  max-height: 100vh;
+}
+.subheader {
+  height: 48px;
+  line-height: 16px;
+  color: rgba(0, 0, 0, 0.54);
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.btn-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.btn-container > button {
+  margin: 0 0.5rem;
+}
+._row {
+  flex-direction: column;
+  display: flex;
+}
+.insurance-form,
+.datetime-form {
+  max-width: 33rem;
+  margin: auto;
+}
+.user-data-form {
+  max-width: 69rem;
+  margin: auto;
+}
+.insurance-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+nb-radio {
+  display: inline-block;
+}
+
+.payment-form.dark {
+  background-color: #f6f6f6;
+}
+
+.payment-form .title {
+  font-size: 1em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.8em;
+  font-weight: 600;
+  padding-bottom: 8px;
+}
+
+.payment-form .products {
+  background-color: #f7f9fc;
+  padding: 1rem;
+}
+
+.payment-form .products .item {
+  margin-bottom: 1em;
+}
+
+.payment-form .products .item-name {
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.payment-form .products .item-description {
+  font-size: 0.8em;
+  opacity: 0.6;
+}
+
+.payment-form .products .item p {
+  margin-bottom: 0.2em;
+}
+
+.payment-form .products .price {
+  float: right;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.payment-form .products .total {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 10px;
+  padding-top: 19px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.payment-form .card-details label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: #79818a;
+  text-transform: uppercase;
+}
+
+.payment-form .card-details button {
+  margin-top: 0.6em;
+  padding: 12px 0;
+  font-weight: 600;
+}
+
+.payment-form .date-separator {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+}
+
+mat-stepper{
+  max-width: 69rem;
+  margin: auto;
+}
+
+.grid-userdata{
+  display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2rem;
+}
+
+.name-wrapper {
+  flex-direction: column;
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+.mat-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
+}
+.sub-title {
+  font-weight: 500;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.under-age {
+  display: none;
+}
+
+.wsReach {
+  padding-bottom: 1.34375em;
+  margin: 0.25em 5px;
+}
+
+@media only screen and (max-width: 800px) {
+  
+  mat-card{
+    padding: 0;
+  }
+  .grid-userdata{
+    grid-template-columns: 1fr;
+  }
+  .name-wrapper {
+    flex-direction: row;
+  }
+  .name-wrapper .name {
+    padding-right: 0.5em;
+  }
+  .name-wrapper .lastName {
+    padding-left: 0.5em;
+  }
+  .name-wrapper .lastName {
+    padding-left: 0;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .name-wrapper {
+    flex-direction: column;
+  }
+}

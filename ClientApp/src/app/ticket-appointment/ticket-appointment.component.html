@@ -1,0 +1,54 @@
+<main>
+
+  <div class="ticket-container">
+    <mat-icon class="task" matSuffix>event_available</mat-icon>
+    <div class="header">
+      <h1>Cita Confirmada</h1>
+      <h5>Abril 16, 2021</h5>
+      <h5>4:00pm</h5>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="content">
+      <div class="medico">
+        <p>Tu médico es <b>Paola Rodriguez</b></p>
+      </div>
+ 
+       <p><b>Especialidad: </b>Alergeología</p>
+      <p><b>Servicio: </b>Consulta</p>
+      <p *ngIf="!isDependent"><b>Doc. Identidad: </b>40222215480</p>
+      <p><b>Paciente: </b>Mario Manuel Monte Real</p>
+      <p *ngIf="isDependent"><b>Doc. Identidad tutor: </b>40153452340</p>
+      <p *ngIf="isDependent"><b>Tutor: </b>Mario Manuel Monte Real</p>
+      <p><b>Número de contacto: </b>809-888-5185</p>
+      <p><b>Seguro: </b>ARS</p>
+      <p><b>Diferencia: </b>RD$200</p>
+      <p style="margin-bottom: 0;"><b>Observación: </b>Tengo fuertes dolores de cabeza al tomar xxx médicamento en las
+        noches.</p>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="footer">
+      <div class="message">
+        <ul>
+            <li> Por favor llegar 30 minutos antes de su cita para dar inicio al proceso de facturación y recordar
+              llevar su <span>documento de identidad</span> consigo el día de su cita.
+            </li>
+            <li> Si bien necesita cambiar la fecha de su cita ó los datos de su seguro puede ingresar <a
+                href="">aquí</a>
+              y digitar su código de verificación.</li>
+            <li> No olvidar traer el canert de su seguro al momento de facturar en caso de ser asegurado.
+            </li>
+            <li> Si necesita ayuda con cualquier otra inquietud llame al 809-550-5491 opción 2.
+            </li>
+          </ul>
+      </div>
+      <p>Hemos enviado un correo de confirmación a: </p>
+      <p><span style="color:rgb(10, 110, 241);">mario002@gmail.com</span></p>
+    </div>
+
+    <mat-card-actions>
+      <button mat-button>Imprimir</button>
+      <button mat-button>Terminar</button>
+    </mat-card-actions>
+  </div>
+
+</main>

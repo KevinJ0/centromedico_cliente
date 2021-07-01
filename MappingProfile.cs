@@ -29,8 +29,8 @@ namespace HospitalSalvador
                 .ForMember(dest => dest.paciente_nombre_tutor, opt => opt.MapFrom(src => src.pacientes.nombre_tutor))
                 .ForMember(dest => dest.paciente_apellido_tutor, opt => opt.MapFrom(src => src.pacientes.apellido_tutor))
                 .ForMember(dest => dest.servicio_descrip, opt => opt.MapFrom(src => src.servicios.descrip))
-                .ForMember(dest => dest.seguro_descrip, opt => opt.MapFrom(src => src.seguros.descrip))
-                .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
+                .ForMember(dest => dest.seguro_descrip, opt => opt.MapFrom(src => src.seguros.descrip));
+              //  .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
 
 
             CreateMap<pacientes, pacienteDTO>();

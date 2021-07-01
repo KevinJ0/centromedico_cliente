@@ -29,8 +29,8 @@ namespace HospitalSalvador.Models.DTO
         [Required]
         public DateTime fecha_hora { get; set; }
         public int? segurosID { get; set; }
-        [Required]
-        public int? especialidadesID { get; set; }
+        /*[Required]
+        public int? especialidadesID { get; set; }*/
         public string? cod_verificacionID { get; set; }
 
 
@@ -95,8 +95,7 @@ namespace HospitalSalvador.Models.DTO
                 }
             }
         }
-        public int? edad
-        { set; get; }
+        public int? edad { set; get; }
         public bool menor_un_año { get; set; }
 
 

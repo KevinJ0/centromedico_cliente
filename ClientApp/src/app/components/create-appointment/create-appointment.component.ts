@@ -239,20 +239,6 @@ export class CreateAppointmentComponent implements OnInit {
       "segurosID": formdata["insuranceControl"],
       "nota": formdata["noteControl"]
     };
-    userinfo = {
-      "nombre": nombre,
-      "apellido": apellido,
-      "sexo": formdata["userSexControl"],
-      "doc_identidad": formdata["identityDocControl"],
-      "fecha_nacimiento": moment(formdata["birthDateControl"]).toDate(),
-      "contacto": formdata["contactControl"],
-      "contacto_whatsapp": formdata["wsReachControl"],
-      "doc_identidad_tutor": formdata["userNameControl"],
-      "nombre_tutor": nombre_tutor,
-      "appoiment_type": formdata["appointmentTypeControl"],
-      "segurosID": formdata["insuranceControl"],
-      "nota": formdata["noteControl"]
-    };
 
     console.log(cita)
 

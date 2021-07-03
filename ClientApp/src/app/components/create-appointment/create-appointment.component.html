@@ -112,15 +112,15 @@
                   <mat-form-field class="lastName" appearance="outline">
                     <mat-label>Apellido(s) del dependiente</mat-label>
                     <input formControlName="dependentLastNameControl" matInput placeholder="Apellido(s) del paciente">
-                  </mat-form-field>
+              </mat-form-field>
                 </div>
-                <div>
-                  <label>Sexo</label>
-                </div>
-                 <mat-radio-group style="display: block;" class="radio-group" formControlName="dependentSexControl">
-                    <mat-radio-button class="insurance-radio-button" value="f">Masculino</mat-radio-button>
-                    <mat-radio-button class="insurance-radio-button" value="m">Femenino</mat-radio-button>
-                  </mat-radio-group>
+               
+                <label>Sexo del dependiente: </label>
+                <mat-radio-group ariaLabel="Sexo:" style="display: block;" class="radio-group" formControlName="dependentSexControl">
+                  <mat-radio-button class="insurance-radio-button" value="f">Masculino</mat-radio-button>
+                  <mat-radio-button class="insurance-radio-button" value="m">Femenino</mat-radio-button>
+                  <mat-error *ngIf="thirdFormGroup.get('dependentSexControl').invalid && isSent">{{getDSexErrorMessage()}}</mat-error>
+                </mat-radio-group>
                 <mat-form-field appearance="outline">
                   <mat-label>Fecha de nacimiento</mat-label>
                   <input formControlName="dependentBirthDateControl" placeholder="Escoge una fecha" matInput
@@ -154,13 +154,14 @@
                 </mat-form-field>
               </div>
 
-              <div>
-                <label>Sexo</label>
-              </div>
-               <mat-radio-group style="display: block;" class="radio-group" formControlName="userSexControl">
-                  <mat-radio-button class="insurance-radio-button" value="f">Masculino</mat-radio-button>
-                  <mat-radio-button class="insurance-radio-button" value="m">Femenino</mat-radio-button>
-                </mat-radio-group>
+
+              <label>Sexo: </label>
+              <mat-radio-group ariaLabel="Sexo:" style="display: block;" required class="radio-group"
+                formControlName="userSexControl">
+                <mat-radio-button class="insurance-radio-button" value="f">Masculino</mat-radio-button>
+                <mat-radio-button class="insurance-radio-button" value="m">Femenino</mat-radio-button>
+                <mat-error *ngIf="thirdFormGroup.get('userSexControl').invalid && isSent">{{getSexErrorMessage()}}</mat-error>
+              </mat-radio-group>
 
               <mat-form-field appearance="outline">
                 <mat-label>Fecha de nacimiento</mat-label>

@@ -117,8 +117,8 @@
                
                 <label>Sexo del dependiente: </label>
                 <mat-radio-group ariaLabel="Sexo:" style="display: block;" class="radio-group" formControlName="dependentSexControl">
-                  <mat-radio-button class="insurance-radio-button" value="f">Masculino</mat-radio-button>
-                  <mat-radio-button class="insurance-radio-button" value="m">Femenino</mat-radio-button>
+                  <mat-radio-button class="insurance-radio-button" value="m">Masculino</mat-radio-button>
+                  <mat-radio-button class="insurance-radio-button" value="f">Femenino</mat-radio-button>
                   <mat-error *ngIf="thirdFormGroup.get('dependentSexControl').invalid && isSent">{{getDSexErrorMessage()}}</mat-error>
                 </mat-radio-group>
                 <mat-form-field appearance="outline">
@@ -138,36 +138,36 @@
               <mat-form-field appearance="outline">
                 <mat-label>Documento de identidad</mat-label>
                 <mat-icon matSuffix>badge</mat-icon>
-                <input formControlName="identityDocControl" maxlength="15" matInput
+                <input [readonly]="isUserConfirmed" formControlName="identityDocControl" maxlength="15" matInput
                   placeholder="Documento de identidad">
               </mat-form-field>
 
               <div class="name-wrapper">
-                <mat-form-field class="name" appearance="outline">
+                <mat-form-field class="name" appearance="outline" >
                   <mat-label>Nombre</mat-label>
-                  <input formControlName="userNameControl" matInput placeholder="Nombre">
+                  <input formControlName="userNameControl" matInput [readonly]="isUserConfirmed" placeholder="Nombre">
                 </mat-form-field>
 
                 <mat-form-field class="lastName" appearance="outline">
                   <mat-label>Apellido(s)</mat-label>
-                  <input formControlName="userLastNameControl" matInput placeholder="Apellido(s)">
+                  <input formControlName="userLastNameControl" [readonly]="isUserConfirmed" matInput placeholder="Apellido(s)">
                 </mat-form-field>
               </div>
 
 
               <label>Sexo: </label>
-              <mat-radio-group ariaLabel="Sexo:" style="display: block;" required class="radio-group"
+              <mat-radio-group  ariaLabel="Sexo:" style="display: block;" required class="radio-group"
                 formControlName="userSexControl">
-                <mat-radio-button class="insurance-radio-button" value="f">Masculino</mat-radio-button>
-                <mat-radio-button class="insurance-radio-button" value="m">Femenino</mat-radio-button>
+                <mat-radio-button  disabled="isUserConfirmed" class="insurance-radio-button" value="m">Masculino</mat-radio-button>
+                <mat-radio-button  disabled="isUserConfirmed"  class="insurance-radio-button" value="f">Femenino</mat-radio-button>
                 <mat-error *ngIf="thirdFormGroup.get('userSexControl').invalid && isSent">{{getSexErrorMessage()}}</mat-error>
               </mat-radio-group>
 
               <mat-form-field appearance="outline">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input formControlName="birthDateControl" placeholder="Escoge una fecha" matInput [min]="minBDDate"
+                <input [readonly]="isUserConfirmed" formControlName="birthDateControl" placeholder="Escoge una fecha" matInput [min]="minBDDate"
                   [max]="maxBDDate" [matDatepicker]="BDpicker">
-                <mat-datepicker-toggle matSuffix [for]="BDpicker"></mat-datepicker-toggle>
+                <mat-datepicker-toggle [disabled]="isUserConfirmed" matSuffix [for]="BDpicker"></mat-datepicker-toggle>
                 <mat-datepicker #BDpicker></mat-datepicker>
               </mat-form-field>
 

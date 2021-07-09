@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HospitalSalvador.Models
 {
-   // [Index(nameof(doc_identidad), Name = "unique_docIdentidad", IsUnique = true)]
+    // [Index(nameof(doc_identidad), Name = "unique_docIdentidad", IsUnique = true)]
     public partial class pacientes
     {
 
@@ -22,7 +22,7 @@ namespace HospitalSalvador.Models
 #pragma warning disable CS0169 // El campo 'pacientes._edad' nunca se usa
         int? _edad;
 #pragma warning restore CS0169 // El campo 'pacientes._edad' nunca se usa
-        
+
         [Key]
         public int ID { get; set; }
         [Required]
@@ -34,9 +34,7 @@ namespace HospitalSalvador.Models
         [StringLength(1)]
         public string sexo { get; set; }
         [Column(TypeName = "date")]
-        public DateTime fecha_nacimiento {
-            get;set;
-        }
+        public DateTime fecha_nacimiento { get; set; }
         [StringLength(15)]
         public string doc_identidad { get; set; }
         [StringLength(40)]
@@ -45,14 +43,13 @@ namespace HospitalSalvador.Models
         public string apellido_tutor { get; set; }
         public bool extranjero { get; set; }
         [StringLength(10)]
-        public string telefono { get; set; }
+        public string contacto { get; set; }
         [StringLength(15)]
         public string doc_identidad_tutor { get; set; }
-      //  public int? edad {get;set;}
+        //  public int? edad {get;set;}
         public bool menor_un_año { get; set; }
         public string MyIdentityUserID { get; set; }
-        public bool doc_identitad_verificado { get; set; }
-        
+
         [InverseProperty("pacientes")]
         public virtual ICollection<citas> citas { get; set; }
         [ForeignKey(nameof(MyIdentityUserID))]

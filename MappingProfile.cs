@@ -15,6 +15,13 @@ namespace HospitalSalvador
 
         public MappingProfile()
         {
+            CreateMap<UserInfo, MyIdentityUser>();
+            CreateMap<citaCreateDTO, UserInfo>();
+            CreateMap<MyIdentityUser, UserInfo>();
+            CreateMap<pacientes, MyIdentityUser>();
+            CreateMap<MyIdentityUser, pacientes>()
+                .ForMember(dto => dto.ID, opt => opt.Ignore());
+
 
             CreateMap<pruebas, pruebaDTO>()
                 .ForMember(dest => dest.descrip, opt => opt.MapFrom(src => src.analisis.descrip));
@@ -30,7 +37,7 @@ namespace HospitalSalvador
                 .ForMember(dest => dest.paciente_apellido_tutor, opt => opt.MapFrom(src => src.pacientes.apellido_tutor))
                 .ForMember(dest => dest.servicio_descrip, opt => opt.MapFrom(src => src.servicios.descrip))
                 .ForMember(dest => dest.seguro_descrip, opt => opt.MapFrom(src => src.seguros.descrip));
-              //  .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
+            //  .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
 
 
             CreateMap<pacientes, pacienteDTO>();
@@ -50,9 +57,10 @@ namespace HospitalSalvador
              )).ForMember(dest => dest.seguros, opt => opt.MapFrom(src =>
             src.cobertura_medicos.Select(x => x.seguros.descrip).ToList()
             )).ForMember(dest => dest.servicios, opt => opt.MapFrom(src =>
-            src.servicios_medicos.Where(x=> x.medicos.ID == src.ID ).Select(x=> x.servicios.descrip).ToList()
+            src.servicios_medicos.Where(x => x.medicos.ID == src.ID).Select(x => x.servicios.descrip).ToList()
             ));
         }
+
 
 
     }

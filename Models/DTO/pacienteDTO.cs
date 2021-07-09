@@ -28,7 +28,7 @@ namespace HospitalSalvador.Models.DTO
         public string apellido_tutor { get; set; }
         public bool extranjero { get; set; }
         [StringLength(10)]
-        public string telefono { get; set; }
+        public string contacto { get; set; }
         [StringLength(15)]
         public string doc_identidad_tutor { get; set; }
         public int? edad

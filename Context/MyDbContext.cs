@@ -122,15 +122,12 @@ namespace HospitalSalvador.Context
 
                 entity.Property(e => e.contacto).IsFixedLength(true);
 
-                entity.Property(e => e.contacto_llamada).HasDefaultValueSql("((0))");
-
                 entity.Property(e => e.contacto_whatsapp).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.estado).HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.segurosID).HasComment("NULL por defecto es sin seguro");
 
-                entity.Property(e => e.tipo_contacto).IsFixedLength(true);
 
              /*   entity.HasOne(d => d.especialidades)
                     .WithMany(p => p.citas)
@@ -464,7 +461,7 @@ namespace HospitalSalvador.Context
                     .IsUnicode(false)
                     .IsFixedLength(true);
 
-                entity.Property(e => e.telefono)
+                entity.Property(e => e.contacto)
                     .IsUnicode(false)
                     .IsFixedLength(true);
 

@@ -32,7 +32,7 @@ namespace HospitalSalvador.Models.DTO
         public string paciente_nombre_apellido { get; set; }
 
         public string doc_identidad_tutor { get; set; } 
-        public string paciente_nombre_apellido_tutor { get; set; }
+        public string tutor_nombre_apellido { get; set; }
 
         [StringLength(10)]
         public string contacto { get; set; }

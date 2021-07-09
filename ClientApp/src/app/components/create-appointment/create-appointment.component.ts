@@ -1,12 +1,14 @@
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, startWith, debounceTime, switchMap } from 'rxjs/operators';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
+import { AccountService } from 'src/app/services/account.service';
+import { UserInfo } from 'src/app/interfaces/InterfacesDto';
 // tslint:disable-next-line:no-duplicate-imports
 
 const moment = _moment;
@@ -57,30 +59,16 @@ export const MY_FORMATS = {
 })
 export class CreateAppointmentComponent implements OnInit {
 
+  baseUrl: string;
+  private userData$ = new Subject<UserInfo>();
+  isUserConfirmed: boolean;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
 
-  dateControl = new FormControl();
-  timeControl = new FormControl(false);
-
   insuranceOption: boolean = true;
-  insuranceControl = new FormControl();
-  insuranceOptionControl = new FormControl();
-
-  dependentSexControl = new FormControl();
-  wsReachControl = new FormControl(false);
-  appointmentTypeControl = new FormControl();
-  dependentBirthDateControl = new FormControl();
-  dependentNameControl = new FormControl();
-  dependentLastNameControl = new FormControl();
-  identityDocControl = new FormControl();
-  userNameControl = new FormControl();
-  userLastNameControl = new FormControl();
-  birthDateControl = new FormControl();
-  contactControl = new FormControl();
-  noteControl = new FormControl();
+  
   isDependent = false;
   isEditable = false;
   isSent = false;
@@ -155,8 +143,6 @@ export class CreateAppointmentComponent implements OnInit {
       userSexControl: ['', Validators.required],
     });
 
-
-
     this.firstFormGroup.get("insuranceOptionControl").valueChanges.subscribe(option => {
       if (option == true) {
         this.firstFormGroup.get("insuranceControl")
@@ -211,29 +197,37 @@ export class CreateAppointmentComponent implements OnInit {
     let nombre_tutor;
     let nombre;
     let apellido;
+    let doc_identidad;
+    let sexo;
+    let doc_identidad_tutor;
 
     if (this.isDependent) {
       nombre_tutor = (formdata["userNameControl"] + " " + formdata["userLastNameControl"]).trim();
       nombre = formdata["dependentNameControl"];
       apellido = formdata["dependentLastNameControl"];
+      sexo = formdata["dependentSexControl"];
+      doc_identidad_tutor = formdata["identityDocControl"];
+
     } else {
-      nombre = formdata["userNameControl"];
+
+     doc_identidad = formdata["identityDocControl"];
+     nombre = formdata["userNameControl"];
       apellido = formdata["userLastNameControl"];
+      sexo = formdata["userSexControl"];
     }
 
     cita = {
       "nombre": nombre,
       "apellido": apellido,
-      "sexo": formdata["userSexControl"],
-      "doc_identidad": formdata["identityDocControl"],
+      "sexo": sexo,
+      "doc_identidad": doc_identidad,
       "fecha_hora": fecha_hora,
       "medicosID": localStorage.getItem("medicoId"),
-      "telefono": formdata["userNameControl"],
       "serviciosID": formdata["serviceTypeControl"],
       "fecha_nacimiento": moment(formdata["birthDateControl"]).toDate(),
       "contacto": formdata["contactControl"],
       "contacto_whatsapp": formdata["wsReachControl"],
-      "doc_identidad_tutor": formdata["userNameControl"],
+      "doc_identidad_tutor": doc_identidad_tutor,
       "nombre_tutor": nombre_tutor,
       "appoiment_type": formdata["appointmentTypeControl"],
       "segurosID": formdata["insuranceControl"],
@@ -244,7 +238,8 @@ export class CreateAppointmentComponent implements OnInit {
 
   }
 
-  constructor(private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
+  constructor(private accountSvc: AccountService, private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
+    this.getUserInfo();
     localStorage.setItem("medicoId", "1");
     localStorage.setItem("especialidadId", "1");
 
@@ -256,10 +251,26 @@ export class CreateAppointmentComponent implements OnInit {
     this.minBDDate = new Date(Date.now() + -43825 * 24 * 3600 * 1000);
     this.maxBDDate = new Date(Date.now() + -6575 * 24 * 3600 * 1000);
 
-
-
   }
 
+  UserConfirm: boolean;
+
+  getUserInfo() {
+
+    this.accountSvc.getUserInfo().subscribe((re) => {
+      
+      console.log(re);
+
+      this.isUserConfirmed = re.confirm_doc_identidad;
+      this.thirdFormGroup.get("userNameControl").setValue(re.nombre);
+      this.thirdFormGroup.get("userLastNameControl").setValue(re.apellido);
+      this.thirdFormGroup.get("birthDateControl").setValue(re.fecha_nacimiento);
+      this.thirdFormGroup.get("contactControl").setValue(re.contacto);
+      this.thirdFormGroup.get("userSexControl").setValue(re.sexo);
+      this.thirdFormGroup.get("identityDocControl").setValue(re.doc_identidad);
+      
+    });
+  }
 
   getDSexErrorMessage() {
     return this.thirdFormGroup.get("dependentSexControl").hasError('required') ? 'Debe seleccionar una opción' : "";

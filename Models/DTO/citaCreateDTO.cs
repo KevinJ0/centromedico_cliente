@@ -24,7 +24,6 @@ namespace HospitalSalvador.Models.DTO
         [StringLength(10)]
         public string contacto { get; set; }
         public bool? contacto_whatsapp { get; set; }
-        public bool? contacto_llamada { get; set; }
         [Column(TypeName = "datetime")]
         [Required]
         public DateTime fecha_hora { get; set; }
@@ -54,47 +53,12 @@ namespace HospitalSalvador.Models.DTO
             } 
         }
         [Column(TypeName = "date")]
-        public DateTime fecha_nacimiento
-        { get; set; }
-        [StringLength(15)]
-        public string doc_identidad
-        {
+        public DateTime fecha_nacimiento { get; set; }
 
-            get => _docIdentidad;
-            set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                    _docIdentidad = null;
-                else
-                {
-                    _docIdentidad = value.Trim();
-                }
-            }
-        }
-        [StringLength(40)]
-        public string nombre_tutor
-        {   get; set;}
-        [StringLength(45)]
-        public string apellido_tutor { get; set; }
         public bool extranjero { get; set; }
-        [StringLength(10)]
-        public string telefono { get; set; }
         [StringLength(40)]
         public string correo { get; set; }
         [StringLength(15)]
-        public string doc_identidad_tutor
-        {
-            get => _docIdentidadTutor;
-            set
-            {
-                if (String.IsNullOrWhiteSpace(value))
-                    _docIdentidadTutor = null;
-                else
-                {
-                    _docIdentidadTutor = value.Trim();
-                }
-            }
-        }
         public int? edad { set; get; }
         public bool menor_un_año { get; set; }
 

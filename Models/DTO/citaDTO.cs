@@ -45,7 +45,6 @@ namespace HospitalSalvador.Models.DTO
         [StringLength(10)]
         public string contacto { get; set; }
         public bool? contacto_whatsapp { get; set; }
-        public bool? contacto_llamada { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime fecha_hora { get; set; }
         public int segurosID { get; set; }

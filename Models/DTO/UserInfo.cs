@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -7,11 +8,24 @@ namespace HospitalSalvador.Models.DTO
 {
     public class UserInfo
     {
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string Role { get; set; }
-        public string RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
+        [StringLength(15)]
+        [Required]
+        public string doc_identidad { get; set; }
+        [StringLength(50)]
+        [Required]
+        public string nombre { get; set; }
+        [StringLength(50)]
+        [Required]
+        public string apellido { get; set; }
+        [StringLength(1)]
+        [Required]
+        public string sexo { get; set; }
+        [StringLength(15)]
+        public string contacto { get; set; }
+        [Required]
+        public DateTime fecha_nacimiento { get; set; }
+        public bool confirm_doc_identidad { get; }
+
 
     }
 }

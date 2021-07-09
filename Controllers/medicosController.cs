@@ -55,9 +55,9 @@ namespace HospitalSalvador.Controllers
         /// <returns>medicoDTO</returns>
         /// <response code="200">Se encontró el médico solicitado y es devuelvo.</response>  
         /// <response code="204">Este médico no tiene los datos requeridos para ser devuelto.</response>  
-        /// <response code="500">Error interno del servidor</response>  
+        /// <response code="500">Error interno del servidor.</response>  
         [HttpGet("{id}")]
-        public async Task<ActionResult<medicoDTO>> get_medico([FromQuery] int Id)
+        public async Task<ActionResult<medicoDTO>> get_medico(int Id)
         {
 
             var horarios = await _db.horarios_medicos.FirstOrDefaultAsync(x => x.medicosID == Id);

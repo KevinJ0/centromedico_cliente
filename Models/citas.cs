@@ -21,8 +21,6 @@ namespace HospitalSalvador.Models
         public int ID { get; set; }
         [Required]
         public int medicosID { get; set; }
-        [StringLength(2)]
-        public string tipo_contacto { get; set; }
         //public byte turno { get; set; }
         [Required] 
         public int serviciosID { get; set; }
@@ -35,7 +33,6 @@ namespace HospitalSalvador.Models
         public string contacto { get; set; }
         [DisplayFormat(NullDisplayText = "Sin especificar")]
         public bool? contacto_whatsapp { get; set; }
-        public bool? contacto_llamada { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime fecha_hora { get; set; }
         public int? segurosID { get; set; }

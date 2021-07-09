@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -31,7 +31,17 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { TicketAppointmentComponent } from './ticket-appointment/ticket-appointment.component';
+import { AccountService } from './services/account.service';
+import { JwtInterceptor } from './_helpers/jwt.Interceptor';
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  console.log("hola");
+
+  //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
+  
+  return localStorage.getItem("jwt");
+}
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +54,7 @@ import { TicketAppointmentComponent } from './ticket-appointment/ticket-appointm
     LoginComponent,
     ListDoctorsComponent,
     TicketAppointmentComponent,
-  ],
+  ], 
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -66,6 +76,14 @@ import { TicketAppointmentComponent } from './ticket-appointment/ticket-appointm
     MatCardModule,
     FormsModule, MatInputModule,
     ReactiveFormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:4211','hospitalsalvador-001-site1.htempurl.com'],
+        disallowedRoutes: [],
+        authScheme: "Bearer ",
+      }
+    }),
     RouterModule.forRoot([
       { path: '', component: CreateAppointmentComponent, pathMatch: 'full' },
       { path: 'paciente-login', component: LoginComponent },
@@ -77,7 +95,7 @@ import { TicketAppointmentComponent } from './ticket-appointment/ticket-appointm
 
 
   ],
-  providers: [],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },AccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

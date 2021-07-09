@@ -21,6 +21,20 @@ namespace HospitalSalvador.Models
         [InverseProperty("MyIdentityUsers")]
         public virtual ICollection<pacientes> pacientes { get; set; }
 
+
+        [StringLength(15)]
+        public string doc_identidad { get; set; }
+        [StringLength(50)]
+        public string nombre { get; set; }
+        [StringLength(50)]
+        public string apellido { get; set; }
+        [StringLength(1)]
+        public string sexo { get; set; }
+        [StringLength(15)]
+        public string contacto { get; set; }
+        public DateTime fecha_nacimiento { get; set; }
+        public bool confirm_doc_identidad { set; get; }
+
         public string Notes { get; set; }
         public int Type { get; set; }
         /*[Required(ErrorMessage = "Email is required")]
@@ -30,6 +44,7 @@ namespace HospitalSalvador.Models
         public string DisplayName { get; set; }
 
         public virtual List<token> tokens { get; set; }
+
     }
 
 }

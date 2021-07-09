@@ -144,10 +144,10 @@ namespace HospitalSalvador.Controllers
                 .ToListAsync();
 
 
-           /* var especialidadeslst = await _db.especialidades_medicos
-                .Where(x => x.medicosID == medicoID)
-                .Select(x => new { x.especialidades.ID, x.especialidades.descrip })
-                .ToListAsync();*/
+            /* var especialidadeslst = await _db.especialidades_medicos
+                 .Where(x => x.medicosID == medicoID)
+                 .Select(x => new { x.especialidades.ID, x.especialidades.descrip })
+                 .ToListAsync();*/
 
             var servicioslst = await _db.servicios_medicos
                 .Where(x => x.medicosID == medicoID)
@@ -164,8 +164,8 @@ namespace HospitalSalvador.Controllers
             if (coberturaslst == null)
                 return BadRequest(new { InvalidCobertura = "El doctor(a) seleccionado no tiene ninguna cobertura" });
 
-         //  if (especialidadeslst == null)
-        //        return BadRequest(new { InvalidEspecialidad = "El doctor(a) seleccionado no tiene ninguna especialidad asignada." });
+            //  if (especialidadeslst == null)
+            //        return BadRequest(new { InvalidEspecialidad = "El doctor(a) seleccionado no tiene ninguna especialidad asignada." });
 
             if (!availableDaylst.Any())
                 return BadRequest(new { NoScheduleAvailable = "No hay horario disponible para una cita con este médico 😅." });
@@ -275,6 +275,7 @@ namespace HospitalSalvador.Controllers
         /// <param name="formdata"></param>
         /// <returns>citaResultDTO</returns>
         /// <response code="400">Los datos suministrados son invalidos.</response>  
+        /// <response code="401">El documento de identificación del usuario no se encuentra registrado en la Base de Datos.</response>  
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         [HttpPost("[action]")]
         public async Task<ActionResult<citaResultDTO>> createCitaAsync(citaCreateDTO formdata)
@@ -296,14 +297,14 @@ namespace HospitalSalvador.Controllers
                      return BadRequest(new { InvalidEspecialidad = "La especialidad seleccionada no se encuentra en la base de datos." });*/
                 servicios servicio = await _db.servicios.FindAsync(formdata.serviciosID);
                 var cobertura = await _db.cobertura_medicos.FirstOrDefaultAsync(x =>
-                  //  x.especialidadesID == formdata.especialidadesID &&
+                    //  x.especialidadesID == formdata.especialidadesID &&
                     x.medicosID == formdata.medicosID &&
                     x.segurosID == formdata.segurosID &&
                     x.serviciosID == formdata.serviciosID);
-              
+
                 hora_reserv = await _db.horarios_medicos_reservados.FirstOrDefaultAsync(h => h.fecha_hora == formdata.fecha_hora && h.medicosID == formdata.medicosID);
                 validationResponse AvailableTime = await ValidateAvailableTimeAsync(formdata.fecha_hora, formdata.medicosID);
-                citaValidationResponse dataResponse = validateAndSetData(formdata);
+                citaValidationResponse dataResponse = await validateAndSetDataAsync(formdata);
 
 
                 //Determine if there's an appoiment already
@@ -314,11 +315,18 @@ namespace HospitalSalvador.Controllers
 
                 codVer = citaExists(user) ? getCV(user) : generateCV(medico);
 
-                //Validate data
+                //VALIDATORS
+                // if (formdata.appoiment_type == (int)appointment.me && _db.citas.Where(x => x.medicos == medico && x.pacientes == paciente && x.estado == true /*&& x.especialidades == especialidad*/).Any())
+                if (_db.citas.Where(x => x.medicos == medico && x.pacientes.MyIdentityUsers == user && x.estado == true).Any())
+                    return BadRequest(new { DuplicatedAppointmentError = "Ya hay una cita programada con este doctor(a)" });
+
+                if (user.doc_identidad == null)
+                    return Unauthorized(new { NoIdDocError = "Este usuario no cuenta con un documento de identidad previamente ingresado." });
+
                 //Determinar si la hora de la cita está disponible
                 if (formdata.fecha_hora < DateTime.Now || formdata.fecha_hora > DateTime.Now.AddDays(30))
                     return BadRequest(new { NoDateError = "El día suministrado no está en el rango de fecha disponible" });
-                
+
                 if (medico == null)
                     return BadRequest(new { InvalidDoctor = "El doctor seleccionado no se encuentra habilitado en estos momentos." });
 
@@ -350,38 +358,39 @@ namespace HospitalSalvador.Controllers
 
                 if (hora_reserv != null)
                     return BadRequest(new { DateTimeReservedError = "La fecha y hora para la cita programada está reservada, intente con otra por favor." });
-                
+
                 if (!AvailableTime.successful)
                     return BadRequest(new { DateTimeError = AvailableTime.errorMessage });
-
-               // if (formdata.appoiment_type == (int)appointment.me && _db.citas.Where(x => x.medicos == medico && x.pacientes == paciente && x.estado == true /*&& x.especialidades == especialidad*/).Any())
-                    if ( _db.citas.Where(x => x.medicos == medico && x.pacientes.MyIdentityUsers == user && x.estado == true).Any())
-                    return BadRequest(new { DuplicatedAppointmentError = "Ya hay una cita programada con este doctor(a)" });
-
 
                 //choosing appoiment type
                 switch (formdata.appoiment_type)
                 {
                     case (int)appointment.me:
 
-                        if (paciente == null || paciente.doc_identidad == null)
+                        if (paciente == null || paciente.doc_identidad == null) //para no repetir el paciente en la db mas de una vez.
                         {
-                            paciente = _mapper.Map<pacientes>(formdata);
+                            paciente = _mapper.Map<pacientes>(user);
                             paciente.MyIdentityUsers = user;
                             _db.pacientes.Add(paciente);
                         }
                         break;
 
                     case (int)appointment.other:
+                        string tutorNombre = user.nombre == null ? "" : user.nombre;
+                        string tutorApellido = user.apellido == null ? "" : user.apellido;
+                        string tutor_NombreApellido = (tutorNombre + " " + tutorApellido).Trim();
 
                         paciente = _mapper.Map<pacientes>(formdata);
+
+                        paciente.doc_identidad_tutor = user.doc_identidad;
+                        paciente.nombre_tutor = String.IsNullOrWhiteSpace(tutor_NombreApellido) ? null : tutor_NombreApellido;
+
                         paciente.MyIdentityUsers = user;
                         _db.pacientes.Add(paciente);
                         break;
 
                     default:
                         return BadRequest(new { PatientTypeError = "No se ha definido al tipo de paciente que se va a consultar, especifique si es \"Yo\" ó \"Otra persona\"" });
-
                 }
 
                 //calculate costs
@@ -404,8 +413,6 @@ namespace HospitalSalvador.Controllers
                     nota = formdata.nota,
                     contacto = formdata.contacto,
                     contacto_whatsapp = formdata.contacto_whatsapp,
-                    contacto_llamada = formdata.contacto_llamada,
-                    tipo_contacto = formdata.tipo_contacto,
                     fecha_hora = formdata.fecha_hora,
                 };
 
@@ -444,7 +451,7 @@ namespace HospitalSalvador.Controllers
                     doc_identidad = paciente.doc_identidad,
                     paciente_nombre_apellido = (paciente.nombre + " " + paciente.apellido).Trim(),
                     doc_identidad_tutor = paciente.doc_identidad_tutor,
-                    paciente_nombre_apellido_tutor = (paciente.nombre_tutor + " " + paciente.apellido_tutor).Trim(),
+                    tutor_nombre_apellido = (paciente.nombre_tutor + " " + paciente.apellido_tutor).Trim(),
                     contacto = cita.contacto,
 
                 });
@@ -456,6 +463,47 @@ namespace HospitalSalvador.Controllers
             }
         }
 
+        private async Task<bool> setUserInfo(UserInfo formuser)
+        {
+            try
+            {
+
+                string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                MyIdentityUser user = await _userManager.FindByNameAsync(userName);
+
+                //si no ha sido confirmado por el auxiliar médico
+                if (!user.confirm_doc_identidad)
+                {
+
+                    user.nombre = formuser.nombre;
+                    user.apellido = formuser.apellido;
+                    user.sexo = formuser.sexo;
+                    user.contacto = formuser.contacto;
+                    user.doc_identidad = formuser.doc_identidad;
+                    user.fecha_nacimiento = formuser.fecha_nacimiento;
+                    var dataResponse = validateBirth(formuser.fecha_nacimiento);
+
+                    if (!dataResponse.successful)
+                    {
+                        return false;
+                    }
+
+                }
+                else
+                {
+                    user.contacto = formuser.contacto;
+                }
+
+                _db.SaveChanges();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+        }
 
         /// <summary>
         /// Método que devuelve el costo y destalles de la consulta de un médico.
@@ -475,7 +523,7 @@ namespace HospitalSalvador.Controllers
         /// <response code="204">No hay cobertura disponibles con estos parametros.</response>
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<ActionResult<costoServicio>> getCoberturasAsync( int servicioID, int medicoID, int seguroID)
+        public async Task<ActionResult<costoServicio>> getCoberturasAsync(int servicioID, int medicoID, int seguroID)
         {
             try
             {
@@ -556,14 +604,14 @@ namespace HospitalSalvador.Controllers
             var dateTimelst = await getAvailableTimeListAsync(fecha_hora, medicoID);
 
             if (dateTimelst == null)
-                return BadRequest(new { NonWorkingDayError = "Este médico no labora el día escogido: "+ fecha_hora.Date.ToShortDateString() });
+                return BadRequest(new { NonWorkingDayError = "Este médico no labora el día escogido: " + fecha_hora.Date.ToShortDateString() });
             else if (!dateTimelst.Any())
                 return NoContent();
-            
-          //  List<TimeSpan> timelst = new List<TimeSpan>();
 
-         //   foreach (var item in dateTimelst)
-         //       timelst.Add(item.TimeOfDay);
+            //  List<TimeSpan> timelst = new List<TimeSpan>();
+
+            //   foreach (var item in dateTimelst)
+            //       timelst.Add(item.TimeOfDay);
 
             return dateTimelst;
         }
@@ -811,12 +859,13 @@ namespace HospitalSalvador.Controllers
             return false;
         }
 
-        private citaValidationResponse validateAndSetData(citaCreateDTO formdata)
+        private async Task<citaValidationResponse> validateAndSetDataAsync(citaCreateDTO formdata)
         {
-
+            string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            MyIdentityUser user = await _userManager.FindByNameAsync(userName);
             string _errorMessage = "";
-            string doc_identidad = formdata.doc_identidad;
-            string doc_identidad_tutor = formdata.doc_identidad_tutor;
+            //string doc_identidad = formdata.doc_identidad; es algo no que necesito validar por el momento
+            //string doc_identidad_tutor = formdata.doc_identidad_tutor;
             var fechaNacimiento = formdata.fecha_nacimiento;
             var appoiment_type = formdata.appoiment_type;
             formdata.menor_un_año = false;
@@ -838,20 +887,14 @@ namespace HospitalSalvador.Controllers
             int _edad = DateTime.Today.AddTicks(-fechaNacimiento.Ticks).Year - 1;
 
             //Valida la edad, tipo de cita y datos de tutor
-            if (_edad >= 18 && doc_identidad == null)
-                _errorMessage = "No se ha provisto de un documento de identidad.";
-            else if (_edad < 18 && doc_identidad_tutor == null) // porque todos los menores de edad necesitan un tutor
-                _errorMessage = "No se ha provisto de una identificación por parte del tutor que acompaña al paciente menor de edad.";
-            else if (_edad < 18 && appoiment_type != 1)
+
+            if (_edad < 18 && appoiment_type != 1)
                 _errorMessage = "Tipo de cita escogido erroneo para un menor de edad.";
             else if (_edad >= 18 && appoiment_type != 0)
                 _errorMessage = "Tipo de cita escogido erroneo para un mayor de edad.";
-            else if (String.IsNullOrWhiteSpace(formdata.nombre_tutor) && _edad < 18)
+            else if (String.IsNullOrWhiteSpace(user.nombre) && _edad < 18)
                 _errorMessage = "Es requerido un nombre para el tutor del menor de edad.";
-            else if (_edad < 18 && doc_identidad_tutor != null)
-                formdata.doc_identidad = null;
-            else if (_edad >= 18)
-                formdata.doc_identidad_tutor = null;
+
 
             //Catch error
             if (!String.IsNullOrEmpty(_errorMessage)) // an error has occured
@@ -882,15 +925,18 @@ namespace HospitalSalvador.Controllers
             };
         }
 
-        private citaValidationResponse validateBirth(citaCreateDTO formdata)
+        public static citaValidationResponse validateBirth(DateTime _fechaNacimiento)
         {
-            DateTime fechaNacimiento = formdata.fecha_nacimiento;
+            DateTime fechaNacimiento = _fechaNacimiento;
             int lessPermititted = DateTime.Compare(fechaNacimiento, new DateTime(1910, 1, 1));
             int graterThanToday = DateTime.Compare(fechaNacimiento, DateTime.Today);
             string _message = "";
+            int _edad = DateTime.Today.AddTicks(-_fechaNacimiento.Ticks).Year - 1;
 
-            if (lessPermititted < 0 || graterThanToday > 0)
-                _message = "La fecha de nacimiento está fuera de rango permitido.";
+            if (_edad < 18)
+                _message = "Es necesario que el usuario sea mayor de edad.";
+
+
 
             return new citaValidationResponse
             {

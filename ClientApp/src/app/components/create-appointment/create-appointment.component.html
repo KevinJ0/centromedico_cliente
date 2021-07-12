@@ -20,10 +20,19 @@
 
           <mat-form-field appearance="outline">
             <mat-label>Seguro</mat-label>
-            <mat-select [disabled]="insuranceOption" formControlName="insuranceControl">
+            <mat-select [disabled]="insuranceOption" required formControlName="insuranceControl">
               <mat-option *ngFor="let seguro of seguros" [value]="seguro.value">
                 {{seguro.viewValue}}
               </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de servicio</mat-label>
+            <mat-select formControlName="serviceTypeControl" name="service" required>
+              <mat-option [value]="1">Consulta</mat-option>
+              <mat-option [value]="2">Consulta de seguimiento</mat-option>
+              <mat-option [value]="3">Solicitud de receta médica</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -31,16 +40,16 @@
             <div class="products">
               <h3 class="title">Pago</h3>
               <div class="item">
-                <span class="price">$200</span>
+                <span class="price">RD${{_cobertura.pago}}</span>
                 <p class="item-name">Costo</p>
                 <p class="item-description">Costo de la consulta con el médico</p>
               </div>
               <div class="item">
-                <span class="price">$120</span>
+                <span class="price">RD${{_cobertura.cobertura}}</span>
                 <p class="item-name">Cobertura</p>
                 <p class="item-description">Cobertura que aplica el seguro médico</p>
               </div>
-              <div class="total">Diferencia<span class="price">$80</span></div>
+              <div class="total">Diferencia<span class="price">RD${{_cobertura.diferencia}}</span></div>
             </div>
           </section>
           <div class="btn-container">
@@ -86,94 +95,124 @@
             <mat-card-title>DATOS DE PACIENTE</mat-card-title>
           </mat-card-header>
 
-
-
           <section>
             <h4>¿Quién es el paciente?</h4>
             <mat-button-toggle-group formControlName="appointmentTypeControl" aria-label="Font Style">
-              <mat-button-toggle checked style="min-width: 5rem;" value="0">Yo</mat-button-toggle>
-              <mat-button-toggle value="1">Menor de edad</mat-button-toggle>
+              <mat-button-toggle checked style="min-width: 5rem;" value=0>Yo</mat-button-toggle>
+              <mat-button-toggle value=1>Menor de edad</mat-button-toggle>
             </mat-button-toggle-group>
           </section>
-          <div class="grid-userdata">
-            <div class="userdata-item">
-              <div class="under-age" [style.display]="underAgeShow">
-                <div class="sub-title">
-                  <p>Datos del dependiente</p>
-                  <mat-divider inset></mat-divider>
-                </div>
 
+          <div class="under-age" [style.display]="underAgeShow">
+            <div class="userdata-content">
+
+              <div class="sub-title">
+                <p>Datos del dependiente</p>
+                <mat-divider inset></mat-divider>
+              </div>
+
+              <div class="userdata-item">
                 <div class="name-wrapper">
                   <mat-form-field class="name" appearance="outline">
                     <mat-label>Nombre del dependiente</mat-label>
-                    <input formControlName="dependentNameControl" matInput placeholder="Nombre del paciente">
+                    <input [required]="isDependent" formControlName="dependentNameControl" matInput
+                      placeholder="Nombre del paciente">
                   </mat-form-field>
 
                   <mat-form-field class="lastName" appearance="outline">
                     <mat-label>Apellido(s) del dependiente</mat-label>
-                    <input formControlName="dependentLastNameControl" matInput placeholder="Apellido(s) del paciente">
-              </mat-form-field>
+                    <input [required]="isDependent" formControlName="dependentLastNameControl" matInput
+                      placeholder="Apellido(s) del paciente">
+                  </mat-form-field>
                 </div>
-               
-                <label>Sexo del dependiente: </label>
-                <mat-radio-group ariaLabel="Sexo:" style="display: block;" class="radio-group" formControlName="dependentSexControl">
-                  <mat-radio-button class="insurance-radio-button" value="m">Masculino</mat-radio-button>
-                  <mat-radio-button class="insurance-radio-button" value="f">Femenino</mat-radio-button>
-                  <mat-error *ngIf="thirdFormGroup.get('dependentSexControl').invalid && isSent">{{getDSexErrorMessage()}}</mat-error>
-                </mat-radio-group>
+              </div>
+
+              <div class="userdata-item">
+                <div class="radio-wrapper">
+                  <label>Sexo del dependiente: </label>
+                  <mat-radio-group [required]="isDependent" ariaLabel="Sexo:" style="display: block;"
+                    class="radio-group" formControlName="dependentSexControl">
+                    <mat-radio-button class="insurance-radio-button" value="m">Masculino</mat-radio-button>
+                    <mat-radio-button class="insurance-radio-button" value="f">Femenino</mat-radio-button>
+                    <mat-error *ngIf="thirdFormGroup.get('dependentSexControl').invalid && isSent">
+                      {{getDSexErrorMessage()}}
+                    </mat-error>
+                  </mat-radio-group>
+                </div>
+
                 <mat-form-field appearance="outline">
                   <mat-label>Fecha de nacimiento</mat-label>
-                  <input formControlName="dependentBirthDateControl" placeholder="Escoge una fecha" matInput
-                    [min]="minDBDDate" [max]="maxDBDDate" [matDatepicker]="DBDpicker">
+                  <input [required]="isDependent" formControlName="dependentBirthDateControl"
+                    placeholder="Escoge una fecha" matInput [min]="minDBDDate" [max]="maxDBDDate"
+                    [matDatepicker]="DBDpicker">
                   <mat-datepicker-toggle matSuffix [for]="DBDpicker"></mat-datepicker-toggle>
                   <mat-datepicker #DBDpicker></mat-datepicker>
                 </mat-form-field>
               </div>
+            </div>
+          </div>
 
-              <div class="sub-title">
-                <p>Mis datos</p>
-                <mat-divider inset></mat-divider>
-              </div>
 
+          <div class="userdata-content">
+
+            <div class="sub-title">
+              <p>Mis datos</p>
+              <mat-divider inset></mat-divider>
+            </div>
+
+            <div class="userdata-item">
               <mat-form-field appearance="outline">
                 <mat-label>Documento de identidad</mat-label>
                 <mat-icon matSuffix>badge</mat-icon>
-                <input [readonly]="isUserConfirmed" formControlName="identityDocControl" maxlength="15" matInput
-                  placeholder="Documento de identidad">
+                <input required [readonly]="isUserConfirmed" formControlName="identityDocControl" maxlength="15"
+                  matInput placeholder="Documento de identidad">
               </mat-form-field>
 
               <div class="name-wrapper">
-                <mat-form-field class="name" appearance="outline" >
+                <mat-form-field class="name" appearance="outline">
                   <mat-label>Nombre</mat-label>
-                  <input formControlName="userNameControl" matInput [readonly]="isUserConfirmed" placeholder="Nombre">
+                  <input required formControlName="userNameControl" matInput [readonly]="isUserConfirmed"
+                    placeholder="Nombre">
                 </mat-form-field>
 
                 <mat-form-field class="lastName" appearance="outline">
                   <mat-label>Apellido(s)</mat-label>
-                  <input formControlName="userLastNameControl" [readonly]="isUserConfirmed" matInput placeholder="Apellido(s)">
+                  <input required formControlName="userLastNameControl" [readonly]="isUserConfirmed" matInput
+                    placeholder="Apellido(s)">
                 </mat-form-field>
               </div>
 
 
-              <label>Sexo: </label>
-              <mat-radio-group  ariaLabel="Sexo:" style="display: block;" required class="radio-group"
-                formControlName="userSexControl">
-                <mat-radio-button  disabled="isUserConfirmed" class="insurance-radio-button" value="m">Masculino</mat-radio-button>
-                <mat-radio-button  disabled="isUserConfirmed"  class="insurance-radio-button" value="f">Femenino</mat-radio-button>
-                <mat-error *ngIf="thirdFormGroup.get('userSexControl').invalid && isSent">{{getSexErrorMessage()}}</mat-error>
-              </mat-radio-group>
+
+              <!--mantiene el width ration del los mat-form-field -->
+              <div class="radio-wrapper">
+                <label>Sexo: </label>
+                <mat-radio-group required ariaLabel="Sexo:" style="display: block;" required class="radio-group"
+                  formControlName="userSexControl">
+                  <mat-radio-button [disabled]="isUserConfirmed" class="insurance-radio-button" value="m">Masculino
+                  </mat-radio-button>
+                  <mat-radio-button [disabled]="isUserConfirmed" class="insurance-radio-button" value="f">Femenino
+                  </mat-radio-button>
+                  <mat-error *ngIf="thirdFormGroup.get('userSexControl').invalid && isSent">{{getSexErrorMessage()}}
+                  </mat-error>
+                </mat-radio-group>
+              </div>
+            </div>
+            <div class="userdata-item">
 
               <mat-form-field appearance="outline">
                 <mat-label>Fecha de nacimiento</mat-label>
-                <input [readonly]="isUserConfirmed" formControlName="birthDateControl" placeholder="Escoge una fecha" matInput [min]="minBDDate"
-                  [max]="maxBDDate" [matDatepicker]="BDpicker">
-                <mat-datepicker-toggle [disabled]="isUserConfirmed" matSuffix [for]="BDpicker"></mat-datepicker-toggle>
+                <input required [readonly]="isUserConfirmed" formControlName="birthDateControl"
+                  placeholder="Escoge una fecha" matInput [min]="minBDDate" [max]="maxBDDate"
+                  [matDatepicker]="BDpicker">
+                <mat-datepicker-toggle [disabled]="isUserConfirmed" matSuffix [for]="BDpicker">
+                </mat-datepicker-toggle>
                 <mat-datepicker #BDpicker></mat-datepicker>
               </mat-form-field>
 
               <mat-form-field appearance="outline">
                 <mat-label>Teléfono</mat-label>
-                <input formControlName="contactControl" mask="000-000-0000" type="tel" matInput
+                <input required formControlName="contactControl" mask="000-000-0000" type="tel" matInput
                   placeholder="555-555-1234">
                 <mat-icon matSuffix>phone</mat-icon>
               </mat-form-field>
@@ -181,31 +220,14 @@
               <mat-checkbox class="wsReach" formControlName="wsReachControl">
                 Contactarme vía Whatsapp
               </mat-checkbox>
-            </div>
 
-            <div class="userdata-item">
-              <!--mantiene el width ration del los mat-form-field -->
-              <div class="wrapper">
-                <div class="sub-title">
-                  <p>Datos de la cita</p>
-                  <mat-divider inset></mat-divider>
-                </div>
-                <mat-form-field appearance="outline">
-                  <mat-label>Tipo de servicio</mat-label>
-                  <mat-select formControlName="serviceTypeControl" name="service">
-                    <mat-option [value]="1">Consulta</mat-option>
-                    <mat-option [value]="2">Consulta de seguimiento</mat-option>
-                    <mat-option [value]="3">Solicitud de receta médica</mat-option>
-                  </mat-select>
-                </mat-form-field>
 
-                <mat-form-field appearance="outline">
-                  <mat-label>Nota</mat-label>
-                  <textarea formControlName="noteControl" rows="8" #matInputNote maxlength="200" matInput
-                    placeholder="Nota para el médico"></textarea>
-                  <mat-hint align="end">{{matInputNote.value?.length || 0}}/200</mat-hint>
-                </mat-form-field>
-              </div>
+              <mat-form-field appearance="outline">
+                <mat-label>Nota</mat-label>
+                <textarea formControlName="noteControl" rows="8" #matInputNote maxlength="200" matInput
+                  placeholder="Nota para el médico"></textarea>
+                <mat-hint align="end">{{matInputNote.value?.length || 0}}/200</mat-hint>
+              </mat-form-field>
             </div>
           </div>
 

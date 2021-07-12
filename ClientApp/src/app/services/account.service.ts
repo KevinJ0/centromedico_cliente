@@ -25,7 +25,7 @@ export class AccountService {
   private UserRole = new BehaviorSubject<string>(localStorage.getItem('userRoles'));
 
   constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    this.baseUrl = "http://hospitalsalvador-001-site1.htempurl.com";
+    this.baseUrl = baseUrl;
   }
 
   getNewRefreshToken(): Observable<any> {

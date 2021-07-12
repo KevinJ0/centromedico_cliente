@@ -147,10 +147,10 @@ mat-stepper{
   margin: auto;
 }
 
-.grid-userdata{
-  display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 2rem;
+.userdata-content{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .name-wrapper {
@@ -158,6 +158,15 @@ mat-stepper{
   display: flex;
   width: 100%;
   flex-wrap: nowrap;
+}
+.radio-wrapper{
+  min-height: 81px;
+    margin: .25em 0;
+}
+.userdata-item{
+  
+  width: 47.9999%;
+
 }
 .mat-card-header {
   display: flex;
@@ -169,6 +178,7 @@ mat-stepper{
   font-weight: 500;
   margin-top: 2rem;
   margin-bottom: 1rem;
+  flex-basis: 100%;
 }
 
 .under-age {
@@ -185,9 +195,10 @@ mat-stepper{
   mat-card{
     padding: 0;
   }
-  .grid-userdata{
-    grid-template-columns: 1fr;
+  .userdata-content{
   }
+  .userdata-item{width: 100%;}
+
   .name-wrapper {
     flex-direction: row;
   }
@@ -205,4 +216,14 @@ mat-stepper{
   .name-wrapper {
     flex-direction: column;
   }
+  .name-wrapper .name {
+    padding-right: 0em;
+  }
+  .name-wrapper .lastName {
+    padding-left: 0em;
+  }
+  .name-wrapper .lastName {
+    padding-left: 0;
+  }
+  .userdata-item{width: 100%;}
 }

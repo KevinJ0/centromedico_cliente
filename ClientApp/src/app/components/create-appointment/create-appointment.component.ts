@@ -8,23 +8,15 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAda
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
 import { AccountService } from 'src/app/services/account.service';
-import { UserInfo } from 'src/app/interfaces/InterfacesDto';
+import { hora, UserInfo, especialidad, seguro, cita, cobertura } from 'src/app/interfaces/InterfacesDto';
+import { CitaService } from 'src/app/services/cita.service';
+import { DoctorHorarioService } from 'src/app/services/doctor-horario.service';
+import { CoberturaService } from 'src/app/services/cobertura.service';
 // tslint:disable-next-line:no-duplicate-imports
 
 const moment = _moment;
 
-interface especialidad {
-  value: number;
-  viewValue: string;
-}
-interface hora {
-  value: Date;
-  viewValue: string;
-}
-interface seguro {
-  value: number;
-  viewValue: string;
-}
+
 export const MY_FORMATS = {
   // parse: {
   //   dateInput: 'LL',
@@ -61,14 +53,16 @@ export class CreateAppointmentComponent implements OnInit {
 
   baseUrl: string;
   private userData$ = new Subject<UserInfo>();
+  private availableDates$ = new Subject<Date[]>();
   isUserConfirmed: boolean;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-
-  insuranceOption: boolean = true;
   
+  _cobertura: cobertura;
+  insuranceOption: boolean = true;
+
   isDependent = false;
   isEditable = false;
   isSent = false;
@@ -88,8 +82,6 @@ export class CreateAppointmentComponent implements OnInit {
     new Date("7/1/2021"),
     new Date("7/2/2021")
   ];
-
-  typesOfShoes: string[] = ['Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
 
   seguros: seguro[] = [
     { value: 1, viewValue: 'Privado' },
@@ -115,15 +107,18 @@ export class CreateAppointmentComponent implements OnInit {
 
   ngOnInit() {
 
+    
+
     this.firstFormGroup = this._formBuilder.group({
       insuranceOptionControl: [true],
-      insuranceControl: ['']
+      insuranceControl: [''],
+      serviceTypeControl: ['', Validators.required],
+
     });
 
     this.secondFormGroup = this._formBuilder.group({
       dateControl: [''],
       timeControl: [''],
-
     });
 
     this.thirdFormGroup = this._formBuilder.group({
@@ -137,9 +132,8 @@ export class CreateAppointmentComponent implements OnInit {
       userLastNameControl: ['', Validators.required],
       birthDateControl: ['', Validators.required],
       contactControl: [''],
-      serviceTypeControl: ['', Validators.required],
       noteControl: [''],
-      dependentSexControl: ['', Validators.required],
+      dependentSexControl: [''],
       userSexControl: ['', Validators.required],
     });
 
@@ -156,89 +150,62 @@ export class CreateAppointmentComponent implements OnInit {
     });
 
     this.thirdFormGroup.get("appointmentTypeControl").valueChanges.subscribe(option => {
-      if (option == 1) {
-        this.isDependent = option;
-        this.thirdFormGroup.get("dependentNameControl")
-          .setValidators([Validators.required]);
-        this.thirdFormGroup.get("dependentLastNameControl")
-          .setValidators([Validators.required]);
-        this.thirdFormGroup.get("dependentBirthDateControl")
-          .setValidators([Validators.required]);
-        this.thirdFormGroup.get("dependentSexControl")
-          .setValidators([Validators.required]);
-        this.underAgeShow = "block";
-      } else {
-        this.underAgeShow = "none";
-        this.thirdFormGroup.get("dependentNameControl")
-          .clearValidators();
-        this.thirdFormGroup.get("dependentLastNameControl")
-          .clearValidators();
-        this.thirdFormGroup.get("dependentBirthDateControl")
-          .clearValidators();
-        this.thirdFormGroup.get("dependentSexControl")
-          .clearValidators();
-      }
-
-      this.thirdFormGroup.get("dependentNameControl").updateValueAndValidity();
-      this.thirdFormGroup.get("dependentLastNameControl").updateValueAndValidity();
-      this.thirdFormGroup.get("dependentBirthDateControl").updateValueAndValidity();
-
+      if (option == 1) this.underAgeShow = "block";
+      else this.underAgeShow = "none";
+      this.isDependent = Boolean(Number.parseInt(option));
     });
 
 
   }
   onClickSubmit() {
     this.isSent = true;
+
     console.log(this.thirdFormGroup.valid);
 
     let formdata = Object.assign(this.secondFormGroup.value, this.firstFormGroup.value, this.thirdFormGroup.value);
-    let cita: any;
+    let _cita: cita;
     let fecha_hora: Date = formdata["timeControl"];
-    let nombre_tutor;
     let nombre;
     let apellido;
     let doc_identidad;
     let sexo;
-    let doc_identidad_tutor;
 
     if (this.isDependent) {
-      nombre_tutor = (formdata["userNameControl"] + " " + formdata["userLastNameControl"]).trim();
       nombre = formdata["dependentNameControl"];
       apellido = formdata["dependentLastNameControl"];
       sexo = formdata["dependentSexControl"];
-      doc_identidad_tutor = formdata["identityDocControl"];
 
     } else {
 
-     doc_identidad = formdata["identityDocControl"];
-     nombre = formdata["userNameControl"];
+      doc_identidad = formdata["identityDocControl"];
+      nombre = formdata["userNameControl"];
       apellido = formdata["userLastNameControl"];
       sexo = formdata["userSexControl"];
     }
 
-    cita = {
+    _cita = {
       "nombre": nombre,
       "apellido": apellido,
       "sexo": sexo,
       "doc_identidad": doc_identidad,
       "fecha_hora": fecha_hora,
-      "medicosID": localStorage.getItem("medicoId"),
+      "medicosID": Number.parseInt(localStorage.getItem("medicoId")),
       "serviciosID": formdata["serviceTypeControl"],
       "fecha_nacimiento": moment(formdata["birthDateControl"]).toDate(),
       "contacto": formdata["contactControl"],
       "contacto_whatsapp": formdata["wsReachControl"],
-      "doc_identidad_tutor": doc_identidad_tutor,
-      "nombre_tutor": nombre_tutor,
       "appoiment_type": formdata["appointmentTypeControl"],
       "segurosID": formdata["insuranceControl"],
       "nota": formdata["noteControl"]
     };
 
-    console.log(cita)
+    console.log(_cita)
 
   }
 
-  constructor(private accountSvc: AccountService, private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
+  constructor(private doctorhSvc: DoctorHorarioService, private coberturaSvc: CoberturaService,
+    private citaSvc: CitaService, private accountSvc: AccountService,
+    private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
     this.getUserInfo();
     localStorage.setItem("medicoId", "1");
     localStorage.setItem("especialidadId", "1");
@@ -253,12 +220,11 @@ export class CreateAppointmentComponent implements OnInit {
 
   }
 
-  UserConfirm: boolean;
 
   getUserInfo() {
 
     this.accountSvc.getUserInfo().subscribe((re) => {
-      
+
       console.log(re);
 
       this.isUserConfirmed = re.confirm_doc_identidad;
@@ -268,7 +234,7 @@ export class CreateAppointmentComponent implements OnInit {
       this.thirdFormGroup.get("contactControl").setValue(re.contacto);
       this.thirdFormGroup.get("userSexControl").setValue(re.sexo);
       this.thirdFormGroup.get("identityDocControl").setValue(re.doc_identidad);
-      
+
     });
   }
 

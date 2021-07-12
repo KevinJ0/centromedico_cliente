@@ -34,12 +34,15 @@ import { TicketAppointmentComponent } from './ticket-appointment/ticket-appointm
 import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './_helpers/jwt.Interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
+import { CitaService } from './services/cita.service';
+import { CoberturaService } from './services/cobertura.service';
+import { DoctorHorarioService } from './services/doctor-horario.service';
 
 export function tokenGetter() {
   console.log("hola");
 
   //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
-  
+
   return localStorage.getItem("jwt");
 }
 @NgModule({
@@ -54,7 +57,7 @@ export function tokenGetter() {
     LoginComponent,
     ListDoctorsComponent,
     TicketAppointmentComponent,
-  ], 
+  ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -79,7 +82,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:4211','hospitalsalvador-001-site1.htempurl.com'],
+        allowedDomains: ['localhost:4211', 'hospitalsalvador-001-site1.htempurl.com'],
         disallowedRoutes: [],
         authScheme: "Bearer ",
       }
@@ -89,13 +92,14 @@ export function tokenGetter() {
       { path: 'paciente-login', component: LoginComponent },
       { path: 'crear-cita', component: HomeComponent },
       { path: 'ticket-cita', component: TicketAppointmentComponent },
-      
+
     ],
       { useHash: false }),
 
 
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },AccountService],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    AccountService, CitaService, DoctorHorarioService, CoberturaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

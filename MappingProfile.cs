@@ -21,6 +21,8 @@ namespace HospitalSalvador
             CreateMap<pacientes, MyIdentityUser>();
             CreateMap<MyIdentityUser, pacientes>()
                 .ForMember(dto => dto.ID, opt => opt.Ignore());
+            CreateMap<especialidades, especialidadDTO>();
+            CreateMap<seguros, seguroDTO>();
 
 
             CreateMap<pruebas, pruebaDTO>()

@@ -13,7 +13,7 @@
 }
 
 :root {
-  --primary-color: hsl(210, 100%, 56%);
+  --primary-color: rgb(31, 143, 255);
 }
 
 app-root{

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { cobertura } from '../interfaces/InterfacesDto';
+import { cobertura, seguro } from '../interfaces/InterfacesDto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,15 @@ export class CoberturaService {
     return this.http.get<cobertura>(this.baseUrl + this.baseEndPoint +
       `?servicioID=${servicioID}&medicoID=${medicoID}&seguroID=${seguroID}`)
       .pipe(map((result: cobertura) => {
+        return result;
+      }));
+  }
+
+  GetSegurosByServicio(medicoID: number, servicioID: number): Observable<seguro[]> {
+
+    return this.http.get<seguro[]>(this.baseUrl +  
+      `/api/seguros/GetSegurosByServicio?servicioID=${servicioID}&medicoID=${medicoID}`)
+      .pipe(map((result: seguro[]) => {
         return result;
       }));
   }

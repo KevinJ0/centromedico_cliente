@@ -64,7 +64,7 @@ namespace HospitalSalvador.Controllers
         ///         },
         ///         "seguros": [
         ///             {
-        ///                 "descrip": "Privado",
+        ///               "descrip": "Privado",
         ///               "segurosID": 1
         ///         },
         ///             {
@@ -82,7 +82,7 @@ namespace HospitalSalvador.Controllers
         ///                 "descrip": "Alergiología"
         ///         },
         ///             {
-        ///         "id": 6,
+        ///                 "id": 6,
         ///                 "descrip": "Ginecología"
         ///         }
         ///         ],
@@ -92,11 +92,11 @@ namespace HospitalSalvador.Controllers
         ///                 "descrip": "Consulta"
         ///         },
         ///             {
-        ///         "id": 2,
+        ///                 "id": 2,
         ///                 "descrip": "Solicitud de receta médica"
         ///         },
         ///             {
-        ///         "id": 3,
+        ///                 "id": 3,
         ///                 "descrip": "Consulta de seguimiento"
         ///         }
         ///         ],
@@ -140,9 +140,8 @@ namespace HospitalSalvador.Controllers
             //Tiene que existir al menos 1 cobertura por defecto que es la privada.
             var coberturaslst = await _db.cobertura_medicos
                 .Where(s => s.medicosID == medicoID)
-                .Select(c => new { c.seguros.descrip, c.segurosID })
+                .Select(c => new { c.seguros.ID, c.seguros.descrip})
                 .ToListAsync();
-
 
             /* var especialidadeslst = await _db.especialidades_medicos
                  .Where(x => x.medicosID == medicoID)
@@ -523,7 +522,7 @@ namespace HospitalSalvador.Controllers
         /// <response code="204">No hay cobertura disponibles con estos parametros.</response>
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<ActionResult<costoServicio>> getCoberturasAsync(int servicioID, int medicoID, int seguroID)
+        public async Task<ActionResult<coberturaDTO>> getCoberturasAsync(int servicioID, int medicoID, int seguroID)
         {
             try
             {
@@ -538,10 +537,12 @@ namespace HospitalSalvador.Controllers
                 decimal _porciento = (Decimal.Divide((cobertura.porciento), 100));
                 decimal _cobertura = cobertura.pago * _porciento;
                 decimal _diferencia = cobertura.pago - _cobertura;
+                decimal _pago = cobertura.pago;
 
-                return new costoServicio
+                return new coberturaDTO
                 {
                     porciento = _porciento,
+                    pago = _pago,
                     cobertura = _cobertura,
                     diferencia = _diferencia
                 };

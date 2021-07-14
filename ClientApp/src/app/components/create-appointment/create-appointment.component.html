@@ -9,20 +9,11 @@
             <mat-card-title>ESCOGE UNA COBERTURA</mat-card-title>
           </mat-card-header>
 
-          <label for="insurance-type" class="label">
-            <h4>¿Tiene seguro médico?</h4>
-          </label>
-          <mat-radio-group [(ngModel)]="insuranceOption" formControlName="insuranceOptionControl"
-            aria-labelledby="hasInsurance" class="radio-group">
-            <mat-radio-button [checked]="true" class="insurance-radio-button" [value]="true">No</mat-radio-button>
-            <mat-radio-button class="insurance-radio-button" [value]="false">Si</mat-radio-button>
-          </mat-radio-group>
-
           <mat-form-field appearance="outline">
             <mat-label>Seguro</mat-label>
-            <mat-select [disabled]="insuranceOption" required formControlName="insuranceControl">
-              <mat-option *ngFor="let seguro of seguros" [value]="seguro.value">
-                {{seguro.viewValue}}
+            <mat-select required formControlName="insuranceControl">
+              <mat-option *ngFor="let seguro of seguros$" [value]="seguro.id">
+                {{seguro.descrip}}
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -30,28 +21,43 @@
           <mat-form-field appearance="outline">
             <mat-label>Tipo de servicio</mat-label>
             <mat-select formControlName="serviceTypeControl" name="service" required>
-              <mat-option [value]="1">Consulta</mat-option>
-              <mat-option [value]="2">Consulta de seguimiento</mat-option>
-              <mat-option [value]="3">Solicitud de receta médica</mat-option>
+              <mat-option [value]=1>Consulta</mat-option>
+              <mat-option [value]=2>Consulta de seguimiento</mat-option>
+              <mat-option [value]=3>Solicitud de receta médica</mat-option>
             </mat-select>
           </mat-form-field>
 
-          <section class="payment-form dark">
-            <div class="products">
-              <h3 class="title">Pago</h3>
-              <div class="item">
-                <span class="price">RD${{_cobertura.pago}}</span>
-                <p class="item-name">Costo</p>
-                <p class="item-description">Costo de la consulta con el médico</p>
+          <ng-template [ngIf]="loadingPayment" [ngIfElse]="payment">
+
+            <section class="payment-form dark">
+              <div class="content-payment">
+                <div class="item">
+                  <p class="item-description">Cargando...</p>
+                </div>
               </div>
-              <div class="item">
-                <span class="price">RD${{_cobertura.cobertura}}</span>
-                <p class="item-name">Cobertura</p>
-                <p class="item-description">Cobertura que aplica el seguro médico</p>
+            </section>
+
+          </ng-template>
+
+          <ng-template #payment>
+            <section class="payment-form dark">
+              <div class="products">
+                <h3 class="title">Pago</h3>
+                <div class="item">
+                  <span class="price">RD${{pago}}</span>
+                  <p class="item-name">Costo</p>
+                  <p class="item-description">Costo de la consulta con el médico</p>
+                </div>
+                <div class="item">
+                  <span class="price">RD${{cobertura}}</span>
+                  <p class="item-name">Cobertura</p>
+                  <p class="item-description">Cobertura que aplica el seguro médico</p>
+                </div>
+                <div class="total">Diferencia<span class="price">RD${{diferencia}}</span></div>
               </div>
-              <div class="total">Diferencia<span class="price">RD${{_cobertura.diferencia}}</span></div>
-            </div>
-          </section>
+            </section>
+          </ng-template>
+
           <div class="btn-container">
             <button mat-button matStepperNext>Siguiente</button>
           </div>
@@ -75,8 +81,8 @@
           <mat-form-field appearance="outline">
             <mat-label>Hora</mat-label>
             <mat-select formControlName="timeControl" name="hora" required>
-              <mat-option *ngFor="let hora of Horas" [value]="hora.value">
-                {{hora.viewValue}}
+              <mat-option *ngFor="let hora of Horas" [value]="hora.id">
+                {{hora.descrip}}
               </mat-option>
             </mat-select>
           </mat-form-field>

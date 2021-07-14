@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/cor
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { map, startWith, debounceTime, switchMap } from 'rxjs/operators';
+import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'rxjs/operators';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import * as _moment from 'moment';
@@ -59,8 +59,15 @@ export class CreateAppointmentComponent implements OnInit {
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
-  
-  _cobertura: cobertura;
+
+  seguros$: Observable<any>;
+  servicios$: Observable<any>;
+  medicoID: number = 1;
+  diferencia: number = 0;
+  pago: number = 0;
+  cobertura: number = 0;
+  loadingPayment: boolean;
+
   insuranceOption: boolean = true;
 
   isDependent = false;
@@ -72,45 +79,67 @@ export class CreateAppointmentComponent implements OnInit {
   maxBDDate: Date;
   maxDBDDate: Date;
   underAgeShow: string = "none";
-  myHolidayDates = [
-    new Date("6/24/2021"),
-    new Date("6/25/2021"),
-    new Date("6/27/2021"),
-    new Date("6/28/2021"),
-    new Date("6/29/2021"),
-    new Date("6/30/2021"),
-    new Date("7/1/2021"),
-    new Date("7/2/2021")
-  ];
+  myHolidayDates: Date[];
 
-  seguros: seguro[] = [
-    { value: 1, viewValue: 'Privado' },
-    { value: 2, viewValue: 'ARS' },
-    { value: 3, viewValue: 'SENASA' }
-  ];
   Horas: hora[] = [
-    { value: new Date(2021, 6, 23, 11, 0, 0), viewValue: moment(new Date(2021, 6, 23, 11, 0, 0)).format('LT') },
-    { value: new Date(2021, 6, 23, 11, 20, 0), viewValue: moment(new Date(2021, 6, 23, 11, 20, 0)).format('LT') },
-    { value: new Date(2021, 6, 23, 11, 40, 0), viewValue: moment(new Date(2021, 6, 23, 11, 40, 0)).format('LT') },
+    { id: new Date(2021, 6, 23, 11, 0, 0), descrip: moment(new Date(2021, 6, 23, 11, 0, 0)).format('LT') },
+    { id: new Date(2021, 6, 23, 11, 20, 0), descrip: moment(new Date(2021, 6, 23, 11, 20, 0)).format('LT') },
+    { id: new Date(2021, 6, 23, 11, 40, 0), descrip: moment(new Date(2021, 6, 23, 11, 40, 0)).format('LT') },
   ];
   especialidades: especialidad[] = [
-    { value: 1, viewValue: "Alergelogía" },
-    { value: 2, viewValue: "Urología" },
-    { value: 3, viewValue: "Cardiología" }
+    { id: 1, descrip: "Alergelogía" },
+    { id: 2, descrip: "Urología" },
+    { id: 3, descrip: "Cardiología" }
   ];
 
-  dateFilter = (d: Date): boolean => {
-    const time = new Date(d).getTime();
-    return this.myHolidayDates.find(x => x.getTime() == time) ? true : false;
-  }
+  dateFilter;
 
+  setCostos() {
+
+    var servicioID = Number.parseInt(this.firstFormGroup.get("serviceTypeControl").value);
+    var seguroID = Number.parseInt(this.firstFormGroup.get("insuranceControl").value);
+
+    //console.log(servicioID, seguroID)
+
+    if (Number.isInteger(seguroID) && Number.isInteger(servicioID)) {
+      this.loadingPayment = true; //muestro la pagina de carga
+
+      setTimeout(() => {
+
+        this.coberturaSvc.GetCobertura(this.medicoID, seguroID, servicioID)
+          .pipe(catchError(err => {
+            this.loadingPayment = false;
+            console.error('Error al intentar acceder a la cobertura');
+            return null;
+          }), finalize(() => {
+            this.loadingPayment = false;
+          }))
+          .subscribe((r: cobertura) => {
+            if (r != null) {
+              this.cobertura = r.cobertura;
+              this.pago = r.pago;
+              this.diferencia = r.diferencia;
+            } else {
+              this.cobertura = 0;
+              this.pago = 0;
+              this.diferencia = 0;
+            }
+          });
+      }, 400)
+    }
+    else {
+      this.cobertura = 0;
+      this.pago = 0;
+      this.diferencia = 0;
+    }
+  }
 
   ngOnInit() {
 
-    
+
 
     this.firstFormGroup = this._formBuilder.group({
-      insuranceOptionControl: [true],
+      //insuranceOptionControl: [true],
       insuranceControl: [''],
       serviceTypeControl: ['', Validators.required],
 
@@ -137,27 +166,54 @@ export class CreateAppointmentComponent implements OnInit {
       userSexControl: ['', Validators.required],
     });
 
-    this.firstFormGroup.get("insuranceOptionControl").valueChanges.subscribe(option => {
-      if (option == true) {
-        this.firstFormGroup.get("insuranceControl")
-          .clearValidators();
-      } else {
-        this.firstFormGroup.get("insuranceControl")
-          .setValidators([Validators.required]);
-      }
+    // this.firstFormGroup.get("insuranceOptionControl").valueChanges.subscribe(option => {
+    //   if (option == true) {
+    //     this.firstFormGroup.get("insuranceControl")
+    //       .clearValidators();
+    //   } else {
+    //     this.firstFormGroup.get("insuranceControl")
+    //       .setValidators([Validators.required]);
+    //   }
+    // this.firstFormGroup.get("insuranceControl").updateValueAndValidity();
+    // });
 
-      this.firstFormGroup.get("insuranceControl").updateValueAndValidity();
-    });
+    this.thirdFormGroup.get("appointmentTypeControl")
+      .valueChanges
+      .subscribe(option => {
+        if (option == 1) this.underAgeShow = "block";
+        else this.underAgeShow = "none";
+        this.isDependent = Boolean(Number.parseInt(option));
+      });
 
-    this.thirdFormGroup.get("appointmentTypeControl").valueChanges.subscribe(option => {
-      if (option == 1) this.underAgeShow = "block";
-      else this.underAgeShow = "none";
-      this.isDependent = Boolean(Number.parseInt(option));
-    });
+
+    this.firstFormGroup.get("insuranceControl")
+      .valueChanges
+      .subscribe(value => this.setCostos());
+
+    this.firstFormGroup.get("serviceTypeControl")
+      .valueChanges
+      .subscribe(value => {
 
 
+        this.coberturaSvc.GetSegurosByServicio(this.medicoID, value)
+          .pipe(catchError(err => {
+
+
+            console.log('Handling error locally and rethrowing it...', err);
+            return of([]);
+          }))
+          .subscribe((r: any) => {
+            this.seguros$ = r;
+            this.firstFormGroup.get("insuranceControl").reset(null, { onlySelf: true, emitEvent: false });
+            console.table(r);
+            this.setCostos();
+
+          })
+      });
   }
+
   onClickSubmit() {
+
     this.isSent = true;
 
     console.log(this.thirdFormGroup.valid);
@@ -203,7 +259,7 @@ export class CreateAppointmentComponent implements OnInit {
 
   }
 
-  constructor(private doctorhSvc: DoctorHorarioService, private coberturaSvc: CoberturaService,
+  constructor(private doctorSvc: DoctorHorarioService, private coberturaSvc: CoberturaService,
     private citaSvc: CitaService, private accountSvc: AccountService,
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
     this.getUserInfo();
@@ -213,6 +269,26 @@ export class CreateAppointmentComponent implements OnInit {
     this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
       .pipe(map(({ matches }) => matches ? 'horizontal' : 'vertical'));
 
+    //inicializa las fechas permitidas
+    this.citaSvc.GetNewCita(this.medicoID)
+      .pipe(
+        catchError(err => {
+          console.error('Error al tratar de acceder a NewCita');
+          return of([]);
+        })).subscribe(r => {
+          this.servicios$ = r.servicios;
+          
+          this.myHolidayDates = r.diasLaborables.map(r => new Date(r));
+
+          this.dateFilter = (d: Date): boolean => {
+            const time = new Date(d).getTime();
+            return this.myHolidayDates.find(x => x.getTime() == time) ? true : false;
+          }
+          console.table(this.myHolidayDates);
+
+        })
+
+    // establezco las fechas minimas permitidas en las fechas de nacimientos
     this.minDBDDate = new Date(Date.now() + -6574 * 24 * 3600 * 1000);
     this.maxDBDDate = new Date();
     this.minBDDate = new Date(Date.now() + -43825 * 24 * 3600 * 1000);
@@ -225,7 +301,7 @@ export class CreateAppointmentComponent implements OnInit {
 
     this.accountSvc.getUserInfo().subscribe((re) => {
 
-      console.log(re);
+      // console.log(re);
 
       this.isUserConfirmed = re.confirm_doc_identidad;
       this.thirdFormGroup.get("userNameControl").setValue(re.nombre);

@@ -10,16 +10,16 @@ export interface UserInfo {
 
 }
 export interface especialidad {
-    value: number;
-    viewValue: string;
+    id: number;
+    descrip: string;
 }
 export interface hora {
-    value: Date;
-    viewValue: string;
+    id: Date;
+    descrip: string;
 }
 export interface seguro {
-    value: number;
-    viewValue: string;
+    id: number;
+    descrip: string;
 }
 
 export interface cobertura {

@@ -22,7 +22,6 @@ mat-form-field {
 .radio-group {
   margin: 10px 0;
   margin-bottom: 1.34375em;
-
 }
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 1rem;
@@ -85,21 +84,28 @@ nb-radio {
   padding-bottom: 8px;
 }
 
-.payment-form .products {
+.payment-form .products,
+.content-payment {
   background-color: #f7f9fc;
   padding: 1rem;
 }
 
-.payment-form .products .item {
+.payment-form .products .item{
   margin-bottom: 1em;
 }
-
+.payment-form .content-payment .item {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .payment-form .products .item-name {
   font-weight: 600;
   font-size: 0.9em;
 }
 
-.payment-form .products .item-description {
+.payment-form .products .item-description,
+.content-payment .item-description {
   font-size: 0.8em;
   opacity: 0.6;
 }
@@ -107,7 +113,10 @@ nb-radio {
 .payment-form .products .item p {
   margin-bottom: 0.2em;
 }
-
+.payment-form .content-payment .item  p{
+  margin: 0;
+  
+}
 .payment-form .products .price {
   float: right;
   font-weight: 600;
@@ -142,15 +151,15 @@ nb-radio {
   margin-top: 5px;
 }
 
-mat-stepper{
+mat-stepper {
   max-width: 69rem;
   margin: auto;
 }
 
-.userdata-content{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
+.userdata-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }
 
 .name-wrapper {
@@ -159,14 +168,12 @@ mat-stepper{
   width: 100%;
   flex-wrap: nowrap;
 }
-.radio-wrapper{
+.radio-wrapper {
   min-height: 81px;
-    margin: .25em 0;
+  margin: 0.25em 0;
 }
-.userdata-item{
-  
+.userdata-item {
   width: 47.9999%;
-
 }
 .mat-card-header {
   display: flex;
@@ -191,13 +198,14 @@ mat-stepper{
 }
 
 @media only screen and (max-width: 800px) {
-  
-  mat-card{
+  mat-card {
     padding: 0;
   }
-  .userdata-content{
+  .userdata-content {
   }
-  .userdata-item{width: 100%;}
+  .userdata-item {
+    width: 100%;
+  }
 
   .name-wrapper {
     flex-direction: row;
@@ -225,5 +233,7 @@ mat-stepper{
   .name-wrapper .lastName {
     padding-left: 0;
   }
-  .userdata-item{width: 100%;}
+  .userdata-item {
+    width: 100%;
+  }
 }

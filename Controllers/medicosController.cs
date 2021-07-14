@@ -247,5 +247,29 @@ namespace HospitalSalvador.Controllers
             _hours = _hours + " - " + Convert.ToDateTime(_time).ToString("hh:mm:sstt");
             return _hours;
         }
+
+        [HttpGet("[action]")]
+        public ActionResult<List<especialidadDTO>> GetEspecialidades()
+        {
+            try
+            {
+
+            List<especialidadDTO> especialidadeslst =  _db.especialidades
+                    .ProjectTo<especialidadDTO>(_mapper.ConfigurationProvider).ToList();
+
+                if (especialidadeslst == null)
+                    return NoContent();
+
+                return especialidadeslst;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        
+        }
     }
+
+
 }

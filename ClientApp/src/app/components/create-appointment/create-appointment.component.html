@@ -2,12 +2,22 @@
   <mat-card>
     <mat-stepper [orientation]="(stepperOrientation | async)!">
 
-      <mat-step [stepControl]="firstFormGroup" label="Seguro">
+      <mat-step [stepControl]="firstFormGroup" label="Servicio y Seguro" state="payments"
+        errorMessage="Datos requeridos">
         <form [formGroup]="firstFormGroup" class="form-group _row insurance-form">
 
           <mat-card-header>
-            <mat-card-title>ESCOGE UNA COBERTURA</mat-card-title>
+            <mat-card-title>ESCOGE EL SERVICIO Y COBERTURA</mat-card-title>
           </mat-card-header>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de servicio</mat-label>
+            <mat-select formControlName="serviceTypeControl" name="service" required>
+              <mat-option *ngFor="let servicio of servicios$" [value]="servicio.id">
+                {{servicio.descrip}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
 
           <mat-form-field appearance="outline">
             <mat-label>Seguro</mat-label>
@@ -18,17 +28,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="outline">
-            <mat-label>Tipo de servicio</mat-label>
-            <mat-select formControlName="serviceTypeControl" name="service" required>
-              <mat-option [value]=1>Consulta</mat-option>
-              <mat-option [value]=2>Consulta de seguimiento</mat-option>
-              <mat-option [value]=3>Solicitud de receta médica</mat-option>
-            </mat-select>
-          </mat-form-field>
-
           <ng-template [ngIf]="loadingPayment" [ngIfElse]="payment">
-
             <section class="payment-form dark">
               <div class="content-payment">
                 <div class="item">
@@ -36,8 +36,9 @@
                 </div>
               </div>
             </section>
-
           </ng-template>
+
+
 
           <ng-template #payment>
             <section class="payment-form dark">
@@ -64,7 +65,7 @@
         </form>
       </mat-step>
 
-      <mat-step [stepControl]="secondFormGroup" label="Fecha y Hora">
+      <mat-step [stepControl]="secondFormGroup" label="Fecha y Hora" state="date" errorMessage="Datos requeridos">
         <form [formGroup]="secondFormGroup" class="form-group _row datetime-form">
           <mat-card-header>
             <mat-card-title>ESCOGE LA FECHA Y HORA</mat-card-title>
@@ -93,12 +94,13 @@
         </form>
       </mat-step>
 
-      <mat-step [stepControl]="thirdFormGroup" label="Datos paciente">
+      <mat-step [stepControl]="thirdFormGroup" label="Datos del paciente" state="userdata"
+        errorMessage="Datos requeridos">
 
         <form [formGroup]="thirdFormGroup" (ngSubmit)="onClickSubmit()" class="form-group _row user-data-form">
 
           <mat-card-header>
-            <mat-card-title>DATOS DE PACIENTE</mat-card-title>
+            <mat-card-title>DATOS DEL PACIENTE</mat-card-title>
           </mat-card-header>
 
           <section>
@@ -239,10 +241,21 @@
 
           <div class="btn-container">
             <button mat-button matStepperPrevious>Volver</button>
-            <button type="submit" mat-button>Confirmar</button>
+            <button [disabled]="isSent" type="submit" mat-button>Confirmar</button>
           </div>
         </form>
       </mat-step>
+
+      <!-- Icon overrides. -->
+      <ng-template matStepperIcon="payments">
+        <mat-icon>attach_money</mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="date">
+        <mat-icon>event</mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="userdata">
+        <mat-icon>person</mat-icon>
+      </ng-template>
     </mat-stepper>
   </mat-card>
 </main>

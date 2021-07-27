@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { UserInfo } from '../interfaces/InterfacesDto';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject,throwError, of, Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
@@ -105,17 +105,33 @@ export class AccountService {
 
   isUserDocIdentConfirm(): Observable<boolean> {
     return this.http.get<any>(this.baseUrl + "/api/account/isUserDocIdentConfirm")
-      .pipe(map((result:any) => {
+      .pipe(map((result: any) => {
 
-        return result; 
+        return result;
 
       }));
   }
 
   getUserInfo(): Observable<UserInfo> {
     return this.http.get<UserInfo>(this.baseUrl + "/api/account/getUserInfo")
-      .pipe(map((data:UserInfo) => data));
+      .pipe(map((data: UserInfo) => data),
+      catchError(err => {
+         
+        return throwError(err);
+      })
+      );
 
+  }
+
+
+  setUserInfo(userInfo: UserInfo): Observable<boolean> {
+    return this.http.post<boolean>(this.baseUrl + "/api/account/setUserInfo", userInfo)
+      .pipe(
+        map(() => true),
+        catchError(err => { 
+        return throwError(err);
+      })
+      );
   }
 
 

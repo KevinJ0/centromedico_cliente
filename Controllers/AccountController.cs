@@ -15,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using HospitalSalvador.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -69,6 +70,17 @@ namespace HospitalSalvador.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult> setUserInfoAsync(UserInfo formuser)
         {
+
+            bool result = await saveUserInfoAsync(formuser);
+
+            if (!result)
+                return BadRequest("La fecha de nacimiento no es valida, debe ser mayor de edad.");
+            else
+                return Ok();
+        }
+
+        private async Task<bool> saveUserInfoAsync(UserInfo formuser)
+        {
             try
             {
 
@@ -78,29 +90,25 @@ namespace HospitalSalvador.Controllers
                 //si no ha sido confirmado por el auxiliar médico
                 if (!user.confirm_doc_identidad)
                 {
-
                     user.nombre = formuser.nombre;
                     user.apellido = formuser.apellido;
                     user.sexo = formuser.sexo;
                     user.contacto = formuser.contacto;
                     user.doc_identidad = formuser.doc_identidad;
                     user.fecha_nacimiento = formuser.fecha_nacimiento;
-                    var dataResponse = Controllers.citasController.validateBirth(formuser.fecha_nacimiento);
+                    var dataDateResponse = Controllers.citasController.validateBirth(formuser.fecha_nacimiento);
 
-                    if (!dataResponse.successful)
-                    {
-                        return BadRequest("La fecha de nacimiento no es valida, debe ser mayor de edad.");
-                    }
+                    if (!dataDateResponse.successful)
+                        return false;
+
 
                 }
                 else
-                {
                     user.contacto = formuser.contacto;
-                }
 
                 _db.SaveChanges();
 
-                return Ok();
+                return true;
             }
             catch (Exception)
             {
@@ -109,7 +117,7 @@ namespace HospitalSalvador.Controllers
 
         }
 
-       
+
 
         /// <summary>
         /// Método que devuelve los datos personales del usuario/paciente.
@@ -131,12 +139,14 @@ namespace HospitalSalvador.Controllers
         /// <returns>UserInfo</returns>
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         [HttpGet("[action]")]
-        public async Task<UserInfo> getUserInfoAsync()
+        public async Task<ActionResult<UserInfo>> getUserInfoAsync()
         {
 
             string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             MyIdentityUser user = await _userManager.FindByNameAsync(userName);
-
+            if ( user.doc_identidad == null) {
+                return NotFound();
+            }
             UserInfo userInfo = _mapper.Map<UserInfo>(user);
             return userInfo;
         }
@@ -159,10 +169,10 @@ namespace HospitalSalvador.Controllers
                 MyIdentityUser user = await _userManager.FindByNameAsync(userName);
                 return user.confirm_doc_identidad ? true : false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw new Exception("Ha ocurrido un error al tratar de hacer la solicitud.");
+                throw new Exception("Ha ocurrido un error al tratar de hacer la solicitud: "+e.Message);
             }
 
         }
@@ -184,12 +194,12 @@ namespace HospitalSalvador.Controllers
         /// </remarks>
         /// <param name="formdata"></param>
         /// <returns>citaResultDTO</returns>
-        /// <response code="400">Los datos suministrados son invalidos.</response>
+        /// <response code="400">Los datos suministrados son invalidos. Devuelve un string con un mesaje sobre el error producido.</response>
         [HttpPost("[action]")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO formdata)
         {
             // Will hold all the errors related to registration
-            List<string> errorList = new List<string>();
+            string _error = "";
             IdentityRole identityRole;
             var user = _mapper.Map<MyIdentityUser>(formdata);
             if (user.Email == null)
@@ -225,12 +235,14 @@ namespace HospitalSalvador.Controllers
             {
                 foreach (var error in result.Errors)
                 {
-                    //ModelState.AddModelError("", error.Description);
-                    errorList.Add(error.Description);
+                    _error = IdentityErrorService.getDescription(error.Code);
+                    
+
+                    break;
                 }
             }
 
-            return BadRequest(new JsonResult(errorList));
+            return BadRequest(_error);
 
         }
 

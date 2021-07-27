@@ -13,6 +13,7 @@ namespace HospitalSalvador.Models.DTO
         private string _docIdentidad;
         private string _sexo;
 
+
         [Required]
         public int medicosID { get; set; }
         [StringLength(2)]
@@ -36,7 +37,7 @@ namespace HospitalSalvador.Models.DTO
 
         //Patient
         [Required]
-        public int appoiment_type { get; set; }
+        public int appointment_type { get; set; }
         [Required]
         [StringLength(40)]
         public string nombre { get; set; }
@@ -62,7 +63,8 @@ namespace HospitalSalvador.Models.DTO
         public int? edad { set; get; }
         public bool menor_un_año { get; set; }
 
-
+//user incoming data
+        public UserInfo? userinfo;
 
     }
 }

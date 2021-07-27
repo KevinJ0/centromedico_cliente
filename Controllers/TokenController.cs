@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 namespace HospitalSalvador.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
 
@@ -62,7 +63,7 @@ namespace HospitalSalvador.Controllers
         public async Task<IActionResult> Auth([FromBody] TokenRequestDTO model) // granttype = "refresh_token"
         {
             // I will return Generic 500 HTTP Server Status Error
-            // If we receive an invalid payload
+            // If it receives an invalid payload
             if (model == null)
             {
                 return new StatusCodeResult(500);
@@ -139,8 +140,7 @@ namespace HospitalSalvador.Controllers
 
             }
 
-            ModelState.AddModelError("", "Username/Password was not Found");
-            return Unauthorized(new { LoginError = "Please Check the Login Credentials - Ivalid Username/Password was entered" });
+            return Unauthorized("Por favor verifique sus credeniales - Usuario/Contraseña suministradas son invalidas.");
 
 
         }

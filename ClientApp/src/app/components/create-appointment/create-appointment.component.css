@@ -198,7 +198,7 @@ mat-stepper {
 }
 
 @media only screen and (max-width: 800px) {
-  mat-card {
+  mat-card { 
     padding: 0;
   }
   .userdata-content {

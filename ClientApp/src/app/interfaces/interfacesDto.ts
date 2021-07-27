@@ -3,7 +3,7 @@ export interface UserInfo {
     doc_identidad: string
     nombre: string
     apellido: string
-    confirm_doc_identidad: boolean
+    confirm_doc_identidad?: boolean
     contacto: string
     fecha_nacimiento: Date
     sexo: string
@@ -31,7 +31,6 @@ export interface cobertura {
 }
 
 
-
 export interface cita {
     nombre: string;
     apellido: string;
@@ -43,7 +42,27 @@ export interface cita {
     fecha_nacimiento: Date;
     contacto: string;
     contacto_whatsapp: boolean;
-    appoiment_type: number;
+    appointment_type: number;
     segurosID: number;
     nota: string;
+}
+
+export interface citaResult {
+
+    cod_verificacion: string;
+    servicio: string;
+    consultorio: number;
+    fecha_hora: string;
+    medico_nombre_apellido: string;
+    seguro: string;
+    pago: number;
+    cobertura: number;
+    diferencia: number;
+    paciente_nombre_apellido: string;
+    doc_identidad_tutor: string;
+    doc_identidad: string;
+    tutor_nombre_apellido: string;
+    contacto: string;
+    correo: string;
+
 }

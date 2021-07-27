@@ -30,14 +30,17 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
-import { TicketAppointmentComponent } from './ticket-appointment/ticket-appointment.component';
+import { TicketAppointmentComponent } from './components/create-appointment/ticket-appointment/ticket-appointment.component';
 import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './_helpers/jwt.Interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { CitaService } from './services/cita.service';
 import { CoberturaService } from './services/cobertura.service';
 import { DoctorHorarioService } from './services/doctor-horario.service';
-
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import * as _moment from 'moment';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 export function tokenGetter() {
   console.log("hola");
 
@@ -45,6 +48,17 @@ export function tokenGetter() {
 
   return localStorage.getItem("jwt");
 }
+export const MY_FORMATS = {
+  // parse: {
+  //   dateInput: 'LL',
+  // },
+  display: {
+    dateInput: 'dddd DD MMM Y',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +85,7 @@ export function tokenGetter() {
     MatDividerModule,
     MatRadioModule,
     MatNativeDateModule,
+    MatSnackBarModule,
     NgxMaskModule.forRoot(),
     MatRippleModule,
     MatSelectModule,
@@ -90,15 +105,20 @@ export function tokenGetter() {
     RouterModule.forRoot([
       { path: '', component: CreateAppointmentComponent, pathMatch: 'full' },
       { path: 'paciente-login', component: LoginComponent },
-      { path: 'crear-cita', component: HomeComponent },
-      { path: 'ticket-cita', component: TicketAppointmentComponent },
-
+      { path: 'create-cita', component: CreateAppointmentComponent },
+      { path: 'ticket', component: TicketAppointmentComponent },
     ],
       { useHash: false }),
-
-
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     AccountService, CitaService, DoctorHorarioService, CoberturaService],
   bootstrap: [AppComponent]
 })

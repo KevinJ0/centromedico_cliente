@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -44,6 +46,34 @@ namespace HospitalSalvador
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
+            });
+            services.AddMvc().ConfigureApiBehaviorOptions(options =>
+            {
+                //options.SuppressModelStateInvalidFilter = true;
+                options.InvalidModelStateResponseFactory = actionContext =>
+                {
+                    string errors = "";
+                    Dictionary<string, List<string>> errorsDic = new Dictionary<string, List<string>>();
+
+                    foreach (var state in actionContext.ModelState)
+                    {
+                        var errorsList = new List<string>();
+
+                        foreach (var error in state.Value.Errors)
+                        {
+
+                            errors = error.ErrorMessage;
+                            var n = errors.IndexOf("Path");
+                            errorsList.Add(errors.Substring(0, n).Trim());
+                             
+                        }
+                        errorsDic.Add(state.Key, errorsList);
+                    }
+
+                    var modelState = actionContext.ModelState;
+                    return new BadRequestObjectResult(errorsDic)
+                    ;
+                };
             });
 
             services.AddControllers().AddNewtonsoftJson(options =>
@@ -120,7 +150,7 @@ namespace HospitalSalvador
                 {
                     Title = "Centro Medico Cliente Api",
                     Version = "v1",
-                     Description = "Esta api describe las funciones de los diferentes endpoint que trabajan en la applicación que da vista al cliente.",
+                    Description = "Esta api describe las funciones de los diferentes endpoint que trabajan en la applicación que da vista al cliente.",
                 });
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

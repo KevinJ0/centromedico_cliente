@@ -24,7 +24,7 @@ namespace HospitalSalvador.Models.DTO
         public string contacto { get; set; }
         [Required]
         public DateTime fecha_nacimiento { get; set; }
-        public bool confirm_doc_identidad { get; }
+        public bool confirm_doc_identidad { get; set; }
 
 
     }

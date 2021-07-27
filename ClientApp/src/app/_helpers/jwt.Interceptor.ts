@@ -38,8 +38,8 @@ export class JwtInterceptor implements HttpInterceptor {
       }),
       catchError((err): Observable<any> => {
         if (err instanceof HttpErrorResponse) {
-          console.log((<HttpErrorResponse>err).status);
-          console.log((<HttpErrorResponse>err).message);
+          //console.log((<HttpErrorResponse>err).status);
+          //console.table((<HttpErrorResponse>err).error);
 
           var grantType = "";
           if (request.url.toLowerCase().includes("auth"))
@@ -56,7 +56,11 @@ export class JwtInterceptor implements HttpInterceptor {
                 console.log("Token expired. Attempting refresh ...");
                 return this.handleHttpResponseError(request, next);
               case 400:
-                return <any>this.acct.logout();
+                return this.handleError(<HttpErrorResponse>err);
+              // return <any>this.acct.logout();
+              default:
+                return this.handleError(<HttpErrorResponse>err);
+              // return <any>this.acct.logout();
             }
           }
         } else {
@@ -72,16 +76,20 @@ export class JwtInterceptor implements HttpInterceptor {
   // Global error handler method 
   private handleError(errorResponse: HttpErrorResponse) {
     let errorMsg: string;
+    console.error(errorResponse)
 
-    if (errorResponse.error instanceof Error) {
+    if (errorResponse.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      errorMsg = "An error occured : " + errorResponse.error.message;
+      errorMsg = "An error occured client side: " + errorResponse.error.message;
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
-      errorMsg = `Backend returned code ${errorResponse.status}, body was: ${errorResponse}`;
-    }
 
+      if (typeof errorResponse.error === 'string' || errorResponse.error instanceof String) {
+        errorMsg = `${errorResponse.error}`;
+        // The backend returned an unsuccessful response code.
+      } else {
+        errorMsg = `Ha ocurrido un error al tratar de procesar su petición.`;
+      }
+    }
     return throwError(errorMsg);
   }
 
@@ -137,6 +145,6 @@ export class JwtInterceptor implements HttpInterceptor {
 
   private attachTokenToRequest(request: HttpRequest<any>) {
     var token = localStorage.getItem('jwt');
-       return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+    return request.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
   }
 }

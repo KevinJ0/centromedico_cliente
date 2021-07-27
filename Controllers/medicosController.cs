@@ -19,6 +19,7 @@ using System.Security.Claims;
 
 namespace HospitalSalvador.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class medicosController : ControllerBase

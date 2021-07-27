@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 namespace HospitalSalvador.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Client")]
     [ApiController]
     public class resultadosController : ControllerBase

@@ -47,6 +47,7 @@ namespace HospitalSalvador.Context
         public virtual DbSet<servicios_medicos> servicios_medicos { get; set; }
         public virtual DbSet<token> token { get; set; }
         public virtual DbSet<turnos> turnos { get; set; }
+        public virtual DbSet<dias_feriados> dias_feriados { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -13,7 +13,7 @@ namespace HospitalSalvador.Models
         public especialidades()
         {
           //  citas = new HashSet<citas>();
-        //    especialidades_medicos = new HashSet<especialidades_medicos>();
+            especialidades_medicos = new HashSet<especialidades_medicos>();
         }
 
         [Key]

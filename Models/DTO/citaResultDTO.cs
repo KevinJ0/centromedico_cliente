@@ -14,6 +14,7 @@ namespace HospitalSalvador.Models.DTO
         [StringLength(8)]
         public string cod_verificacion { get; set; }    
         public string servicio { get; set; }
+       // public string especialidad { get; set; }
         public int consultorio { get; set; }
         [Column(TypeName = "datetime")]
         public DateTime fecha_hora { get; set; }
@@ -36,7 +37,8 @@ namespace HospitalSalvador.Models.DTO
 
         [StringLength(10)]
         public string contacto { get; set; }
+        public string correo { get; set; }
 
-    
+
     }
 }

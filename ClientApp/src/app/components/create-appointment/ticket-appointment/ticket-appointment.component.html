@@ -4,27 +4,25 @@
     <mat-icon class="task" matSuffix>event_available</mat-icon>
     <div class="header">
       <h1>Cita Confirmada</h1>
-      <h5>Abril 16, 2021</h5>
-      <h5>4:00pm</h5>
+      <h5>{{citaDataResult.fecha_hora}}</h5>
     </div>
     <mat-divider></mat-divider>
     <div class="content">
       <div class="medico">
-        <p>Tu médico es <b>Paola Rodriguez</b></p>
+        <p>Tu médico es <b>{{citaDataResult.medico_nombre_apellido}}</b></p>
+      <p *ngIf="!isDependent"><b>Consultorio: </b>{{citaDataResult.consultorio}}</p>
+
       </div>
  
-       <p><b>Especialidad: </b>Alergeología</p>
-      <p><b>Servicio: </b>Consulta</p>
-      <p *ngIf="!isDependent"><b>Doc. Identidad: </b>40222215480</p>
-      <p><b>Paciente: </b>Mario Manuel Monte Real</p>
-      <p *ngIf="isDependent"><b>Doc. Identidad tutor: </b>40153452340</p>
-      <p *ngIf="isDependent"><b>Tutor: </b>Mario Manuel Monte Real</p>
-      <p><b>Número de contacto: </b>809-888-5185</p>
-      <p><b>Seguro: </b>ARS</p>
-      <p><b>Diferencia: </b>RD$200</p>
-      <p style="margin-bottom: 0;"><b>Observación: </b>Tengo fuertes dolores de cabeza al tomar xxx médicamento en las
-        noches.</p>
-    </div>
+       <p><b>Servicio: </b>{{citaDataResult.servicio}}</p>
+      <p *ngIf="!isDependent"><b>Doc. Identidad: </b>{{citaDataResult.doc_identidad}}</p>
+      <p><b>Paciente: </b>{{citaDataResult.paciente_nombre_apellido}}</p>
+      <p *ngIf="isDependent"><b>Doc. Identidad tutor: </b>{{citaDataResult.doc_identidad_tutor}}</p>
+      <p *ngIf="isDependent"><b>Tutor: </b>{{citaDataResult.tutor_nombre_apellido}}</p>
+      <p><b>Número de contacto: </b>{{citaDataResult.contacto}}</p>
+      <p><b>Seguro: </b>{{citaDataResult.seguro}}</p>
+      <p><b>Diferencia: </b>RD${{citaDataResult.diferencia}}</p>
+     </div>
     <mat-divider></mat-divider>
     <div class="footer">
       <div class="message">
@@ -42,7 +40,7 @@
           </ul>
       </div>
       <p>Hemos enviado un correo de confirmación a: </p>
-      <p><span style="color:rgb(10, 110, 241);">mario002@gmail.com</span></p>
+      <p><span style="color:rgb(10, 110, 241);">{{citaDataResult.correo}}</span></p>
     </div>
 
     <mat-card-actions>

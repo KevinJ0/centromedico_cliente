@@ -16,7 +16,7 @@ namespace HospitalSalvador.Models
             balance_caja = new HashSet<balance_caja>();
             citas = new HashSet<citas>();
             cobertura_medicos = new HashSet<cobertura_medicos>();
-            especialidades_medicos = new HashSet<especialidades_medicos>();
+            //especialidades_medicos = new HashSet<especialidades_medicos>();
             extensiones_telefonicas = new HashSet<extensiones_telefonicas>();
             resultados = new HashSet<resultados>();
             secretarias_medicos = new HashSet<secretarias_medicos>();

@@ -16,10 +16,6 @@ namespace HospitalSalvador.Models.DTO
         public string medico_nombre { get; set; }
         public string medico_apellido { get; set; }
 
-
-        [StringLength(2)]
-#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
-        public string? tipo_contacto { get; set; }
 #pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public int? serviciosID { get; set; }
         

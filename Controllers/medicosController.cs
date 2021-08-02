@@ -114,16 +114,42 @@ namespace HospitalSalvador.Controllers
         [HttpGet]
         public async Task<ActionResult<List<medicoDirectorioDTO>>> filter_medicos([FromQuery] string nombre = "", string especialidadID = "", string seguroID = "")
         {
-            List<medicoDirectorioDTO> medicoslst = await _db.medicos
-                .Where(m => m.estado == true)
-                .Where(x => x.especialidades_medicos.Where(p => p.especialidadesID.ToString().Contains(especialidadID)).Any())
-                .Where(x => x.cobertura_medicos.Where(p => p.segurosID.ToString().Contains(seguroID)).Any())
-                .Where(x => (x.nombre + x.apellido).Contains(nombre))
-                .ProjectTo<medicoDirectorioDTO>(_mapper.ConfigurationProvider).ToListAsync();
-            if (!medicoslst.Any())
-                return NoContent();
+            try
+            {
 
-            return medicoslst;
+                List<medicoDirectorioDTO> medicoslst = new List<medicoDirectorioDTO>();
+
+                if (String.IsNullOrWhiteSpace(nombre))
+                    nombre = String.Empty;
+                if (String.IsNullOrWhiteSpace(especialidadID))
+                    especialidadID = String.Empty;
+                if (String.IsNullOrWhiteSpace(seguroID))
+                    seguroID = String.Empty;
+
+                medicoslst = _db.medicos
+                        .Where(m => m.estado == true)
+                        .Where(x =>
+                        x.especialidades_medicos.Where(p => p.especialidadesID.ToString().Contains(especialidadID)).Any()
+                        && x.cobertura_medicos.Where(p => p.segurosID.ToString().Contains(seguroID)).Any()
+                        && (x.nombre + x.apellido).ToLower().Contains(nombre))
+                        .ProjectTo<medicoDirectorioDTO>(_mapper.ConfigurationProvider).ToList();
+
+                if (!medicoslst.Any())
+                    return Ok(new
+                    {
+                        nombre = nombre,
+                        seguroID = seguroID,
+                        especialidadID = especialidadID
+                    });
+
+                return medicoslst;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         private string getSunday(horarios_medicos horarios)
@@ -255,8 +281,8 @@ namespace HospitalSalvador.Controllers
             try
             {
 
-            List<especialidadDTO> especialidadeslst =  _db.especialidades
-                    .ProjectTo<especialidadDTO>(_mapper.ConfigurationProvider).ToList();
+                List<especialidadDTO> especialidadeslst = _db.especialidades
+                        .ProjectTo<especialidadDTO>(_mapper.ConfigurationProvider).ToList();
 
                 if (especialidadeslst == null)
                     return NoContent();
@@ -268,7 +294,7 @@ namespace HospitalSalvador.Controllers
             {
                 throw new Exception(e.Message);
             }
-        
+
         }
     }
 

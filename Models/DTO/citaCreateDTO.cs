@@ -16,8 +16,6 @@ namespace HospitalSalvador.Models.DTO
 
         [Required]
         public int medicosID { get; set; }
-        [StringLength(2)]
-        public string? tipo_contacto { get; set; }
         [Required]
         public int? serviciosID { get; set; }
         [Column(TypeName = "text")]
@@ -32,7 +30,6 @@ namespace HospitalSalvador.Models.DTO
         /*[Required]
         public int? especialidadesID { get; set; }*/
         public string? cod_verificacionID { get; set; }
-
 
 
         //Patient
@@ -63,8 +60,10 @@ namespace HospitalSalvador.Models.DTO
         public int? edad { set; get; }
         public bool menor_un_año { get; set; }
 
-//user incoming data
+        //user incoming data
+#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public UserInfo? userinfo;
+#pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
 
     }
 }

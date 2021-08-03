@@ -202,12 +202,6 @@ namespace HospitalSalvador.Controllers
             string _error = "";
             IdentityRole identityRole;
             var user = _mapper.Map<MyIdentityUser>(formdata);
-            if (user.Email == null)
-            {
-                user.Email = formdata.UserCredential + "@hospital.com";
-                identityRole = new IdentityRole { Name = "Client" };
-                await _roleManager.CreateAsync(identityRole);
-            }
 
             user.SecurityStamp = Guid.NewGuid().ToString();
 
@@ -220,7 +214,6 @@ namespace HospitalSalvador.Controllers
                 identityRole = new IdentityRole { Name = formdata.RoleName };
                 await _roleManager.CreateAsync(identityRole);
                 await _userManager.AddToRoleAsync(user, formdata.RoleName);
-                await _userManager.AddToRoleAsync(user, "Client");
 
                 return Ok(new
                 {
@@ -236,7 +229,6 @@ namespace HospitalSalvador.Controllers
                 foreach (var error in result.Errors)
                 {
                     _error = IdentityErrorService.getDescription(error.Code);
-                    
 
                     break;
                 }

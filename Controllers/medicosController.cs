@@ -135,19 +135,13 @@ namespace HospitalSalvador.Controllers
                         .ProjectTo<medicoDirectorioDTO>(_mapper.ConfigurationProvider).ToList();
 
                 if (!medicoslst.Any())
-                    return Ok(new
-                    {
-                        nombre = nombre,
-                        seguroID = seguroID,
-                        especialidadID = especialidadID
-                    });
+                    return NoContent();
 
                 return medicoslst;
 
             }
             catch (Exception)
             {
-
                 throw;
             }
         }

@@ -64,8 +64,11 @@ namespace HospitalSalvador
 
                             errors = error.ErrorMessage;
                             var n = errors.IndexOf("Path");
-                            errorsList.Add(errors.Substring(0, n).Trim());
-                             
+                            if (n! > 0)
+                                errorsList.Add(errors.Substring(0, n).Trim());
+                            else
+                                errorsList.Add(errors);
+
                         }
                         errorsDic.Add(state.Key, errorsList);
                     }

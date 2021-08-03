@@ -48,7 +48,7 @@ namespace HospitalSalvador
             CreateMap<pacienteDTO, pacientes>();
             CreateMap<citaCreateDTO, pacientes>();
             CreateMap<RegisterDTO, MyIdentityUser>()
-               .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.UserCredential));
+               .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
 
             CreateMap<medicos, medicoDirectorioDTO>()
                 .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
@@ -67,5 +67,5 @@ namespace HospitalSalvador
 
 
 
-    }
+}
 }

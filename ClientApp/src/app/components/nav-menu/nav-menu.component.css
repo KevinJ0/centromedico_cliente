@@ -9,10 +9,13 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+.header{
+  box-shadow: rgb(0 0 0 / 5%) 0px 0px 3px;
+margin-bottom:1rem;
+}
 .header-container {
   width: 100%;
-  max-width: 1600px;
+  max-width: var(--max-width);
   margin: auto;
   padding: 1rem clamp(0.5rem, 3vw, 2rem) 0;
   display: grid;
@@ -31,7 +34,7 @@
 }
 
 .menu-main {
-  max-width: 1600px;
+  max-width: var(--max-width);
   margin: auto;
   box-shadow: 0 8px 8px rgb(0 0 0 / 3%);
   padding: 0 clamp(0.5rem, 3vw, 2rem) 0;

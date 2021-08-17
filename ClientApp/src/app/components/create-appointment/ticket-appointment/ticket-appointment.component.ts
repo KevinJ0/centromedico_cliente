@@ -25,7 +25,7 @@ export class TicketAppointmentComponent implements OnInit {
       {
         this.isDependent = true;
       }} else {
-      this.router.navigate(['create-cita']);
+     // this.router.navigate(['create-cita']);
     }
 
     let fechaHora: string = this.citaDataResult.fecha_hora;

@@ -10,10 +10,9 @@ import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NewHomeComponent } from './components/home/new-home/new-home.component';
-import { BarnerComponent } from './barner/barner.component';
+import { BarnerComponent } from './components/barner/barner.component';
 import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 import { LoginComponent } from './components/login/login.component';
-import { ListDoctorsComponent } from './components/list-doctors/list-doctors.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -31,21 +30,27 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { TicketAppointmentComponent } from './components/create-appointment/ticket-appointment/ticket-appointment.component';
+import { MedicalDirectoryComponent } from './components/medical-directory/medical-directory.component';
 import { AccountService } from './services/account.service';
 import { JwtInterceptor } from './_helpers/jwt.Interceptor';
 import { JwtModule } from '@auth0/angular-jwt';
 import { CitaService } from './services/cita.service';
 import { CoberturaService } from './services/cobertura.service';
-import { DoctorHorarioService } from './services/doctor-horario.service';
+import { DoctorService } from './services/doctor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import * as _moment from 'moment';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DoctorCardComponent } from './components/medical-directory/doctor-card/doctor-card.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { NoProfilePhotoPipe } from './Pipes/no-imagen.pipe';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { DoctorComponent } from './components/doctor/doctor.component';
+
+
+
 export function tokenGetter() {
-  console.log("hola");
-
   //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
-
   return localStorage.getItem("jwt");
 }
 export const MY_FORMATS = {
@@ -69,8 +74,11 @@ export const MY_FORMATS = {
     BarnerComponent,
     CreateAppointmentComponent,
     LoginComponent,
-    ListDoctorsComponent,
+    MedicalDirectoryComponent,
+    NoProfilePhotoPipe,
     TicketAppointmentComponent,
+    DoctorCardComponent,
+    DoctorComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -83,16 +91,19 @@ export const MY_FORMATS = {
     MatButtonToggleModule,
     MatListModule,
     MatDividerModule,
-    MatRadioModule,
+    MatRadioModule,  
     MatNativeDateModule,
+    MatPaginatorModule,
     MatSnackBarModule,
     NgxMaskModule.forRoot(),
     MatRippleModule,
     MatSelectModule,
+    MatProgressSpinnerModule,
     MatIconModule,
     MatDatepickerModule,
     MatCardModule,
-    FormsModule, MatInputModule,
+    FormsModule, 
+    MatInputModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
@@ -103,10 +114,13 @@ export const MY_FORMATS = {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: CreateAppointmentComponent, pathMatch: 'full' },
+      { path: '', component: MedicalDirectoryComponent, pathMatch: 'full' },
       { path: 'paciente-login', component: LoginComponent },
       { path: 'create-cita', component: CreateAppointmentComponent },
       { path: 'ticket', component: TicketAppointmentComponent },
+      { path: 'directorio-medico', component: MedicalDirectoryComponent },
+      { path: 'medico/:id', component: DoctorComponent },
+
     ],
       { useHash: false }),
   ],
@@ -119,7 +133,7 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    AccountService, CitaService, DoctorHorarioService, CoberturaService],
+    AccountService, CitaService, DoctorService, CoberturaService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

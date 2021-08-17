@@ -64,7 +64,7 @@ namespace HospitalSalvador
             src.servicios_medicos.Where(x => x.medicos.ID == src.ID).Select(x => x.servicios.descrip).ToList()
             ));
         }
-
+         
 
 
 }

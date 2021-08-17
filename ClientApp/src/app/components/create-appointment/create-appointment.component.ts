@@ -8,11 +8,11 @@ import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'r
 import * as _moment from 'moment';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { DoctorHorarioService } from 'src/app/services/doctor-horario.service';
 import { CoberturaService } from 'src/app/services/cobertura.service';
 import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
 import { hora, UserInfo, seguro, cita, cobertura, citaResult } from 'src/app/interfaces/InterfacesDto';
+import { SeguroService } from 'src/app/services/seguro.service';
 
 const moment = _moment;
 
@@ -61,10 +61,7 @@ export class CreateAppointmentComponent implements OnInit {
   diasLaborables: Date[];
 
   Horas: hora[];
-
   dateFilter;
-
-
 
   ngOnInit() {
 
@@ -123,7 +120,7 @@ export class CreateAppointmentComponent implements OnInit {
     this.firstFormGroup.get("serviceTypeControl")
       .valueChanges
       .subscribe(value => {
-        this.coberturaSvc.GetSegurosByServicio(this.medicoID, value)
+        this.seguroSvc.GetSegurosByServicio(this.medicoID, value)
           .pipe(catchError(err => {
             console.log('Ha ocurrido un error al tratar de obtener la lista de seguros: ', err);
             return of([]);
@@ -200,6 +197,7 @@ export class CreateAppointmentComponent implements OnInit {
           sexo: formdata["userSexControl"],
           contacto: contacto
         }
+        
         _cita = {
           "nombre": nombre,
           "apellido": apellido,
@@ -302,7 +300,9 @@ export class CreateAppointmentComponent implements OnInit {
   constructor(
 
     private router: Router,
-    private _snackBar: MatSnackBar, private doctorSvc: DoctorHorarioService, private coberturaSvc: CoberturaService,
+    private _snackBar: MatSnackBar,
+     private coberturaSvc: CoberturaService,
+     private seguroSvc: SeguroService,
     public citaSvc: CitaService, private accountSvc: AccountService,
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
 

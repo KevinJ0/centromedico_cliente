@@ -86,6 +86,8 @@ namespace HospitalSalvador.Controllers
         [HttpPost("[action]")]
         public async Task<ActionResult> UploadAsync([FromForm] IFormFile file)
         {
+            string BucketName = "centromedico-assets";
+
             try
             {
                 /*  var transferUtility = new TransferUtility(_amazons3);
@@ -101,18 +103,37 @@ namespace HospitalSalvador.Controllers
 
                 var putRequest = new PutObjectRequest()
                 {
-                    BucketName = "hospitalsalvador",
+                    BucketName = BucketName,
                     Key = file.FileName,
                     InputStream = file.OpenReadStream(),
-                    ContentType = file.ContentType
+                    ContentType = file.ContentType,
+                    CannedACL = S3CannedACL.PublicRead,
+
                 };
 
+                // Create a CopyObject request
+                GetPreSignedUrlRequest request = new GetPreSignedUrlRequest
+                {
+                    BucketName = "centromedico-assets",
+                    Key = file.FileName,
+                };
+                  
+                // Get path for request
                 var result = await _amazons3.PutObjectAsync(putRequest);
-                return Ok(result);
+                var url  = "https://"+ BucketName+".s3."+ _amazons3.Config.RegionEndpoint.SystemName + ".amazonaws.com/" + file.FileName;
+                return Ok(url);
             }
-            catch (AmazonS3Exception s3Exception)
+            catch (AmazonS3Exception amazonS3Exception)
             {
-                throw new Exception(s3Exception.Message);
+                if (amazonS3Exception.ErrorCode != null &&
+                (amazonS3Exception.ErrorCode.Equals("InvalidAccessKeyId")
+                ||
+                amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
+                {
+                    throw new Exception("Check the provided AWS Credentials.");
+                }
+
+                throw amazonS3Exception;
             }
 
         }

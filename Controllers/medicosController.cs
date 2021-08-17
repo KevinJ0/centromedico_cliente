@@ -58,18 +58,18 @@ namespace HospitalSalvador.Controllers
         /// <response code="204">Este médico no tiene los datos requeridos para ser devuelto.</response>  
         /// <response code="500">Error interno del servidor.</response>  
         [HttpGet("{id}")]
-        public async Task<ActionResult<medicoDTO>> get_medico(int Id)
+        public async Task<ActionResult<medicoDTO>> getMedico(int Id)
         {
-
+            try
+            {
+           
             var horarios = await _db.horarios_medicos.FirstOrDefaultAsync(x => x.medicosID == Id);
 
             medicoDTO _medicoDTO = await _db.medicos.ProjectTo<medicoDTO>(_mapper.ConfigurationProvider)
              .FirstOrDefaultAsync(x => x.ID == Id);
 
-
             if (horarios == null)
                 return NoContent();
-
 
             Dictionary<string, string> schedulelst = new Dictionary<string, string>();
 
@@ -92,6 +92,13 @@ namespace HospitalSalvador.Controllers
             _medicoDTO.horarios = schedulelst;
 
             return _medicoDTO;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Ha ocurrido un error al tratar de conseguir al médico: " + e.Message);
+            }
+
         }
 
 
@@ -112,7 +119,7 @@ namespace HospitalSalvador.Controllers
         /// <response code="200">Devuelve la lista de médicos.</response>  
         /// <response code="204">No encontró ningún médico con estos parametros.</response>  
         [HttpGet]
-        public async Task<ActionResult<List<medicoDirectorioDTO>>> filter_medicos([FromQuery] string nombre = "", string especialidadID = "", string seguroID = "")
+        public async Task<ActionResult<List<medicoDirectorioDTO>>> filterMedicos([FromQuery] string nombre = "", string especialidadID = "", string seguroID = "")
         {
             try
             {
@@ -121,9 +128,9 @@ namespace HospitalSalvador.Controllers
 
                 if (String.IsNullOrWhiteSpace(nombre))
                     nombre = String.Empty;
-                if (String.IsNullOrWhiteSpace(especialidadID))
+                if (String.IsNullOrWhiteSpace(especialidadID) || especialidadID == "0")
                     especialidadID = String.Empty;
-                if (String.IsNullOrWhiteSpace(seguroID))
+                if (String.IsNullOrWhiteSpace(seguroID) || seguroID == "0")
                     seguroID = String.Empty;
 
                 medicoslst = _db.medicos
@@ -270,7 +277,7 @@ namespace HospitalSalvador.Controllers
         }
 
         [HttpGet("[action]")]
-        public ActionResult<List<especialidadDTO>> GetEspecialidades()
+        public ActionResult<List<especialidadDTO>> getEspecialidades()
         {
             try
             {

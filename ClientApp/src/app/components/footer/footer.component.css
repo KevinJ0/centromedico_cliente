@@ -13,6 +13,8 @@ footer {
 }
 .footer-logo {
   width: clamp(12rem, 50vw, 20rem);
+  max-width: var(--max-width);
+
 }
 .row {
   display: grid;
@@ -20,7 +22,7 @@ footer {
   grid-template-columns: 2fr 1fr 1fr;
   gap: 2rem;
   margin: auto;
-  max-width: 1600px;
+  max-width: var(--max-width);
 }
 .row .top-row-item,
 .bottom-row-item {

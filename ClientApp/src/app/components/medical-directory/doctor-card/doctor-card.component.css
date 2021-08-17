@@ -1,0 +1,53 @@
+.doctor-card {
+  margin: 1rem;
+  display: flex;
+  padding: 1rem;
+  box-shadow: rgb(0 0 0 / 25%) 0px 0px 5px;
+  align-items: center;
+  justify-content: flex-start;
+}
+.doctor-card p {
+  margin: 0 0 5px 0;
+}
+
+.doctor-img img {
+  width: 120px;
+  height: 120px;
+  margin-right: 1rem;
+      border-radius: 100px;
+
+}
+
+
+.doctor-info .contactos .numeros {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr 1fr;
+}
+.doctor-info .contactos .telefono1,
+.telefono2 {
+  font-size: 1.3rem;
+  display: flex;
+}
+.doctor-info .contactos .correo {
+  font-size: 0.8rem;
+  font-weight: bold;
+  color: #494949;
+}
+.doctor-info .contactos img {
+    margin-left: 5px;
+    max-width: 15px;
+  }
+  
+.doctor-card .descrip {
+  margin-bottom: 1rem;
+}
+.nombre {
+  color: #0195ff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.especialidades {
+  color: #494949;
+  font-weight: 600;
+}

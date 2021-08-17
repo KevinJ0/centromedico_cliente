@@ -17,9 +17,6 @@ namespace HospitalSalvador.Models.DTO
         [StringLength(10)]
         public string colegiatura { get; set; }
         [Required]
-        [StringLength(11)]
-        public string cedula { get; set; }
-        [Required]
         [StringLength(30)]
         public string nombre { get; set; }
         [StringLength(40)]
@@ -27,16 +24,11 @@ namespace HospitalSalvador.Models.DTO
         [Required]
         [StringLength(1)]
         public string sexo { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime? fecha_nacimiento { get; set; }
-        [Column(TypeName = "date")]
-        public DateTime fecha_creacion { get; set; }
         [StringLength(50)]
         public string correo { get; set; }
         public string url_twitter { get; set; }
         public string url_facebook { get; set; }
         public string url_instagram { get; set; }
-        public string MyIdentityUserID { get; set; }
         [StringLength(10)]
         public string telefono1 { get; set; }
         [StringLength(10)]

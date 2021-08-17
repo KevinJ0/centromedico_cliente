@@ -62,6 +62,29 @@ namespace HospitalSalvador.Controllers
 
         }
 
+        [HttpGet("[action]")]
+        public ActionResult<List<seguroDTO>> getAllSeguros()
+        {
+            try
+            {
+                List<seguroDTO> seguroslst = _db.seguros
+                    .ProjectTo<seguroDTO>(_mapper.ConfigurationProvider)
+                    .ToList();
+
+                if (!seguroslst.Any())
+                    return NoContent();
+
+                return seguroslst;
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+
+        }
+
+
         // GET: api/<segurosController>
         [HttpGet("[action]")]
         public ActionResult<List<seguroDTO>> getSegurosByServicio(int medicoID, int servicioID)

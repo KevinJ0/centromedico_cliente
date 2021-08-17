@@ -28,12 +28,5 @@ export class CoberturaService {
       }));
   }
 
-  GetSegurosByServicio(medicoID: number, servicioID: number): Observable<seguro[]> {
-
-    return this.http.get<seguro[]>(this.baseUrl +  
-      `/api/seguros/GetSegurosByServicio?servicioID=${servicioID}&medicoID=${medicoID}`)
-      .pipe(map((result: seguro[]) => {
-        return result;
-      }));
-  }
+ 
 }

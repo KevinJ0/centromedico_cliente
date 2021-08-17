@@ -1,5 +1,5 @@
 main {
-  max-width: 1600px;
+  max-width: 1360px;
   margin: auto;
   padding: 3rem clamp(0.5rem, 4vw, 6rem);
 }
@@ -90,7 +90,7 @@ nb-radio {
   padding: 1rem;
 }
 
-.payment-form .products .item{
+.payment-form .products .item {
   margin-bottom: 1em;
 }
 .payment-form .content-payment .item {
@@ -113,9 +113,8 @@ nb-radio {
 .payment-form .products .item p {
   margin-bottom: 0.2em;
 }
-.payment-form .content-payment .item  p{
+.payment-form .content-payment .item p {
   margin: 0;
-  
 }
 .payment-form .products .price {
   float: right;
@@ -198,7 +197,7 @@ mat-stepper {
 }
 
 @media only screen and (max-width: 800px) {
-  mat-card { 
+  mat-card {
     padding: 0;
   }
   .userdata-content {

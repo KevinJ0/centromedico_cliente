@@ -66,3 +66,46 @@ export interface citaResult {
     correo: string;
 
 }
+
+export interface medico {
+    id: number,
+    exequatur: string,
+    colegiatura: string,
+    cedula: string,
+    nombre: string,
+    apellido: string,
+    sexo: string,
+    correo: string,
+    url_twitter: string,
+    url_facebook: string,
+    url_instagram: string,
+    telefono1: string,
+    telefono2: string,
+    consultorio: number,
+    estado: Boolean,
+    profilePhoto: string,
+    especialidades: string[],
+    seguros: string[],
+    servicios: string[];
+    horarios: Object;
+}
+
+export interface doctorCard {
+    id: number;
+    exequatur: string;
+    colegiatura: string;
+    nombre: string;
+    apellido: string;
+    sexo: string;
+    correo: string;
+    url_twitter: string;
+    url_facebook: string;
+    url_instagram: string;
+    telefono1: string;
+    telefono2: string;
+    consultorio: number;
+    profilePhoto: string
+    telefono1_contact: string;
+    telefono2_contact: string;
+    especialidades: string[];
+}

@@ -20,7 +20,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
         transition(
           ':enter',
           [
-            style({ opacity: 0 }),
+            style({ opacity: 0 }), 
             animate('300ms ease-out',
               style({ opacity: 1 }))
           ]
@@ -120,6 +120,7 @@ export class MedicalDirectoryComponent implements OnInit {
     }
   }
 
+  
   pageChangeEvent(event) {
     const offset = ((event.pageIndex + 1) - 1) * event.pageSize;
     this.splicedData = this.doctorCardList.slice(offset).slice(0, event.pageSize);

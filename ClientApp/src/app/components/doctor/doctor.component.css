@@ -1,0 +1,231 @@
+main {
+  padding: 3rem clamp(0.5rem, 4vw, 6rem);
+  max-width: 1360px;
+  margin: auto;
+}
+.progress-content {
+  padding: clamp(1rem, 18vh, 10rem) 0px !important;
+}
+mat-card {
+  margin-bottom: clamp(1rem, 7vh, 3rem);
+}
+mat-progress-spinner {
+  margin: auto;
+}
+
+.back {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-decoration: none;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.header-info > mat-card-content {
+  display: flex;
+  padding: 0rem 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: space-between;
+}
+
+.header-info > mat-card-content img {
+  border-radius: 100%;
+  width: clamp(8rem, 14vw, 10rem);
+  height: clamp(8rem, 14vw, 10rem);
+}
+
+.left-side {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+.right-side button {
+  width: 10rem;
+  height: 2.25rem;
+}
+.right-side button span {
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+.right-side button mat-icon {
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.nombre h5 {
+  font-size: clamp(1.5rem, 6vw, 2rem);
+  margin: 0;
+  color: var(--primary-color);
+}
+.nombre h6 {
+  margin: 0;
+  font-size: clamp(14px, 4vw, 1rem);
+  color: #5e5e5e;
+  text-transform: uppercase;
+}
+
+.right-side button {
+  width: 12rem;
+  height: 3.5rem;
+}
+.right-side button span {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.right-side button mat-icon {
+  font-size: 2rem;
+  width: 2rem;
+  height: 2rem;
+}
+/* ---------------------- */
+
+.body-info > mat-card-content {
+  padding: 0rem 1rem;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1.5fr;
+  align-items: start;
+  gap: clamp(0.5rem, 1.5vw, 1rem);
+  font-weight: 500;
+}
+.horizontal-divider {
+  display: none;
+}
+.icon {
+  margin-right: clamp(0.8rem, 2vw, 1.1rem);
+  width: 3rem;
+}
+.body-info h5 {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.body-info .schedule table {
+  width: 100%;
+}
+
+.body-info .schedule table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.body-info .schedule table td {
+  padding: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.personal-info .item {
+  margin-top: 1.5rem;
+}
+.personal-info .item p {
+  margin: 0;
+}
+.personal-info .item span p {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+.personal-info .item a {
+  margin-right: 10px;
+  color: none;
+  text-decoration: none;
+}
+
+.personal-info .item a mat-icon {
+  color: var(--primary-color);
+  font-size: 2rem;
+  width: 2rem;
+  height: auto;
+}
+
+.personal-info .item p mat-icon {
+  margin-right: 5px;
+  color: var(--primary-color);
+}
+
+.personal-info .item > p {
+  font-size: 1rem;
+  color: #3e3e3e;
+  font-weight: 500;
+}
+
+.personal-info .item .cod {
+  margin: 0.4rem 0;
+  padding: 10px 1rem;
+  color: white;
+  background: var(--primary-color);
+  border-radius: 29px;
+  width: fit-content;
+  font-weight: 500;
+}
+
+.insurance li {
+  margin-bottom: 1rem;
+}
+@media only screen and (max-width: 1000px) {
+  .header-info > mat-card-content {
+    flex-direction: column;
+  }
+  
+  .body-info > mat-card-content {
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: 1fr;
+  }
+  .schedule-divider-v {
+    display: none;
+  }
+  .schedule-divider-h {
+    display: block;
+  }
+  .schedule {
+    grid-column: 1 / span 3;
+    margin-top: 1rem;
+    grid-row: 3;
+  }
+}
+ 
+
+@media only screen and (max-width: 600px) {
+  .header-info .left-side {
+    margin-bottom: 1rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+  }
+
+  .header-info > mat-card-content img {
+    border-radius: 100%;
+    width: clamp(10rem, 47vw, 14rem);
+    height: clamp(10rem, 47vw, 14rem);
+  }
+  .body-info > mat-card-content {
+    grid-template-rows: auto auto auto;
+    grid-template-columns: 1fr;
+  }
+
+  .horizontal-divider {
+    display: block;
+  }
+  .schedule,
+  .insurance {
+    grid-column: span 1;
+    margin-top: 1rem;
+    grid-row: auto;
+  }
+}

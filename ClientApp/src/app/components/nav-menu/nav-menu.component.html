@@ -18,7 +18,13 @@
             <a href="">Ofertas Laborales</a>
           </li>
           <li>
-            <a href="login"><i class="bi bi-person-fill"></i>Paciente Login</a>
+            <span *ngIf="userName; else login">{{userName}}</span>
+            <ng-template #login> <a href="login">
+                <mat-icon matSuffix>person</mat-icon>
+                Paciente Login
+            </ng-template>
+            </a>
+
           </li>
         </ul>
       </div>

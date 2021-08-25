@@ -2,7 +2,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'rxjs/operators';
 import * as _moment from 'moment';
@@ -41,7 +41,7 @@ export class CreateAppointmentComponent implements OnInit {
 
   seguros$: Observable<any>;
   servicios$: Observable<any>;
-  medicoID: number = 1;
+  medicoId: number = 0;
   diferencia: number = 0;
   pago: number = 0;
   cobertura: number = 0;
@@ -120,7 +120,7 @@ export class CreateAppointmentComponent implements OnInit {
     this.firstFormGroup.get("serviceTypeControl")
       .valueChanges
       .subscribe(value => {
-        this.seguroSvc.GetSegurosByServicio(this.medicoID, value)
+        this.seguroSvc.GetSegurosByServicio(this.medicoId, value)
           .pipe(catchError(err => {
             console.log('Ha ocurrido un error al tratar de obtener la lista de seguros: ', err);
             return of([]);
@@ -142,7 +142,7 @@ export class CreateAppointmentComponent implements OnInit {
 
           this.secondFormGroup.get("timeControl").reset(null, { onlySelf: true, emitEvent: false });
 
-          this.citaSvc.GetTimeList(value, this.medicoID)
+          this.citaSvc.GetTimeList(value, this.medicoId)
             .pipe(catchError(err => {
               console.log('Ha ocurrido un error al tratar de obtener la lista de las horas disponibles: ', err);
               return of([]);
@@ -197,14 +197,14 @@ export class CreateAppointmentComponent implements OnInit {
           sexo: formdata["userSexControl"],
           contacto: contacto
         }
-        
+
         _cita = {
           "nombre": nombre,
           "apellido": apellido,
           "sexo": sexo,
           "doc_identidad": doc_identidad,
           "fecha_hora": fecha_hora,
-          "medicosID": Number.parseInt(localStorage.getItem("medicoId")),
+          "medicosID": this.medicoId,
           "serviciosID": formdata["serviceTypeControl"],
           "fecha_nacimiento": fecha_nacimiento,
           "contacto": formdata["contactControl"],
@@ -235,17 +235,17 @@ export class CreateAppointmentComponent implements OnInit {
   }
   setCostos() {
 
-    var servicioID = Number.parseInt(this.firstFormGroup.get("serviceTypeControl").value);
-    var seguroID = Number.parseInt(this.firstFormGroup.get("insuranceControl").value);
+    var servicioId = Number.parseInt(this.firstFormGroup.get("serviceTypeControl").value);
+    var seguroId = Number.parseInt(this.firstFormGroup.get("insuranceControl").value);
 
-    //console.log(servicioID, seguroID)
+    //console.log(servicioId, seguroId)
 
-    if (Number.isInteger(seguroID) && Number.isInteger(servicioID)) {
+    if (Number.isInteger(seguroId) && Number.isInteger(servicioId)) {
       this.loadingPayment = true; //muestro la pagina de carga
 
       setTimeout(() => {
 
-        this.coberturaSvc.GetCobertura(this.medicoID, seguroID, servicioID)
+        this.coberturaSvc.GetCobertura(this.medicoId, seguroId, servicioId)
           .pipe(catchError(err => {
             this.loadingPayment = false;
             console.error('Error al intentar acceder a la cobertura');
@@ -300,20 +300,24 @@ export class CreateAppointmentComponent implements OnInit {
   constructor(
 
     private router: Router,
+    private rutaActiva: ActivatedRoute,
     private _snackBar: MatSnackBar,
-     private coberturaSvc: CoberturaService,
-     private seguroSvc: SeguroService,
+    private coberturaSvc: CoberturaService,
+    private seguroSvc: SeguroService,
     public citaSvc: CitaService, private accountSvc: AccountService,
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
 
-    localStorage.setItem("medicoId", "1");
-    localStorage.setItem("especialidadId", "1");
+    this.medicoId = Number.parseInt(this.rutaActiva.snapshot.queryParamMap.get('medicoId'));
+    if (!this.medicoId ) {
+      this.router.navigate(['']);
+    }
+
 
     this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
       .pipe(map(({ matches }) => matches ? 'horizontal' : 'vertical'));
 
     //inicializa las fechas permitidas
-    this.citaSvc.GetNewCita(this.medicoID)
+    this.citaSvc.GetNewCita(this.medicoId)
       .pipe(
         catchError(err => {
           console.error('Error al tratar de acceder a los pre-datos de la cita');

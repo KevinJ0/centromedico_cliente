@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { UserInfo } from '../interfaces/InterfacesDto';
-import { BehaviorSubject,throwError, of, Observable } from 'rxjs';
+import { BehaviorSubject, throwError, of, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 @Injectable({
@@ -11,18 +11,18 @@ export class AccountService {
   baseUrl: string;
 
   // Url to access our Web API’s
-  private baseUrlLogin: string = "/api/account/login";
+  private baseUrlLogin: string = "api/account/login";
 
-  private baseUrlRegister: string = "/api/account/register";
+  private baseUrlRegister: string = "api/account/register";
 
   // Token Controller
-  private baseUrlToken: string = "/api/token/auth";
+  private baseUrlToken: string = "api/token/auth";
 
 
   // User related properties
-  private loginStatus = new BehaviorSubject<boolean>(this.checkLoginStatus());
-  private UserName = new BehaviorSubject<string>(localStorage.getItem('username'));
-  private UserRole = new BehaviorSubject<string>(localStorage.getItem('userRoles'));
+  public loginStatus = new BehaviorSubject<boolean>(this.checkLoginStatus());
+  public UserName = new BehaviorSubject<string>(localStorage.getItem('username'));
+  public UserRole = new BehaviorSubject<string>(localStorage.getItem('userRoles'));
 
   constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -30,12 +30,12 @@ export class AccountService {
 
   getNewRefreshToken(): Observable<any> {
 
-    let username = localStorage.getItem('username');
+    let usercredential = localStorage.getItem('username');
     let refreshToken = localStorage.getItem('refreshToken');
     const grantType = "refresh_token";
 
 
-    return this.http.post<any>(this.baseUrl + this.baseUrlToken, { username, refreshToken, grantType }).pipe(
+    return this.http.post<any>(this.baseUrl + this.baseUrlToken, { usercredential, refreshToken, grantType }).pipe(
       map((result: any) => {
         if (result && result.authToken.token) {
           this.loginStatus.next(true);
@@ -56,14 +56,10 @@ export class AccountService {
 
 
   //Login Method
-  login(username: string, password: string) {
+  login(usercredential: string, password: string) {
     const grantType = "password";
-    // pipe() let you combine multiple functions into a single function. 
-    // pipe() runs the composed functions in sequence.
-
-    return this.http.post<any>(this.baseUrlToken, { username, password, grantType }).pipe(
-
-
+    
+    return this.http.post<any>(this.baseUrl + this.baseUrlToken, { usercredential, password, grantType }).pipe(
       map((result: any) => {
 
         // login successful if there's a jwt token in the response
@@ -77,12 +73,11 @@ export class AccountService {
           localStorage.setItem('expiration', result.authToken.expiration);
           localStorage.setItem('userRole', result.authToken.roles);
           localStorage.setItem('refreshToken', result.authToken.refresh_token);
-          this.UserName.next(localStorage.getItem('username'));
-          this.UserRole.next(localStorage.getItem('userRole'));
-
-
+          this.UserName.next(result.authToken.username);
+          this.UserRole.next(result.authToken.roles);
+ 
         }
-
+        console.log(result);
         return result;
 
       })
@@ -104,7 +99,7 @@ export class AccountService {
 
 
   isUserDocIdentConfirm(): Observable<boolean> {
-    return this.http.get<any>(this.baseUrl + "/api/account/isUserDocIdentConfirm")
+    return this.http.get<any>(this.baseUrl + "api/account/isUserDocIdentConfirm")
       .pipe(map((result: any) => {
 
         return result;
@@ -113,24 +108,24 @@ export class AccountService {
   }
 
   getUserInfo(): Observable<UserInfo> {
-    return this.http.get<UserInfo>(this.baseUrl + "/api/account/getUserInfo")
+    return this.http.get<UserInfo>(this.baseUrl + "api/account/getUserInfo")
       .pipe(map((data: UserInfo) => data),
-      catchError(err => {
-         
-        return throwError(err);
-      })
+        catchError(err => {
+
+          return throwError(err);
+        })
       );
 
   }
 
 
   setUserInfo(userInfo: UserInfo): Observable<boolean> {
-    return this.http.post<boolean>(this.baseUrl + "/api/account/setUserInfo", userInfo)
+    return this.http.post<boolean>(this.baseUrl + "api/account/setUserInfo", userInfo)
       .pipe(
         map(() => true),
-        catchError(err => { 
-        return throwError(err);
-      })
+        catchError(err => {
+          return throwError(err);
+        })
       );
   }
 

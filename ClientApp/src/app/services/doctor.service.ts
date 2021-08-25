@@ -23,7 +23,7 @@ export class DoctorService {
     try {
 
       return this.http.get<doctorCard[]>(this.baseUrl +
-        `/api/medicos?nombre=${nombre}&especialidadID=${especialidadId}&seguroID=${seguroId}`)
+        `api/medicos?nombre=${nombre}&especialidadID=${especialidadId}&seguroID=${seguroId}`)
         .pipe(map(result => {
           console.log(result)
           return result;
@@ -40,19 +40,19 @@ export class DoctorService {
 
 
 
-  GetMedicoById(medicoId: number): medico {
+  GetMedicoById(medicoId: number): Observable<medico> {
 
     try {
 
       return this.http.get<medico>(this.baseUrl +
-        `/api/medicos/${medicoId}`)
-        .subscribe(r => {
-          console.log(r)
-          return r;
-        }, err => {
+        `api/medicos/${medicoId}`)
+        .pipe(map(result => {
+          console.log(result)
+          return result;
+        }), catchError(err => {
           console.log('Ha ocurrido un error al tratar de obtener al médico: ', err);
           return of();
-        });
+        }));
 
     } catch (error) {
       console.log('Ha ocurrido un error al tratar de obtener los médicos: ', error);

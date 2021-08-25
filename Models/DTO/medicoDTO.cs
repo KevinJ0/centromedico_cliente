@@ -42,7 +42,7 @@ namespace HospitalSalvador.Models.DTO
         public List<string> servicios { get; set; }
         //public virtual horarios_medicos horarios_medicos { get; set; }
 
-        public Dictionary<string, string> horarios {get; set;}
+        public Dictionary<string, List<string>> horarios {get; set;}
     }
    
 }

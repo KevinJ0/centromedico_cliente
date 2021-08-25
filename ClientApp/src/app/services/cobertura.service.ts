@@ -12,7 +12,7 @@ export class CoberturaService {
   baseUrl: string;
 
   // Url to access our Web API’s
-  private baseEndPoint: string = "/api/citas/getCoberturas";
+  private baseEndPoint: string = "api/citas/getCoberturas";
 
   constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;

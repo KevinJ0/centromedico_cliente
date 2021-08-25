@@ -46,7 +46,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { NoProfilePhotoPipe } from './Pipes/no-imagen.pipe';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DoctorComponent } from './components/doctor/doctor.component';
-
+import {MatTabsModule} from '@angular/material/tabs';
+import { MaterialModule } from "./shared/material.module"; 
 
 
 export function tokenGetter() {
@@ -84,9 +85,11 @@ export const MY_FORMATS = {
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
     MatStepperModule,
+    MatTabsModule,
     MatCheckboxModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MaterialModule,
     MatFormFieldModule,
     MatButtonToggleModule,
     MatListModule,
@@ -114,17 +117,17 @@ export const MY_FORMATS = {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: MedicalDirectoryComponent, pathMatch: 'full' },
+      { path: '', component: LoginComponent, pathMatch: 'full' },
       { path: 'paciente-login', component: LoginComponent },
-      { path: 'create-cita', component: CreateAppointmentComponent },
+      { path: 'crear-cita', component: CreateAppointmentComponent },
       { path: 'ticket', component: TicketAppointmentComponent },
-      { path: 'directorio-medico', component: MedicalDirectoryComponent },
-      { path: 'medico/:id', component: DoctorComponent },
-
+      { path: 'medicos', component: MedicalDirectoryComponent },
+      { path: 'medicos/:id', component: DoctorComponent },
     ],
       { useHash: false }),
   ],
   providers: [
+    
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     {
       provide: DateAdapter,

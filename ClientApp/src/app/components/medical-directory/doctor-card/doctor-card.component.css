@@ -14,10 +14,8 @@
   width: 120px;
   height: 120px;
   margin-right: 1rem;
-      border-radius: 100px;
-
+  border-radius: 100px;
 }
-
 
 .doctor-info .contactos .numeros {
   display: grid;
@@ -35,10 +33,10 @@
   color: #494949;
 }
 .doctor-info .contactos img {
-    margin-left: 5px;
-    max-width: 15px;
-  }
-  
+  margin-left: 5px;
+  max-width: 15px;
+}
+
 .doctor-card .descrip {
   margin-bottom: 1rem;
 }
@@ -50,4 +48,8 @@
 .especialidades {
   color: #494949;
   font-weight: 600;
+}
+
+a {
+  text-decoration: none;
 }

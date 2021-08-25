@@ -20,7 +20,7 @@ export class EspecialidadService {
 
     try {
       return this.http.get<especialidad[]>(this.baseUrl +
-        `/api/especialidades/getAllEspecialidades`)
+        `api/especialidades/getAllEspecialidades`)
         .pipe(map(result => {
           console.log(result)
           return result;

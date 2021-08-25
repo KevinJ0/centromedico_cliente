@@ -71,19 +71,19 @@ namespace HospitalSalvador.Controllers
             if (horarios == null)
                 return NoContent();
 
-            Dictionary<string, string> schedulelst = new Dictionary<string, string>();
+            Dictionary<string, List<string>> schedulelst = new Dictionary<string, List<string>>();
 
-            string lunesHoras = getMonday(horarios);
-            string martesHoras = getTuesday(horarios);
-            string miercolesHoras = getWednesday(horarios);
-            string juevesHoras = getThursday(horarios);
-            string viernesHoras = getFriday(horarios);
-            string sabadosHoras = getSaturday(horarios);
-            string domingosHoras = getSunday(horarios);
+            List<string> lunesHoras = getMonday(horarios);
+                List<string> martesHoras = getTuesday(horarios);
+                List<string> miercolesHoras = getWednesday(horarios);
+                List<string> juevesHoras = getThursday(horarios);
+                List<string> viernesHoras = getFriday(horarios);
+                List<string> sabadosHoras = getSaturday(horarios);
+                List<string> domingosHoras = getSunday(horarios);
 
             schedulelst.Add("Lunes", lunesHoras);
             schedulelst.Add("Martes", martesHoras);
-            schedulelst.Add("Miércoles", miercolesHoras);
+            schedulelst.Add("Miercoles", miercolesHoras);
             schedulelst.Add("Jueves", juevesHoras);
             schedulelst.Add("Viernes", viernesHoras);
             schedulelst.Add("Sabados", sabadosHoras);
@@ -153,7 +153,7 @@ namespace HospitalSalvador.Controllers
             }
         }
 
-        private string getSunday(horarios_medicos horarios)
+        List<string> getSunday(horarios_medicos horarios)
         {
             if (horarios.sunday_from != null && horarios.sunday_until != null)
             {
@@ -168,7 +168,7 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getSaturday(horarios_medicos horarios)
+        List<string> getSaturday(horarios_medicos horarios)
         {
             if (horarios.saturday_from != null && horarios.saturday_until != null)
             {
@@ -183,7 +183,7 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getWednesday(horarios_medicos horarios)
+       List<string>  getWednesday(horarios_medicos horarios)
         {
             if (horarios.wednesday_from != null && horarios.wednesday_until != null)
             {
@@ -199,7 +199,7 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getFriday(horarios_medicos horarios)
+       List<string>  getFriday(horarios_medicos horarios)
         {
             if (horarios.friday_from != null && horarios.friday_until != null)
             {
@@ -215,7 +215,7 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getThursday(horarios_medicos horarios)
+       List<string>  getThursday(horarios_medicos horarios)
         {
             if (horarios.thursday_from != null && horarios.thursday_until != null)
             {
@@ -230,7 +230,7 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getTuesday(horarios_medicos horarios)
+       List<string>  getTuesday(horarios_medicos horarios)
         {
             if (horarios.tuesday_from != null && horarios.tuesday_until != null)
             {
@@ -245,7 +245,7 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getMonday(horarios_medicos horarios)
+       List<string>  getMonday(horarios_medicos horarios)
         {
             if (horarios.monday_from != null && horarios.monday_until != null)
             {
@@ -260,20 +260,23 @@ namespace HospitalSalvador.Controllers
                 return null;
         }
 
-        private string getHoursList(TimeSpan WDStartH,
+        private List<string> getHoursList(TimeSpan WDStartH,
         TimeSpan WDEndH, TimeSpan FreeTimeFrom, TimeSpan FreeTimeUntil)
         {
             //primera tanda 
+            List<string> hourslst = new List<string>();
             var _time = WDStartH.ToString();
-            string _hours = Convert.ToDateTime(_time).ToString("hh:mm:sstt");
+            string _hour = Convert.ToDateTime(_time).ToString("h:mm:tt");
             _time = FreeTimeFrom.ToString();
-            _hours = _hours + " - " + Convert.ToDateTime(_time).ToString("hh:mm:sstt");
+            _hour = _hour + " - " + Convert.ToDateTime(_time).ToString("h:mm:tt");
+            hourslst.Add(_hour);
             //segunda tanda 
             _time = FreeTimeUntil.ToString();
-            _hours = _hours + "  " + Convert.ToDateTime(_time).ToString("hh:mm:sstt");
+            _hour = Convert.ToDateTime(_time).ToString("h:mm:tt");
             _time = WDEndH.ToString();
-            _hours = _hours + " - " + Convert.ToDateTime(_time).ToString("hh:mm:sstt");
-            return _hours;
+            _hour = _hour + " - " + Convert.ToDateTime(_time).ToString("h:mm:tt");
+            hourslst.Add(_hour);
+            return hourslst;
         }
 
         [HttpGet("[action]")]

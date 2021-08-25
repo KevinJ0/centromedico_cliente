@@ -109,3 +109,13 @@ export interface doctorCard {
     telefono2_contact: string;
     especialidades: string[];
 }
+
+
+export interface User {
+    id?: string;
+    name?: string;
+    email?: string;
+    role?: string;
+  }
+   
+  

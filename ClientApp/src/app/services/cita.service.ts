@@ -23,7 +23,7 @@ export class CitaService {
 
     try {
       return this.http.get<any>(this.baseUrl +
-        `/api/citas/getNewCita?medicoID=${medicoID}`)
+        `api/citas/getNewCita?medicoID=${medicoID}`)
         .pipe(map(result => {
           return result;
         }));
@@ -37,7 +37,7 @@ export class CitaService {
 
     try {
       return this.http.get<any>(this.baseUrl +
-        `/api/citas/GetTimeList?fecha_hora=${fecha.toISOString()}&medicoID=${medicoID}`)
+        `api/citas/GetTimeList?fecha_hora=${fecha.toISOString()}&medicoID=${medicoID}`)
         .pipe(map(result => {
           return result;
         }), catchError(err => {
@@ -55,7 +55,7 @@ export class CitaService {
     console.info(_cita);
     try {
       return this.http.post<citaResult>(this.baseUrl +
-        `/api/citas/createCita`, _cita)
+        `api/citas/createCita`, _cita)
         .pipe(map(result => {
           this._citaResult = result;
           return result;

@@ -7,25 +7,28 @@
   <div class="doctor-info">
 
     <div class="descrip">
-    <p class="nombre"> {{doctorData.nombre + " "+ doctorData.apellido  }}</p>
-    <p class="especialidades"> {{_especialidades}}</p>
-  </div>
+      <a [routerLink]="['/medicos', doctorData.id]">
+        <p class="nombre"> {{doctorData.nombre + " "+ doctorData.apellido  }}</p>
+      </a>
+      <p class="especialidades"> {{_especialidades}}</p>
+    </div>
 
     <div class="contactos">
       <div class="numeros">
-      <p *ngIf="doctorData.telefono1" class="telefono1">{{doctorData.telefono1}}
-          <img class="contact-icon" *ngIf="doctorData.telefono1_contact.includes('w')" src="../../../../assets/icons/whatsapp.svg"/>
-          <img *ngIf="doctorData.telefono1_contact.includes('t')" src="../../../../assets/icons/phone-call.svg"/>
-      </p>
-      <p *ngIf="doctorData.telefono2" class="telefono2">{{doctorData.telefono2}}
-        <img *ngIf="doctorData.telefono2_contact.includes('w')" src="../../../../assets/icons/whatsapp.svg"/>
-          <img *ngIf="doctorData.telefono2_contact.includes('t')" src="../../../../assets/icons/phone-call.svg"/>
-      </p>
-    </div>
-    <p class="correo">{{doctorData.correo}}</p>
+        <p *ngIf="doctorData.telefono1" class="telefono1">{{doctorData.telefono1}}
+          <img class="contact-icon" *ngIf="doctorData.telefono1_contact.includes('w')"
+            src="../../../../assets/icons/whatsapp.svg" />
+          <img *ngIf="doctorData.telefono1_contact.includes('t')" src="../../../../assets/icons/phone-call.svg" />
+        </p>
+        <p *ngIf="doctorData.telefono2" class="telefono2">{{doctorData.telefono2}}
+          <img *ngIf="doctorData.telefono2_contact.includes('w')" src="../../../../assets/icons/whatsapp.svg" />
+          <img *ngIf="doctorData.telefono2_contact.includes('t')" src="../../../../assets/icons/phone-call.svg" />
+        </p>
+      </div>
+      <p class="correo">{{doctorData.correo}}</p>
 
     </div>
- 
-    
+
+
   </div>
 </div>

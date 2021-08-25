@@ -19,7 +19,7 @@ export class SeguroService {
   GetSegurosByServicio(medicoID: number, servicioID: number): Observable<seguro[]> {
 
     return this.http.get<seguro[]>(this.baseUrl +  
-      `/api/seguros/GetSegurosByServicio?servicioID=${servicioID}&medicoID=${medicoID}`)
+      `api/seguros/GetSegurosByServicio?servicioID=${servicioID}&medicoID=${medicoID}`)
       .pipe(map((result: seguro[]) => {
         return result;
       }));
@@ -30,7 +30,7 @@ export class SeguroService {
     try {
 
       return this.http.get<seguro[]>(this.baseUrl +
-        `/api/seguros/getAllSeguros`)
+        `api/seguros/getAllSeguros`)
         .pipe(map(result => {
           console.log(result)
           return result;

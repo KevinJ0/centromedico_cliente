@@ -1,0 +1,47 @@
+main {
+  margin: auto;
+  max-width: 23rem;
+}
+mat-card {
+  margin-bottom: clamp(1rem, 7vh, 3rem);
+}
+
+mat-card-content {
+  padding: 1rem;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+mat-card-title {
+  margin-top: 2rem;
+  font-size: 28px;
+  color: #4e4e4e;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+}
+form button {
+  margin-top: clamp(1rem, 10vh, 2rem);
+    justify-content: flex-end;
+    align-self: flex-end;
+    font-weight: 300;
+    padding: 3px 1.2rem;
+    text-transform: uppercase;
+}
+
+.forgotpass {
+  margin-top: 0;
+}
+.forgotpass a{
+color:#0254ec;
+}

@@ -1,4 +1,45 @@
-<div class="header">
+<header class="header" id="menu-mobile" role="banner">
+
+  <nav id="nav" class="nav" role="navigation">
+    <div class="mobile-container-logo">
+      <img src="../../../assets/imgs/header_logo.png" class="mobile-main-logo" alt="Logo">
+    </div>
+
+    <!-- ACTUAL NAVIGATION MENU -->
+    <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
+      <li class="nav__item"><a href="#" class="nav__link">Inicio</a></li>
+      <li class="nav__item"><a href="#" class="nav__link">Cita médica</a></li>
+      <li class="nav__item"><a href="#" class="nav__link">Pre-cita de análisis</a></li>
+      
+      <li class="nav__item"><a href="#" class="nav__link">Directorio Médico</a></li>
+      <li class="nav__item"><a href="#" class="nav__link">Resultados</a></li>
+      <li class="nav__item"><a href="#" class="nav__link">Contactos</a></li>
+      <li class="nav__item"><a href="#" class="nav__link">Ubicación</a></li>
+    </ul>
+
+    <!-- MENU TOGGLE BUTTON -->
+    <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
+      <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+        <title>Toggle Menu</title>
+        <g>
+          <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" />
+          <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+          <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+          <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" />
+          <circle class="menuicon__circle" r="23" cx="25" cy="25" />
+        </g>
+      </svg>
+    </a>
+
+    <!-- ANIMATED BACKGROUND ELEMENT -->
+    <div class="splash"></div>
+
+  </nav>
+
+</header>
+
+
+<header id="menu-principal">
   <div class="bg-container-sub">
     <div class="header-container">
 
@@ -18,12 +59,12 @@
             <a href="">Ofertas Laborales</a>
           </li>
           <li>
-            <span *ngIf="userName; else login">{{userName}}</span>
-            <ng-template #login> <a href="login">
-                <mat-icon matSuffix>person</mat-icon>
+            <a href="login" *ngIf="userName; else login">{{userName}}</a>
+            <ng-template #login>
+              <a href="login">
                 Paciente Login
+              </a>
             </ng-template>
-            </a>
 
           </li>
         </ul>
@@ -43,9 +84,9 @@
         </li>
         <li><a href="">Directorio Médico</a></li>
         <li><a href="">Resultados</a></li>
-        <li><a href="">Contáctos</a></li>
+        <li><a href="">Contactos</a></li>
         <li><a href="">Ubicación</a></li>
       </ul>
     </nav>
   </div>
-</div>
+</header>

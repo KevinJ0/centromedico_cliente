@@ -13,6 +13,10 @@
 :root {
   --primary-color: #1f8fff;
   --max-width: 1360px;
+  --screen-width: 320px;
+  --screen-height: 560px;
+  --header-bg-color: #25283d;
+  --splash-bg-color: #1f8fff;
 }
 
 app-root {
@@ -22,10 +26,6 @@ app-root {
   justify-content: space-between;
   flex-wrap: nowrap;
 }
-main {
-  /* align-self: flex-start; */
-}
-
 
 code {
   color: #e01a76;
@@ -58,7 +58,6 @@ body {
   padding-left: 10px;
   padding-right: 10px;
   padding-top: 5px;
-
 }
 .form-search {
   background-color: white;
@@ -66,4 +65,24 @@ body {
 .form-search button {
   border-radius: 0;
   border-bottom: solid #767676 1px;
+}
+
+
+
+
+#menu-mobile {
+  display: none;
+}
+
+@media only screen and (max-width: 600px) {
+  #menu-principal {
+    display: none;
+  }
+  .main {
+    margin-top: 7rem !important;
+  }
+  #menu-mobile {
+    background-color: #e0e0e0;
+    display: block;
+  }
 }

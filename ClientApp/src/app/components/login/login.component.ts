@@ -11,13 +11,40 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CoberturaService } from 'src/app/services/cobertura.service';
 import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
+import { trigger, style, animate, transition } from '@angular/animations';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  animations: [
+    trigger(
+      'inOutAnimation',
+      [
+        transition(
+          ':enter',
+          [
+            style({ opacity: 0 }),
+            animate('30ms ease-out',
+              style({ opacity: 1 }))
+          ]
+        ),
+        transition(
+          ':leave',
+          [
+            style({ opacity: 1, position: "absolute" }),
+            animate('10ms ease-in',
+              style({ opacity: 0, position: "relative" }))
+          ]
+        )
+      ]
+    )
+  ]
 })
 export class LoginComponent implements OnInit {
+
+  mode: ProgressSpinnerMode = 'indeterminate';
 
   loginFormGroup: FormGroup;
   signupFormGroup: FormGroup;
@@ -32,6 +59,13 @@ export class LoginComponent implements OnInit {
     public citaSvc: CitaService,
     private accountSvc: AccountService,
     private _formBuilder: FormBuilder) { }
+
+  openSnackBar(message: string) {
+    const config = new MatSnackBarConfig();
+    config.panelClass = 'background-red';
+    config.duration = 5000;
+    this._snackBar.open(message, null, config);
+  }
 
   ngOnInit(): void {
 
@@ -65,37 +99,35 @@ export class LoginComponent implements OnInit {
       this.password2.setErrors([{ 'passwordMismatch': true }]);
     else
       this.password2.setErrors(null);
-
   }
 
-
   Login(): void {
+    if (!this.loading) {
+      this.loading = true;
+      const credentials = JSON.stringify(this.loginFormGroup.value);
+      let userlogin = this.loginFormGroup.value;
 
-    this.loading = true;
-    const credentials = JSON.stringify(this.loginFormGroup.value);
-    let userlogin = this.loginFormGroup.value;
+      this.accountSvc
+        .login(userlogin.loginEmailControl, userlogin.loginPasswordControl)
+        .subscribe(result => {
 
-    this.accountSvc
-    .login(userlogin.loginEmailControl, userlogin.loginPasswordControl)
-    .subscribe(result => {
+          this.loading = false;
+          let token = (<any>result).authToken.token;
+          console.log("User Logged In Successfully");
+          this.invalidLogin = false;
+          this.router.navigateByUrl(this.returnUrl);
 
-      this.loading = false;
-      let token = (<any>result).authToken.token;
-      console.log("User Logged In Successfully");
-      this.invalidLogin = false;
-      this.router.navigateByUrl(this.returnUrl);
+        },
+          (error) => {
+            this.invalidLogin = true;
+            this.loading = false;
 
-    },
-      (error) => {
-        this.invalidLogin = true;
-        this.loading = false;
+            this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
+            this.openSnackBar(error);
+            console.log(error);
+          })
 
-        this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
-
-        console.log(error);
-      })
-
-
+    }
   }
 
   Signup(): void {

@@ -3,7 +3,12 @@ main {
   max-width: 23rem;
 }
 mat-card {
+  min-height: 450px;
   margin-bottom: clamp(1rem, 7vh, 3rem);
+  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 mat-card-content {
@@ -32,16 +37,16 @@ mat-card-title {
 }
 form button {
   margin-top: clamp(1rem, 10vh, 2rem);
-    justify-content: flex-end;
-    align-self: flex-end;
-    font-weight: 300;
-    padding: 3px 1.2rem;
-    text-transform: uppercase;
+  justify-content: flex-end;
+  align-self: flex-end;
+  font-weight: 300;
+  padding: 3px 1.2rem;
+  text-transform: uppercase;
 }
 
 .forgotpass {
   margin-top: 0;
 }
-.forgotpass a{
-color:#0254ec;
+.forgotpass a {
+  color: #0254ec;
 }

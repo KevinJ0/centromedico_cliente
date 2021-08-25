@@ -142,4 +142,18 @@ export class AccountService {
     console.log("Logged Out Successfully");
 
   }
+
+  
+  get isLoggesIn() {
+    return this.loginStatus.asObservable();
+  }
+
+  get currentUserName() {
+    return this.UserName.asObservable();
+  }
+
+  get currentUserRole() {
+    return this.UserRole.asObservable();
+  }
+
 }

@@ -48,6 +48,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import { MaterialModule } from "./shared/material.module"; 
+import { AuthGuardService } from './guards/auth-guard.service';
 
 
 export function tokenGetter() {
@@ -136,7 +137,7 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    AccountService, CitaService, DoctorService, CoberturaService],
+    AccountService, CitaService, DoctorService, CoberturaService,AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

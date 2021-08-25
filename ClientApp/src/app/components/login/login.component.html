@@ -1,11 +1,12 @@
 <main>
+
   <div class="content-wrapper">
     <!-- <a class="back" [routerLink]="['..']">
       <mat-icon matSuffix>chevron_left</mat-icon> Volver
     </a> -->
 
-    <mat-card class="header-info">
-      <mat-tab-group dynamicHeight>
+    <mat-card>
+      <mat-tab-group dynamicHeight *ngIf="!loading else load" [@inOutAnimation]>
         <mat-tab label="Acceso">
           <mat-card-content class="acceso">
             <form [formGroup]="loginFormGroup" (ngSubmit)="Login()" class="login-form">
@@ -52,6 +53,7 @@
               <mat-card-header>
                 <mat-card-title>Registro</mat-card-title>
               </mat-card-header>
+
               <mat-form-field class="email">
                 <mat-label>Correo</mat-label>
                 <mat-icon matSuffix>account_circle</mat-icon>
@@ -70,14 +72,16 @@
                 <mat-icon matSuffix>password</mat-icon>
                 <input matInput type="password" placeholder="Contraseña" formControlName="password"
                   (input)="onPasswordInput()">
-                <mat-error *ngIf="signupFormGroup.get('password').hasError('required')">Contraseña <strong>requerida</strong></mat-error>
+                <mat-error *ngIf="signupFormGroup.get('password').hasError('required')">Contraseña
+                  <strong>requerida</strong></mat-error>
               </mat-form-field>
 
               <mat-form-field>
                 <mat-icon matSuffix>password</mat-icon>
                 <input matInput type="password" placeholder="Confirme contraseña" formControlName="password2"
                   (input)="onPasswordInput()">
-                <mat-error *ngIf="signupFormGroup.get('password2').hasError('required')">Por favor <strong>confirme</strong> su contraseña
+                <mat-error *ngIf="signupFormGroup.get('password2').hasError('required')">Por favor
+                  <strong>confirme</strong> su contraseña
                 </mat-error>
                 <mat-error
                   *ngIf="signupFormGroup.get('password2').invalid && !signupFormGroup.get('password2').hasError('required')">
@@ -92,17 +96,15 @@
           </mat-card-content>
         </mat-tab>
       </mat-tab-group>
-
-
-
-
     </mat-card>
-
-
-
-
   </div>
 
 
+  <ng-template #load>
+    <div class="progress-content">
+      <mat-progress-spinner style="margin:auto;" [mode]="mode">
+      </mat-progress-spinner>
+    </div>
+  </ng-template>
 
 </main>

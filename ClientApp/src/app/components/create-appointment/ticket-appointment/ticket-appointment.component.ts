@@ -14,6 +14,7 @@ const moment = _moment;
 export class TicketAppointmentComponent implements OnInit {
 
   citaDataResult: citaResult;
+  isDependent: boolean;
 
   constructor(private router: Router, public citaSvc: CitaService) {
     moment.locale('es');
@@ -21,18 +22,18 @@ export class TicketAppointmentComponent implements OnInit {
     this.citaDataResult = this.citaSvc._citaResult;
 
     if (this.citaDataResult != null) {
-      if (this.citaDataResult.doc_identidad_tutor)
-      {
+      if (this.citaDataResult.doc_identidad_tutor) {
+        console.log("is dependent: "+this.citaDataResult.doc_identidad_tutor)
         this.isDependent = true;
-      }} else {
-     // this.router.navigate(['create-cita']);
+      }
+    } else {
+      this.router.navigate(['..']);
     }
 
     let fechaHora: string = this.citaDataResult.fecha_hora;
     this.citaDataResult.fecha_hora = _moment(fechaHora).utc().format('dddd DD MMM Y hh:mm A');
   }
 
-  isDependent: boolean = true;
 
   ngOnInit(): void {
 

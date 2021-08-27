@@ -50,6 +50,19 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
+/* this is to avoid nav and footer's main */
+main main {
+  max-width: 1360px;
+  margin: auto;
+  padding: 3rem clamp(0.5rem, 4vw, 6rem);
+}
+/* this is to center progress-bar container */
+.mat-tab-body-wrapper {
+  display: flex;
+  flex-basis:100%;
+  align-items: center;
+}
+
 .form-search .mat-form-field-wrapper {
   margin-bottom: -1.25em;
 }
@@ -66,9 +79,6 @@ body {
   border-radius: 0;
   border-bottom: solid #767676 1px;
 }
-
-
-
 
 #menu-mobile {
   display: none;

@@ -48,10 +48,10 @@ export class LoginComponent implements OnInit {
 
   loginFormGroup: FormGroup;
   signupFormGroup: FormGroup;
-  loading: boolean;
+  loading: boolean = false;
   returnUrl: string;
   ErrorMessage: string;
-  invalidLogin: boolean;
+  invalidLogin: boolean = false;
 
   constructor(private router: Router,
     private rutaActiva: ActivatedRoute,
@@ -84,7 +84,6 @@ export class LoginComponent implements OnInit {
         Validators.required,
         Validators.email,
       ]],
-      signupPasswordControl: ['', Validators.required],
       password: ['', [Validators.required]],
       password2: ['', [Validators.required]]
     }, { validator: passwordMatchValidator });
@@ -102,36 +101,65 @@ export class LoginComponent implements OnInit {
   }
 
   Login(): void {
-    if (!this.loading) {
-      this.loading = true;
-      const credentials = JSON.stringify(this.loginFormGroup.value);
-      let userlogin = this.loginFormGroup.value;
 
-      this.accountSvc
-        .login(userlogin.loginEmailControl, userlogin.loginPasswordControl)
-        .subscribe(result => {
+    if (this.loginFormGroup.valid) {
+      if (!this.loading) {
+        this.loading = true;
+        const credentials = JSON.stringify(this.loginFormGroup.value);
+        let userLogin = this.loginFormGroup.value;
 
-          this.loading = false;
-          let token = (<any>result).authToken.token;
-          console.log("User Logged In Successfully");
-          this.invalidLogin = false;
-          this.router.navigateByUrl(this.returnUrl);
+        this.accountSvc
+          .Login(userLogin.loginEmailControl, userLogin.loginPasswordControl)
+          .subscribe(result => {
 
-        },
-          (error) => {
-            this.invalidLogin = true;
             this.loading = false;
+            let token = (<any>result).authToken.token;
+            console.log("User Logged In Successfully");
+            this.invalidLogin = false;
+            this.router.navigateByUrl(this.returnUrl);
 
-            this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
-            this.openSnackBar(error);
-            console.log(error);
-          })
+          },
+            (error) => {
+              this.invalidLogin = true;
+              this.loading = false;
 
+              this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
+              this.openSnackBar(error);
+              console.log(error);
+            }
+          )
+      }
     }
   }
 
   Signup(): void {
+  
+    if (this.signupFormGroup.valid) {
+      if (!this.loading) {
+        this.loading = true;
+        let userSignup = this.signupFormGroup.value;
 
+        this.accountSvc
+          .Signup(userSignup.signupEmailControl, userSignup.password)
+          .subscribe(result => {
+
+            this.loading = false;
+            let token = (<any>result).authToken.token;
+            console.log("User Register and Login In Successfully");
+            this.router.navigateByUrl(this.returnUrl);
+
+          },
+            (error) => {
+              this.invalidLogin = true;
+              this.loading = false;
+
+              this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
+              this.openSnackBar(error);
+              console.log(error);
+            }
+          )
+      }
+    }
 
   }
 

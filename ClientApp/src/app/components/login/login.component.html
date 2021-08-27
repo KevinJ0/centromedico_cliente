@@ -6,9 +6,9 @@
     </a> -->
 
     <mat-card>
-      <mat-tab-group dynamicHeight *ngIf="!loading else load" [@inOutAnimation]>
+      <mat-tab-group style="height:450px;">
         <mat-tab label="Acceso">
-          <mat-card-content class="acceso">
+          <mat-card-content class="acceso" *ngIf="!loading else load" [@inOutAnimation]>
             <form [formGroup]="loginFormGroup" (ngSubmit)="Login()" class="login-form">
               <mat-card-header>
                 <mat-card-title>Acceso</mat-card-title>
@@ -47,9 +47,9 @@
         </mat-tab>
 
         <mat-tab label="Registro">
-          <mat-card-content class="signup">
+          <mat-card-content class="registro" >
 
-            <form [formGroup]="signupFormGroup" (ngSubmit)="Signup()" class="signup-form">
+            <form [formGroup]="signupFormGroup" (ngSubmit)="Signup()" class="signup-form" *ngIf="!loading else load" [@inOutAnimation]>
               <mat-card-header>
                 <mat-card-title>Registro</mat-card-title>
               </mat-card-header>

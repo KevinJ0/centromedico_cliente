@@ -12,6 +12,9 @@ using Microsoft.Extensions.Configuration;
 using System.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using AutoMapper;
+using HospitalSalvador.Services;
+
 namespace HospitalSalvador.Controllers
 {
     [Produces("application/json")]
@@ -26,17 +29,19 @@ namespace HospitalSalvador.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly MyDbContext _db;
         private readonly IConfiguration _configuration;
+        private readonly IMapper _mapper;
 
 
         public TokenController(RoleManager<IdentityRole> roleManager,
             IConfiguration configuration, UserManager<MyIdentityUser> userManager,
-            token token, MyDbContext db)
+            token token, MyDbContext db, IMapper mapper)
         {
             _userManager = userManager;
             _configuration = configuration;
             _token = token;
             _roleManager = roleManager;
             _db = db;
+            _mapper = mapper;
         }
 
 
@@ -102,7 +107,7 @@ namespace HospitalSalvador.Controllers
         /// <param name="model"></param>
         /// <param name="mobile"></param>
         /// <response code="200">Operación exitosa, devuelve un TokenResponseDTO con el Token y refresh token incluido.</response>
-        /// <response code="401">Si las credenciales no son validas.</response>  
+        /// <response code="400">Si las credenciales no son validas.</response>  
         private async Task<IActionResult> GenerateNewToken(TokenRequestDTO model, bool mobile = false)
         {
             // check if there's an user with the given username
@@ -135,17 +140,72 @@ namespace HospitalSalvador.Controllers
 
                 var accessToken = await CreateAccessToken(user, newRtoken.Value);
 
-
                 return Ok(new { authToken = accessToken });
-
             }
 
-            return Unauthorized("Por favor verifique sus credeniales - Usuario/Contraseña suministradas son invalidas.");
+            return BadRequest("El usuario o ontraseña son invalidos. Por favor verifique sus credeniales.");
+        }
 
+        /// <summary>
+        /// Método que crea un usuario con el rol de Client por defecto y
+        /// recibe por parametro el nombre de un rol que deseas agregar al usuario.
+        /// </summary>
+        /// <remarks>
+        /// Sample response:
+        ///
+        ///     POST /Account/Register
+        ///      {
+        ///         username = UserName,
+        ///         email = Email,
+        ///         status = 1,
+        ///         message = "Registration Successful"
+        ///      }
+        /// </remarks>
+        /// <param name="formdata"></param>
+        /// <returns>citaResultDTO</returns>
+        /// <response code="400">Los datos suministrados son invalidos. Devuelve un string con un mesaje sobre el error producido.</response>
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Register([FromBody] RegisterDTO formdata)
+        {
+            // Will hold all the errors related to registration
+            string _error = "";
+            IdentityRole identityRole;
+            var user = _mapper.Map<MyIdentityUser>(formdata);
+
+            user.SecurityStamp = Guid.NewGuid().ToString();
+
+            var result = await _userManager.CreateAsync(user, formdata.Password);
+
+            if (result.Succeeded)
+            {
+
+                // Get user Role
+                identityRole = new IdentityRole { Name = "Pacient" };
+                await _roleManager.CreateAsync(identityRole);
+                await _userManager.AddToRoleAsync(user, "Pacient");
+
+                //Now login in
+               return await GenerateNewToken(new TokenRequestDTO
+                {
+                    UserCredential = formdata.Email,
+                    Password = formdata.Password
+                });
+            }
+            else
+            {
+                foreach (var error in result.Errors)
+                {
+                    _error = IdentityErrorService.getDescription(error.Code);
+
+                    break;
+                }
+            }
+
+            return BadRequest(_error);
 
         }
 
-        // Create access Tokenm
+        // Create access Token
         private async Task<TokenResponseDTO> CreateAccessToken(MyIdentityUser user, string refreshToken)
         {
 

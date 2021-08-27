@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { UserInfo } from '../interfaces/InterfacesDto';
+import { UserInfo, TokenResponse } from '../interfaces/InterfacesDto';
 import { BehaviorSubject, throwError, of, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ export class AccountService {
   // Url to access our Web API’s
   private baseUrlLogin: string = "api/account/login";
 
-  private baseUrlRegister: string = "api/account/register";
+  private baseUrlRegister: string = "api/token/register";
 
   // Token Controller
   private baseUrlToken: string = "api/token/auth";
@@ -28,26 +28,26 @@ export class AccountService {
     this.baseUrl = baseUrl;
   }
 
-  getNewRefreshToken(): Observable<any> {
+  getNewRefreshToken(): Observable<TokenResponse> {
 
     let usercredential = localStorage.getItem('username');
     let refreshToken = localStorage.getItem('refreshToken');
     const grantType = "refresh_token";
 
 
-    return this.http.post<any>(this.baseUrl + this.baseUrlToken, { usercredential, refreshToken, grantType }).pipe(
-      map((result: any) => {
+    return this.http.post<TokenResponse>(this.baseUrl + this.baseUrlToken, { usercredential, refreshToken, grantType }).pipe(
+      map((result: TokenResponse) => {
         if (result && result.authToken.token) {
           this.loginStatus.next(true);
           localStorage.setItem('loginStatus', '1');
           localStorage.setItem('jwt', result.authToken.token);
-          localStorage.setItem('username', result.authToken.username);
+          localStorage.setItem('userName', result.authToken.username);
           localStorage.setItem('expiration', result.authToken.expiration);
           localStorage.setItem('userRole', result.authToken.roles);
           localStorage.setItem('refreshToken', result.authToken.refresh_token);
         }
 
-        return <any>result;
+        return <TokenResponse>result;
 
       })
     );
@@ -56,26 +56,16 @@ export class AccountService {
 
 
   //Login Method
-  login(usercredential: string, password: string) {
+  Login(userCredential: string, password: string) {
     const grantType = "password";
-    
-    return this.http.post<any>(this.baseUrl + this.baseUrlToken, { usercredential, password, grantType }).pipe(
-      map((result: any) => {
+
+    return this.http.post<TokenResponse>(this.baseUrl + this.baseUrlToken, { userCredential, password, grantType }).pipe(
+      map((result: TokenResponse) => {
 
         // login successful if there's a jwt token in the response
         if (result && result.authToken.token) {
           // store user details and jwt token in local storage to keep user logged in between page refreshes
-
-          this.loginStatus.next(true);
-          localStorage.setItem('loginStatus', '1');
-          localStorage.setItem('jwt', result.authToken.token);
-          localStorage.setItem('username', result.authToken.username);
-          localStorage.setItem('expiration', result.authToken.expiration);
-          localStorage.setItem('userRole', result.authToken.roles);
-          localStorage.setItem('refreshToken', result.authToken.refresh_token);
-          this.UserName.next(result.authToken.username);
-          this.UserRole.next(result.authToken.roles);
- 
+          this.setUserResult(result);
         }
         console.log(result);
         return result;
@@ -85,6 +75,36 @@ export class AccountService {
     );
   }
 
+  //Signup Method
+  Signup(email: string, password: string) {
+    return this.http.post<TokenResponse>(this.baseUrl + this.baseUrlRegister, { email, password }).pipe(
+      map((result: TokenResponse) => {
+
+        // login successful if there's a jwt token in the response
+        if (result && result.authToken.token) {
+          // store user details and jwt token in local storage to keep user logged in between page refreshes
+          this.setUserResult(result);
+        }
+        console.log(result);
+        return result;
+
+      })
+
+    );
+  }
+
+  setUserResult(result: TokenResponse): void {
+    this.loginStatus.next(true);
+    localStorage.setItem('loginStatus', '1');
+    localStorage.setItem('jwt', result.authToken.token);
+    localStorage.setItem('userName', result.authToken.username);
+    localStorage.setItem('expiration', result.authToken.expiration);
+    localStorage.setItem('userRole', result.authToken.roles);
+    localStorage.setItem('refreshToken', result.authToken.refresh_token);
+    this.UserName.next(result.authToken.username);
+    this.UserRole.next(result.authToken.roles);
+
+  }
   checkLoginStatus(): boolean {
 
     var loginCookie = localStorage.getItem("loginStatus");
@@ -97,10 +117,9 @@ export class AccountService {
     return false;
   }
 
-
   isUserDocIdentConfirm(): Observable<boolean> {
-    return this.http.get<any>(this.baseUrl + "api/account/isUserDocIdentConfirm")
-      .pipe(map((result: any) => {
+    return this.http.get<boolean>(this.baseUrl + "api/account/isUserDocIdentConfirm")
+      .pipe(map((result: boolean) => {
 
         return result;
 
@@ -143,8 +162,11 @@ export class AccountService {
 
   }
 
-  
+
   get isLoggesIn() {
+    this.loginStatus.next((localStorage.getItem("loginStatus").toLowerCase() == '1'));
+    console.log(localStorage.getItem("loginStatus"));
+
     return this.loginStatus.asObservable();
   }
 

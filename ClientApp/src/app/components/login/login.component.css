@@ -1,19 +1,22 @@
 main {
+  min-width: 16rem;
   margin: auto;
-  max-width: 23rem;
+  max-width: 34rem;
 }
 mat-card {
   min-height: 450px;
   margin-bottom: clamp(1rem, 7vh, 3rem);
   display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
 }
 
 mat-card-content {
   padding: 1rem;
 }
+
+
 
 mat-form-field {
   width: 100%;

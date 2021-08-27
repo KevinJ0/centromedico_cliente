@@ -42,13 +42,16 @@ import * as _moment from 'moment';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DoctorCardComponent } from './components/medical-directory/doctor-card/doctor-card.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { NoProfilePhotoPipe } from './Pipes/no-imagen.pipe';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DoctorComponent } from './components/doctor/doctor.component';
-import {MatTabsModule} from '@angular/material/tabs';
-import { MaterialModule } from "./shared/material.module"; 
+import { MatTabsModule } from '@angular/material/tabs';
+import { MaterialModule } from "./shared/material.module";
 import { AuthGuardService } from './guards/auth-guard.service';
+import { ListAppointmentComponent } from './components/list-appointment/list-appointment.component';
+import { LocationComponent } from './components/location/location.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 
 export function tokenGetter() {
@@ -95,7 +98,7 @@ export const MY_FORMATS = {
     MatButtonToggleModule,
     MatListModule,
     MatDividerModule,
-    MatRadioModule,  
+    MatRadioModule,
     MatNativeDateModule,
     MatPaginatorModule,
     MatSnackBarModule,
@@ -106,7 +109,7 @@ export const MY_FORMATS = {
     MatIconModule,
     MatDatepickerModule,
     MatCardModule,
-    FormsModule, 
+    FormsModule,
     MatInputModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
@@ -118,17 +121,21 @@ export const MY_FORMATS = {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: LoginComponent, pathMatch: 'full' },
-      { path: 'paciente-login', component: LoginComponent },
-      { path: 'crear-cita', component: CreateAppointmentComponent },
-      { path: 'ticket', component: TicketAppointmentComponent },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'paciente-login', component: LoginComponent, canActivate: [AuthGuardService] },
+      { path: 'crear-cita', component: CreateAppointmentComponent, canActivate: [AuthGuardService] },
+      { path: 'ticket', component: TicketAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'medicos', component: MedicalDirectoryComponent },
       { path: 'medicos/:id', component: DoctorComponent },
+      { path: 'mis-citas', component: ListAppointmentComponent },
+      { path: 'ubicacion', component: LocationComponent },
+      { path: 'contactos', component: ContactComponent },
+      { path: '**', component: HomeComponent },
     ],
       { useHash: false }),
   ],
   providers: [
-    
+
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     {
       provide: DateAdapter,
@@ -137,7 +144,7 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    AccountService, CitaService, DoctorService, CoberturaService,AuthGuardService],
+    AccountService, CitaService, DoctorService, CoberturaService, AuthGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

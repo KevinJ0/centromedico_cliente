@@ -98,7 +98,7 @@ export class JwtInterceptor implements HttpInterceptor {
   private handleHttpResponseError(request: HttpRequest<any>, next: HttpHandler) {
 
     // First thing to check if the token is in process of refreshing
-    if (!this.isTokenRefreshing)  // If the Token Refresheing is not true
+    if (!this.isTokenRefreshing)  // If the Token Refreshing is not true
     {
       this.isTokenRefreshing = true;
 

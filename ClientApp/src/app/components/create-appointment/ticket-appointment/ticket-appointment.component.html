@@ -8,12 +8,9 @@
     </div>
     <mat-divider></mat-divider>
     <div class="content">
-      <div class="medico">
         <p>Tu médico es <b>{{citaDataResult.medico_nombre_apellido}}</b></p>
       <p *ngIf="!isDependent"><b>Consultorio: </b>{{citaDataResult.consultorio}}</p>
 
-      </div>
- 
        <p><b>Servicio: </b>{{citaDataResult.servicio}}</p>
       <p *ngIf="!isDependent"><b>Doc. Identidad: </b>{{citaDataResult.doc_identidad}}</p>
       <p><b>Paciente: </b>{{citaDataResult.paciente_nombre_apellido}}</p>

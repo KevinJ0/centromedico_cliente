@@ -116,6 +116,14 @@ export interface User {
     name?: string;
     email?: string;
     role?: string;
-  }
-   
-  
+}
+
+export interface TokenResponse {
+    authToken: {
+        token: string;
+        expiration: string; //date
+        refresh_token: string;
+        roles: string;
+        username: string;
+    }
+}

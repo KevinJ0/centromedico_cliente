@@ -18,45 +18,29 @@ export class AuthGuardService implements CanActivate {
       const destination: string = state.url;
 
       // To check if user is not logged in
+      console.log(loginStatus)
       if (!loginStatus) {
-        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
-
+        this.router.navigate(['paciente-login'], { queryParams: { returnUrl: state.url } });
         return false;
       }
 
+      console.log(destination)
+
       // if the user is already logged in
-      switch (destination) {
-        case '/analisis-categoria':
-          {
-            if (localStorage.getItem("userRole") === "Manager" || localStorage.getItem("userRole") === "Admin" || localStorage.getItem("userRole") === "Moderator") {
-              return true;
-            }
-          }
-
-        case '/resultados':
-          {
-            if (localStorage.getItem("userRole") === "Manager" ) {
-              this.router.navigate(['/access-denied'])
-
-              return false;
-            }
-
-            if (localStorage.getItem("userRole") === "Admin") {
-
-              return true;
-            }
-
-          }
-
-        default:
+      if (destination.includes('/paciente-login'))
+        return false;
+      else if (destination.includes('/resultados')) {
+        if (localStorage.getItem("userRole") === "Manager") {
+          this.router.navigate(['/access-denied'])
           return false;
+        }
       }
-
+      else if (destination.includes('/crear-cita') && localStorage.getItem("userRole") === "Pacient")
+        return true;
+      else if (destination.includes('/ticket') && localStorage.getItem("userRole") === "Pacient")
+        return true;
+      else
+        return false;
     }));
-
-
   }
-
-
-
 }

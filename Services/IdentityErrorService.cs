@@ -15,7 +15,7 @@ namespace HospitalSalvador.Services
             switch (identityErrorCode)
             {
                 case IdentityErrorCodes.DuplicateUserName:
-                    _error = "Este usuario ha sido tomado.";
+                    _error = "Este usuario ya está registrado.";
                     break;
                 case IdentityErrorCodes.DuplicateEmail:
                     _error = "Este email ya ha sido tomado.";

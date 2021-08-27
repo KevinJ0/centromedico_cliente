@@ -211,9 +211,9 @@ namespace HospitalSalvador.Controllers
             {
 
                 // get user Role
-                identityRole = new IdentityRole { Name = formdata.RoleName };
+                identityRole = new IdentityRole { Name = "Pacient" };
                 await _roleManager.CreateAsync(identityRole);
-                await _userManager.AddToRoleAsync(user, formdata.RoleName);
+                await _userManager.AddToRoleAsync(user, "Pacient");
 
                 return Ok(new
                 {

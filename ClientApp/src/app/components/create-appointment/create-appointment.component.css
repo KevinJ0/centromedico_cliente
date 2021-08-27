@@ -1,8 +1,4 @@
-main {
-  max-width: 1360px;
-  margin: auto;
-  padding: 3rem clamp(0.5rem, 4vw, 6rem);
-}
+ 
 
 .doctor-container {
   grid-auto-flow: column;

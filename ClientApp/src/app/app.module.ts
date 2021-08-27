@@ -122,7 +122,7 @@ export const MY_FORMATS = {
     }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'paciente-login', component: LoginComponent, canActivate: [AuthGuardService] },
+      { path: 'paciente-login', component: LoginComponent },
       { path: 'crear-cita', component: CreateAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'ticket', component: TicketAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'medicos', component: MedicalDirectoryComponent },
@@ -132,7 +132,7 @@ export const MY_FORMATS = {
       { path: 'contactos', component: ContactComponent },
       { path: '**', component: HomeComponent },
     ],
-      { useHash: false }),
+      { useHash: false}),
   ],
   providers: [
 

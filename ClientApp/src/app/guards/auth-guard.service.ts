@@ -20,16 +20,14 @@ export class AuthGuardService implements CanActivate {
       // To check if user is not logged in
       console.log(loginStatus)
       if (!loginStatus) {
-        this.router.navigate(['paciente-login'], { queryParams: { returnUrl: state.url } });
+        this.router.navigate(['/paciente-login'], { queryParams: { returnUrl: state.url } });
         return false;
       }
-
       console.log(destination)
 
       // if the user is already logged in
-      if (destination.includes('/paciente-login'))
-        return false;
-      else if (destination.includes('/resultados')) {
+
+       if (destination.includes('/resultados')) {
         if (localStorage.getItem("userRole") === "Manager") {
           this.router.navigate(['/access-denied'])
           return false;

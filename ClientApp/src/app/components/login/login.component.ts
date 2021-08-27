@@ -58,7 +58,11 @@ export class LoginComponent implements OnInit {
     private _snackBar: MatSnackBar,
     public citaSvc: CitaService,
     private accountSvc: AccountService,
-    private _formBuilder: FormBuilder) { }
+    private _formBuilder: FormBuilder) {
+//go back user is already logged in
+    if (this.accountSvc.checkLoginStatus())
+      this.router.navigate(['..']);
+  }
 
   openSnackBar(message: string) {
     const config = new MatSnackBarConfig();
@@ -133,7 +137,7 @@ export class LoginComponent implements OnInit {
   }
 
   Signup(): void {
-  
+
     if (this.signupFormGroup.valid) {
       if (!this.loading) {
         this.loading = true;

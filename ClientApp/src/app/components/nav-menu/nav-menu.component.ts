@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 
 @Component({
@@ -10,13 +11,13 @@ export class NavMenuComponent {
   userName: string;
   userRole: string;
 
-  constructor(private accountSvc: AccountService) {
-
+  constructor(private accountSvc: AccountService,private router: Router) {
 
   }
   ngOnInit(): void {
     this.currentUserName$.subscribe(r => {
       this.userName = r;
+      console.log(r)
     });
 
     this.loadScript('../../../assets/js/main.js');
@@ -35,14 +36,16 @@ export class NavMenuComponent {
   }
 
   isExpanded = false;
-  currentUserName$ = this.accountSvc.UserName;
-  currentUserRole$ = this.accountSvc.UserRole;
+  currentUserName$ = this.accountSvc.currentUserName;
+  currentUserRole$ = this.accountSvc.currentUserRole;
 
-  collapse() {
-    this.isExpanded = false;
-  }
 
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  logOut() {
+    this.accountSvc.logout();
+    console.log("logout")
+              
+    
+      this.router.navigate(['/']);
+  
   }
 }

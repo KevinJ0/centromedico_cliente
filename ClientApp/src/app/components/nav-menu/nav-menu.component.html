@@ -10,7 +10,7 @@
       <li class="nav__item"><a href="#" class="nav__link">Inicio</a></li>
       <li class="nav__item"><a href="#" class="nav__link">Cita médica</a></li>
       <li class="nav__item"><a href="#" class="nav__link">Pre-cita de análisis</a></li>
-      
+
       <li class="nav__item"><a href="#" class="nav__link">Directorio Médico</a></li>
       <li class="nav__item"><a href="#" class="nav__link">Resultados</a></li>
       <li class="nav__item"><a href="#" class="nav__link">Contactos</a></li>
@@ -59,13 +59,15 @@
             <a href="">Ofertas Laborales</a>
           </li>
           <li>
-            <a href="login" *ngIf="userName; else login">{{userName}}</a>
+            <a *ngIf="userName; else login">{{userName}}</a>
             <ng-template #login>
-              <a href="login">
+              <a [routerLink]="['/paciente-login']">
                 Paciente Login
               </a>
             </ng-template>
-
+          </li>
+          <li *ngIf="userName">
+            <a  (click)="logOut()">Cerrar sessión</a>
           </li>
         </ul>
       </div>

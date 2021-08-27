@@ -20,9 +20,9 @@ export class AccountService {
 
 
   // User related properties
-  public loginStatus = new BehaviorSubject<boolean>(this.checkLoginStatus());
-  public UserName = new BehaviorSubject<string>(localStorage.getItem('username'));
-  public UserRole = new BehaviorSubject<string>(localStorage.getItem('userRoles'));
+  private loginStatus = new BehaviorSubject<boolean>(this.checkLoginStatus());
+  private UserName = new BehaviorSubject<string>(localStorage.getItem('userName'));
+  private UserRole = new BehaviorSubject<string>(localStorage.getItem('userRoles'));
 
   constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this.baseUrl = baseUrl;
@@ -30,7 +30,7 @@ export class AccountService {
 
   getNewRefreshToken(): Observable<TokenResponse> {
 
-    let usercredential = localStorage.getItem('username');
+    let usercredential = localStorage.getItem('userName');
     let refreshToken = localStorage.getItem('refreshToken');
     const grantType = "refresh_token";
 
@@ -152,9 +152,13 @@ export class AccountService {
   logout() {
     // Set Loginstatus to false and delete saved jwt cookie
     this.loginStatus.next(false);
+    this.UserName.next(null);
+    this.UserRole.next(null);
+
     localStorage.removeItem('jwt');
+    localStorage.removeItem('refreshToken');
     localStorage.removeItem('userRole');
-    localStorage.removeItem('username');
+    localStorage.removeItem('userName');
     localStorage.removeItem('expiration');
     localStorage.setItem('loginStatus', '0');
     //this.router.navigate(['/login']);
@@ -171,10 +175,14 @@ export class AccountService {
   }
 
   get currentUserName() {
+    this.UserName.next((localStorage.getItem("userName")));
+
     return this.UserName.asObservable();
   }
 
   get currentUserRole() {
+    this.UserRole.next((localStorage.getItem("UserRole")));
+
     return this.UserRole.asObservable();
   }
 

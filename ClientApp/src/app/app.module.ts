@@ -129,7 +129,7 @@ export const MY_FORMATS = {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: ListAppointmentComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'paciente-login', component: LoginComponent },
       { path: 'crear-cita', component: CreateAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'ticket', component: TicketAppointmentComponent, canActivate: [AuthGuardService] },

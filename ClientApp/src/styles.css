@@ -59,11 +59,11 @@ main main {
 /* this is to center progress-bar container */
 .mat-tab-body-wrapper {
   display: flex;
-  flex-basis:100%;
+  flex-basis: 100%;
   align-items: center;
 }
 
-mat-expansion-panel-header .mat-content{
+mat-expansion-panel-header .mat-content {
   align-items: center;
 }
 
@@ -92,9 +92,11 @@ mat-expansion-panel-header .mat-content{
   #menu-principal {
     display: none;
   }
+  
   .main {
-    margin-top: 7rem !important;
+    margin-top: 5rem !important;
   }
+
   #menu-mobile {
     background-color: #e0e0e0;
     display: block;

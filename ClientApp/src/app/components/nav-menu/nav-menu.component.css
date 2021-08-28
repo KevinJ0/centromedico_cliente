@@ -7,7 +7,7 @@
 }
 
 header *{
-  z-index: 99999999;
+  z-index: 99;
 }
 .menu-principal {
   box-shadow: rgb(0 0 0 / 5%) 0px 0px 3px;
@@ -43,7 +43,7 @@ header *{
   flex-wrap: nowrap;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: 0rem; 
 }
 
 .menu-main ul {

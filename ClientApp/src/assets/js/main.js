@@ -1,6 +1,7 @@
 const nav = document.querySelector('#nav');
 const menu = document.querySelector('#menu');
 const menuToggle = document.querySelector('.nav__toggle');
+const navLinks = document.querySelectorAll('.nav__link');
 let isMenuOpen = false;
 
 
@@ -15,6 +16,19 @@ menuToggle.addEventListener('click', e => {
   nav.classList.toggle('nav--open');
 });
 
+// CLOSE TOGGLE MENU
+navLinks.forEach(elem=>{
+  elem.addEventListener('click', e => {
+    e.preventDefault();
+    isMenuOpen = !isMenuOpen;
+    
+    // toggle a11y attributes and active class
+    menuToggle.setAttribute('aria-expanded', String(isMenuOpen));
+    menu.hidden = !isMenuOpen;
+    nav.classList.toggle('nav--open');
+  });
+  
+})
 
 // TRAP TAB INSIDE NAV WHEN OPEN
 nav.addEventListener('keydown', e => {

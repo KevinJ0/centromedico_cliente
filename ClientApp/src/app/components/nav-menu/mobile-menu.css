@@ -2,7 +2,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 9999;
+  z-index: 9999 !important;
   background: var(--header-bg-color);
   height: 5rem;
 }
@@ -10,7 +10,7 @@
   display: inline-block;
   position: absolute;
   padding: 0;
-  z-index: 99999;
+  z-index: 99999 !important;
   border: 0;
   background: transparent;
   outline: 0;
@@ -31,7 +31,7 @@
   height: 100vh;
 
   position: relative;
-  z-index: 9999;
+  z-index: 9999 !important;
   visibility: hidden;
 }
 

@@ -1,0 +1,104 @@
+main {
+  padding: 0 !important;
+}
+.contact-wrapper {
+  position: relative;
+
+  padding-top: 2rem;
+  font-style: none;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+.contact-wrapper .bg {
+  width: 100%;
+  z-index: -1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 410px;
+  background-size: cover;
+  background-position: center;
+  background-image: url("../../../assets/imgs/contactos-bg.jpg");
+}
+
+.contact-wrapper .title {
+  padding-left: clamp(1rem, 4vw, 5rem);
+}
+
+.contact-wrapper .title h1 {
+  font-size: clamp(2rem, 10vw, 3rem);
+  font-weight: 500;
+  margin: 1rem 0rem 4rem 0rem;
+  text-shadow: 0px 0px 4px rgb(0 0 0 / 31%);
+  color: white;
+}
+
+.contact-wrapper .title a {
+  text-shadow: 0px 0px 4px rgb(0 0 0 / 31%);
+  text-decoration: none;
+  color: white !important;
+}
+.location-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6vh;
+  justify-content: space-around;
+}
+
+mat-card {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+mat-card-content > h2 {
+  font-size: 23px;
+  font-weight: 400;
+}
+mat-card-content > p {
+  display: flex;
+  align-items: center;
+}
+mat-icon {
+  color: var(--primary-color);
+  margin-right: 4px;
+}
+mat-card-actions {
+  text-align: center;
+}
+
+.form-wrapper {
+  padding: 4rem;
+  background-color: #f6f7fb;
+  margin-top: 7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.form-wrapper h1 {
+  font-size: xx-large;
+  padding: 2rem;
+  color: var(--header-bg-color);
+  margin: auto;
+  text-align: center;
+}
+
+.form-wrapper button {
+  font-size: 1rem;
+  font-weight: 200;
+  padding: 0.2rem 2rem;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+.example-full-width {
+  width: 100%;
+}
+
+td {
+  padding-right: 8px;
+}

@@ -8,14 +8,16 @@
     <!-- ACTUAL NAVIGATION MENU -->
     <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
       <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Inicio</a></li>
+      <li class="nav__item" *ngIf="userName"><a class="nav__link" [routerLink]="['/mis-citas']">Mis Citas</a>
+      </li>
       <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
       <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
-      <li class="nav__item"><a [routerLink]="['']" class="nav__link">Resultados</a></li>
       <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
+      <li class="nav__item"><a [routerLink]="['']" class="nav__link">Preguntas Frecuentes</a></li>
       <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicación</a></li>
       <li class="nav__item">
-        <a class="nav__link" *ngIf="userName; else login">{{userName}}</a>
-        <ng-template #login>
+        <a class="nav__link" *ngIf="userName; else loginMobile">{{userName}}</a>
+        <ng-template #loginMobile>
           <a class="nav__link" [routerLink]="['/paciente-login']">
             Paciente Login
           </a>
@@ -58,13 +60,13 @@
       <div class="sub-menu">
         <ul>
           <li>
-            <a href="">Acerca de</a>
+            <a>Acerca de</a>
           </li>
           <li>
-            <a href="">Noticias</a>
+            <a>Noticias</a>
           </li>
           <li>
-            <a href="">Ofertas Laborales</a>
+            <a>Ofertas Laborales</a>
           </li>
           <li>
             <a *ngIf="userName; else login">{{userName}}</a>
@@ -85,17 +87,21 @@
   <div class="bg-container-menu">
     <nav class="menu-main">
       <ul>
+        <!-- 
         <li>Citas Online<i class="fa fa-angle-down"></i>
           <ul>
-            <li><a href="">Realizar una cita</a></li>
-            <li><a href="">Ver mi consulta</a></li>
-            <li><a href="">Realizar pre-cita para análisis</a></li>
+            <li><a [routerLink]="['/medicos']" >Realizar una cita</a></li>
+            <li><a [routerLink]="['/medicos']" >Ver mi consulta</a></li>
+            <li><a [routerLink]="['/medicos']" >Realizar pre-cita para análisis</a></li>
           </ul>
-        </li>
-        <li><a href="">Directorio Médico</a></li>
-        <li><a href="">Resultados</a></li>
-        <li><a href="">Contactos</a></li>
-        <li><a href="">Ubicación</a></li>
+        </li> -->
+        <li><a [routerLink]="['/']">Inicio</a></li>
+        <li *ngIf="userName"> <a [routerLink]="['/mis-citas']">Mis Citas</a></li>
+        <li><a [routerLink]="['/medicos']">Directorio Médico</a></li>
+        <li><a [routerLink]="['/resultados']">Resultados</a></li>
+        <li><a [routerLink]="['/contactos']">Contactos</a></li>
+        <li><a [routerLink]="['']">Preguntas Frecuentes</a></li>
+        <li><a [routerLink]="['/ubicacion']">Ubicación</a></li>
       </ul>
     </nav>
   </div>

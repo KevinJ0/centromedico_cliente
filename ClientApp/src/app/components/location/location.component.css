@@ -1,0 +1,39 @@
+.center-map{
+    z-index: 99;
+    top: 30px;
+    right: 30px;
+    position:absolute;
+}
+#map {
+  height: 400px;
+  width: 100vw;
+}
+
+mat-card-content {
+gap:1rem;
+display: flex;
+}
+
+main >h2{
+}
+.romana,
+.sd {
+  background-size: cover;
+  width: 250px;
+  height: 150px;
+  display: flex;
+  background-image: url("../../../assets/imgs/hospital_recinto.jpg");
+  flex-direction: row;
+  align-content: flex-end;
+  justify-content: flex-end;
+  align-items: flex-end;
+  box-shadow: rgb(0 0 0 / 20%) 0px 0px 3px 2px;
+}
+.romana p,
+.sd p {
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 3px 6px;
+  font-size: 1.2rem;
+}

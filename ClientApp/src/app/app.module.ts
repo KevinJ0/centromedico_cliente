@@ -15,7 +15,6 @@ import { CreateAppointmentComponent } from './components/create-appointment/crea
 import { LoginComponent } from './components/login/login.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -24,7 +23,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -40,20 +38,20 @@ import { DoctorService } from './services/doctor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import * as _moment from 'moment';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MatRippleModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DoctorCardComponent } from './components/medical-directory/doctor-card/doctor-card.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NoProfilePhotoPipe } from './Pipes/no-imagen.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import { MatTabsModule } from '@angular/material/tabs';
-import { MaterialModule } from "./shared/material.module";
 import { AuthGuardService } from './guards/auth-guard.service';
 import { ListAppointmentComponent } from './components/list-appointment/list-appointment.component';
 import { LocationComponent } from './components/location/location.component';
 import { ContactComponent } from './components/contact/contact.component';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatTableModule} from '@angular/material/table';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 
 export function tokenGetter() {
@@ -89,7 +87,7 @@ export const MY_FORMATS = {
     DoctorComponent,
     ContactComponent,
     LocationComponent,
-    ListAppointmentComponent
+    ListAppointmentComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -99,7 +97,6 @@ export const MY_FORMATS = {
     MatCheckboxModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MaterialModule,
     MatFormFieldModule,
     MatExpansionModule,
     MatButtonToggleModule,
@@ -135,12 +132,12 @@ export const MY_FORMATS = {
       { path: 'ticket', component: TicketAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'medicos', component: MedicalDirectoryComponent },
       { path: 'medicos/:id', component: DoctorComponent },
-      { path: 'mis-citas', component: ListAppointmentComponent },
+      { path: 'mis-citas', component: ListAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'ubicacion', component: LocationComponent },
       { path: 'contactos', component: ContactComponent },
       { path: '**', component: HomeComponent },
     ],
-      { useHash: false,scrollPositionRestoration: 'enabled'}),
+      { useHash: false }),
   ],
   providers: [
 

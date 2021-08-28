@@ -16,7 +16,6 @@ export class AuthGuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
     return this.acct.isLoggesIn.pipe(take(1), map((loginStatus: boolean) => {
       const destination: string = state.url;
-
       // To check if user is not logged in
       console.log(loginStatus)
       if (!loginStatus) {
@@ -27,7 +26,7 @@ export class AuthGuardService implements CanActivate {
 
       // if the user is already logged in
 
-       if (destination.includes('/resultados')) {
+      if (destination.includes('/resultados')) {
         if (localStorage.getItem("userRole") === "Manager") {
           this.router.navigate(['/access-denied'])
           return false;
@@ -37,7 +36,7 @@ export class AuthGuardService implements CanActivate {
         return true;
       else if (destination.includes('/ticket') && localStorage.getItem("userRole") === "Patient")
         return true;
-        else if (destination.includes('/mis-citas') && localStorage.getItem("userRole") === "Patient")
+      else if (destination.includes('/mis-citas') && localStorage.getItem("userRole") === "Patient")
         return true;
       else
         return false;

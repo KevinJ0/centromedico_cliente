@@ -22,8 +22,8 @@
             <h6>{{_especialidades}}</h6>
           </div>
         </div>
-        <div class="right-side">
-          <button (click)="Cita()" mat-flat-button color="primary">
+        <div class="right-side">  
+          <button [routerLink]="['/crear-cita']" [queryParams]="{ medicoId: medicoId}" mat-flat-button color="primary">
             <mat-icon matSuffix>event</mat-icon>
             <span>Hacer cita</span>
           </button>

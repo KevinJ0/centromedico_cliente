@@ -21,7 +21,7 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [ "src/assets" ],
             "styles": [
-              "./node_modules/@angular/material/prebuilt-themes/custom-blue.css",
+              "./node_modules/@angular/material/prebuilt-themes/custom.css",
               "src/styles.css"
             ],
             "scripts": [

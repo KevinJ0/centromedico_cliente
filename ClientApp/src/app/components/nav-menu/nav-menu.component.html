@@ -13,7 +13,7 @@
       <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
       <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
       <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
-      <li class="nav__item"><a [routerLink]="['']" class="nav__link">Preguntas Frecuentes</a></li>
+      <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li>
       <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicación</a></li>
       <li class="nav__item">
         <a class="nav__link" *ngIf="userName; else loginMobile">{{userName}}</a>
@@ -100,7 +100,7 @@
         <li><a [routerLink]="['/medicos']">Directorio Médico</a></li>
         <li><a [routerLink]="['/resultados']">Resultados</a></li>
         <li><a [routerLink]="['/contactos']">Contactos</a></li>
-        <li><a [routerLink]="['']">Preguntas Frecuentes</a></li>
+        <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li>
         <li><a [routerLink]="['/ubicacion']">Ubicación</a></li>
       </ul>
     </nav>

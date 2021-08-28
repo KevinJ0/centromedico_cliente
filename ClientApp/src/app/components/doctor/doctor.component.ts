@@ -58,14 +58,14 @@ export class DoctorComponent implements OnInit {
       (params: Params) => {
         this.medicoId = params.id;
         this.doctorSvc.GetMedicoById(this.medicoId)
-         .pipe(catchError(err => {
-          this.loading = false;
-          console.error('Error: '+err);
+          .pipe(catchError(err => {
+            this.loading = false;
+            console.error('Error: ' + err);
             return null;
           }), finalize(() => {
             this.loading = false;
           }))
-          .subscribe((r:medico) => {
+          .subscribe((r: medico) => {
             this._medico = r;
             if (r) {
 
@@ -80,18 +80,18 @@ export class DoctorComponent implements OnInit {
 
             }
           }
-        );
-
-
-
+          );
 
       }
     );
   }
 
   Cita(): void {
+    try {
+      this.router.navigate(['/crear-cita', { medicoId: this.medicoId }]);
+    } catch (error) {
 
-    this.router.navigate(['/crear-cita'], { queryParams: { medicoId: this.medicoId } });
+    }
   }
 
 }

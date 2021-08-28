@@ -149,6 +149,7 @@ export class CreateAppointmentComponent implements OnInit {
             }))
             .subscribe((r: any) => {
               this.Horas = r.map((r: Date) => {
+                
                 return { id: r, descrip: _moment(r).utc().format(' hh:mm A') };
               });
             })
@@ -166,6 +167,8 @@ export class CreateAppointmentComponent implements OnInit {
 
   onClickSubmit() {
 
+        console.log(_moment.utc(this.secondFormGroup.get("timeControl").value).format());
+        
     if (!this.firstFormGroup.valid || !this.secondFormGroup.valid || !this.thirdFormGroup.valid) {
       this.openSnackBar("Las información ingresada no es valida");
     } else {
@@ -308,7 +311,7 @@ export class CreateAppointmentComponent implements OnInit {
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
 
     this.medicoId = Number.parseInt(this.rutaActiva.snapshot.queryParamMap.get('medicoId'));
-    if (!this.medicoId ) {
+    if (!this.medicoId) {
       this.router.navigate(['']);
     }
 
@@ -324,14 +327,19 @@ export class CreateAppointmentComponent implements OnInit {
           return of([]);
         })).subscribe(r => {
           this.servicios$ = r.servicios;
-
-          this.diasLaborables = r.diasLaborables.map(r => new Date(r));
+          this.diasLaborables = r.diasLaborables.map(r => 
+            {
+              
+              return new Date(r)} );
 
           this.dateFilter = (d: Date): boolean => {
-            const time = new Date(d).getTime();
-            return this.diasLaborables.find(x => x.getTime() == time) ? true : false;
+            const _date = new Date(d);
+
+            return this.diasLaborables.find(x => _moment.utc(x).format("l") ==
+             _moment.utc(_date).format("l")) ? true : false;
           }
-          //console.table(this.diasLaborables);
+
+           console.table(this.diasLaborables);
         })
 
     //Establezco las fechas minimas permitidas en las fechas de nacimientos

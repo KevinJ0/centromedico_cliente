@@ -27,8 +27,47 @@
 <body>
 
   <app-root>
-    <div></div>
+    <div id="loader" style=" 
+    position: absolute;
+    top: 0;
+    display: flex;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: white;
+    z-index: 99;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    font-weight: bold;
+    align-items: center;">
+
+      <div style="
+    background-image: url('assets/icons/heartbeat.svg');
+      width:7rem;
+      height: 7rem;
+      background-repeat: no-repeat;
+      background-position:center;
+      background-size: cover;"></div>
+
+      <p style="margin: 0;">Cargando...</p>
+    </div>
+
   </app-root>
+<!-- 
+<script type="text/javascript">
+    window.Trengo = window.Trengo || {};
+    window.Trengo.key = 'Ac0gbq93YzZOsmC';
+    (function (d, script, t) {
+      script = d.createElement('script');
+      script.type = 'text/javascript';
+      script.async = true;
+      script.src = 'https://static.widget.trengo.eu/embed.js';
+      d.getElementsByTagName('head')[0].appendChild(script);
+    }(document));
+
+  </script> -->
+
 </body>
 
 </html>

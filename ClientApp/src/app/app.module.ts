@@ -52,6 +52,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { FaqComponent } from './components/faq/faq.component';
 
 
 export function tokenGetter() {
@@ -88,6 +89,7 @@ export const MY_FORMATS = {
     ContactComponent,
     LocationComponent,
     ListAppointmentComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -135,6 +137,7 @@ export const MY_FORMATS = {
       { path: 'mis-citas', component: ListAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'ubicacion', component: LocationComponent },
       { path: 'contactos', component: ContactComponent },
+      { path: 'faq', component: FaqComponent },
       { path: '**', component: HomeComponent },
     ],
       { useHash: false }),

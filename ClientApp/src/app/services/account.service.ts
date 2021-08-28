@@ -161,7 +161,6 @@ export class AccountService {
     localStorage.removeItem('userName');
     localStorage.removeItem('expiration');
     localStorage.setItem('loginStatus', '0');
-    //this.router.navigate(['/login']);
     console.log("Logged Out Successfully");
 
   }
@@ -170,19 +169,16 @@ export class AccountService {
   get isLoggesIn() {
     this.loginStatus.next((localStorage.getItem("loginStatus").toLowerCase() == '1'));
     console.log(localStorage.getItem("loginStatus"));
-
     return this.loginStatus.asObservable();
   }
 
   get currentUserName() {
     this.UserName.next((localStorage.getItem("userName")));
-
     return this.UserName.asObservable();
   }
 
   get currentUserRole() {
     this.UserRole.next((localStorage.getItem("UserRole")));
-
     return this.UserRole.asObservable();
   }
 

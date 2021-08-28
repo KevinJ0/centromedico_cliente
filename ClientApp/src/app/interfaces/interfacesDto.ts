@@ -46,7 +46,32 @@ export interface cita {
     segurosID: number;
     nota: string;
 }
+export interface citaCard {
 
+    id: number;
+    medicosID: number;
+    medico_nombre: string;
+    medico_apellido: string;
+    serviciosID: number;
+    servicio_descrip: string;
+    cod_verificacionID: string;
+    pacientesID: number;
+    paciente_nombre: string;
+    paciente_apellido: string;
+    paciente_nombre_tutor: string;
+    paciente_apellido_tutor: string;
+    nota: string;
+    contacto: string;
+    contacto_whatsapp: string;
+    fecha_hora: string;
+    segurosID: number;
+    seguro_descrip: string;
+    diferencia: number;
+    cobertura: number;
+    descuento: number;
+    pago: number;
+    consultorio: number;
+}
 export interface citaResult {
 
     cod_verificacion: string;

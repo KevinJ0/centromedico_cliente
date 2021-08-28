@@ -52,6 +52,8 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { ListAppointmentComponent } from './components/list-appointment/list-appointment.component';
 import { LocationComponent } from './components/location/location.component';
 import { ContactComponent } from './components/contact/contact.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatTableModule} from '@angular/material/table';
 
 
 export function tokenGetter() {
@@ -63,6 +65,7 @@ export const MY_FORMATS = {
   //   dateInput: 'LL',
   // },
   display: {
+
     dateInput: 'dddd DD MMM Y',
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
@@ -84,6 +87,9 @@ export const MY_FORMATS = {
     TicketAppointmentComponent,
     DoctorCardComponent,
     DoctorComponent,
+    ContactComponent,
+    LocationComponent,
+    ListAppointmentComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -95,7 +101,9 @@ export const MY_FORMATS = {
     MatButtonModule,
     MaterialModule,
     MatFormFieldModule,
+    MatExpansionModule,
     MatButtonToggleModule,
+    MatTableModule,
     MatListModule,
     MatDividerModule,
     MatRadioModule,
@@ -121,7 +129,7 @@ export const MY_FORMATS = {
       }
     }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: ListAppointmentComponent, pathMatch: 'full' },
       { path: 'paciente-login', component: LoginComponent },
       { path: 'crear-cita', component: CreateAppointmentComponent, canActivate: [AuthGuardService] },
       { path: 'ticket', component: TicketAppointmentComponent, canActivate: [AuthGuardService] },
@@ -132,7 +140,7 @@ export const MY_FORMATS = {
       { path: 'contactos', component: ContactComponent },
       { path: '**', component: HomeComponent },
     ],
-      { useHash: false}),
+      { useHash: false,scrollPositionRestoration: 'enabled'}),
   ],
   providers: [
 

@@ -3,7 +3,8 @@ import { MaterialModule } from "./shared/material.module";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser"; 
 import { trigger, style, animate, transition } from '@angular/animations';
-
+import * as _moment from 'moment';
+const moment = _moment;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -37,6 +38,8 @@ export class AppComponent {
   constructor(
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry) {
+      moment.locale('es'); 
+
       this.matIconRegistry.addSvgIcon(
         "twitter",
         this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/twitter.svg")

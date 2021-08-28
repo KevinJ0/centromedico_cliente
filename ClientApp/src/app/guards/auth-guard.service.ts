@@ -33,9 +33,9 @@ export class AuthGuardService implements CanActivate {
           return false;
         }
       }
-      else if (destination.includes('/crear-cita') && localStorage.getItem("userRole") === "Pacient")
+      else if (destination.includes('/crear-cita') && localStorage.getItem("userRole") === "Patient")
         return true;
-      else if (destination.includes('/ticket') && localStorage.getItem("userRole") === "Pacient")
+      else if (destination.includes('/ticket') && localStorage.getItem("userRole") === "Patient")
         return true;
       else
         return false;

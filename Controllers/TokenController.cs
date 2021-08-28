@@ -143,7 +143,7 @@ namespace HospitalSalvador.Controllers
                 return Ok(new { authToken = accessToken });
             }
 
-            return BadRequest("El usuario o ontraseña son invalidos. Por favor verifique sus credeniales.");
+            return BadRequest("El usuario o ontraseña son invalidos, por favor verifique sus credeniales.");
         }
 
         /// <summary>
@@ -180,9 +180,9 @@ namespace HospitalSalvador.Controllers
             {
 
                 // Get user Role
-                identityRole = new IdentityRole { Name = "Pacient" };
+                identityRole = new IdentityRole { Name = "Patient" };
                 await _roleManager.CreateAsync(identityRole);
-                await _userManager.AddToRoleAsync(user, "Pacient");
+                await _userManager.AddToRoleAsync(user, "Patient");
 
                 //Now login in
                return await GenerateNewToken(new TokenRequestDTO

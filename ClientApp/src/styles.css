@@ -63,6 +63,10 @@ main main {
   align-items: center;
 }
 
+mat-expansion-panel-header .mat-content{
+  align-items: center;
+}
+
 .form-search .mat-form-field-wrapper {
   margin-bottom: -1.25em;
 }

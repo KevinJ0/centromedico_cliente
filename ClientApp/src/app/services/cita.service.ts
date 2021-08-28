@@ -1,6 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { cita, citaResult, UserInfo } from '../interfaces/InterfacesDto';
+import { cita, citaCard, citaResult, UserInfo } from '../interfaces/InterfacesDto';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -64,8 +64,26 @@ export class CitaService {
         }));
 
     } catch (err) {
-      console.log('Ha ocurrido un error al  : ', err.error);
+      console.log('Ha ocurrido un error al tratar de crear la cita: ', err.error);
       return throwError(err);
     }
   }
+
+  GetCitaList(): Observable<citaCard[]> {
+    try {
+      return this.http.get<citaCard[]>(this.baseUrl +
+        `api/citas/getCitasList`)
+        .pipe(map(result => {
+          console.log(result)
+          return result;
+        }), catchError(err => {
+          return throwError(err);
+        }));
+
+    } catch (err) {
+      console.log('Ha ocurrido un error  al tratar de obtener las citas: ', err.error);
+      return throwError(err);
+    }
+  }
+  
 }

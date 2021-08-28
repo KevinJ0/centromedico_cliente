@@ -44,7 +44,6 @@ export class NavMenuComponent {
     this.accountSvc.logout();
     console.log("logout")
               
-    
       this.router.navigate(['/']);
   
   }

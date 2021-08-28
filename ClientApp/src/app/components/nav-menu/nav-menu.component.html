@@ -7,14 +7,22 @@
 
     <!-- ACTUAL NAVIGATION MENU -->
     <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
-      <li class="nav__item"><a href="#" class="nav__link">Inicio</a></li>
-      <li class="nav__item"><a href="#" class="nav__link">Cita médica</a></li>
-      <li class="nav__item"><a href="#" class="nav__link">Pre-cita de análisis</a></li>
-
-      <li class="nav__item"><a href="#" class="nav__link">Directorio Médico</a></li>
-      <li class="nav__item"><a href="#" class="nav__link">Resultados</a></li>
-      <li class="nav__item"><a href="#" class="nav__link">Contactos</a></li>
-      <li class="nav__item"><a href="#" class="nav__link">Ubicación</a></li>
+      <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Inicio</a></li>
+      <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
+      <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
+      <li class="nav__item"><a [routerLink]="['']" class="nav__link">Resultados</a></li>
+      <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
+      <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicación</a></li>
+      <li class="nav__item">
+        <a class="nav__link" *ngIf="userName; else login">{{userName}}</a>
+        <ng-template #login>
+          <a class="nav__link" [routerLink]="['/paciente-login']">
+            Paciente Login
+          </a>
+        </ng-template>
+      </li>
+      <li class="nav__item" *ngIf="userName"><a class="nav__link" (click)="logOut()">Cerrar sesión</a>
+      </li>
     </ul>
 
     <!-- MENU TOGGLE BUTTON -->
@@ -67,7 +75,7 @@
             </ng-template>
           </li>
           <li *ngIf="userName">
-            <a  (click)="logOut()">Cerrar sessión</a>
+            <a (click)="logOut()">Cerrar sesión</a>
           </li>
         </ul>
       </div>

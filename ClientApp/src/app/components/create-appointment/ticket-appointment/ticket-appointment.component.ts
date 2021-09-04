@@ -1,10 +1,12 @@
 import { Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { citaResult } from '../../../interfaces/InterfacesDto';
 import { CitaService } from '../../../services/cita.service';
 import * as _moment from 'moment';
 const moment = _moment;
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-ticket-appointment',
   templateUrl: './ticket-appointment.component.html',
@@ -36,6 +38,9 @@ export class TicketAppointmentComponent implements OnInit {
 
 
   ngOnInit(): void {
+
+  }
+  ngOnDestroy() { 
 
   }
 }

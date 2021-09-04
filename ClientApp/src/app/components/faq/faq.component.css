@@ -1,17 +1,30 @@
-.example-headers-align .mat-expansion-panel-header-title,
-.example-headers-align .mat-expansion-panel-header-description {
-  flex-basis: 0;
-}
+
 
 .example-headers-align .mat-expansion-panel-header-description {
   justify-content: space-between;
   align-items: center;
 }
 
-.example-headers-align .mat-form-field + .mat-form-field {
+.example-headers-align {
   margin-left: 8px;
 }
 
-.hightlight{
-    color: var(--primary-color);
+mat-panel-title{
+    flex-basis: unset;
+}
+mat-panel-title > h4 {
+  margin: 16px 0;
+}
+
+.hightlight {
+  color: var(--primary-color);
+  border-top-color: #0195ff;
+}
+
+mat-expansion-panel-header
+{
+    height: fit-content;
+}
+ .mat-expansion-indicator::after {
+  color: var(--primary-color);
 }

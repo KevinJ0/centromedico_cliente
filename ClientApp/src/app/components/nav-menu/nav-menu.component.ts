@@ -1,7 +1,9 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-nav-menu',
   templateUrl: './nav-menu.component.html',
@@ -12,12 +14,10 @@ export class NavMenuComponent {
   userRole: string;
 
   constructor(private accountSvc: AccountService,private router: Router) {
-
   }
   ngOnInit(): void {
     this.currentUserName$.subscribe(r => {
-      this.userName = r;
-      console.log(r)
+      this.userName = r; 
     });
 
     this.loadScript('../../../assets/js/main.js');
@@ -46,5 +46,9 @@ export class NavMenuComponent {
               
       this.router.navigate(['/']);
   
+  }
+
+  ngOnDestroy() {
+    // We'll throw an error if it doesn't
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -8,7 +8,9 @@ import { EspecialidadService } from 'src/app/services/especialidad.service';
 import { SeguroService } from 'src/app/services/seguro.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-medical-directory',
   templateUrl: './medical-directory.component.html',
@@ -124,5 +126,8 @@ export class MedicalDirectoryComponent implements OnInit {
   pageChangeEvent(event) {
     const offset = ((event.pageIndex + 1) - 1) * event.pageSize;
     this.splicedData = this.doctorCardList.slice(offset).slice(0, event.pageSize);
+  }
+  ngOnDestroy() { 
+
   }
 }

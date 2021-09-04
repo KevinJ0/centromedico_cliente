@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit,OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,6 +15,9 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
 const moment = _moment;
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+
+@AutoUnsubscribe()
 @Component({
   selector: 'app-list-appointment',
   templateUrl: './list-appointment.component.html',
@@ -76,5 +79,7 @@ export class ListAppointmentComponent implements OnInit {
   convertDate(date: string): string {
     return _moment(date).utc().format('dddd DD MMM Y hh:mm A');
   }
+  ngOnDestroy() { 
 
+  }
 }

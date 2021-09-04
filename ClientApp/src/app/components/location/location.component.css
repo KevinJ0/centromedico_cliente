@@ -1,39 +1,113 @@
-.center-map{
-    z-index: 99;
-    top: 30px;
-    right: 30px;
-    position:absolute;
+.center-map {
+  z-index: 99;
+  top: 30px;
+  right: 30px;
+  position: absolute;
 }
 #map {
   height: 400px;
   width: 100vw;
 }
 
+main {
+  top: -153px;
+  position: relative;
+  padding-bottom: 0;
+}
 mat-card-content {
-gap:1rem;
-display: flex;
+  gap: 1rem;
+  display: flex;
 }
 
-main >h2{
+main > h2 {
+  margin-top: clamp(2rem, 7vw, 5rem);
 }
+.container {
+  position: relative;
+
+  cursor: pointer;
+  width: 250px;
+  height: 150px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+}
+
+.container:hover .overlay {
+  display: block;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+}
+
+.title {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  z-index: 1;
+  transition: top 0.5s ease;
+  text-shadow: black 0 0 4px;
+}
+
+.container:hover .title {
+  top: 35%;
+  background-color: transparent;
+}
+
+.button {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 60%;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.button a {
+  width: 200px;
+  padding: 12px 48px;
+  text-align: center;
+  color: white;
+  border: solid 2px white;
+  z-index: 1;
+  text-decoration-line: initial;
+}
+
+.button a:hover {
+  text-decoration-line: underline;
+}
+
+.container:hover .button {
+  opacity: 1;
+}
+
 .romana,
 .sd {
   background-size: cover;
   width: 250px;
   height: 150px;
-  display: flex;
   background-image: url("../../../assets/imgs/hospital_recinto.jpg");
-  flex-direction: row;
-  align-content: flex-end;
-  justify-content: flex-end;
-  align-items: flex-end;
+
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 3px 2px;
-}
-.romana p,
-.sd p {
-  background-color: black;
-  color: white;
-  margin: 0;
-  padding: 3px 6px;
-  font-size: 1.2rem;
 }

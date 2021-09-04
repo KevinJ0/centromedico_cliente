@@ -1,23 +1,49 @@
-<div class="wrapper" style="    position: relative;">
-  <button class="center-map" color="primary" onclick="centerMap()" mat-flat-button>País completo</button>
+<google-map width="100vw" height="450px" [(zoom)]="zoom" [(center)]="center" [options]="options">
+  <map-marker #marker="mapMarker" *ngFor="let hospital of markers; let i = index" (mapClick)="openInfoWindow(marker)"
+    [position]="hospital.position">
+    <map-info-window>
+      <h4>{{ hospital.name }}</h4>
+      <p>lat: {{ hospital.position.lat }}</p>
+      <p>long: {{ hospital.position.lng }}</p>
+      <p>Teléfono: 809-555-8754</p>
+    </map-info-window>
+  </map-marker>
 
-  <div id="map">
-  </div>
+</google-map>
+<main>
   <mat-card>
     <mat-card-content>
-      <div onclick="setRomana()" id="romana" class="romana">
-        <p>La Romana</p>
+      <div class="romana container">
+        <p class="title">La Romana</p>
+        <div class="overlay"></div>
+        <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a></div>
       </div>
-      <div onclick="setSD()" class="sd">
-        <p>Santo Domingo</p>
+
+      <div class="sd container">
+        <p class="title">Santo Domingo</p>
+        <div class="overlay"></div>
+        <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
       </div>
+
     </mat-card-content>
+    <swiper
+    [config]="config"
+    (swiper)="onSwiper($event)"
+    (slideChange)="onSlideChange()"
+  >
+    <ng-template swiperSlide>Slide 1</ng-template>
+    <ng-template swiperSlide>Slide 2</ng-template>
+    <ng-template swiperSlide>Slide 3</ng-template>
+    <ng-template swiperSlide>Slide 4</ng-template>
+    <ng-template swiperSlide>Slide 5</ng-template>
+    <ng-template swiperSlide>Slide 6</ng-template>
+  </swiper>
   </mat-card>
-</div>
-<main>
   <h2>
     Atención excepcional y accesible a todas horas
   </h2>
+  <mat-divider style="margin-bottom:1rem;">
+  </mat-divider>
   <p>
     El Hospital Salvador es uno de los sistemas de atención médica académica integrados más completos del país, más de 5
     clínicas y grupos médicos de atención primaria y especializada, y una variedad de servicios de telemedicina. Con

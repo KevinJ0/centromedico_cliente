@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,OnDestroy } from '@angular/core';
+
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { medico } from 'src/app/interfaces/InterfacesDto';
@@ -8,7 +9,9 @@ import { NoProfilePhotoPipe } from '../../Pipes/no-imagen.pipe';
 import * as _moment from 'moment';
 import { catchError, finalize } from 'rxjs/operators';
 const moment = _moment;
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
@@ -93,5 +96,7 @@ export class DoctorComponent implements OnInit {
 
     }
   }
+  ngOnDestroy() { 
 
+  }
 }

@@ -109,6 +109,7 @@ header *{
 span {
   color: #25283d;
   text-decoration: underline;
+  cursor: pointer;
   font-size: small;
 }
 .sub-menu li {

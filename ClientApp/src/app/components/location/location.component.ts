@@ -1,20 +1,65 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
+import { SwiperOptions } from 'swiper';
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-location',
   templateUrl: './location.component.html',
   styleUrls: ['./location.component.css']
 })
+
 export class LocationComponent implements OnInit {
+  @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
+  config: SwiperOptions = { 
+    slidesPerView: 3,
+    spaceBetween: 50,
+    navigation: true,
+    pagination: { clickable: true },
+    scrollbar: { draggable: true },
+  };
+  onSwiper(swiper) {
+    console.log(swiper);
+  }
+  onSlideChange() {
+    console.log('slide change');
+  }
+  markers: hospital[] = [];
+  center = { lat: 18.436234, lng: -69.46064 };
+  zoom = 10;
+  options: google.maps.MapOptions = {
+    fullscreenControl: false,
+    scrollwheel: false,
+    zoomControl: false,
+    scaleControl: true,
+    disableDoubleClickZoom: true,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    maxZoom: 15,
+    minZoom: 8,
+  }
 
   constructor() { }
 
   ngOnInit(): void {
-    this.loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCXB5KBEe0E5ElF7_k1neDKuhNzH_loPvw&callback=initMap');
-    this.loadScript('../../../assets/js/map.js');
-    
+    console.log()
+    this.markers.push({
+      position: {
+        lat: 18.4634403,
+        lng: -69.9499557,
+      },
+      name: 'La Romana'
+    })
 
+    this.markers.push({
+      position: {
+        lat: 18.4296925,
+        lng: -68.9656023,
+      },
+      name: 'Santo Domingo'
+    })
   }
+
   public loadScript(url: string) {
     const body = <HTMLDivElement>document.body;
     const script = document.createElement('script');
@@ -24,4 +69,22 @@ export class LocationComponent implements OnInit {
     script.defer = true;
     body.appendChild(script);
   }
+
+  ngOnDestroy() {
+
+  }
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
+  }
+  setFocus(lat: number, lng: number) {
+    this.zoom = 14;
+    this.center = { lat: lat, lng: lng };
+  }
+}
+export interface hospital {
+  name: string;
+  position: {
+    lat: number;
+    lng: number;
+  };
 }

@@ -53,7 +53,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { FaqComponent } from './components/faq/faq.component';
-
+import { FaqExpansionPanelComponent } from './components/faq/faq-expansion-panel/faq-expansion-panel.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { SwiperModule } from 'ngx-swiper-wrapper';
 
 export function tokenGetter() {
   //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
@@ -90,10 +92,13 @@ export const MY_FORMATS = {
     LocationComponent,
     ListAppointmentComponent,
     FaqComponent,
+    FaqExpansionPanelComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    GoogleMapsModule,
+    SwiperModule,
     MatStepperModule,
     MatTabsModule,
     MatCheckboxModule,

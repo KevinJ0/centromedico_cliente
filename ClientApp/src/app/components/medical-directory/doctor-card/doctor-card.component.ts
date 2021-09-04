@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit,OnDestroy, Input } from '@angular/core';
 import { doctorCard } from 'src/app/interfaces/InterfacesDto';
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-doctor-card',
   templateUrl: './doctor-card.component.html',
@@ -22,5 +24,7 @@ export class DoctorCardComponent implements OnInit {
     })
 
    }
+   ngOnDestroy() { 
 
+  }
 }

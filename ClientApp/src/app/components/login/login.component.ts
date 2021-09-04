@@ -1,19 +1,19 @@
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'rxjs/operators';
 import * as _moment from 'moment';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
-import { CoberturaService } from 'src/app/services/cobertura.service';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'; 
 import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -166,7 +166,9 @@ export class LoginComponent implements OnInit {
     }
 
   }
+  ngOnDestroy() { 
 
+  }
 }
 
 export const passwordMatchValidator: ValidatorFn = (formGroup: FormGroup): ValidationErrors | null => {

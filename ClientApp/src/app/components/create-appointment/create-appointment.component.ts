@@ -1,5 +1,5 @@
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, Component, Inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,9 +13,10 @@ import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
 import { hora, UserInfo, seguro, cita, cobertura, citaResult } from 'src/app/interfaces/InterfacesDto';
 import { SeguroService } from 'src/app/services/seguro.service';
-
 const moment = _moment;
+import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 
+@AutoUnsubscribe()
 @Component({
   // changeDetection: ChangeDetectionStrategy.OnPush,
   selector: 'app-create-appointment',
@@ -350,5 +351,8 @@ export class CreateAppointmentComponent implements OnInit {
 
     //Relleno los datos del usuario si existe
     this.setUserInfo();
+  }
+  ngOnDestroy() { 
+
   }
 }

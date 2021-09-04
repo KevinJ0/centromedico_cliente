@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatIconRegistry } from "@angular/material/icon";
-import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser"; 
+import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { trigger, style, animate, transition } from '@angular/animations';
 import * as _moment from 'moment';
 const moment = _moment;
@@ -34,18 +34,20 @@ const moment = _moment;
 
 export class AppComponent {
   title = 'app';
+  // Configuración de Google Maps 
+ 
   constructor(
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry) {
-      moment.locale('es'); 
+    moment.locale('es');
 
-      this.matIconRegistry.addSvgIcon(
-        "twitter",
-        this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/twitter.svg")
-      ).addSvgIcon(
-        "instagram",
-        this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/instagram.svg")
-      );
-   } 
+    this.matIconRegistry.addSvgIcon( 
+      "twitter",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/twitter.svg")
+    ).addSvgIcon(
+      "instagram",
+      this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/instagram.svg")
+    );
   }
+}
 

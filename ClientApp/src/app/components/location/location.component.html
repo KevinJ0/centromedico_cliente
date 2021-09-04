@@ -12,32 +12,88 @@
 </google-map>
 <main>
   <mat-card>
+    
     <mat-card-content>
-      <div class="romana container">
-        <p class="title">La Romana</p>
-        <div class="overlay"></div>
-        <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a></div>
-      </div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+      
 
-      <div class="sd container">
-        <p class="title">Santo Domingo</p>
-        <div class="overlay"></div>
-        <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-      </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            </div>
+          </div>
 
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+          </div>  <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            </div>
+          </div>
+
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+          </div>  <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            </div>
+          </div>
+
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+          </div>  <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            </div>
+          </div>
+
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+          </div>  <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            </div>
+          </div>
+
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+          </div>  <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            </div>
+          </div>
+
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+          </div>
+
+        </div>
+    
+  <!-- Add Arrows -->
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
+  </div>
     </mat-card-content>
-    <swiper
-    [config]="config"
-    (swiper)="onSwiper($event)"
-    (slideChange)="onSlideChange()"
-  >
-    <ng-template swiperSlide>Slide 1</ng-template>
-    <ng-template swiperSlide>Slide 2</ng-template>
-    <ng-template swiperSlide>Slide 3</ng-template>
-    <ng-template swiperSlide>Slide 4</ng-template>
-    <ng-template swiperSlide>Slide 5</ng-template>
-    <ng-template swiperSlide>Slide 6</ng-template>
-  </swiper>
+
   </mat-card>
   <h2>
     Atención excepcional y accesible a todas horas
@@ -50,4 +106,6 @@
     ubicaciones en la Ciudad de La Romana, contamos con especialistas líderes en todos los campos de la medicina que
     brindan atención conveniente y de alta calidad a nuestros pacientes.
   </p>
+
+
 </main>

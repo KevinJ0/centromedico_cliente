@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { SwiperOptions } from 'swiper';
+ 
 
 @AutoUnsubscribe()
 @Component({
@@ -10,7 +11,7 @@ import { SwiperOptions } from 'swiper';
   styleUrls: ['./location.component.css']
 })
 
-export class LocationComponent implements OnInit {
+export class LocationComponent implements OnInit,AfterViewInit  {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
   config: SwiperOptions = { 
     slidesPerView: 3,
@@ -40,10 +41,11 @@ export class LocationComponent implements OnInit {
   }
 
   constructor() { }
+  ngAfterViewInit():void {
 
+  }
   ngOnInit(): void {
-    console.log()
-    this.markers.push({
+     this.markers.push({
       position: {
         lat: 18.4634403,
         lng: -69.9499557,
@@ -58,6 +60,8 @@ export class LocationComponent implements OnInit {
       },
       name: 'Santo Domingo'
     })
+    this.loadScript('../../../assets/js/carousel.js');
+
   }
 
   public loadScript(url: string) {
@@ -65,7 +69,7 @@ export class LocationComponent implements OnInit {
     const script = document.createElement('script');
     script.innerHTML = '';
     script.src = url;
-    script.async = true;
+    script.async = false;
     script.defer = true;
     body.appendChild(script);
   }

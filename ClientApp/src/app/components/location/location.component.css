@@ -111,3 +111,14 @@ img {
 
   box-shadow: rgb(0 0 0 / 20%) 0px 0px 3px 2px;
 }
+.swiper-container {
+  cursor: pointer;
+  width: 100%;
+  align-items: center;
+  overflow-x: hidden; /* prevent horizontal scroll */
+  display: flex;
+}
+.swiper-slide {
+  position: relative;
+  transition-property: transform;
+}

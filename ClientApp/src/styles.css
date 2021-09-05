@@ -54,7 +54,7 @@ body {
 main main {
   max-width: 1360px;
   margin: auto;
-  padding: 3rem clamp(0.5rem, 4vw, 6rem);
+  padding-left: clamp(0.5rem, 4vw, 6rem);
 }
 /* this is to center progress-bar container */
 .mat-tab-body-wrapper {

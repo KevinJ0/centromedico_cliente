@@ -90,11 +90,10 @@ main {
   color: white;
 }
 
-.doctors-wrapper>h4{
+.doctors-wrapper>h2{
     text-align: center;
     color: #262626;
-    font-size: 1.5rem;
-    margin: 2rem auto .5rem auto;
+    margin: 5rem auto .5rem auto;
 }
 .doctors-wrapper .no-content{
     color: #262626;

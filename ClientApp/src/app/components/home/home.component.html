@@ -57,8 +57,42 @@
       </div>
     </div>
   </div>
-  <app-new-home></app-new-home>
+  <main>
+
+    <app-new-home></app-new-home>
+  </main>
+
 </div>
+<div class="leftRightBlock">
+  <div class="location-wrapper">
+    <section class="content">
+      <div class="content-wrapper">
+        <div class="cmp cmp-title">
+          <h2 class="location-title">
+            <mat-icon class="gps-icon" matSuffix>room</mat-icon>
+            Mire Nuestras Ubicaciones
+          </h2>
+        </div>
+        <div class="contentblocktext">
+          <div>
+            <div >
+              <div class="location-text">
+                <p>Tenemos ubicaciones en todo el territorio nacional. <br> Encuentre una cerca de usted.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="callToAction">
+          <button [routerLink]="['/ubicacion']" mat-flat-button color="primary">
+            BUSCAR UBICACIONES
+          </button>
+        </div>
+      </div>
+    </section>
+    <section class="feature">
+      <div class="location-bg"></div>
+    </section>
+  </div>
 
+</div>
 <app-barner></app-barner>
-

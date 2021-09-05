@@ -2,8 +2,9 @@
 
   <nav id="nav" class="nav" role="navigation">
     <div class="mobile-container-logo">
-      <img src="../../../assets/imgs/header_logo.png" class="mobile-main-logo" alt="Logo">
-    </div>
+      <a [routerLink]="['/']">
+        <img src="../../../assets/imgs/header_logo.png" class="mobile-main-logo" alt="Logo">
+      </a> </div>
 
     <!-- ACTUAL NAVIGATION MENU -->
     <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
@@ -54,7 +55,9 @@
     <div class="header-container">
 
       <div class="container-logo">
-        <img src="../../../assets/imgs/header_logo.png" class="main-logo" alt="Logo">
+        <a [routerLink]="['/']">
+          <img src="../../../assets/imgs/header_logo.png" class="main-logo" alt="Logo">
+        </a>
       </div>
 
       <div class="sub-menu">
@@ -98,7 +101,7 @@
         <li><a [routerLink]="['/']">Inicio</a></li>
         <li *ngIf="userName"> <a [routerLink]="['/mis-citas']">Mis Citas</a></li>
         <li><a [routerLink]="['/medicos']">Directorio Médico</a></li>
-        <li><a [routerLink]="['/resultados']">Resultados</a></li>
+        <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
         <li><a [routerLink]="['/contactos']">Contactos</a></li>
         <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li>
         <li><a [routerLink]="['/ubicacion']">Ubicación</a></li>

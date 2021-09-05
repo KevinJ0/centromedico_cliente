@@ -1,7 +1,7 @@
 .home-container {
-    padding: 3rem clamp(0.5rem, 4vw, 6rem);
-    max-width: 1600px;
-    margin: auto;
+  padding: 3rem clamp(0.5rem, 4vw, 6rem);
+  max-width: 1600px;
+  margin: auto;
 }
 
 .short-menu {
@@ -42,4 +42,76 @@
   color: white;
   font-weight: 500;
   font-size: clamp(12px, 1.4vw, 18px);
+}
+
+.location-bg {
+  width: 100%;
+  height: 250px;
+  background-position: left center;
+  background-size: cover;
+  background-image: url(../../../assets/imgs/location-search.jpg);
+}
+
+.location-wrapper {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  align-content: center;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.content-wrapper {
+  padding: 0 clamp(0.5rem, 4vw, 6rem);
+
+}
+.location-text p{
+margin-top: 0;
+}
+.gps-icon {
+  height: 3rem;
+  width: 3rem;
+  font-size: 3rem;
+  margin: 5px;
+}
+.location-title {
+  color: var(--primary-color);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  margin:0;
+  font-size: clamp(1.2rem,5vw,1.5rem);
+}
+.feature {
+  width: 100%;
+  height: 100%;
+}
+app-barner{
+  position: relative;
+  top: 76px;
+}
+@media screen and (max-width: 680px) {
+  .location-bg {
+    background-image: url(../../../assets/imgs/location-search-mobile.jpg);
+    height: 150px;
+    background-position: center;
+  }
+  .content-wrapper {
+    text-align: center;
+    padding: 0 clamp(0.5rem, 4vw, 6rem);
+
+  }
+  .location-wrapper {
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+  }
+  .content {
+    order: 2;
+    justify-content: center;
+  }
 }

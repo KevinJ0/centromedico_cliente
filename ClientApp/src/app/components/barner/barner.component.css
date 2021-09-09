@@ -4,13 +4,12 @@
   background-size: cover;
   width: 100%;
   height: auto;
-  padding: 4rem;
+  padding: 4rem clamp(.5rem , 4vw, 4rem);
   display: grid;
   justify-content: space-between;
   grid-auto-columns: auto auto;
   grid-auto-flow: column;
   background-color: rgba(0, 0, 0, 0.096);
-  margin-top: 5rem;
   position: relative;
 }
 .black-screen {
@@ -69,4 +68,5 @@ a {
   grid-auto-flow: row;
 
   }
+  
 }

@@ -1,12 +1,15 @@
-.center-map {
-  z-index: 99;
-  top: 30px;
-  right: 30px;
-  position: absolute;
-}
+
 #map {
   height: 400px;
   width: 100vw;
+}
+
+.map-wrapper .button-center-map {
+  z-index: 1;
+  top: 30px;
+  right: 30px;
+  position: absolute;
+
 }
 
 main {
@@ -24,7 +27,6 @@ main > h2 {
 }
 .container {
   position: relative;
-
   cursor: pointer;
   width: 250px;
   height: 150px;

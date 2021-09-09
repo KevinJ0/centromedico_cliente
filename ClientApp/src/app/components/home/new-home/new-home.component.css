@@ -2,7 +2,10 @@
   margin-top: clamp(1rem, 10vh, 5rem);
 }
 
-.title > hr {
+.title-container > h2 {
+  margin: 0;
+}
+.title-container > hr {
   background: linear-gradient(
     to right,
     rgba(0, 0, 0, 0),
@@ -13,7 +16,7 @@
   border: none;
 }
 
-.title {
+.title-container {
   font-size: large;
   text-align: center;
 }
@@ -44,10 +47,19 @@
 }
 
 article h2 {
-  font-size: 24px;
 }
 article hr {
   height: 10px;
   background: #dfdfdf;
   border: none;
+}
+
+@media screen and (max-width: 680px) {
+  .new-grid {
+    display: block;
+  }
+
+  .right-side {
+    margin-top: 3rem;
+  }
 }

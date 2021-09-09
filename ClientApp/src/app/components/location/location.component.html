@@ -1,22 +1,25 @@
-<google-map width="100vw" height="450px" [(zoom)]="zoom" [(center)]="center" [options]="options">
-  <map-marker #marker="mapMarker" *ngFor="let hospital of markers; let i = index" (mapClick)="openInfoWindow(marker)"
-    [position]="hospital.position">
-    <map-info-window>
-      <h4>{{ hospital.name }}</h4>
-      <p>lat: {{ hospital.position.lat }}</p>
-      <p>long: {{ hospital.position.lng }}</p>
-      <p>Teléfono: 809-555-8754</p>
-    </map-info-window>
-  </map-marker>
+<div class="map-wrapper" style="    position: relative;">
+  <button class="button-center-map" color="primary" (click)="setCenter(18.436234,-69.46064)" mat-flat-button>País completo</button>
+  <google-map width="100vw" height="450px" [(zoom)]="zoom" [(center)]="center" [options]="options">
+    <map-marker #marker="mapMarker" *ngFor="let hospital of markers; let i = index" (mapClick)="openInfoWindow(marker)"
+      [position]="hospital.position">
+      <map-info-window>
+        <h4>{{ hospital.name }}</h4>
+        <p>lat: {{ hospital.position.lat }}</p>
+        <p>long: {{ hospital.position.lng }}</p>
+        <p>Teléfono: 809-555-8754</p>
+      </map-info-window>
+    </map-marker>
 
-</google-map>
+  </google-map>
+</div> 
 <main>
   <mat-card>
-    
+
     <mat-card-content>
       <div class="swiper-container">
         <div class="swiper-wrapper">
-      
+
 
           <div class="swiper-slide romana container">
             <p class="title">La Romana</p>
@@ -29,69 +32,15 @@
             <p class="title">Santo Domingo</p>
             <div class="overlay"></div>
             <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-          </div>  <div class="swiper-slide romana container">
-            <p class="title">La Romana</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
-            </div>
           </div>
 
-          <div class="swiper-slide sd container">
-            <p class="title">Santo Domingo</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-          </div>  <div class="swiper-slide romana container">
-            <p class="title">La Romana</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
-            </div>
-          </div>
-
-          <div class="swiper-slide sd container">
-            <p class="title">Santo Domingo</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-          </div>  <div class="swiper-slide romana container">
-            <p class="title">La Romana</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
-            </div>
-          </div>
-
-          <div class="swiper-slide sd container">
-            <p class="title">Santo Domingo</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-          </div>  <div class="swiper-slide romana container">
-            <p class="title">La Romana</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
-            </div>
-          </div>
-
-          <div class="swiper-slide sd container">
-            <p class="title">Santo Domingo</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-          </div>  <div class="swiper-slide romana container">
-            <p class="title">La Romana</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
-            </div>
-          </div>
-
-          <div class="swiper-slide sd container">
-            <p class="title">Santo Domingo</p>
-            <div class="overlay"></div>
-            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
-          </div>
 
         </div>
-    
-  <!-- Add Arrows -->
-  <div class="swiper-button-next"></div>
-  <div class="swiper-button-prev"></div>
-  </div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
     </mat-card-content>
 
   </mat-card>

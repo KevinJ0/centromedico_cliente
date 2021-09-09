@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
 import { SwiperOptions } from 'swiper';
- 
+
 
 @AutoUnsubscribe()
 @Component({
@@ -11,9 +11,9 @@ import { SwiperOptions } from 'swiper';
   styleUrls: ['./location.component.css']
 })
 
-export class LocationComponent implements OnInit,AfterViewInit  {
+export class LocationComponent implements OnInit, AfterViewInit {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
-  config: SwiperOptions = { 
+  config: SwiperOptions = {
     slidesPerView: 3,
     spaceBetween: 50,
     navigation: true,
@@ -28,7 +28,7 @@ export class LocationComponent implements OnInit,AfterViewInit  {
   }
   markers: hospital[] = [];
   center = { lat: 18.436234, lng: -69.46064 };
-  zoom = 10;
+  zoom = 8;
   options: google.maps.MapOptions = {
     fullscreenControl: false,
     scrollwheel: false,
@@ -37,15 +37,15 @@ export class LocationComponent implements OnInit,AfterViewInit  {
     disableDoubleClickZoom: true,
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     maxZoom: 15,
-    minZoom: 8,
+    minZoom: 7,
   }
 
   constructor() { }
-  ngAfterViewInit():void {
+  ngAfterViewInit(): void {
 
   }
   ngOnInit(): void {
-     this.markers.push({
+    this.markers.push({
       position: {
         lat: 18.4634403,
         lng: -69.9499557,
@@ -79,6 +79,11 @@ export class LocationComponent implements OnInit,AfterViewInit  {
   }
   openInfoWindow(marker: MapMarker) {
     this.infoWindow.open(marker);
+  }
+  setCenter(lat: number, lng: number) {
+    this.zoom = 8;
+    this.center = { lat: lat, lng: lng };
+
   }
   setFocus(lat: number, lng: number) {
     this.zoom = 14;

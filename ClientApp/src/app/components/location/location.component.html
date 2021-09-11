@@ -1,5 +1,6 @@
 <div class="map-wrapper" style="    position: relative;">
-  <button class="button-center-map" color="primary" (click)="setCenter(18.436234,-69.46064)" mat-flat-button>País completo</button>
+  <button class="button-center-map" color="primary" (click)="setCenter(18.436234,-69.46064)" mat-flat-button>País
+    completo</button>
   <google-map width="100vw" height="450px" [(zoom)]="zoom" [(center)]="center" [options]="options">
     <map-marker #marker="mapMarker" *ngFor="let hospital of markers; let i = index" (mapClick)="openInfoWindow(marker)"
       [position]="hospital.position">
@@ -12,7 +13,7 @@
     </map-marker>
 
   </google-map>
-</div> 
+</div>
 <main>
   <mat-card>
 
@@ -20,21 +21,84 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
 
-
           <div class="swiper-slide romana container">
             <p class="title">La Romana</p>
             <div class="overlay"></div>
-            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button"><a>Ubicar</a>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
             </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
+          </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
+          </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
+          </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
+          </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
+          </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
+          </div>
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/place/Hipermercados+Iberia/@18.4289398,-68.9693356,16z/data=!4m5!3m4!1s0x8eaf5465dff06dc9:0x25af0ecc1cf85d3e!8m2!3d18.4280949!4d-68.9643478?hl=en-US">Abrir
+                mapa</a></div>
           </div>
 
           <div class="swiper-slide sd container">
             <p class="title">Santo Domingo</p>
             <div class="overlay"></div>
-            <div (click)="setFocus(18.4634403,-69.9499557)" class="button"><a>Ubicar</a></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button-locate"><a>Ubicar</a></div>
+            <div class="button-open-map"><a target="_blank"
+                href="https://www.google.com/maps/@18.455369,-69.9643642,13.94z?hl=en-US">Abrir mapa</a></div>
           </div>
-
-
         </div>
 
         <!-- Add Arrows -->

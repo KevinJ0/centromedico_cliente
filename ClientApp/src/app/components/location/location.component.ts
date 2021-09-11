@@ -13,13 +13,7 @@ import { SwiperOptions } from 'swiper';
 
 export class LocationComponent implements OnInit, AfterViewInit {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
-  config: SwiperOptions = {
-    slidesPerView: 3,
-    spaceBetween: 50,
-    navigation: true,
-    pagination: { clickable: true },
-    scrollbar: { draggable: true },
-  };
+  
   onSwiper(swiper) {
     console.log(swiper);
   }

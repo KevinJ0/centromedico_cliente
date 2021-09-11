@@ -35,8 +35,6 @@ const moment = _moment; import * as WebFont from 'webfontloader';
 
 export class AppComponent {
   title = 'app';
-  // Configuración de Google Maps 
-  
   constructor(
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry) {

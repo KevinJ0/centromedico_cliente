@@ -1,8 +1,9 @@
+<!-- 
+<div class="background-content">
+<div class="background-linear-color"></div> -->
 <main>
-
-
+  
   <section class="search-wrapper">
-    <!-- <div class="background-blue"></div> -->
     <div class="title">
       <a href="">&#60; INICIO</a>
       <h1>Directorio Médico</h1>
@@ -74,14 +75,15 @@
 
     <ng-template #DoctorsLst>
       <div class="doctors-list" *ngIf="!showNoContent else NoContent">
-        <div>
+        <div class="doctor-cards-list">
           <span *ngFor="let doctor of splicedData">
             <app-doctor-card [doctorData]="doctor"></app-doctor-card>
           </span>
+        
+        </div>
           <mat-paginator (page)="pageChangeEvent($event)" [length]="pageLength" [pageSize]="pageSize"
             [pageSizeOptions]="pageSizeOptions">
           </mat-paginator>
-        </div>
       </div>
     </ng-template>
 

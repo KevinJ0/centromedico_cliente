@@ -145,7 +145,7 @@ export const MY_FORMATS = {
       { path: 'faq', component: FaqComponent },
       { path: '**', component: HomeComponent },
     ],
-      {         anchorScrolling: 'enabled',useHash: false }),
+      { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', useHash: false }),
   ],
   providers: [
 

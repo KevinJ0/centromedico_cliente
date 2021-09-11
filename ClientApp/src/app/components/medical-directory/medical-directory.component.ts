@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { catchError } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -22,7 +22,7 @@ import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
         transition(
           ':enter',
           [
-            style({ opacity: 0 }), 
+            style({ opacity: 0 }),
             animate('300ms ease-out',
               style({ opacity: 1 }))
           ]
@@ -56,8 +56,8 @@ export class MedicalDirectoryComponent implements OnInit {
   searchFormGroup: FormGroup;
   doctorsCount: number;
   pageLength: number;
-  pageSize: number = 10;
-  pageSizeOptions = [10, 25, 50, 100];
+  pageSize: number = 5;
+  pageSizeOptions = [5, 10, 50, 100];
   showNoContent: Boolean;
   mode: ProgressSpinnerMode = 'indeterminate';
 
@@ -95,12 +95,12 @@ export class MedicalDirectoryComponent implements OnInit {
       try {
 
         this.doctorSvc.SearchMedicos(nombre, especialidadId, seguroId)
-          .subscribe(r => {
+          .subscribe((r: doctorCard[]) => {
             if (r) {
               this.doctorsCount = r.length;
               this.pageLength = r.length;
               this.splicedData = r.slice(0, this.pageSize);
-              console.table(this.splicedData)
+              //console.table(this.splicedData)
               this.doctorCardList = r;
               this.showNoContent = false;
             } else {
@@ -122,12 +122,12 @@ export class MedicalDirectoryComponent implements OnInit {
     }
   }
 
-  
+
   pageChangeEvent(event) {
     const offset = ((event.pageIndex + 1) - 1) * event.pageSize;
     this.splicedData = this.doctorCardList.slice(offset).slice(0, event.pageSize);
   }
-  ngOnDestroy() { 
+  ngOnDestroy() {
 
   }
 }

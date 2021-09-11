@@ -127,10 +127,7 @@ mat-expansion-panel-header .mat-content {
 .form-search {
   background-color: white;
 }
-.form-search button {
-  border-radius: 0;
-  border-bottom: solid #767676 1px;
-}
+
 
 #menu-mobile {
   display: none;

@@ -18,14 +18,14 @@
 }
 
 .doctor-info .contactos .numeros {
-  display: grid;
-  gap: 1rem;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
 }
 .doctor-info .contactos .telefono1,
 .telefono2 {
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   display: flex;
+  margin-right: 8px;
 }
 .doctor-info .contactos .correo {
   font-size: 0.8rem;
@@ -35,6 +35,8 @@
 .doctor-info .contactos img {
   margin-left: 5px;
   max-width: 15px;
+  width: 15px;
+
 }
 
 .doctor-card .descrip {
@@ -52,4 +54,20 @@
 
 a {
   text-decoration: none;
+}
+
+@media screen and (max-width: 420px) {
+  .doctor-card {
+    gap:1rem;
+    flex-direction: column;
+  }
+
+  .doctor-info {
+    align-content: center;
+    align-items: center;
+    text-align: center;
+}
+.doctor-info .numeros{
+    justify-content: center;
+}
 }

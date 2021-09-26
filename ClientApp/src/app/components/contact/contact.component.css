@@ -114,8 +114,8 @@ mat-card-actions {
 .name {
   display: flex;
 }
-.name td{
-  
+
+.name td {
   width: 100%;
 }
 

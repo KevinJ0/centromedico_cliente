@@ -37,6 +37,7 @@ mat-progress-spinner {
   border-radius: 100%;
   width: clamp(8rem, 14vw, 10rem);
   height: clamp(8rem, 14vw, 10rem);
+  object-fit: cover;
 }
 
 .left-side {
@@ -213,6 +214,7 @@ mat-progress-spinner {
     border-radius: 100%;
     width: clamp(10rem, 47vw, 14rem);
     height: clamp(10rem, 47vw, 14rem);
+    object-fit: cover;
   }
   .body-info > mat-card-content {
     grid-template-rows: auto auto auto;

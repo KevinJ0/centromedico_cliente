@@ -1,5 +1,5 @@
 import { Router } from '@angular/router';
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { citaResult } from '../../../interfaces/InterfacesDto';
 import { CitaService } from '../../../services/cita.service';
 import * as _moment from 'moment';
@@ -22,10 +22,10 @@ export class TicketAppointmentComponent implements OnInit {
     moment.locale('es');
 
     this.citaDataResult = this.citaSvc._citaResult;
-
+    console.log(this.citaDataResult)
     if (this.citaDataResult != null) {
       if (this.citaDataResult.doc_identidad_tutor) {
-        console.log("is dependent: "+this.citaDataResult.doc_identidad_tutor)
+        console.log("is dependent: " + this.citaDataResult.doc_identidad_tutor)
         this.isDependent = true;
       }
     } else {
@@ -40,7 +40,7 @@ export class TicketAppointmentComponent implements OnInit {
   ngOnInit(): void {
 
   }
-  ngOnDestroy() { 
+  ngOnDestroy() {
 
   }
 }

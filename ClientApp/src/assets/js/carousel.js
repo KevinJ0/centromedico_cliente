@@ -2,7 +2,8 @@
 
 (function carousel() {
     var swiper = new Swiper('.swiper-container', {
-        spaceBetween: 20, slidesPerView: 'auto',
+        spaceBetween: 20,
+         slidesPerView: 'auto',
         setWrapperSize: true,
         navigation: true, preloadImages: true,
         centerInsufficientSlides: true,

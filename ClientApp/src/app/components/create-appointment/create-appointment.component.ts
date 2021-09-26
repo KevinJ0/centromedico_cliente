@@ -150,7 +150,7 @@ export class CreateAppointmentComponent implements OnInit {
             }))
             .subscribe((r: any) => {
               this.Horas = r.map((r: Date) => {
-                
+
                 return { id: r, descrip: _moment(r).utc().format(' hh:mm A') };
               });
             })
@@ -168,8 +168,8 @@ export class CreateAppointmentComponent implements OnInit {
 
   onClickSubmit() {
 
-        console.log(_moment.utc(this.secondFormGroup.get("timeControl").value).format());
-        
+    console.log(_moment.utc(this.secondFormGroup.get("timeControl").value).format());
+
     if (!this.firstFormGroup.valid || !this.secondFormGroup.valid || !this.thirdFormGroup.valid) {
       this.openSnackBar("Las información ingresada no es valida");
     } else {
@@ -186,20 +186,19 @@ export class CreateAppointmentComponent implements OnInit {
         let sexo = formdata["userSexControl"];
         let fecha_nacimiento = moment(formdata["birthDateControl"]).toDate();
 
+        let userInfo: UserInfo = {
+          doc_identidad: formdata["identityDocControl"],
+          nombre: formdata["userNameControl"],
+          apellido: formdata["userLastNameControl"],
+          fecha_nacimiento: moment(formdata["birthDateControl"]).toDate(),
+          sexo: formdata["userSexControl"],
+          contacto: contacto
+        }
         if (this.isDependent) {
           nombre = formdata["dependentNameControl"];
           apellido = formdata["dependentLastNameControl"];
           sexo = formdata["dependentSexControl"];
           fecha_nacimiento = moment(formdata["dependentBirthDateControl"]).toDate();
-        }
-
-        let userInfo: UserInfo = {
-          doc_identidad: formdata["identityDocControl"],
-          nombre: formdata["userNameControl"],
-          apellido: formdata["userLastNameControl"],
-          fecha_nacimiento: fecha_nacimiento,
-          sexo: formdata["userSexControl"],
-          contacto: contacto
         }
 
         _cita = {
@@ -222,8 +221,9 @@ export class CreateAppointmentComponent implements OnInit {
 
         }, err => of([])
           , () => {
-
+console.log(_cita)
             this.citaSvc.CreateCita(_cita).subscribe((r: citaResult) => {
+              console.log(r)
               this.citaSvc._citaResult = r;
               this.router.navigate(['ticket']);
             }, (err: string) => {
@@ -327,20 +327,21 @@ export class CreateAppointmentComponent implements OnInit {
           console.error('Error al tratar de acceder a los pre-datos de la cita');
           return of([]);
         })).subscribe(r => {
+          console.log(r)
           this.servicios$ = r.servicios;
-          this.diasLaborables = r.diasLaborables.map(r => 
-            {
-              
-              return new Date(r)} );
+          this.diasLaborables = r.diasLaborables.map(r => {
+
+            return new Date(r)
+          });
 
           this.dateFilter = (d: Date): boolean => {
             const _date = new Date(d);
 
             return this.diasLaborables.find(x => _moment.utc(x).format("l") ==
-             _moment.utc(_date).format("l")) ? true : false;
+              _moment.utc(_date).format("l")) ? true : false;
           }
 
-           console.table(this.diasLaborables);
+          console.table(this.diasLaborables);
         })
 
     //Establezco las fechas minimas permitidas en las fechas de nacimientos
@@ -352,7 +353,7 @@ export class CreateAppointmentComponent implements OnInit {
     //Relleno los datos del usuario si existe
     this.setUserInfo();
   }
-  ngOnDestroy() { 
+  ngOnDestroy() {
 
   }
 }

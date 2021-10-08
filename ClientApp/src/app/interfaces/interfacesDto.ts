@@ -70,6 +70,7 @@ export interface citaCard {
     cobertura: number;
     descuento: number;
     pago: number;
+  turno: number;
     consultorio: number;
 }
 export interface citaResult {
@@ -89,7 +90,7 @@ export interface citaResult {
     tutor_nombre_apellido: string;
     contacto: string;
     correo: string;
-
+    turno: number;
 }
 
 export interface medico {

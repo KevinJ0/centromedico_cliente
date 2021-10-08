@@ -82,10 +82,10 @@ export class JwtInterceptor implements HttpInterceptor {
 
     if (errorResponse.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      errorMsg = "An error occured client side: " + errorResponse.error.message;
+      errorMsg = "Un error ha ocurrido del lado del cliente: " + errorResponse.error.message;
     } else {
 
-      if (typeof errorResponse.error === 'string' || errorResponse.error instanceof String) {
+      if ((typeof errorResponse.error === 'string' || errorResponse.error instanceof String) && errorResponse.error.length < 150) {
         errorMsg = `${errorResponse.error}`;
         // The backend returned an unsuccessful response code.
       } else {

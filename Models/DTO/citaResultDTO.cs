@@ -38,6 +38,7 @@ namespace HospitalSalvador.Models.DTO
         [StringLength(10)]
         public string contacto { get; set; }
         public string correo { get; set; }
+        public int turno { get; set; }
 
 
     }

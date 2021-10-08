@@ -90,17 +90,39 @@ namespace HospitalSalvador.Controllers
                 //si no ha sido confirmado por el auxiliar médico
                 if (!user.confirm_doc_identidad)
                 {
+                    var dataDateResponse = Controllers.citasController.validateBirth(formuser.fecha_nacimiento);
+
+                    if (!dataDateResponse.successful)
+                        return false;
+
                     user.nombre = formuser.nombre;
                     user.apellido = formuser.apellido;
                     user.sexo = formuser.sexo;
                     user.contacto = formuser.contacto;
                     user.doc_identidad = formuser.doc_identidad;
                     user.fecha_nacimiento = formuser.fecha_nacimiento;
-                    var dataDateResponse = Controllers.citasController.validateBirth(formuser.fecha_nacimiento);
 
-                    if (!dataDateResponse.successful)
-                        return false;
+                    //Update patient info
+                    //Update tutor's name for all records in the database with this user
+                    (from p in _db.pacientes
+                     where p.MyIdentityUserID == user.Id && p.doc_identidad_tutor != null
+                     select p).ToList()
+                   .ForEach(x =>
+                   {
+                       x.nombre_tutor = user.nombre;
+                       x.apellido_tutor = user.apellido;
+                       x.doc_identidad_tutor = user.doc_identidad;
+                   });
 
+                    var paciente = (from p in _db.pacientes
+                                    where p.MyIdentityUserID == user.Id && p.doc_identidad != null
+                                    select p).FirstOrDefault();
+                    if (paciente != null)
+                    {
+                        paciente.nombre = user.nombre;
+                        paciente.doc_identidad = user.doc_identidad;
+                        paciente.apellido = user.apellido;
+                    }
 
                 }
                 else
@@ -141,14 +163,24 @@ namespace HospitalSalvador.Controllers
         [HttpGet("[action]")]
         public async Task<ActionResult<UserInfo>> getUserInfoAsync()
         {
+            try
+            {
 
-            string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            MyIdentityUser user = await _userManager.FindByNameAsync(userName);
-            if ( user.doc_identidad == null) {
-                return NotFound();
+
+                string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                MyIdentityUser user = await _userManager.FindByNameAsync(userName);
+                if (user.doc_identidad == null)
+                {
+                    return NotFound();
+                }
+                UserInfo userInfo = _mapper.Map<UserInfo>(user);
+                return userInfo;
             }
-            UserInfo userInfo = _mapper.Map<UserInfo>(user);
-            return userInfo;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
 
@@ -161,8 +193,8 @@ namespace HospitalSalvador.Controllers
         [HttpGet("[action]")]
         public async Task<bool> isUserDocIdentConfirmAsync()
         {
-           
-            
+
+
             try
             {
                 string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -172,7 +204,7 @@ namespace HospitalSalvador.Controllers
             catch (Exception e)
             {
 
-                throw new Exception("Ha ocurrido un error al tratar de hacer la solicitud: "+e.Message);
+                throw new Exception("Ha ocurrido un error al tratar de hacer la solicitud: " + e.Message);
             }
 
         }

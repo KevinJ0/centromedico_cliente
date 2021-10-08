@@ -22,8 +22,14 @@ mat-panel-title {
   color: #343434;
 }
 
+
+
 mat-card-content {
   margin-top: clamp(2rem, 5vw, 3rem);
+}
+
+.mat-expansion-panel-header-description {
+  gap: 5px;
 }
 
 .first-row {

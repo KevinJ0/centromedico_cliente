@@ -111,8 +111,14 @@ main main {
   align-items: center;
 }
 
+mat-expansion-panel-header {
+  height: fit-content !important;
+  min-height: 3rem;
+}
+  
 mat-expansion-panel-header .mat-content {
   align-items: center;
+  margin: 1rem 0;
 }
 
 .form-search .mat-form-field-wrapper {
@@ -148,4 +154,13 @@ mat-expansion-panel-header .mat-content {
     background-color: #e0e0e0;
     display: block;
   }
+
+  mat-expansion-panel-header .mat-content {
+    flex-direction: column;
+    align-items: flex-start;
+   }
+  }
+.TrengoOnlineStatus__iframe, .TrengoWidgetPanel__iframe {
+  z-index: 999 !important;
 }
+

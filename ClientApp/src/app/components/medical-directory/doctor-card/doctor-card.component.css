@@ -69,7 +69,10 @@ a {
     align-items: center;
     text-align: center;
 }
-.doctor-info .numeros{
+  .doctor-card .doctor-img img {
+    margin: auto;
+  }
+  .doctor-info .numeros {
     justify-content: center;
-}
+  }
 }

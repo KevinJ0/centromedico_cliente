@@ -2,6 +2,9 @@ main {
   max-width: 700px;
   margin: auto;
   padding: 3rem clamp(0.5rem, 4vw, 6rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .task {
@@ -122,4 +125,22 @@ margin-bottom: .5rem;
 }
 mat-divider {
   margin: 1rem 0 2rem 0;
+}
+
+@media print {
+  main{
+    top: 0;
+    left: 0;
+  }
+
+  .task {
+    display: none;
+    position: absolute;
+    visibility: hidden;
+  }
+
+
+  .message li {
+    font-size: 13px;
+  }
 }

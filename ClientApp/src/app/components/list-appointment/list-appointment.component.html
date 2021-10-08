@@ -25,9 +25,14 @@
               <div class="content">
                 <div class="first-row">
                   <div><span>ID: </span><span><b>{{cita.id}}</b></span></div>
-                  <div><span>Consultorio: <b>
+                  <div><span>Turno: </span><span><b>{{cita.turno}}</b></span></div>
+                  <div>
+                    <span>
+                      Consultorio: <b>
                         {{cita.consultorio}}
-                      </b></span></div>
+                      </b>
+                    </span>
+                  </div>
                 </div>
                 <div class="second-row">
                   <div>
@@ -40,7 +45,7 @@
                     <div>Tutor</div>
                     <div class="data">
                       <span>
-                        {{cita.paciente_nombre_tutor}}
+                        {{cita.paciente_nombre_tutor+" "+cita.paciente_apellido_tutor}}
                       </span>
                     </div>
                   </div>

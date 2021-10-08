@@ -13,7 +13,7 @@ import { SwiperOptions } from 'swiper';
 
 export class LocationComponent implements OnInit, AfterViewInit {
   @ViewChild(MapInfoWindow) infoWindow: MapInfoWindow;
-  
+
   onSwiper(swiper) {
     console.log(swiper);
   }
@@ -46,8 +46,14 @@ export class LocationComponent implements OnInit, AfterViewInit {
       },
       name: 'La Romana'
     })
-
-   
+     
+    this.markers.push({
+      position: {
+        lat: 18.4296925,
+        lng: -68.9656023,
+      },
+      name: 'Santo Domingo'
+    })
     this.loadScript('../../../assets/js/carousel.js');
 
   }

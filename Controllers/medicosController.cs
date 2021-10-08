@@ -152,6 +152,8 @@ namespace HospitalSalvador.Controllers
                 throw;
             }
         }
+       
+
 
         List<string> getSunday(horarios_medicos horarios)
         {

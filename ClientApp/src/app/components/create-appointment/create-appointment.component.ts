@@ -15,7 +15,15 @@ import { hora, UserInfo, seguro, cita, cobertura, citaResult } from 'src/app/int
 import { SeguroService } from 'src/app/services/seguro.service';
 const moment = _moment;
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+interface Food {
+  value: number;
+  viewValue: string;
+}
 
+interface Car {
+  value: string;
+  viewValue: string;
+}
 @AutoUnsubscribe()
 @Component({
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -63,7 +71,8 @@ export class CreateAppointmentComponent implements OnInit {
 
   Horas: hora[];
   dateFilter;
-
+  identDocMask: string = "000-0000000-0";
+  selectedTypeDoc: number = 0;
   ngOnInit() {
 
     this.firstFormGroup = this._formBuilder.group({
@@ -83,6 +92,7 @@ export class CreateAppointmentComponent implements OnInit {
       dependentBirthDateControl: [''],
       dependentNameControl: [''],
       dependentLastNameControl: [''],
+      typeIdentityDocControl: [0],
       identityDocControl: ['', [Validators.required, Validators.minLength(11), Validators.maxLength(15)]],
       userNameControl: ['', Validators.required],
       userLastNameControl: ['', Validators.required],
@@ -104,13 +114,7 @@ export class CreateAppointmentComponent implements OnInit {
     // this.firstFormGroup.get("insuranceControl").updateValueAndValidity();
     // });
 
-    this.thirdFormGroup.get("appointmentTypeControl")
-      .valueChanges
-      .subscribe(option => {
-        if (option == 1) this.underAgeShow = "block";
-        else this.underAgeShow = "none";
-        this.isDependent = Boolean(Number.parseInt(option));
-      });
+
 
     //actualiza los costos por el seguro que se escoja
     this.firstFormGroup.get("insuranceControl")
@@ -149,12 +153,48 @@ export class CreateAppointmentComponent implements OnInit {
               return of([]);
             }))
             .subscribe((r: any) => {
-              this.Horas = r.map((r: Date) => {
+              const keys = Object.keys(r);
 
-                return { id: r, descrip: _moment(r).utc().format(' hh:mm A') };
+              console.log(keys);
+
+              this.Horas = keys.map((key, index) => {
+                return { id: new Date(key), descrip: _moment(key).utc().format(' hh:mm A') + " - Turno " + r[key] };
               });
+              console.log(this.Horas)
+
             })
         }
+      });
+
+    this.thirdFormGroup.get("appointmentTypeControl")
+      .valueChanges
+      .subscribe(option => {
+        if (option == 1) this.underAgeShow = "block";
+        else this.underAgeShow = "none";
+        this.isDependent = Boolean(Number.parseInt(option));
+      });
+
+    this.thirdFormGroup.get("typeIdentityDocControl")
+      .valueChanges
+      .subscribe(value => {
+        var identityDoc = this.thirdFormGroup.get("identityDocControl");
+
+        switch (value) {
+          case 0:
+            this.identDocMask = "000-0000000-0";
+            identityDoc.setValue(identityDoc.value.replace(/\D/g, '').substr(0, 11));
+            identityDoc.setValidators([Validators.minLength(11)]);
+            break;
+          case 1:
+            identityDoc.setValidators([Validators.minLength(8)]);
+            this.identDocMask = "AAAAAAAAAAAAAA";
+            break;
+          case 2:
+            this.identDocMask = "AAAAAAAAAAAAAA";
+            break;
+        }
+
+        identityDoc.updateValueAndValidity();
       });
   }
 
@@ -221,11 +261,11 @@ export class CreateAppointmentComponent implements OnInit {
 
         }, err => of([])
           , () => {
-console.log(_cita)
+            console.log(_cita)
             this.citaSvc.CreateCita(_cita).subscribe((r: citaResult) => {
               console.log(r)
               this.citaSvc._citaResult = r;
-              this.router.navigate(['ticket']);
+             // this.router.navigate(['ticket']);
             }, (err: string) => {
               this.isSent = false;
               this.openSnackBar(err);
@@ -245,7 +285,7 @@ console.log(_cita)
     //console.log(servicioId, seguroId)
 
     if (Number.isInteger(seguroId) && Number.isInteger(servicioId)) {
-      this.loadingPayment = true; //muestro la pagina de carga
+      this.loadingPayment = true; //muestro la página de carga
 
       setTimeout(() => {
 
@@ -288,6 +328,10 @@ console.log(_cita)
       this.thirdFormGroup.get("contactControl").setValue(re.contacto);
       this.thirdFormGroup.get("userSexControl").setValue(re.sexo);
       this.thirdFormGroup.get("identityDocControl").setValue(re.doc_identidad);
+      var regExp = /[a-zA-Z]/i;
+
+      if (regExp.test(re.doc_identidad))
+        this.thirdFormGroup.get("typeIdentityDocControl").setValue(1);
 
     }, err => {
       console.error(err)
@@ -330,7 +374,6 @@ console.log(_cita)
           console.log(r)
           this.servicios$ = r.servicios;
           this.diasLaborables = r.diasLaborables.map(r => {
-
             return new Date(r)
           });
 

@@ -21,7 +21,7 @@ namespace HospitalSalvador.Models
         public int ID { get; set; }
         [Required]
         public int medicosID { get; set; }
-        //public byte turno { get; set; }
+        public int turno { get; set; }
         [Required] 
         public int serviciosID { get; set; }
         [StringLength(6)]

@@ -77,7 +77,7 @@ export class ListAppointmentComponent implements OnInit {
 
   }
   convertDate(date: string): string {
-    return _moment(date).utc().format('dddd DD MMM Y hh:mm A');
+    return _moment(date).format('dddd DD MMM Y hh:mm A');
   }
   ngOnDestroy() { 
 

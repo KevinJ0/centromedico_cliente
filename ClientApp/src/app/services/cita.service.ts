@@ -37,7 +37,7 @@ export class CitaService {
 
     try {
       return this.http.get<any>(this.baseUrl +
-        `api/citas/GetTimeList?fecha_hora=${fecha.toISOString()}&medicoID=${medicoID}`)
+        `api/citas/getTimeList?fecha_hora=${fecha.toISOString()}&medicoID=${medicoID}`)
         .pipe(map(result => {
           return result;
         }), catchError(err => {

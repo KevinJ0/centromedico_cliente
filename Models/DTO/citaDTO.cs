@@ -59,6 +59,7 @@ namespace HospitalSalvador.Models.DTO
       /*public int especialidadesID { get; set; }
         public string especialidad_descrip { get; set; }*/
         public int consultorio { get; set; }
+        public int turno { get; set; }
 
 
     }

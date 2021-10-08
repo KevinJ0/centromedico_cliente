@@ -14,6 +14,11 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Polly.Retry;
+using Polly;
+using HospitalSalvador.Services;
+using System.Globalization;
+using System.Text;
 
 namespace HospitalSalvador.Controllers
 {
@@ -31,11 +36,15 @@ namespace HospitalSalvador.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly MyDbContext _db;
         private readonly IConfiguration _configuration;
-
+        private readonly RetryPolicy _retryPolicy;
+        private readonly int MaxRetries = 3;
+        private readonly IEmailService _emailService;
+        private readonly IWhatsappService _whatsappService;
 
         public citasController(RoleManager<IdentityRole> roleManager,
             IConfiguration configuration, UserManager<MyIdentityUser> userManager,
-            token token, MyDbContext db, IMapper mapper)
+            token token, MyDbContext db, IMapper mapper,
+              IEmailService emailService, IWhatsappService whatsappService)
         {
             _userManager = userManager;
             _configuration = configuration;
@@ -43,6 +52,10 @@ namespace HospitalSalvador.Controllers
             _roleManager = roleManager;
             _db = db;
             _mapper = mapper;
+            _emailService = emailService;
+            _whatsappService = whatsappService;
+            _retryPolicy = Policy.Handle<Exception>()
+                .WaitAndRetry(MaxRetries, time => TimeSpan.FromSeconds(1));
         }
 
         /// <summary>
@@ -186,8 +199,7 @@ namespace HospitalSalvador.Controllers
                     seguros = coberturaslst,
                     //especialidades = especialidadeslst,
                     servicios = servicioslst,
-                    diasLaborables = availableDaylst,
-                    horasDisponibles = availableTimelst
+                    diasLaborables = availableDaylst
                 });
         }
 
@@ -311,6 +323,8 @@ namespace HospitalSalvador.Controllers
                     x.segurosID == formdata.segurosID &&
                     x.serviciosID == formdata.serviciosID);
 
+                int nTurn = await getNewTurn(formdata.fecha_hora, formdata.medicosID);
+
                 hora_reserv = await _db.horarios_medicos_reservados.FirstOrDefaultAsync(h => h.fecha_hora == formdata.fecha_hora && h.medicosID == formdata.medicosID);
                 validationResponse availableTime = await ValidateAvailableTimeAsync(formdata.fecha_hora, formdata.medicosID);
                 citaValidationResponse dataResponse = await ValidateAndSetDataAsync(formdata);
@@ -319,19 +333,19 @@ namespace HospitalSalvador.Controllers
                 paciente = _db.pacientes
                     .FirstOrDefault(p => p.MyIdentityUsers == user && !String.IsNullOrWhiteSpace(p.doc_identidad)); //this is for add another row with the same ID tutor.
 
-                if (paciente == null)
-                    paciente = await _db.pacientes.FirstOrDefaultAsync(p => p.MyIdentityUsers == user); //this is for addind another row with the same ID tutor.
-
+                /* if (paciente == null)
+                     paciente = await _db.pacientes.FirstOrDefaultAsync(p => p.MyIdentityUsers == user); //this is for addind another row with the same ID tutor.
+ */
                 codVer = citaExists(user) ? getCV(user) : generateCV(medico);
 
                 //VALIDATORS
 
-                if (formdata.userinfo != null)
-                {
-                    bool result = await saveUserInfoAsync(formdata.userinfo);
-                    if (!result)
-                        return BadRequest("Ha ocurrido un error al tratar de guardar los datos del paciente");
-                }
+                /*  if (formdata.userinfo != null)
+                  {
+                      bool result = await saveUserInfoAsync(formdata.userinfo);
+                      if (!result)
+                          return BadRequest("Ha ocurrido un error al tratar de guardar los datos del paciente");
+                  }*/
 
                 if (String.IsNullOrWhiteSpace(user.doc_identidad))
                     return StatusCode(403, "Este usuario no cuenta con un documento de identidad previamente ingresado");
@@ -373,19 +387,21 @@ namespace HospitalSalvador.Controllers
                 if (!availableTime.successful)
                     return BadRequest(availableTime.errorMessage);
 
+                if (nTurn == 0)
+                    return StatusCode(500, "Ha ocurrido un error al tratar de generar el turno para la cita.");
 
                 //choosing appoiment type
                 switch (formdata.appointment_type)
                 {
                     case (int)appointment.me:
 
-                        bool addPaciente = false;
+                        bool addNewPaciente = false;
 
-                        if (paciente == null || paciente.doc_identidad == null) //para no repetir el paciente en la db mas de una vez.
-                            addPaciente = true;
+                        if (paciente == null || paciente.doc_identidad == null) //para no repetir el paciente en la db más de una vez.
+                            addNewPaciente = true;
 
                         _mapper.Map<MyIdentityUser, pacientes>(user, paciente);
-                        if (addPaciente)
+                        if (addNewPaciente)
                         {
                             paciente = _mapper.Map<pacientes>(user);
                             _db.pacientes.Add(paciente);
@@ -396,22 +412,22 @@ namespace HospitalSalvador.Controllers
                         break;
 
                     case (int)appointment.other:
-                        string tutorNombre = user.nombre == null ? "" : user.nombre;
-                        string tutorApellido = user.apellido == null ? "" : user.apellido;
-                        string tutor_NombreApellido = (tutorNombre + " " + tutorApellido).Trim();
+
 
                         paciente = _mapper.Map<pacientes>(formdata);
 
                         paciente.doc_identidad_tutor = user.doc_identidad;
-                        paciente.nombre_tutor = String.IsNullOrWhiteSpace(tutor_NombreApellido) ? null : tutor_NombreApellido;
-
+                        paciente.nombre_tutor = String.IsNullOrWhiteSpace(user.nombre) ? null : user.nombre;
+                        paciente.apellido_tutor = String.IsNullOrWhiteSpace(user.apellido) ? null : user.apellido;
                         paciente.MyIdentityUsers = user;
                         _db.pacientes.Add(paciente);
+
                         break;
 
                     default:
                         return BadRequest("No se ha definido al tipo de paciente que se va a consultar, especifique si es \"Yo\" ó \"Otra persona\"");
                 }
+
 
                 //calculate costs
                 decimal coberturaPorciento = (Decimal.Divide((cobertura.porciento), 100));
@@ -434,6 +450,7 @@ namespace HospitalSalvador.Controllers
                     contacto = formdata.contacto,
                     contacto_whatsapp = formdata.contacto_whatsapp,
                     fecha_hora = formdata.fecha_hora,
+                    turno = nTurn
                 };
 
                 //reserve a doctor's schedule
@@ -455,8 +472,8 @@ namespace HospitalSalvador.Controllers
                 _db.horarios_medicos_reservados.Add(hora_reserv);
                 await _db.SaveChangesAsync();
 
-                //I need to return a tiket
-                return Ok(new citaResultDTO
+
+                var citaResult = new citaResultDTO
                 {
                     cod_verificacion = cita.cod_verificacionID,
                     servicio = cita.servicios.descrip,
@@ -474,8 +491,23 @@ namespace HospitalSalvador.Controllers
                     tutor_nombre_apellido = (paciente.nombre_tutor + " " + paciente.apellido_tutor).Trim(),
                     contacto = cita.contacto,
                     correo = user.Email,
+                    turno = nTurn
 
-                });
+                };
+                try
+                {
+                    //throw new Exception();
+                    sendTicketMail(citaResult, user.Email);
+                    sendTicketWhatsapp(citaResult, user.contacto);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                //I return a ticket
+                return Ok(citaResult);
 
             }
             catch (Exception)
@@ -484,47 +516,104 @@ namespace HospitalSalvador.Controllers
             }
         }
 
+        private void sendTicketWhatsapp(citaResultDTO citaResult, string contacto)
+        {
+
+            String message = "";
 
 
-        private async Task<bool> saveUserInfoAsync(UserInfo formuser)
+            message = "*Fecha y hora:* " + new CultureInfo("es-ES").TextInfo.ToTitleCase(citaResult.fecha_hora.ToString("dddd, dd MMMM yyyy hh:mm tt", new CultureInfo("es-ES")))
+                    + Environment.NewLine + "*Código:* " + citaResult.cod_verificacion
+                    + Environment.NewLine + "Tu médico es *" + citaResult.medico_nombre_apellido + "*"
+                    + Environment.NewLine + "*Consultorio:* " + citaResult.consultorio
+                    + Environment.NewLine + "*Turno:* " + citaResult.turno
+                    + Environment.NewLine + "*Servicio:* " + citaResult.servicio
+                    + Environment.NewLine + "*Paciente:* " + citaResult.paciente_nombre_apellido;
+
+            if (citaResult.doc_identidad_tutor != null)
+                message = message
+                    + Environment.NewLine + "*Doc.identidad tutor:* " + citaResult.doc_identidad_tutor
+                    + Environment.NewLine + "*Tutor:* " + citaResult.tutor_nombre_apellido;
+            else
+                message = message
+                + Environment.NewLine + "*Doc.identidad:* " + citaResult.doc_identidad;
+            
+
+            message = message
+                    + Environment.NewLine + "*Número de contacto:* " + citaResult.contacto
+                    + Environment.NewLine + "*Seguro:* " + citaResult.seguro
+                    + Environment.NewLine + "*Diferencia:* RD$" + Decimal.Round(citaResult.diferencia, 2);
+
+            _whatsappService.Send("14155238886", contacto, message);
+
+        }
+
+
+        private void sendTicketMail(citaResultDTO citaResult, string to)
+        {
+
+            _retryPolicy.Execute(() =>
+            {
+                StringBuilder message = new StringBuilder("");
+                var reader = new System.IO.StreamReader("Helpers/TicketTemplateFirst.html", System.Text.Encoding.UTF8);
+                var firstTicket = reader.ReadToEnd();
+                reader = new System.IO.StreamReader("Helpers/TicketTemplateSecond.html", System.Text.Encoding.UTF8);
+                var secondTicket = reader.ReadToEnd();
+                reader.Close();
+
+                string showDocIdent = "inherit";
+                string showDocIdentTutor = "none";
+                if (citaResult.doc_identidad_tutor != null)
+                {
+                    showDocIdent = "none";
+                    showDocIdentTutor = "inherit";
+                }
+                message.Append(firstTicket);
+                message.Append($@"
+                     <h2 style=""
+                        margin-bottom: 2rem;
+                        font-weight: normal;
+                        font-size: clamp(0.7rem, 6vw, 1.3rem);
+                        padding: 1rem;
+                        text-align: center;
+                        padding-top: 0;
+                        "" >{new CultureInfo("es-ES").TextInfo.ToTitleCase(citaResult.fecha_hora.ToString("dddd, dd MMMM yyyy hh:mm tt", new CultureInfo("es-ES")))}</h2>
+                        <div class=""user_data"">
+                          <div class=""flex-container"">
+                            <p><b>Código:</b>  {citaResult.cod_verificacion}</p>
+                            <p><b>Tu médico es</b> {citaResult.medico_nombre_apellido}</p>
+                            <p><b>Consultorio: </b>{citaResult.consultorio}</p>
+                            <p><b>Turno: </b>{citaResult.turno}</p>
+                            <p><b>Servicio: </b>{citaResult.servicio}</p>
+                            <p  style=""display: {showDocIdent};""><b>Doc. identidad: </b><span>{citaResult.doc_identidad}</span></p>
+                            <p><b>Paciente: </b>{citaResult.paciente_nombre_apellido}</p>
+                            <p style=""display: {showDocIdentTutor};""><b>Doc. identidad tutor: </b><span>{citaResult.doc_identidad_tutor}</span></p>
+                            <p style=""display: {showDocIdentTutor};""><b>Tutor: </b><span>{citaResult.tutor_nombre_apellido}</span></p>
+                            <p><b>Número de contacto: </b>{citaResult.contacto}</p>
+                            <p><b>Seguro: </b>{citaResult.seguro}</p>
+                            <p><b>Diferencia: </b>RD${Decimal.Round(citaResult.diferencia, 2)}</p>
+                          </div>");
+                message.Append(secondTicket);
+
+                _emailService.Send(to, "Cita Médica - Hospital Salvador", message.ToString(), _configuration["AppSettings:EmailFrom"]);
+            });
+        }
+
+        private async Task<int> getNewTurn(DateTime fecha_hora, int medicoID)
         {
             try
             {
-
-                string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                MyIdentityUser user = await _userManager.FindByNameAsync(userName);
-
-                //si no ha sido confirmado por el auxiliar médico
-                if (!user.confirm_doc_identidad)
-                {
-                    user.nombre = formuser.nombre;
-                    user.apellido = formuser.apellido;
-                    user.sexo = formuser.sexo;
-                    user.contacto = formuser.contacto;
-                    user.doc_identidad = formuser.doc_identidad;
-                    user.fecha_nacimiento = formuser.fecha_nacimiento;
-                    var dataDateResponse = validateBirth(formuser.fecha_nacimiento);
-
-                    if (!dataDateResponse.successful)
-                        return false;
-                }
-                else
-                {
-                    if (user.contacto != null)
-                        user.contacto = formuser.contacto;
-
-                }
-
-                _db.SaveChanges();
-
-                return true;
+                var TimeTurnDic = await getAvailableTimeTurnDicAsync(fecha_hora, medicoID);
+                int nTurn = TimeTurnDic.First(x => x.Key.Equals(fecha_hora)).Value;
+                return nTurn;
             }
             catch (Exception)
             {
-                throw;
-            }
 
+                return 0;
+            }
         }
+
 
 
         /// <summary>
@@ -606,8 +695,8 @@ namespace HospitalSalvador.Controllers
         }
 
         /// <summary>
-        /// Devuelve una lista de los horarios disponibles de este médico, tomando como referencia 
-        /// el día que se le suministra. Retorna null si el médico no labora ese día.
+        /// Devuelve un diccionario datetime y init que representa los horarios disponibles de este médico , tomando como referencia 
+        /// el día que se le suministra y el turno que le concierne a la fecha. Retorna null si el médico no labora ese día.
         /// </summary>
         /// <remarks>
         /// Sample request:
@@ -622,22 +711,17 @@ namespace HospitalSalvador.Controllers
         /// <response code="400">El médico no labora este día.</response>  
         [HttpGet("[action]")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
-        public async Task<ActionResult<List<DateTime>>> getTimeListAsync(DateTime fecha_hora, int medicoID)
+        public async Task<ActionResult<Dictionary<DateTime, int>>> getTimeListAsync(DateTime fecha_hora, int medicoID)
         {
             //get the  appointment list schedule of this doctor
-            var dateTimelst = await getAvailableTimeListAsync(fecha_hora, medicoID);
+            var dateTimeDic = await getAvailableTimeTurnDicAsync(fecha_hora, medicoID);
 
-            if (dateTimelst == null)
+            if (dateTimeDic == null)
                 return BadRequest("Este médico no labora el día escogido: " + fecha_hora.Date.ToShortDateString());
-            else if (!dateTimelst.Any())
+            else if (!dateTimeDic.Any())
                 return NoContent();
 
-            //  List<TimeSpan> timelst = new List<TimeSpan>();
-
-            //   foreach (var item in dateTimelst)
-            //       timelst.Add(item.TimeOfDay);
-
-            return dateTimelst;
+            return dateTimeDic;
         }
 
         private async Task<List<DateTime>> getAvailableTimeListAsync(DateTime fecha_hora, int medicoID)
@@ -664,12 +748,49 @@ namespace HospitalSalvador.Controllers
                 startTime = startTime.AddMinutes(appointmentDuration);
             }
 
-
-
             //let's get rid of reserved hours
             if (reservedTimelst != null)
                 availableTimelst = availableTimelst.Except(reservedTimelst).ToList();
 
+            return availableTimelst;
+        }
+
+        private async Task<Dictionary<DateTime, int>> getAvailableTimeTurnDicAsync(DateTime fecha_hora, int medicoID)
+        {
+            //get the last appointment list schedule of this doctor
+            horarios_medicosDTO doctorWorkSchedule = getWorkDaySchedule(fecha_hora.DayOfWeek, medicoID);
+            if (doctorWorkSchedule == null)
+                return null;
+
+            int appointmentDuration = doctorWorkSchedule.tiempo_cita.Minutes;
+            List<DateTime> reservedTimelst = await getReservedTimelstAsync(medicoID, fecha_hora);
+            DateTime startTime = fecha_hora.Date.Add(doctorWorkSchedule._from.Value);
+            DateTime endTime = fecha_hora.Date.Add(doctorWorkSchedule._until.Value);
+            DateTime startFreeTime = fecha_hora.Date.Add(doctorWorkSchedule.free_time_from.Value);
+            DateTime endFreeTime = fecha_hora.Date.Add(doctorWorkSchedule.free_time_until.Value);
+            Dictionary<DateTime, int> availableTimelst = new Dictionary<DateTime, int>();
+            Dictionary<DateTime, int> b = new Dictionary<DateTime, int>();
+            int nTurn = 0;
+
+            while (startTime < endTime)
+            {
+                var intime = startTime.CompareTo(DateTime.Now); // compare today's date in order to not allow lower date than today 
+                if ((startTime.TimeOfDay.CompareTo(startFreeTime.TimeOfDay) < 0 || startTime.TimeOfDay.CompareTo(endFreeTime.TimeOfDay) > 0) && intime > 0)
+                {
+                    nTurn++;
+                    availableTimelst.Add(startTime, nTurn);
+
+                }
+                startTime = startTime.AddMinutes(appointmentDuration);
+            }
+
+            //let's get rid of reserved hours
+            if (reservedTimelst != null)
+            {
+                availableTimelst = availableTimelst
+                .Where(kvp => !reservedTimelst.Contains(kvp.Key))
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            }
             return availableTimelst;
         }
 
@@ -962,7 +1083,6 @@ namespace HospitalSalvador.Controllers
 
             if (_edad < 18)
                 _message = "Es necesario que el usuario sea mayor de edad.";
-
 
 
             return new citaValidationResponse

@@ -36,7 +36,6 @@ export class TicketAppointmentComponent implements OnInit {
     this.citaDataResult.fecha_hora = _moment(fechaHora).utc().format('dddd DD MMM Y hh:mm A');
   }
 
-
   ngOnInit(): void {
 
   }

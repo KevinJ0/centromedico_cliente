@@ -153,7 +153,7 @@ mat-stepper {
 
 .userdata-content {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-around; 
   flex-wrap: wrap;
 }
 
@@ -162,6 +162,10 @@ mat-stepper {
   display: flex;
   width: 100%;
   flex-wrap: nowrap;
+}
+
+.date-appointment {
+cursor:pointer;
 }
 .radio-wrapper {
   min-height: 81px;

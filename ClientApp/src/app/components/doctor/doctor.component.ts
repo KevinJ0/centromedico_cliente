@@ -1,4 +1,4 @@
-import { Component, OnInit,OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -93,7 +93,7 @@ export class DoctorComponent implements OnInit {
     try {
       this.router.navigate(['/crear-cita', { medicoId: this.medicoId }]);
     } catch (error) {
-
+      console.error(error);
     }
   }
   ngOnDestroy() { 

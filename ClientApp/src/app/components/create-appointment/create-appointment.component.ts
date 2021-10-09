@@ -13,17 +13,10 @@ import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
 import { hora, UserInfo, seguro, cita, cobertura, citaResult } from 'src/app/interfaces/InterfacesDto';
 import { SeguroService } from 'src/app/services/seguro.service';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 const moment = _moment;
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
-interface Food {
-  value: number;
-  viewValue: string;
-}
 
-interface Car {
-  value: string;
-  viewValue: string;
-}
 @AutoUnsubscribe()
 @Component({
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -41,6 +34,8 @@ interface Car {
 export class CreateAppointmentComponent implements OnInit {
 
   baseUrl: string;
+  mode: ProgressSpinnerMode = 'indeterminate';
+  loading: boolean = false;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -207,6 +202,7 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
   onClickSubmit() {
+     
 
     console.log(_moment.utc(this.secondFormGroup.get("timeControl").value).format());
 
@@ -276,6 +272,7 @@ export class CreateAppointmentComponent implements OnInit {
           });
       }
     }
+
   }
   setCostos() {
 

@@ -1,17 +1,16 @@
- 
 
-.doctor-container {
-  grid-auto-flow: column;
-  margin: 1rem 0;
-  display: grid;
-  grid-template-columns: 1fr 3fr;
-  width: 100%;
-  gap: clamp(5px, 1vw, 1rem);
+.progress-content {
+  padding: clamp(1rem, 18vh, 10rem) 0px !important;
 }
 
-.form-doctor-filter {
-  height: fit-content;
+mat-card {
+  margin-bottom: clamp(1rem, 7vh, 3rem);
 }
+
+mat-progress-spinner {
+  margin: auto;
+}
+
 mat-form-field {
   width: 100%;
 }
@@ -27,14 +26,7 @@ mat-selection-list {
   height: auto;
   max-height: 100vh;
 }
-.subheader {
-  height: 48px;
-  line-height: 16px;
-  color: rgba(0, 0, 0, 0.54);
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-}
+
 
 .btn-container {
   width: 100%;

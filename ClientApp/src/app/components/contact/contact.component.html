@@ -138,45 +138,50 @@
 
 <section class="form-wrapper" id="contactus">
   <h1>Envianos tus preguntas y comentarios</h1>
-
-  <form class="example-form">
-
+  <form [formGroup]="contactFormGroup" (ngSubmit)="onClickSubmit()" class="form-group _row contact-form">
     <table class="example-full-width" cellspacing="0">
       <tr class="name">
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Tu nombre</mat-label>
-            <input matInput>
+            <input formControlName="nameControl" matInput required>
           </mat-form-field>
         </td>
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Tu número de teléfono</mat-label>
-            <input matInput>
+            <input formControlName="phoneControl" mask="000-000-0000"  type="tel" matInput required>
           </mat-form-field>
         </td>
       </tr>
     </table>
 
     <mat-form-field class="example-full-width" appearance="fill">
-      <mat-label>Tu correo electrónico</mat-label>
-      <input matInput placeholder="" type="email" value="">
+      <mat-label>Email</mat-label>
+      <input  formControlName="emailControl" type="email" matInput  [errorStateMatcher]="matcher"
+             placeholder="">
+      <mat-error *ngIf="contactFormGroup.get('emailControl').hasError('email') && !contactFormGroup.get('emailControl').hasError('required')">
+        Por favor ingrese un correo válido
+      </mat-error>
+      <mat-error *ngIf="contactFormGroup.get('emailControl').hasError('required')">
+        Correo es <strong>requerido</strong>
+      </mat-error>
     </mat-form-field>
-
 
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Motivo de su contactar</mat-label>
-      <mat-select name="resons">
-        <mat-option [value]="1">General</mat-option>
-        <mat-option [value]="1">Donación</mat-option>
-        <mat-option [value]="1">Medios de comunicación</mat-option>
+      <mat-select formControlName="reasonControl" name="reason" required>
+        <mat-option [value]=0>General</mat-option>
+        <mat-option [value]=1>Donación</mat-option>
+        <mat-option [value]=2>Medios de comunicación</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Tu mensaje</mat-label>
-      <textarea rows=10 matInput placeholder=""></textarea>
+      <textarea formControlName="messageControl" rows=10 matInput placeholder="" required></textarea>
     </mat-form-field>
+    <div *ngIf="serverMsj.length != 0" class="server-msj">{{serverMsj}}</div>
 
     <button type="submit" mat-flat-button color="primary">Enviar</button>
 

@@ -48,7 +48,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { ListAppointmentComponent } from './components/list-appointment/list-appointment.component';
 import { LocationComponent } from './components/location/location.component';
-import { ContactComponent } from './components/contact/contact.component';
+import { ContactComponent, DialogSuccessedEmail } from './components/contact/contact.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -57,6 +57,8 @@ import { FaqExpansionPanelComponent } from './components/faq/faq-expansion-panel
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { NgxPrintModule } from 'ngx-print';
+import { PreguntaService  } from './services/pregunta.service';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export function tokenGetter() {
   //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
@@ -93,7 +95,7 @@ export const MY_FORMATS = {
     LocationComponent,
     ListAppointmentComponent,
     FaqComponent,
-    FaqExpansionPanelComponent,
+    FaqExpansionPanelComponent, DialogSuccessedEmail
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -110,7 +112,8 @@ export const MY_FORMATS = {
     MatButtonToggleModule,
     MatTableModule,
     MatListModule,
-    MatDividerModule,
+    MatDialogModule,
+    MatDividerModule, 
     MatRadioModule,
     MatNativeDateModule,
     MatPaginatorModule,
@@ -159,7 +162,8 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    AccountService, CitaService, DoctorService, CoberturaService, AuthGuardService],
-  bootstrap: [AppComponent]
+    AccountService, CitaService, DoctorService, CoberturaService, AuthGuardService, PreguntaService],
+  bootstrap: [AppComponent],
+  entryComponents: [DialogSuccessedEmail]
 })
 export class AppModule { }

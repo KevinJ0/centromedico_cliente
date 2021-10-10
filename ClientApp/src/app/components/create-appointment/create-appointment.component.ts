@@ -68,6 +68,7 @@ export class CreateAppointmentComponent implements OnInit {
   dateFilter;
   identDocMask: string = "000-0000000-0";
   selectedTypeDoc: number = 0;
+
   ngOnInit() {
 
     this.firstFormGroup = this._formBuilder.group({
@@ -97,19 +98,6 @@ export class CreateAppointmentComponent implements OnInit {
       dependentSexControl: [''],
       userSexControl: ['', Validators.required],
     });
-
-    // this.firstFormGroup.get("insuranceOptionControl").valueChanges.subscribe(option => {
-    //   if (option == true) {
-    //     this.firstFormGroup.get("insuranceControl")
-    //       .clearValidators();
-    //   } else {
-    //     this.firstFormGroup.get("insuranceControl")
-    //       .setValidators([Validators.required]);
-    //   }
-    // this.firstFormGroup.get("insuranceControl").updateValueAndValidity();
-    // });
-
-
 
     //actualiza los costos por el seguro que se escoja
     this.firstFormGroup.get("insuranceControl")

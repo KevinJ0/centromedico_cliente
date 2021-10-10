@@ -88,6 +88,8 @@ mat-card-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
+  top: 45px;
+  position: relative;
 }
 .form-wrapper h1 {
   font-size: xx-large;
@@ -103,7 +105,7 @@ mat-card-actions {
   padding: 0.2rem 2rem;
 }
 
-.example-form {
+.contact-form {
   min-width: 150px;
   max-width: 500px;
   width: 100%;
@@ -117,6 +119,14 @@ mat-card-actions {
 
 .name td {
   width: 100%;
+}
+.server-msj {
+  padding: .5rem;
+  padding-left: 8px;
+  border-left: solid 4px red;
+  background: #ffc9c97a;
+  margin: 1rem 0;
+  color: #ff0000;
 }
 
 @media screen and (max-width: 900px) {

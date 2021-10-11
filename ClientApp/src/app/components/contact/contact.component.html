@@ -150,7 +150,7 @@
         <td>
           <mat-form-field class="example-full-width" appearance="fill">
             <mat-label>Tu número de teléfono</mat-label>
-            <input formControlName="phoneControl" mask="000-000-0000"  type="tel" matInput required>
+            <input formControlName="phoneControl" mask="000-000-0000" type="tel" matInput required>
           </mat-form-field>
         </td>
       </tr>
@@ -183,7 +183,7 @@
     </mat-form-field>
     <div *ngIf="serverMsj.length != 0" class="server-msj">{{serverMsj}}</div>
 
-    <button type="submit" mat-flat-button color="primary">Enviar</button>
+    <button type="submit" mat-flat-button  [disabled]="isSent" color="primary">Enviar</button>
 
   </form>
 </section>

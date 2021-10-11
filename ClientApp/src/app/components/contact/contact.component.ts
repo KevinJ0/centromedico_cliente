@@ -23,6 +23,7 @@ export class ContactComponent implements OnInit {
   contactFormGroup: FormGroup;
   serverMsj: string = "";
   contactForm: CorreoPregunta;
+  isSent: boolean = false;
   constructor(public dialog: MatDialog, private _formBuilder: FormBuilder, private preguntaSvc: PreguntaService) { }
 
   openDialog() {
@@ -45,7 +46,7 @@ export class ContactComponent implements OnInit {
   onClickSubmit() {
     let formdata = this.contactFormGroup.value
     if (this.contactFormGroup.valid) {
-
+      this.isSent = true;
       this.contactForm = {
         "nombre": formdata.nameControl,
         "correo": formdata.emailControl,
@@ -60,11 +61,14 @@ export class ContactComponent implements OnInit {
           this.serverMsj = "";
           this.contactFormGroup.reset();
           this.openDialog();
+          this.isSent = false;
 
         }, err => {
+          this.isSent = false;
           this.serverMsj = err;
         });
       } catch (e) {
+        this.isSent = false;
         this.serverMsj = e;
       }
     }

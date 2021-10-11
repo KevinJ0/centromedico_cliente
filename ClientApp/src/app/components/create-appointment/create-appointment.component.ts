@@ -249,7 +249,7 @@ export class CreateAppointmentComponent implements OnInit {
             this.citaSvc.CreateCita(_cita).subscribe((r: citaResult) => {
               console.log(r)
               this.citaSvc._citaResult = r;
-             // this.router.navigate(['ticket']);
+             this.router.navigate(['ticket']);
             }, (err: string) => {
               this.isSent = false;
               this.openSnackBar(err);

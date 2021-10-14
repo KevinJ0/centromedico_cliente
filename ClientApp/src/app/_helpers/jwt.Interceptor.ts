@@ -3,6 +3,7 @@ import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpResponse, Htt
 import { AccountService } from '../services/account.service';
 import { Observable, BehaviorSubject, pipe, throwError } from 'rxjs';
 import { tap, catchError, switchMap, finalize, filter, take } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 
 
@@ -18,7 +19,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   tokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
-  constructor(private acct: AccountService) { }
+  constructor(private acct: AccountService, private router: Router) { }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // Check if the user is logging in for the first time
@@ -50,6 +51,7 @@ export class JwtInterceptor implements HttpInterceptor {
           if ((<HttpErrorResponse>err).status == 401 && grantType == "refresh_token") {
 
             console.log("TokenRefresh has expired");
+            this.router.navigate(['/paciente-login']);
             return <any>this.acct.logout();
 
           } else {

@@ -4,18 +4,16 @@ import { UserInfo, TokenResponse } from '../interfaces/InterfacesDto';
 import { BehaviorSubject, throwError, of, Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   baseUrl: string;
 
-  // Url to access our Web API’s
-  private baseUrlLogin: string = "api/account/login";
-
-  private baseUrlRegister: string = "api/token/register";
-
+  // Url to access to the Web API
   // Token Controller
+  private baseUrlRegister: string = "api/token/register";
   private baseUrlToken: string = "api/token/auth";
 
 

@@ -19,37 +19,20 @@ export class CitaService {
   }
 
 
-  GetNewCita(medicoID: number): Observable<any> {
+  GetCitaForm(medicoID: number): Observable<any> {
 
     try {
       return this.http.get<any>(this.baseUrl +
-        `api/citas/getNewCita?medicoID=${medicoID}`)
+        `api/citas/getCitaForm?medicoID=${medicoID}`)
         .pipe(map(result => {
           return result;
         }));
     } catch (error) {
-      console.log('Ha ocurrido un error al tratar de obtener los datos de la cita: ', error);
+      console.log('Ha ocurrido un error al tratar de obtener los datos del formulario para la cita: ', error);
       return of([]);
     }
   }
 
-  GetTimeList(fecha: Date, medicoID: number): Observable<any> {
-
-    try {
-      return this.http.get<any>(this.baseUrl +
-        `api/citas/getTimeList?fecha_hora=${fecha.toISOString()}&medicoID=${medicoID}`)
-        .pipe(map(result => {
-          return result;
-        }), catchError(err => {
-          console.log('Ha ocurrido un error al tratar de obtener la lista de horas: ', err);
-          return of([]);
-        }));
-
-    } catch (error) {
-      console.log('Ha ocurrido un error al tratar de obtener la lista de horas: ', error);
-      return of([]);
-    }
-  }
 
   CreateCita(_cita: cita): Observable<citaResult> {
     console.info(_cita);

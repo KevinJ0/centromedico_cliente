@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace HospitalSalvador.Models.DTO
+namespace CentromedicoCliente.Models.DTO
 {
     public class LoginDTO
     {

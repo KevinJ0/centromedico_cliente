@@ -1,69 +1,269 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using AutoMapper;
+using Centromedico.Database.Context;
+using Centromedico.Database.DbModels;
+using CentromedicoCliente.Exceptions;
+using CentromedicoCliente.Services.Interfaces;
+using Cliente.DTO;
+using Cliente.Repository.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace centromedico.Services
+namespace CentromedicoCliente.Services
 {
-public class TokenService : ITokenService
-{
+    public class TokenService : ITokenService
+    {
+        private readonly ITokenRepository _tokenRepo;
+        private readonly UserManager<MyIdentityUser> _userManager;
+        private readonly MyDbContext _db;
         private readonly IConfiguration _configuration;
 
-        public TokenService(IConfiguration configuration) {
+        public TokenService(ITokenRepository tokenRepo,
+            IConfiguration configuration,
+            UserManager<MyIdentityUser> userManager,
+            MyDbContext db)
+        {
+            _userManager = userManager;
+            _db = db;
             _configuration = configuration;
-
+            _tokenRepo = tokenRepo;
         }
-        public string GenerateAccessToken(IEnumerable<Claim> claims)
-        {
-            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authorization:LlaveSecreta"]));
-            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-            var creds = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
-            var expiration = DateTime.UtcNow.AddSeconds(10);  ///////////////////
-            JwtSecurityToken tokeOptions = new JwtSecurityToken(
-                issuer: _configuration["Authorization:issuer"],
-                audience: _configuration["Authorization:audience"],
-                claims: claims,
-                expires: expiration,
-                signingCredentials: creds); 
 
-        var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
-        return tokenString;
-    }
 
-    public string GenerateRefreshToken()
-    {
-        var randomNumber = new byte[32];
-        using (var rng = RandomNumberGenerator.Create())
+
+        public async Task<bool> RegisterAsync(RegisterDTO formdata)
         {
-            rng.GetBytes(randomNumber);
-            return Convert.ToBase64String(randomNumber);
+
+            try
+            {
+
+                // Will hold all the errors related to registration
+                string _error = "";
+                IdentityResult result = await _tokenRepo.Add(formdata);
+                if (result.Succeeded)
+                    return true;
+
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        _error = IdentityErrorService.getDescription(error.Code);
+                        break;
+                    }
+                }
+                throw new BadRequestException(_error);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
-    }
 
-    public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
-    {
-        var tokenValidationParameters = new TokenValidationParameters
+        /// <summary>
+        /// Método que crea un New JWT y refresca el token.
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /Auth
+        ///     {
+        ///        "UserCredential":"jose@gmail.com", 
+        ///        "password":"12345", 
+        ///        "granttype":"password" 
+        ///     }
+        ///
+        /// </remarks>
+        /// <param name="model"></param>
+        /// <param name="mobile"></param>
+        /// <response code="200">Operación exitosa, devuelve un TokenResponseDTO con el Token y refresh token incluido.</response>
+        /// <response code="400">Si las credenciales no son validas.</response>  
+        public async Task<IActionResult> GenerateNewToken(TokenRequestDTO model, bool mobile = false)
         {
-            ValidateAudience = false, //you might want to validate the audience and issuer depending on your use case
-            ValidateIssuer = false,
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Authorization:LlaveSecreta"])),
-            ValidateLifetime = true //here we are saying that we don't care about the token's expiration date
-        };
+            try
+            {
 
-        var tokenHandler = new JwtSecurityTokenHandler();
-        SecurityToken securityToken;
-        var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
-        var jwtSecurityToken = securityToken as JwtSecurityToken;
-        if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
-            throw new SecurityTokenException("Invalid token");
 
-        return principal;
+                // check if there's an user with the given username
+                var user = await _userManager.FindByNameAsync(model.UserCredential) ?? await _userManager.FindByEmailAsync(model.UserCredential);
+
+                // Validate credentials
+                if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
+                {
+
+                    // username & password matches: create the refresh token
+                    token newRtoken = CreateRefreshToken(_configuration["Authorization:ClientId"], user.Id, mobile);
+
+                    // first we delete any existing old refreshtoken
+                    IQueryable oldrtoken = _tokenRepo.getAllByUserId(user.Id);
+
+                    if (oldrtoken != null)
+                    {
+                        foreach (var oldrt in oldrtoken)
+                        {
+                            _tokenRepo.Remove((token)oldrt);
+                        }
+                    }
+
+                    // Add new refresh token to Database
+                    _tokenRepo.Add(newRtoken);
+
+                    await _db.SaveChangesAsync();
+
+                    // Create & Return the access token which contains JWT and Refresh Token
+
+                    var accessToken = await CreateAccessToken(user, newRtoken.Value);
+
+                    return new OkObjectResult(new { authToken = accessToken });
+                }
+
+               throw new BadRequestException("El usuario o ontraseña son invalidos, por favor verifique sus credenciales.");
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        // Create access Token
+        public async Task<TokenResponseDTO> CreateAccessToken(MyIdentityUser user, string refreshToken)
+        {
+
+            double tokenExpiryTime = Convert.ToDouble(_configuration["Authorization:ExpireTime"]);
+
+            var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_configuration["Authorization:LlaveSecreta"]));
+
+            var roles = await _userManager.GetRolesAsync(user);
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
+                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                        new Claim(ClaimTypes.NameIdentifier, user.Id),
+                        new Claim(ClaimTypes.Role, roles.FirstOrDefault()),
+                        new Claim("LoggedOn", DateTime.Now.ToString()),
+                     }),
+
+                SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature),
+                Issuer = _configuration["Authorization:Issuer"],
+                Audience = _configuration["Authorization:Audience"],
+                Expires = DateTime.UtcNow.AddYears((int)tokenExpiryTime)
+            };
+
+            // Generate token
+
+            var newtoken = tokenHandler.CreateToken(tokenDescriptor);
+            var encodedToken = tokenHandler.WriteToken(newtoken);
+
+            return new TokenResponseDTO()
+            {
+                token = encodedToken,
+                expiration = newtoken.ValidTo,
+                refresh_token = refreshToken,
+                roles = roles.FirstOrDefault(),
+                username = user.UserName
+            };
+        }
+
+
+        public token CreateRefreshToken(string clientId, string userId, bool mobile = false)
+        {
+            if (mobile)
+            {
+                return new token()
+                {
+                    ClientId = clientId,
+                    UserId = userId,
+                    Value = Guid.NewGuid().ToString("N"),
+                    CreatedDate = DateTime.UtcNow,
+                    ExpiryTime = DateTime.UtcNow.AddYears(1)
+                };
+            }
+
+            return new token()
+            {
+                ClientId = clientId,
+                UserId = userId,
+                Value = Guid.NewGuid().ToString("N"),
+                CreatedDate = DateTime.UtcNow,
+                ExpiryTime = DateTime.UtcNow.AddMinutes(60)
+            };
+        }
+
+
+
+        // Method to Refresh JWT and Refresh Token
+        public async Task<IActionResult> RefreshToken(TokenRequestDTO model, bool mobile = false)
+        {
+            try
+            {
+                // check if the received refreshToken exists for the given clientId
+                var rt = _db.token
+                    .FirstOrDefault(t =>
+                    t.ClientId == _configuration["Authorization:ClientId"]
+                    && t.Value == model.RefreshToken.ToString());
+
+                if (rt == null)
+                {
+                    // refresh token not found or invalid (or invalid clientId)
+                    throw new UnauthorizedException("El refresh token no se ha encontrado o es inválido.");
+                }
+
+                // check if refresh token is expired
+                if (rt.ExpiryTime < DateTime.UtcNow)
+                {
+                    throw new UnauthorizedException("El resfresh token ha expirado.");
+                }
+
+                // check if there's an user with the refresh token's userId
+                var user = await _userManager.FindByIdAsync(rt.UserId);
+
+
+                if (user == null)
+                {
+                    // UserId not found or invalid
+                    throw new UnauthorizedException("El userId no es valido.");
+
+                }
+
+                // generate a new refresh token 
+
+                var rtNew = CreateRefreshToken(rt.ClientId, rt.UserId, mobile);
+
+                // invalidate the old refresh token (by deleting it)
+                _tokenRepo.Remove(rt);
+
+                // add the new refresh token
+                _tokenRepo.Add(rtNew);
+
+                // persist changes in the DB
+                _db.SaveChanges();
+
+
+                var response = await CreateAccessToken(user, rtNew.Value);
+
+                return new OkObjectResult(new { authToken = response });
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
     }
-}
 }

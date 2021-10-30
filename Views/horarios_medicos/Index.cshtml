@@ -1,0 +1,137 @@
+﻿@model IEnumerable<Centromedico.Database.DbModels.horarios_medicos>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.tiempo_cita)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.monday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tuesday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tuesday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.wednesday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.wednesday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.thursday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.thursday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.friday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.friday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.saturday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.saturday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sunday_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sunday_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.free_time_from)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.free_time_until)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.medicos)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tiempo_cita)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.monday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tuesday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tuesday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.wednesday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.wednesday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.thursday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.thursday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.friday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.friday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.saturday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.saturday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sunday_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sunday_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.free_time_from)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.free_time_until)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.medicos.apellido)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.medicosID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.medicosID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.medicosID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

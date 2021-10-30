@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 using Polly.Retry;
 using Polly;
 using System.Globalization;
-using System.Text;
-using HospitalSalvador.Models.DTO;
 using Microsoft.Extensions.Configuration;
+using Cliente.DTO;
 
-namespace HospitalSalvador.Services
+namespace CentromedicoCliente.Services
 {
     public interface INotificationService
     {
@@ -32,7 +31,7 @@ namespace HospitalSalvador.Services
             _emailService = emailService;
             _whatsappService = whatsappService;
             _retryPolicy = Policy.Handle<Exception>()
-                    .WaitAndRetry(MaxRetries, time => TimeSpan.FromSeconds(1));
+                    .WaitAndRetry(MaxRetries, time => TimeSpan.FromSeconds(3));
         }
 
 
@@ -73,9 +72,9 @@ namespace HospitalSalvador.Services
             _retryPolicy.Execute(() =>
             {
                 StringBuilder message = new StringBuilder("");
-                var reader = new System.IO.StreamReader("Helpers/TicketTemplateFirst.html", System.Text.Encoding.UTF8);
+                var reader = new System.IO.StreamReader("wwwroot/assets/TicketTemplateFirst.html", System.Text.Encoding.UTF8);
                 var firstTicket = reader.ReadToEnd();
-                reader = new System.IO.StreamReader("Helpers/TicketTemplateSecond.html", System.Text.Encoding.UTF8);
+                reader = new System.IO.StreamReader("wwwroot/assets/TicketTemplateSecond.html", System.Text.Encoding.UTF8);
                 var secondTicket = reader.ReadToEnd();
                 reader.Close();
 

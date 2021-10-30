@@ -23,6 +23,8 @@ export interface seguro {
 }
 
 export interface cobertura {
+  segurosID: number;
+  descrip: string;
   porciento: number;
   pago: number;
   cobertura: number;
@@ -153,12 +155,20 @@ export interface TokenResponse {
     username: string;
   }
 }
- export interface CorreoPregunta {
+export interface CorreoPregunta {
 
   nombre: string;
-   correo: string;
+  correo: string;
   contacto: string;
   motivo: number;
   mensaje: string;
+
+}
+
+export interface servicioCobertura {
+
+  id: number;
+  descrip: string;
+  coberturas: cobertura[];
 
 }

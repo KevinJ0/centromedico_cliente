@@ -11,11 +11,12 @@ import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { CoberturaService } from 'src/app/services/cobertura.service';
 import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
-import { hora, UserInfo, seguro, cita, cobertura, citaResult } from 'src/app/interfaces/InterfacesDto';
+import { hora, UserInfo, seguro, cita, cobertura, citaResult, servicioCobertura } from 'src/app/interfaces/InterfacesDto';
 import { SeguroService } from 'src/app/services/seguro.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 const moment = _moment;
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+import { HorarioMedicoService } from '../../services/horario-medico.service';
 
 @AutoUnsubscribe()
 @Component({
@@ -35,7 +36,6 @@ export class CreateAppointmentComponent implements OnInit {
 
   baseUrl: string;
   mode: ProgressSpinnerMode = 'indeterminate';
-  loading: boolean = false;
 
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
@@ -43,19 +43,22 @@ export class CreateAppointmentComponent implements OnInit {
 
   isUserConfirmed: boolean;
 
-  seguros$: Observable<any>;
-  servicios$: Observable<any>;
+  seguros: seguro[];
+  coberturas: cobertura[];
+  servicios: servicioCobertura[];
   medicoId: number = 0;
   diferencia: number = 0;
   pago: number = 0;
   cobertura: number = 0;
+
   loadingPayment: boolean;
+  loadingDateControl: boolean = false;
+  loading: boolean = false;
 
   insuranceOption: boolean = true;
 
   isDependent = false;
   isEditable = false;
-  isSent = false;
   stepperOrientation: Observable<StepperOrientation>;
   minBDDate: Date;
   minDBDDate: Date;
@@ -68,6 +71,8 @@ export class CreateAppointmentComponent implements OnInit {
   dateFilter;
   identDocMask: string = "000-0000000-0";
   selectedTypeDoc: number = 0;
+
+
 
   ngOnInit() {
 
@@ -102,40 +107,25 @@ export class CreateAppointmentComponent implements OnInit {
     //actualiza los costos por el seguro que se escoja
     this.firstFormGroup.get("insuranceControl")
       .valueChanges
-      .subscribe(value => this.setCostos());
+      .subscribe(() => this.setCostos());
 
     //actualiza los seguros disponibles al cambiar de servicio
     this.firstFormGroup.get("serviceTypeControl")
       .valueChanges
-      .subscribe(value => {
-        this.seguroSvc.GetSegurosByServicio(this.medicoId, value)
-          .pipe(catchError(err => {
-            console.log('Ha ocurrido un error al tratar de obtener la lista de seguros: ', err);
-            return of([]);
-          }))
-          .subscribe((r: any) => {
-            this.seguros$ = r;
-            this.firstFormGroup.get("insuranceControl").reset(null, { onlySelf: true, emitEvent: false });
-            //console.table(r);
-            this.setCostos();
-          })
-      });
+      .subscribe(value => this.SetSegurosByServicio(value));
+
 
     //actualiza las horas disponibles
     this.secondFormGroup.get("dateControl")
       .valueChanges
       .subscribe(value => {
+        this.loadingDateControl = true;
 
         if (value.length != 0) {
+          this.secondFormGroup.get("timeControl").reset(null);
 
-          this.secondFormGroup.get("timeControl").reset(null, { onlySelf: true, emitEvent: false });
-
-          this.citaSvc.GetTimeList(value, this.medicoId)
-            .pipe(catchError(err => {
-              console.log('Ha ocurrido un error al tratar de obtener la lista de las horas disponibles: ', err);
-              return of([]);
-            }))
-            .subscribe((r: any) => {
+          this.horarioMedicoSvc.GetHoursList(value, this.medicoId)
+             .subscribe((r: any) => {
               const keys = Object.keys(r);
 
               console.log(keys);
@@ -144,10 +134,17 @@ export class CreateAppointmentComponent implements OnInit {
                 return { id: new Date(key), descrip: _moment(key).utc().format(' hh:mm A') + " - Turno " + r[key] };
               });
               console.log(this.Horas)
+              this.loadingDateControl = false;
 
-            })
+             }, err => {
+               this.loadingDateControl = false;
+               this.openSnackBar("Ha ocurrido un error al tratar de obtener la lista de las horas disponibles");
+                 console.error('Ha ocurrido un error al tratar de obtener la lista de las horas disponibles: ', err);
+             })
         }
       });
+
+
 
     this.thirdFormGroup.get("appointmentTypeControl")
       .valueChanges
@@ -156,6 +153,7 @@ export class CreateAppointmentComponent implements OnInit {
         else this.underAgeShow = "none";
         this.isDependent = Boolean(Number.parseInt(option));
       });
+
 
     this.thirdFormGroup.get("typeIdentityDocControl")
       .valueChanges
@@ -182,6 +180,17 @@ export class CreateAppointmentComponent implements OnInit {
   }
 
 
+
+
+  SetSegurosByServicio(servicioID: number) {
+    this.coberturas = this.servicios.find(r => r.id == servicioID).coberturas;
+    this.firstFormGroup.get("insuranceControl").reset(null, { onlySelf: true, emitEvent: false });
+    this.setCostos();
+  }
+
+
+
+
   openSnackBar(message: string) {
     const config = new MatSnackBarConfig();
     config.panelClass = 'background-red';
@@ -189,16 +198,18 @@ export class CreateAppointmentComponent implements OnInit {
     this._snackBar.open(message, null, config);
   }
 
+
+
+
   onClickSubmit() {
-     
 
     console.log(_moment.utc(this.secondFormGroup.get("timeControl").value).format());
 
     if (!this.firstFormGroup.valid || !this.secondFormGroup.valid || !this.thirdFormGroup.valid) {
       this.openSnackBar("Las información ingresada no es valida");
     } else {
-      if (!this.isSent) {
-        this.isSent = true;
+      if (!this.loading) {
+        this.loading = true;
 
         let formdata = Object.assign(this.firstFormGroup.value, this.secondFormGroup.value, this.thirdFormGroup.value);
         let _cita: cita;
@@ -218,6 +229,7 @@ export class CreateAppointmentComponent implements OnInit {
           sexo: formdata["userSexControl"],
           contacto: contacto
         }
+
         if (this.isDependent) {
           nombre = formdata["dependentNameControl"];
           apellido = formdata["dependentLastNameControl"];
@@ -241,58 +253,46 @@ export class CreateAppointmentComponent implements OnInit {
           "nota": formdata["noteControl"]
         };
 
-        this.accountSvc.setUserInfo(userInfo).subscribe(arg => {
-
-        }, err => of([])
-          , () => {
+        this.accountSvc.setUserInfo(userInfo).subscribe(arg => { },
+          err =>  this.loading = false,
+          () => {
             console.log(_cita)
             this.citaSvc.CreateCita(_cita).subscribe((r: citaResult) => {
               console.log(r)
               this.citaSvc._citaResult = r;
-             this.router.navigate(['ticket']);
+              this.router.navigate(['ticket']);
             }, (err: string) => {
-              this.isSent = false;
+              this.loading = false;
               this.openSnackBar(err);
               console.error(err);
             }, () => {
-              this.isSent = false;
+              this.loading = false;
             });
           });
       }
     }
 
   }
+
+
+
   setCostos() {
 
     var servicioId = Number.parseInt(this.firstFormGroup.get("serviceTypeControl").value);
     var seguroId = Number.parseInt(this.firstFormGroup.get("insuranceControl").value);
 
-    //console.log(servicioId, seguroId)
-
     if (Number.isInteger(seguroId) && Number.isInteger(servicioId)) {
-      this.loadingPayment = true; //muestro la página de carga
+      this.loadingPayment = true;
 
       setTimeout(() => {
 
-        this.coberturaSvc.GetCobertura(this.medicoId, seguroId, servicioId)
-          .pipe(catchError(err => {
-            this.loadingPayment = false;
-            console.error('Error al intentar acceder a la cobertura');
-            return null;
-          }), finalize(() => {
-            this.loadingPayment = false;
-          }))
-          .subscribe((r: cobertura) => {
-            if (r != null) {
-              this.cobertura = r.cobertura;
-              this.pago = r.pago;
-              this.diferencia = r.diferencia;
-            } else {
-              this.cobertura = 0;
-              this.pago = 0;
-              this.diferencia = 0;
-            }
-          });
+        let result = this.coberturas.find(r => r.segurosID == seguroId);
+        this.cobertura = result.cobertura;
+        this.pago = result.pago;
+        this.diferencia = result.diferencia;
+
+        this.loadingPayment = false;
+
       }, 400)
     }
     else {
@@ -301,6 +301,8 @@ export class CreateAppointmentComponent implements OnInit {
       this.diferencia = 0;
     }
   }
+
+
 
   setUserInfo() {
     this.accountSvc.getUserInfo().subscribe((re: UserInfo) => {
@@ -318,10 +320,12 @@ export class CreateAppointmentComponent implements OnInit {
       if (regExp.test(re.doc_identidad))
         this.thirdFormGroup.get("typeIdentityDocControl").setValue(1);
 
-    }, err => {
+    }, err => { 
       console.error(err)
     });
   }
+
+
 
   getDSexErrorMessage() {
     return this.thirdFormGroup.get("dependentSexControl").hasError('required') ? 'Debe seleccionar una opción' : "";
@@ -330,15 +334,20 @@ export class CreateAppointmentComponent implements OnInit {
     return this.thirdFormGroup.get("userSexControl").hasError('required') ? 'Debe seleccionar una opción' : "";
   }
 
+
+
   constructor(
 
     private router: Router,
     private rutaActiva: ActivatedRoute,
     private _snackBar: MatSnackBar,
     private coberturaSvc: CoberturaService,
+    private horarioMedicoSvc: HorarioMedicoService,
     private seguroSvc: SeguroService,
     public citaSvc: CitaService, private accountSvc: AccountService,
     private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
+
+    this.loading = true;
 
     this.medicoId = Number.parseInt(this.rutaActiva.snapshot.queryParamMap.get('medicoId'));
     if (!this.medicoId) {
@@ -350,14 +359,14 @@ export class CreateAppointmentComponent implements OnInit {
       .pipe(map(({ matches }) => matches ? 'horizontal' : 'vertical'));
 
     //inicializa las fechas permitidas
-    this.citaSvc.GetNewCita(this.medicoId)
+    this.citaSvc.GetCitaForm(this.medicoId)
       .pipe(
         catchError(err => {
           console.error('Error al tratar de acceder a los pre-datos de la cita');
           return of([]);
         })).subscribe(r => {
           console.log(r)
-          this.servicios$ = r.servicios;
+          this.servicios = r.servicios;
           this.diasLaborables = r.diasLaborables.map(r => {
             return new Date(r)
           });
@@ -368,19 +377,23 @@ export class CreateAppointmentComponent implements OnInit {
             return this.diasLaborables.find(x => _moment.utc(x).format("l") ==
               _moment.utc(_date).format("l")) ? true : false;
           }
-
+          this.loading = false;
           console.table(this.diasLaborables);
         })
 
     //Establezco las fechas minimas permitidas en las fechas de nacimientos
     this.minDBDDate = new Date(Date.now() + -6574 * 24 * 3600 * 1000);
-    this.maxDBDDate = new Date();
+    this.maxDBDDate = new Date(Date.now() + -31 * 24 * 3600 * 1000);
     this.minBDDate = new Date(Date.now() + -43825 * 24 * 3600 * 1000);
     this.maxBDDate = new Date(Date.now() + -6575 * 24 * 3600 * 1000);
 
     //Relleno los datos del usuario si existe
     this.setUserInfo();
+
   }
+
+
+
   ngOnDestroy() {
 
   }

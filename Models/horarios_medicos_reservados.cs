@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace HospitalSalvador.Models
+namespace CentromedicoCliente.Models
 {
     public partial class horarios_medicos_reservados
     {

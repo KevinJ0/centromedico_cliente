@@ -18,7 +18,7 @@
         "TWILIO_ACCOUNT_SID": "AC8333955ad662b4dd4d537ca87e2b4522"
       }
     },
-    "HospitalSalvador": {
+    "CentromedicoCliente": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

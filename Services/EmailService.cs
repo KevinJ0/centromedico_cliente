@@ -1,12 +1,12 @@
 ﻿
-using HospitalSalvador.Helpers;
+using CentromedicoCliente.Services.Helpers;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 
-namespace HospitalSalvador.Services
+namespace CentromedicoCliente.Services
 {
     public interface IEmailService
     {
@@ -31,10 +31,10 @@ namespace HospitalSalvador.Services
             email.Subject = subject;
             email.Body = new TextPart(TextFormat.Html) { Text = html };
 
-          
             // send email
-             var smtp = new SmtpClient();
-            smtp.Connect(_emailSettings.SmtpHost, _emailSettings.SmtpPort, SecureSocketOptions.StartTls);
+            var smtp = new SmtpClient();
+            smtp.CheckCertificateRevocation = false;
+            smtp.Connect(_emailSettings.SmtpHost, _emailSettings.SmtpPort, SecureSocketOptions.Auto);
             smtp.Authenticate(_emailSettings.SmtpUser, _emailSettings.SmtpPass);
             smtp.Send(email);
             smtp.Disconnect(true);

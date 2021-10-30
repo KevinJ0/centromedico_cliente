@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace HospitalSalvador.Models
+namespace CentromedicoCliente.Models
 {
     [Index(nameof(MyIdentityUserID), Name = "IX_clientes_MyIdentityUserID")]
     [Index(nameof(doc_identidad), Name = "unique_identidad", IsUnique = true)]

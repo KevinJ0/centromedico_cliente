@@ -59,6 +59,8 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { NgxPrintModule } from 'ngx-print';
 import { PreguntaService  } from './services/pregunta.service';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { CustomPaginator } from './shared/CustomPaginatorConfiguration';
 
 export function tokenGetter() {
   //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
@@ -132,7 +134,7 @@ export const MY_FORMATS = {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:4211', 'hospitalsalvador-001-site1.htempurl.com'],
+        allowedDomains: ['localhost:4211', 'CentromedicoCliente-001-site1.htempurl.com'],
         disallowedRoutes: [],
         authScheme: "Bearer ",
       }
@@ -153,7 +155,7 @@ export const MY_FORMATS = {
       { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', useHash: false }),
   ],
   providers: [
-
+    { provide: MatPaginatorIntl, useValue: CustomPaginator() },
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     {
       provide: DateAdapter,
@@ -167,3 +169,5 @@ export const MY_FORMATS = {
   entryComponents: [DialogSuccessedEmail]
 })
 export class AppModule { }
+
+

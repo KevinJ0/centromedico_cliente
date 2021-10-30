@@ -86,9 +86,9 @@ export class JwtInterceptor implements HttpInterceptor {
       // A client-side or network error occurred. Handle it accordingly.
       errorMsg = "Un error ha ocurrido del lado del cliente: " + errorResponse.error.message;
     } else {
-
-      if ((typeof errorResponse.error === 'string' || errorResponse.error instanceof String) && errorResponse.error.length < 150) {
-        errorMsg = `${errorResponse.error}`;
+      console.log(typeof errorResponse.error.error[0]) 
+      if (errorResponse.error.customError && (typeof errorResponse.error.error[0] === 'string' || errorResponse.error instanceof String) && errorResponse.error.error[0].length < 150) {
+        errorMsg = `${errorResponse.error.error[0]}`;
         // The backend returned an unsuccessful response code.
       } else {
         errorMsg = `Ha ocurrido un error al tratar de procesar su petición.`;

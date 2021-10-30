@@ -1,10 +1,14 @@
 using Amazon.Runtime;
 using Amazon.S3;
 using AutoMapper;
-using HospitalSalvador.Context;
-using HospitalSalvador.Helpers;
-using HospitalSalvador.Models;
-using HospitalSalvador.Services;
+using Centromedico.Database.DbModels;
+using Centromedico.Database.Context;
+using CentromedicoCliente.Exceptions;
+using Cliente.Repository.Repositories;
+using Cliente.Repository.Repositories.Interfaces;
+using CentromedicoCliente.Services;
+using CentromedicoCliente.Services.Helpers;
+using CentromedicoCliente.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,9 +28,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using CentromedicoCliente.Profiles;
+using Centromedico.Services;
 
-
-namespace HospitalSalvador
+namespace CentromedicoCliente
 {
     public class Startup
     {
@@ -42,13 +47,34 @@ namespace HospitalSalvador
         {
             // configure strongly typed settings object
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<TwilioSettings>();
 
-            services.Configure<TwilioSettings>(Configuration.GetSection("TwilioSettings"));
+            services.AddHttpContextAccessor();
+
             services.AddScoped<IWhatsappService, WhatsappService>();
+            services.AddScoped<ICitaService, CitaService>();
+            services.AddScoped<IHorarioMedicoService, HorarioMedicoService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IMedicoService, MedicoService>();
+            services.AddScoped<ISeguroService,  SeguroService>();
+            services.AddScoped<IPreguntaService, PreguntaService>();
+
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<ICitaRepository, CitaRepository>();
+            services.AddScoped<IHorarioMedicoRepository, HorarioMedicoRepository>();
+            services.AddScoped<IPreguntaRepository, PreguntaRepository>();
+            services.AddScoped<IMedicoRepository, MedicoRepository>();
+            services.AddScoped<ICoberturaRepository, CoberturaRepository>();
+            services.AddScoped<IServicioRepository, ServicioRepository>();
+            services.AddScoped<IHorarioMedicoReservaRepository, HorarioMedicoReservaRepository>();
+            services.AddScoped<IPacienteRepository, PacienteRepository>();
+            services.AddScoped<ISeguroRepository, SeguroRepository>();
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();
-            
+
             services.AddSingleton<IS3Service, S3Service>();
             services.AddAWSService<IAmazonS3>();
 
@@ -58,17 +84,17 @@ namespace HospitalSalvador
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+            services.AddMvc(options => options.Filters.Add(typeof(ExceptionFilter)));
             services.AddMvc().ConfigureApiBehaviorOptions(options =>
             {
                 //options.SuppressModelStateInvalidFilter = true;
                 options.InvalidModelStateResponseFactory = actionContext =>
                 {
                     string errors = "";
-                    Dictionary<string, List<string>> errorsDic = new Dictionary<string, List<string>>();
+                    var errorsList = new List<string>();
 
                     foreach (var state in actionContext.ModelState)
                     {
-                        var errorsList = new List<string>();
 
                         foreach (var error in state.Value.Errors)
                         {
@@ -81,11 +107,14 @@ namespace HospitalSalvador
                                 errorsList.Add(errors);
 
                         }
-                        errorsDic.Add(state.Key, errorsList);
+
                     }
 
                     var modelState = actionContext.ModelState;
-                    return new BadRequestObjectResult(errorsDic)
+                    return new BadRequestObjectResult(new
+                    {
+                        error = new[] { errorsList[0]},
+                    })
                     ;
                 };
             });
@@ -109,8 +138,8 @@ namespace HospitalSalvador
 
             });
             IMapper mapper = mapperConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
+            // services.AddSingleton(mapper);
+            services.AddAutoMapper(typeof(Startup));
             // Token Model
             services.AddScoped<token>();
 
@@ -226,7 +255,7 @@ namespace HospitalSalvador
             });
 
 
-           
+
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HospitalSalvador.Context;
-using HospitalSalvador.Models;
-using HospitalSalvador.Models.DTO;
+using Centromedico.Database.Context;
+using Centromedico.Database.DbModels;
+using Cliente.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,33 +13,31 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HospitalSalvador.Controllers
+namespace CentromedicoCliente.Controllers
 {
     [Route("api/[controller]")]
+    [Produces("application/json")]
     [ApiController]
-    public class especialidadesController : ControllerBase
+    public class EspecialidadesController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly token _token;
         private readonly UserManager<MyIdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly MyDbContext _db;
         private readonly IConfiguration _configuration;
 
-        public especialidadesController(RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, UserManager<MyIdentityUser> userManager,
-            token token, MyDbContext db, IMapper mapper)
+        public EspecialidadesController(
+            IConfiguration configuration,
+            UserManager<MyIdentityUser> userManager,
+             MyDbContext db, IMapper mapper)
         {
             _userManager = userManager;
             _configuration = configuration;
-            _token = token;
-            _roleManager = roleManager;
             _db = db;
             _mapper = mapper;
         }
 
         [HttpGet("[action]")]
-        public ActionResult<List<especialidadDTO>> getAllEspecialidades(int medicoID)
+        public ActionResult<List<especialidadDTO>> getAllEspecialidades()
         {
             try
             {

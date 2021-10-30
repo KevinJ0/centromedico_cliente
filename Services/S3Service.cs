@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalSalvador.Services
+namespace CentromedicoCliente.Services
 {
     public class S3Service : IS3Service
     {

@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using HospitalSalvador.Models;
-using HospitalSalvador.Models.DTO;
-using HospitalSalvador.Context;
+using Centromedico.Database.Context;
+using Cliente.DTO;
+using CentromedicoCliente.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using HospitalSalvador.Services;
+using CentromedicoCliente.Services;
+using Centromedico.Database.DbModels;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HospitalSalvador.Controllers
+namespace CentromedicoCliente.Controllers
 {
     [Produces("application/json")]
     [Route("api/[controller]")]
@@ -33,11 +29,14 @@ namespace HospitalSalvador.Controllers
         private readonly IConfiguration _configuration;
         private readonly MyDbContext _db;
         private readonly IMapper _mapper;
+        private readonly IAccountService _accountSvc;
 
 
-        public AccountController(RoleManager<IdentityRole> roleManager, UserManager<MyIdentityUser> userManager,
+        public AccountController(IAccountService accountSvc,
+            RoleManager<IdentityRole> roleManager, UserManager<MyIdentityUser> userManager,
       SignInManager<MyIdentityUser> signManager, MyDbContext context, IConfiguration configuration, IMapper mapper)
         {
+            _accountSvc = accountSvc;
             _userManager = userManager;
             _signManager = signManager;
             _roleManager = roleManager;
@@ -71,7 +70,7 @@ namespace HospitalSalvador.Controllers
         public async Task<ActionResult> setUserInfoAsync(UserInfo formuser)
         {
 
-            bool result = await saveUserInfoAsync(formuser);
+            bool result = await _accountSvc.saveUserInfoAsync(formuser);
 
             if (!result)
                 return BadRequest("La fecha de nacimiento no es valida, debe ser mayor de edad.");
@@ -79,65 +78,6 @@ namespace HospitalSalvador.Controllers
                 return Ok();
         }
 
-        private async Task<bool> saveUserInfoAsync(UserInfo formuser)
-        {
-            try
-            {
-
-                string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-                MyIdentityUser user = await _userManager.FindByNameAsync(userName);
-
-                //si no ha sido confirmado por el auxiliar médico
-                if (!user.confirm_doc_identidad)
-                {
-                    var dataDateResponse = Controllers.citasController.validateBirth(formuser.fecha_nacimiento);
-
-                    if (!dataDateResponse.successful)
-                        return false;
-
-                    user.nombre = formuser.nombre;
-                    user.apellido = formuser.apellido;
-                    user.sexo = formuser.sexo;
-                    user.contacto = formuser.contacto;
-                    user.doc_identidad = formuser.doc_identidad;
-                    user.fecha_nacimiento = formuser.fecha_nacimiento;
-
-                    //Update patient info
-                    //Update tutor's name for all records in the database with this user
-                    (from p in _db.pacientes
-                     where p.MyIdentityUserID == user.Id && p.doc_identidad_tutor != null
-                     select p).ToList()
-                   .ForEach(x =>
-                   {
-                       x.nombre_tutor = user.nombre;
-                       x.apellido_tutor = user.apellido;
-                       x.doc_identidad_tutor = user.doc_identidad;
-                   });
-
-                    var paciente = (from p in _db.pacientes
-                                    where p.MyIdentityUserID == user.Id && p.doc_identidad != null
-                                    select p).FirstOrDefault();
-                    if (paciente != null)
-                    {
-                        paciente.nombre = user.nombre;
-                        paciente.doc_identidad = user.doc_identidad;
-                        paciente.apellido = user.apellido;
-                    }
-
-                }
-                else
-                    user.contacto = formuser.contacto;
-
-                _db.SaveChanges();
-
-                return true;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-
-        }
 
 
 
@@ -165,8 +105,6 @@ namespace HospitalSalvador.Controllers
         {
             try
             {
-
-
                 string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 MyIdentityUser user = await _userManager.FindByNameAsync(userName);
                 if (user.doc_identidad == null)
@@ -193,8 +131,6 @@ namespace HospitalSalvador.Controllers
         [HttpGet("[action]")]
         public async Task<bool> isUserDocIdentConfirmAsync()
         {
-
-
             try
             {
                 string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -206,67 +142,6 @@ namespace HospitalSalvador.Controllers
 
                 throw new Exception("Ha ocurrido un error al tratar de hacer la solicitud: " + e.Message);
             }
-
-        }
-
-        /// <summary>
-        /// Método que crea un usuario con el rol de Client por defecto y
-        /// recibe por parametro el nombre de un rol que deseas agregar al usuario.
-        /// </summary>
-        /// <remarks>
-        /// Sample response:
-        ///
-        ///     POST /Account/Register
-        ///      {
-        ///         username = UserName,
-        ///         email = Email,
-        ///         status = 1,
-        ///         message = "Registration Successful"
-        ///      }
-        /// </remarks>
-        /// <param name="formdata"></param>
-        /// <returns>citaResultDTO</returns>
-        /// <response code="400">Los datos suministrados son invalidos. Devuelve un string con un mesaje sobre el error producido.</response>
-        [HttpPost("[action]")]
-        public async Task<IActionResult> Register([FromBody] RegisterDTO formdata)
-        {
-            // Will hold all the errors related to registration
-            string _error = "";
-            IdentityRole identityRole;
-            var user = _mapper.Map<MyIdentityUser>(formdata);
-
-            user.SecurityStamp = Guid.NewGuid().ToString();
-
-            var result = await _userManager.CreateAsync(user, formdata.Password);
-
-            if (result.Succeeded)
-            {
-
-                // get user Role
-                identityRole = new IdentityRole { Name = "Pacient" };
-                await _roleManager.CreateAsync(identityRole);
-                await _userManager.AddToRoleAsync(user, "Pacient");
-
-                return Ok(new
-                {
-                    username = user.UserName,
-                    email = user.Email,
-                    status = 1,
-                    message = "Registration Successful"
-                });
-
-            }
-            else
-            {
-                foreach (var error in result.Errors)
-                {
-                    _error = IdentityErrorService.getDescription(error.Code);
-
-                    break;
-                }
-            }
-
-            return BadRequest(_error);
 
         }
 

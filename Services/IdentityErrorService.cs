@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalSalvador.Services
+namespace CentromedicoCliente.Services
 {
     public class IdentityErrorService
     {
@@ -14,11 +14,11 @@ namespace HospitalSalvador.Services
 
             switch (identityErrorCode)
             {
-                case IdentityErrorCodes.DuplicateUserName:
-                    _error = "Este usuario ya está registrado.";
-                    break;
                 case IdentityErrorCodes.DuplicateEmail:
                     _error = "Este email ya ha sido tomado.";
+                    break;
+                case IdentityErrorCodes.DuplicateUserName:
+                    _error = "Este usuario ya está registrado.";
                     break;
                 case IdentityErrorCodes.InvalidEmail:
                     _error = "Este correo es invalido.";

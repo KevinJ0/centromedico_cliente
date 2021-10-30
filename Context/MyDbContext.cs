@@ -1,12 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using HospitalSalvador.Models;
+using CentromedicoCliente.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 #nullable disable
 
-namespace HospitalSalvador.Context
+namespace CentromedicoCliente.Context
 {
     public partial class MyDbContext : IdentityDbContext
     {

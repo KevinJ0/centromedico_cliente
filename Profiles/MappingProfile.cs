@@ -1,13 +1,13 @@
 ﻿using AutoMapper;
-using HospitalSalvador.Models;
-using HospitalSalvador.Models.DTO;
+using Centromedico.Database.DbModels;
+using Cliente.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalSalvador
+namespace CentromedicoCliente.Profiles
 {
     public class MappingProfile : Profile
     {
@@ -16,10 +16,11 @@ namespace HospitalSalvador
         public MappingProfile()
         {
             CreateMap<UserInfo, MyIdentityUser>();
-            CreateMap<citaCreateDTO, UserInfo>();
             CreateMap<MyIdentityUser, UserInfo>();
             CreateMap<pacientes, MyIdentityUser>()
                 .ForMember(dto => dto.Id, opt => opt.Ignore());
+
+
             CreateMap<MyIdentityUser, pacientes>()
                 .ForMember(dto => dto.ID, opt => opt.Ignore())
                 .ForMember(dest => dest.MyIdentityUserID, opt => opt.MapFrom(src => src.Id));
@@ -31,6 +32,24 @@ namespace HospitalSalvador
                 .ForMember(dest => dest.descrip, opt => opt.MapFrom(src => src.analisis.descrip));
 
             CreateMap<pruebaDTO, pruebas>();
+
+            CreateMap<citas, citaResultDTO>()
+                .ForMember(dest => dest.cod_verificacion, opt => opt.MapFrom(src => src.cod_verificacionID))
+                .ForMember(dest => dest.servicio, opt => opt.MapFrom(src => src.servicios.descrip))
+                .ForMember(dest => dest.consultorio, opt => opt.MapFrom(src => src.consultorio))
+                .ForMember(dest => dest.fecha_hora, opt => opt.MapFrom(src => src.fecha_hora))
+                .ForMember(dest => dest.medico_nombre_apellido, opt => opt.MapFrom(src => (src.medicos.nombre + " " + src.medicos.apellido).Trim()))
+                .ForMember(dest => dest.seguro, opt => opt.MapFrom(src => src.seguros.descrip))
+                .ForMember(dest => dest.cobertura, opt => opt.MapFrom(src => src.cobertura))
+                .ForMember(dest => dest.diferencia, opt => opt.MapFrom(src => src.diferencia))
+                .ForMember(dest => dest.doc_identidad, opt => opt.MapFrom(src => src.pacientes.doc_identidad))
+                .ForMember(dest => dest.paciente_nombre_apellido, opt => opt.MapFrom(src => (src.pacientes.nombre + " " + src.pacientes.apellido).Trim()))
+                .ForMember(dest => dest.doc_identidad_tutor, opt => opt.MapFrom(src => src.pacientes.doc_identidad_tutor))
+                .ForMember(dest => dest.tutor_nombre_apellido, opt => opt.MapFrom(src => (src.pacientes.nombre_tutor + " " + src.pacientes.apellido_tutor).Trim()))
+                .ForMember(dest => dest.contacto, opt => opt.MapFrom(src => src.contacto))
+                .ForMember(dest => dest.correo, opt => opt.MapFrom(src => src.pacientes.MyIdentityUsers.Email))
+                .ForMember(dest => dest.turno, opt => opt.MapFrom(src => src.turno));
+
 
             CreateMap<citas, citaDTO>()
                 .ForMember(dest => dest.medico_nombre, opt => opt.MapFrom(src => src.medicos.nombre))
@@ -54,6 +73,12 @@ namespace HospitalSalvador
                 .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
                     src.especialidades_medicos.Select(x => x.especialidades.descrip).ToList()));
 
+            
+            CreateMap<servicios, servicioDTO>();
+            CreateMap<cobertura_medicos, coberturaMedicoDTO>();
+            CreateMap<cobertura_medicos, coberturaDTO>()
+                .ForMember(dest => dest.descrip, opt => opt.MapFrom(src => src.seguros.descrip));
+            CreateMap<servicios_medicos, servicioDTO>();
 
             CreateMap<medicos, medicoDTO>()
          .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>

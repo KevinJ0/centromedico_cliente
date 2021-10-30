@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
-namespace HospitalSalvador.Models.DTO
+namespace CentromedicoCliente.Models.DTO
 {
     public partial class pacienteDTO
     {

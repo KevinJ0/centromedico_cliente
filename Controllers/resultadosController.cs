@@ -3,9 +3,9 @@ using Amazon.S3.Model;
 using Amazon.S3.Transfer;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HospitalSalvador.Context;
-using HospitalSalvador.Models;
-using HospitalSalvador.Models.DTO;
+using CentromedicoCliente.Context;
+using CentromedicoCliente.Models;
+using CentromedicoCliente.Models.DTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -19,15 +19,13 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
-namespace HospitalSalvador.Controllers
+namespace CentromedicoCliente.Controllers
 {
     [Route("api/[controller]")]
     [Produces("application/json")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Client")]
     [ApiController]
-    public class resultadosController : ControllerBase
+    public class ResultadosController : ControllerBase
     {
 
         private readonly MyDbContext _db;
@@ -35,7 +33,7 @@ namespace HospitalSalvador.Controllers
         private readonly IMapper _mapper;
         private readonly IAmazonS3 _amazons3;
 
-        public resultadosController(IAmazonS3 amazonS3, IMapper mapper, UserManager<MyIdentityUser> userManager, MyDbContext db)
+        public ResultadosController(IAmazonS3 amazonS3, IMapper mapper, UserManager<MyIdentityUser> userManager, MyDbContext db)
         {
             _amazons3 = amazonS3;
             _userManager = userManager;
@@ -94,7 +92,7 @@ namespace HospitalSalvador.Controllers
 
                   var request = new TransferUtilityUploadRequest()
                   {
-                      BucketName = "hospitalsalvador",
+                      BucketName = "CentromedicoCliente",
                       Key = file.FileName,
                       InputStream = file.OpenReadStream(),
                       ContentType = file.ContentType,
@@ -160,7 +158,7 @@ namespace HospitalSalvador.Controllers
             {
                 var request = new GetObjectRequest()
                 {
-                    BucketName = "hospitalsalvador",
+                    BucketName = "CentromedicoCliente",
                     Key = pruebaUrl
                 };
 

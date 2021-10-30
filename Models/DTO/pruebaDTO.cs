@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalSalvador.Models.DTO
+namespace CentromedicoCliente.Models.DTO
 {
     public class pruebaDTO
     {

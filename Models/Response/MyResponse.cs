@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HospitalSalvador.Models.Response
+namespace CentromedicoCliente.Models.Response
 {
     public class MyResponse
     {

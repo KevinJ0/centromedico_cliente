@@ -57,7 +57,7 @@ export class MedicalDirectoryComponent implements OnInit {
   doctorsCount: number;
   pageLength: number;
   pageSize: number = 10;
-  pageSizeOptions = [10, 10, 50, 100];
+  pageSizeOptions = [10, 25, 50, 100];
   showNoContent: Boolean;
   mode: ProgressSpinnerMode = 'indeterminate';
 

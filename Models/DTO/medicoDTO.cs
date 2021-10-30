@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
 
-namespace HospitalSalvador.Models.DTO
+namespace CentromedicoCliente.Models.DTO
 {
     public class medicoDTO
     {

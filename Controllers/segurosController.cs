@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HospitalSalvador.Context;
-using HospitalSalvador.Models;
-using HospitalSalvador.Models.DTO;
+using Centromedico.Database.Context;
+using Centromedico.Database.DbModels ;
+using CentromedicoCliente.Services.Interfaces;
+using Cliente.DTO;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -13,27 +14,19 @@ using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace HospitalSalvador.Controllers
+namespace CentromedicoCliente.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class segurosController : ControllerBase
+    public class SegurosController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private readonly token _token;
-        private readonly UserManager<MyIdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly MyDbContext _db;
-        private readonly IConfiguration _configuration;
+        private readonly ISeguroService _seguroSvc;
 
-        public segurosController(RoleManager<IdentityRole> roleManager,
-            IConfiguration configuration, UserManager<MyIdentityUser> userManager,
-            token token, MyDbContext db, IMapper mapper)
+        public SegurosController(ISeguroService seguroSvc, MyDbContext db, IMapper mapper)
         {
-            _userManager = userManager;
-            _configuration = configuration;
-            _token = token;
-            _roleManager = roleManager;
+            _seguroSvc = seguroSvc;
             _db = db;
             _mapper = mapper;
         }
@@ -43,28 +36,28 @@ namespace HospitalSalvador.Controllers
         {
             try
             {
-                List<seguroDTO> seguroslst = _db.cobertura_medicos
-                    .Where(x => x.medicosID == medicoID)
-                    .Select(x => x.seguros)
-                    .ProjectTo<seguroDTO>(_mapper.ConfigurationProvider)
-                    .ToList();
+                List<seguroDTO> segurosDtolst =  _seguroSvc.getAllByDoctorId(medicoID);
 
-                if (!seguroslst.Any())
-                    return NoContent();
+                if (!segurosDtolst.Any())
+                    return new NoContentResult();
 
-                return seguroslst;
-
+                return segurosDtolst;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception(e.Message);
+                throw;
             }
 
+             
         }
 
+
+        //en desuso
         [HttpGet("[action]")]
         public ActionResult<List<seguroDTO>> getAllSeguros()
         {
+
+
             try
             {
                 List<seguroDTO> seguroslst = _db.seguros
@@ -77,9 +70,9 @@ namespace HospitalSalvador.Controllers
                 return seguroslst;
 
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception(e.Message);
+                throw;
             }
 
         }
@@ -89,24 +82,21 @@ namespace HospitalSalvador.Controllers
         [HttpGet("[action]")]
         public ActionResult<List<seguroDTO>> getSegurosByServicio(int medicoID, int servicioID)
         {
+
             try
             {
-                List<seguroDTO> seguroslst = _db.cobertura_medicos
-                    .Where(x => x.medicosID == medicoID && x.serviciosID == servicioID)
-                    .Select(x=>x.seguros)
-                    .ProjectTo<seguroDTO>(_mapper.ConfigurationProvider)
-                    .ToList();
+                List<seguroDTO> segurosDtolst = _seguroSvc.getSegurosByServicio(medicoID, servicioID);
 
-                if (!seguroslst.Any())
-                    return NoContent();
+                if (!segurosDtolst.Any())
+                    return new NoContentResult();
 
-                return seguroslst;
-
+                return segurosDtolst;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw new Exception(e.Message);
+                throw;
             }
+             
 
         }
 

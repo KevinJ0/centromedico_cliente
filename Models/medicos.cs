@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 #nullable disable
 
-namespace HospitalSalvador.Models
+namespace CentromedicoCliente.Models
 {
     [Index(nameof(MyIdentityUserID), Name = "IX_medicos_MyIdentityUserID")]
     public partial class medicos

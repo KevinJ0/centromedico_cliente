@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.Options;
-using HospitalSalvador.Helpers;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using System;
+using CentromedicoCliente.Services.Helpers;
 
-namespace HospitalSalvador.Services
+namespace CentromedicoCliente.Services
 {
 
 
@@ -18,15 +18,17 @@ namespace HospitalSalvador.Services
     {
         private readonly TwilioSettings _twilioSettings;
 
-        public WhatsappService(IOptions<TwilioSettings> twilioSettings)
+        public WhatsappService(TwilioSettings twilioSettings)
         {
-            _twilioSettings = twilioSettings.Value;
+            _twilioSettings = twilioSettings;
         }
 
         public void Send(string from, string to, string msj)
         {
-            var accountSid = Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
-            var authToken = Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
+            var accountSid = _twilioSettings.AccountSid;
+            //Environment.GetEnvironmentVariable("TWILIO_ACCOUNT_SID");
+            var authToken = _twilioSettings.AuthToken;
+            //Environment.GetEnvironmentVariable("TWILIO_AUTH_TOKEN");
 
             TwilioClient.Init(accountSid, authToken);
 

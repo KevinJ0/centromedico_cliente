@@ -1,11 +1,10 @@
 ﻿using Amazon.S3;
+using Centromedico.Database.Context;
 using Amazon.S3.Model;
-using Amazon.S3.Transfer;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using CentromedicoCliente.Context;
-using CentromedicoCliente.Models;
-using CentromedicoCliente.Models.DTO;
+using Centromedico.Database.DbModels;
+using Cliente.DTO;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

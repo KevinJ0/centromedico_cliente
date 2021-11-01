@@ -1,12 +1,13 @@
-﻿
-using CentromedicoCliente.Services.Helpers;
+﻿using CentromedicoCliente.Services.Helpers;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 using MimeKit.Text;
 
+
 namespace CentromedicoCliente.Services
+
 {
     public interface IEmailService
     {

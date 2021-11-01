@@ -32,6 +32,7 @@ using CentromedicoCliente.Profiles;
 using Centromedico.Services;
 
 namespace CentromedicoCliente
+
 {
     public class Startup
     {
@@ -74,6 +75,7 @@ namespace CentromedicoCliente
 
             services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
             services.AddScoped<IEmailService, EmailService>();
+
 
             services.AddSingleton<IS3Service, S3Service>();
             services.AddAWSService<IAmazonS3>();
@@ -253,8 +255,6 @@ namespace CentromedicoCliente
                     // spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-
 
         }
     }

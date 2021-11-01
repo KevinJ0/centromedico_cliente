@@ -81,6 +81,7 @@ namespace CentromedicoCliente.Controllers
 
 
 
+
         /// <summary>
         /// Método que devuelve los datos personales del usuario/paciente.
         /// </summary>
@@ -117,6 +118,7 @@ namespace CentromedicoCliente.Controllers
             catch (Exception)
             {
 
+
                 throw;
             }
         }
@@ -131,6 +133,7 @@ namespace CentromedicoCliente.Controllers
         [HttpGet("[action]")]
         public async Task<bool> isUserDocIdentConfirmAsync()
         {
+
             try
             {
                 string userName = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

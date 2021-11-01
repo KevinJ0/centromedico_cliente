@@ -93,6 +93,7 @@ export interface citaResult {
   contacto: string;
   correo: string;
   turno: number;
+
 }
 
 export interface medico {

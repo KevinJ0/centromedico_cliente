@@ -1,9 +1,9 @@
-﻿using CentromedicoCliente.Models.DTO;
+﻿using Cliente.DTO;
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CentromedicoCliente.Context;
-using CentromedicoCliente.Models;
+using Centromedico.Database.Context;
+using Centromedico.Database.DbModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using AutoMapper;

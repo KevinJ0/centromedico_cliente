@@ -73,9 +73,9 @@
           <mat-form-field (click)="picker.open()"  appearance="outline">
             <mat-label>Fecha</mat-label>
             <input class="date-appointment" formControlName="dateControl" [matDatepickerFilter]="dateFilter" matInput [matDatepicker]="picker"
-                   required [readonly]="true">
+              required (click)="picker.open()" [readonly]="true">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker touchUi #picker></mat-datepicker>
+            <mat-datepicker touchUi #picker ></mat-datepicker>
           </mat-form-field>
 
           <mat-form-field appearance="outline">
@@ -170,10 +170,11 @@
             </div>
 
             <div class="userdata-item">
-
+  
               <mat-form-field appearance="outline">
                 <mat-label>Tipo de documento</mat-label>
                 <mat-select formControlName="typeIdentityDocControl" name="tipoDoc" required>
+ 
                   <mat-option [value]=0 selected>Cédula</mat-option>
                   <mat-option [value]=1>Pasaporte</mat-option>
                   <mat-option [value]=2>RNC</mat-option>
@@ -213,6 +214,7 @@
                     Femenino
                   </mat-radio-button>
                   <mat-error *ngIf="thirdFormGroup.get('userSexControl').invalid && loading">
+
                     {{getSexErrorMessage()}}
                   </mat-error>
                 </mat-radio-group>
@@ -254,6 +256,7 @@
           <div class="btn-container">
             <button mat-button matStepperPrevious>Volver</button>
             <button mat-flat-button color="primary" [disabled]="loading" type="submit">Confirmar</button>
+
           </div>
         </form>
       </mat-step>

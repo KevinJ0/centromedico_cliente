@@ -6,8 +6,6 @@ import { tap, catchError, switchMap, finalize, filter, take } from 'rxjs/operato
 import { Router } from '@angular/router';
 
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -82,17 +80,26 @@ export class JwtInterceptor implements HttpInterceptor {
     let errorMsg: string;
     console.error(errorResponse)
 
+    try {
+
     if (errorResponse.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
       errorMsg = "Un error ha ocurrido del lado del cliente: " + errorResponse.error.message;
     } else {
+
       console.log(typeof errorResponse.error.error[0]) 
       if (errorResponse.error.customError && (typeof errorResponse.error.error[0] === 'string' || errorResponse.error instanceof String) && errorResponse.error.error[0].length < 150) {
         errorMsg = `${errorResponse.error.error[0]}`;
+
         // The backend returned an unsuccessful response code.
       } else {
         errorMsg = `Ha ocurrido un error al tratar de procesar su petición.`;
       }
+    }
+
+    } catch (e) {
+      console.error(e)
+      errorMsg = `Ha ocurrido un error al tratar de procesar su petición.`;
     }
     return throwError(errorMsg);
   }

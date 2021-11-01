@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Centromedico.Database.Context;
 using Cliente.DTO;
 using CentromedicoCliente.Services.Interfaces;
+
 
 namespace CentromedicoCliente.Controllers
 {
@@ -22,6 +22,7 @@ namespace CentromedicoCliente.Controllers
         public CitasController(ICitaService citaSvc)
         {
             _citaSvc = citaSvc;
+
         }
 
         /// <summary>
@@ -124,6 +125,7 @@ namespace CentromedicoCliente.Controllers
             {
                 throw;
             }
+
         }
 
         /// <summary>
@@ -202,15 +204,16 @@ namespace CentromedicoCliente.Controllers
         {
             try
             {
+
                 citaResultDTO resulta = await _citaSvc.createCitaAsync(formdata);
                 return resulta;
             }
             catch (Exception)
             {
                 throw;
+
             }
         }
-
 
         enum appointment : int
         {

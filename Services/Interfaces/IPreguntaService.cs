@@ -1,4 +1,4 @@
-﻿using CentromedicoCliente.Models.DTO;
+﻿using Cliente.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;

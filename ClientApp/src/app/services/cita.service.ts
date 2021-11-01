@@ -1,7 +1,7 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { cita, citaCard, citaResult, UserInfo } from '../interfaces/InterfacesDto';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import {  Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 

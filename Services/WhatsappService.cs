@@ -6,6 +6,7 @@ using System;
 using CentromedicoCliente.Services.Helpers;
 
 namespace CentromedicoCliente.Services
+
 {
 
 
@@ -21,6 +22,7 @@ namespace CentromedicoCliente.Services
         public WhatsappService(TwilioSettings twilioSettings)
         {
             _twilioSettings = twilioSettings;
+
         }
 
         public void Send(string from, string to, string msj)
@@ -36,6 +38,7 @@ namespace CentromedicoCliente.Services
               new PhoneNumber($"whatsapp:+1{to}"));
             messageOptions.From = new PhoneNumber($"whatsapp:+{from}");
             messageOptions.Body = msj;
+
             var message = MessageResource.Create(messageOptions);
 
         }

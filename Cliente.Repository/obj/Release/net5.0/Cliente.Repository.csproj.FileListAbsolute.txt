@@ -1,0 +1,16 @@
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Cliente.Repository.deps.json
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Cliente.Repository.dll
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\ref\Cliente.Repository.dll
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Cliente.Repository.pdb
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Centromedico.Database.dll
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Cliente.DTO.dll
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Centromedico.Database.pdb
+C:\Users\KevinJ\source\repos\Cliente.Repository\bin\Release\net5.0\Cliente.DTO.pdb
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.csproj.AssemblyReference.cache
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.AssemblyInfoInputs.cache
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.AssemblyInfo.cs
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.csproj.CoreCompileInputs.cache
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.dll
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\ref\Cliente.Repository.dll
+C:\Users\KevinJ\source\repos\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.pdb

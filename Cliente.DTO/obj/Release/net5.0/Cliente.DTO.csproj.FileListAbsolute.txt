@@ -1,0 +1,12 @@
+C:\Users\KevinJ\source\repos\Cliente.DTO\bin\Release\net5.0\Cliente.DTO.deps.json
+C:\Users\KevinJ\source\repos\Cliente.DTO\bin\Release\net5.0\Cliente.DTO.dll
+C:\Users\KevinJ\source\repos\Cliente.DTO\bin\Release\net5.0\ref\Cliente.DTO.dll
+C:\Users\KevinJ\source\repos\Cliente.DTO\bin\Release\net5.0\Cliente.DTO.pdb
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.csproj.AssemblyReference.cache
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.AssemblyInfoInputs.cache
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.AssemblyInfo.cs
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.csproj.CoreCompileInputs.cache
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.dll
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\ref\Cliente.DTO.dll
+C:\Users\KevinJ\source\repos\Cliente.DTO\obj\Release\net5.0\Cliente.DTO.pdb

@@ -1,14 +1,3 @@
-## **0.1.0** <sub><sup>2021-11-02 ([cadb29d...dfa2952](https://github.com/KevinJ0/centromedico_cliente/compare/cadb29d...dfa2952?diff=split))</sup></sub>
-
-### Features
-*  generador de versiones agregado ([cadb29d](https://github.com/KevinJ0/centromedico_cliente/commit/cadb29d))
-
-
-### ???
-*  ed ([6461887](https://github.com/KevinJ0/centromedico_cliente/commit/6461887))
-*  ed ([dfa2952](https://github.com/KevinJ0/centromedico_cliente/commit/dfa2952))
-
-
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.

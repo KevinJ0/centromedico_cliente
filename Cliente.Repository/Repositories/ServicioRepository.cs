@@ -47,14 +47,12 @@ namespace Cliente.Repository.Repositories
             {
 
                 servicios servicio = await _db.servicios.FindAsync(segurosID);
-                //servicioDTO r = _mapper.Map<servicioDTO>(servicio);
 
                 return servicio;
 
             }
             catch (Exception)
             {
-
                 throw;
             }
 

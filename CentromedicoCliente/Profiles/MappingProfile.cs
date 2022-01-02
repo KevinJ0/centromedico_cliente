@@ -15,12 +15,9 @@ namespace CentromedicoCliente.Profiles
 
         public MappingProfile()
         {
-            CreateMap<UserInfo, MyIdentityUser>();
-            CreateMap<MyIdentityUser, UserInfo>();
+            CreateMap<MyIdentityUser, UserInfo>().ReverseMap();
             CreateMap<pacientes, MyIdentityUser>()
                 .ForMember(dto => dto.Id, opt => opt.Ignore());
-
-
             CreateMap<MyIdentityUser, pacientes>()
                 .ForMember(dto => dto.ID, opt => opt.Ignore())
                 .ForMember(dest => dest.MyIdentityUserID, opt => opt.MapFrom(src => src.Id));
@@ -63,8 +60,7 @@ namespace CentromedicoCliente.Profiles
             //  .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
 
 
-            CreateMap<pacientes, pacienteDTO>();
-            CreateMap<pacienteDTO, pacientes>();
+            CreateMap<pacientes, pacienteDTO>().ReverseMap();
             CreateMap<citaCreateDTO, pacientes>();
             CreateMap<RegisterDTO, MyIdentityUser>()
                .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
@@ -78,7 +74,7 @@ namespace CentromedicoCliente.Profiles
             CreateMap<cobertura_medicos, coberturaMedicoDTO>();
             CreateMap<cobertura_medicos, coberturaDTO>()
                 .ForMember(dest => dest.descrip, opt => opt.MapFrom(src => src.seguros.descrip));
-            CreateMap<servicios_medicos, servicioDTO>();
+            CreateMap<servicios_medicos, servicioDTO>(); 
 
             CreateMap<medicos, medicoDTO>()
          .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>

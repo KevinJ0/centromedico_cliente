@@ -14,9 +14,9 @@ export class CitaService {
   prueba: string;
   // Url to access our Web API’s
 
-  constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-    this.baseUrl = baseUrl;
-  }
+    constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+      this.baseUrl = baseUrl;
+    }
 
 
   GetCitaForm(medicoID: number): Observable<any> {

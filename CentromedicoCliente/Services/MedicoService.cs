@@ -73,7 +73,8 @@ namespace CentromedicoCliente.Services
 
                 var horarios = await _db.horarios_medicos.FirstOrDefaultAsync(x => x.medicosID == Id);
 
-                medicoDTO _medicoDTO = _mapper.Map<medicoDTO>(_medicoRepos.getById(Id));
+                medicoDTO _medicoDTO = _mapper.Map<medicoDTO>(_medicoRepos.getMedicoServices(Id));
+
 
                 if (horarios == null || _medicoDTO is null)
                     return new NoContentResult();

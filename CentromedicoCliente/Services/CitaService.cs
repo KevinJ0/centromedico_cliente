@@ -27,40 +27,42 @@ namespace CentromedicoCliente.Services
         private readonly UserManager<MyIdentityUser> _userManager;
         private readonly MyDbContext _db;
         private readonly IHorarioMedicoRepository _horarioMedicoRepo;
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IServicioRepository _servicioRepo;
-        private readonly IMedicoRepository _medicoRepo;
         private readonly ICoberturaRepository _coberturaRepo;
+        private readonly IHorarioMedicoReservaRepository _horarioMRRepo;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IMedicoRepository _medicoRepo;
         private readonly ISeguroRepository _seguroRepo;
         private readonly INotificationService _notificationService;
         private readonly IPacienteRepository _pacienteRepo;
-        private readonly IHorarioMedicoReservaRepository _horarioMRRepo;
 
-        public CitaService(IHorarioMedicoReservaRepository horarioMRRepo,
+        public CitaService(
+            IHorarioMedicoReservaRepository horarioMRRepo,
+            IServicioRepository servicioRepo,
+            IMedicoRepository medicoRepo,
             IPacienteRepository pacienteRepo,
             ISeguroRepository seguroRepo,
             INotificationService notificationService,
-            IServicioRepository servicioRepo, IMedicoRepository medicoRepo,
             ICoberturaRepository coberturaRepo,
-            ICitaRepository citaRepo, 
+            ICitaRepository citaRepo,
             IHttpContextAccessor httpContextAccessor,
             IHorarioMedicoRepository horarioMedicoRepo,
             UserManager<MyIdentityUser> userManager,
             MyDbContext db, IMapper mapper)
         {
             _horarioMRRepo = horarioMRRepo;
+            _horarioMedicoRepo = horarioMedicoRepo;
+            _coberturaRepo = coberturaRepo;
+            _servicioRepo = servicioRepo;
             _pacienteRepo = pacienteRepo;
             _seguroRepo = seguroRepo;
             _notificationService = notificationService;
-            _horarioMedicoRepo = horarioMedicoRepo;
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
             _citaRepo = citaRepo;
             _db = db;
             _mapper = mapper;
-            _servicioRepo = servicioRepo;
             _medicoRepo = medicoRepo;
-            _coberturaRepo = coberturaRepo;
         }
 
         public async Task<citaResultDTO> createCitaAsync(citaCreateDTO formdata)
@@ -105,7 +107,7 @@ namespace CentromedicoCliente.Services
 
                 paciente = _pacienteRepo.getWithDocIdent(user);
 
-                codVer = _citaRepo.Exist(user) ? getCV(user) : generateCV(medico.nombre, medico.apellido);
+                codVer = _citaRepo.Exist(user) ? _citaRepo.getCV(user) : generateCV(medico.nombre, medico.apellido);
 
                 int nTurn = getNewTurn(formdata.fecha_hora, formdata.medicosID);
 
@@ -289,18 +291,10 @@ namespace CentromedicoCliente.Services
         public async Task<Object> getFormCitaAsync(int medicoID)
         {
 
-            medicos medico = _medicoRepo.getById(medicoID);
+            medicos medico = _medicoRepo.getMedicoServices(medicoID);
 
             //Tiene que existir al menos 1 cobertura por defecto que es la privada.
             var coberturaslst = await _coberturaRepo.getAllByDoctorIdAsync(medicoID);
-
-            /* var especialidadeslst = await _db.especialidades_medicos
-                 .Where(x => x.medicosID == medicoID)
-                 .Select(x => new { x.especialidades.ID, x.especialidades.descrip })
-                 .ToListAsync();*/
-
-            //  if (especialidadeslst == null)
-            //        throw  new BadRequestException(new { InvalidEspecialidad = "El doctor(a) seleccionado no tiene ninguna especialidad asignada." });
 
             var servicioslst = await _servicioRepo.getAllByDoctorIdAsync(medicoID);
 
@@ -335,15 +329,6 @@ namespace CentromedicoCliente.Services
 
         }
 
-        private string getCV(MyIdentityUser user)
-        {
-            cod_verificacion codV = _db.cod_verificacion
-                .Include("citas")
-                .Where(x => x.citas.pacientes.MyIdentityUsers == user && x.citas.estado == true)
-                .FirstOrDefault();
-
-            return codV.value;
-        }
 
         private string generateCV(string value1, string value2)
         {
@@ -377,9 +362,7 @@ namespace CentromedicoCliente.Services
             {
                 var availableTimelst = _horarioMedicoRepo.getAvailableHoursTurnDic(fecha_hora, medicoID)?.Select(x => x.Key).ToList(); ;
 
-
                 return availableTimelst;
-
             }
             catch (Exception)
             {

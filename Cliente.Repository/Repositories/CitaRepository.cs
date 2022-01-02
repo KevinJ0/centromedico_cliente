@@ -22,20 +22,14 @@ namespace Cliente.Repository.Repositories
 
         private readonly IMapper _mapper;
         private readonly UserManager<MyIdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly MyDbContext _db;
-        private readonly IConfiguration _configuration;
-        private readonly IHorarioMedicoRepository _HMRepo;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public CitaRepository(IHttpContextAccessor httpContextAccessor, IHorarioMedicoRepository HMRepo, RoleManager<IdentityRole> roleManager,
+        public CitaRepository(IHttpContextAccessor httpContextAccessor, RoleManager<IdentityRole> roleManager,
             IConfiguration configuration, UserManager<MyIdentityUser> userManager, MyDbContext db, IMapper mapper)
         {
-            _HMRepo = HMRepo;
             _httpContextAccessor = httpContextAccessor;
             _userManager = userManager;
-            _configuration = configuration;
-            _roleManager = roleManager;
             _db = db;
             _mapper = mapper;
         }
@@ -75,7 +69,7 @@ namespace Cliente.Repository.Repositories
         }
 
 
-        private string getCV(MyIdentityUser user)
+        public string getCV(MyIdentityUser user)
         {
             cod_verificacion codV = _db.cod_verificacion
                 .Include("citas")

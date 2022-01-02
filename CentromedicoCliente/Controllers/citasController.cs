@@ -157,7 +157,7 @@ namespace CentromedicoCliente.Controllers
         }
 
         /// <summary>
-        /// Devuelve las citas vículadas con el usuario registrado. Estas pueden ser las citas que son para esta misma persona
+        /// Devuelve las citas vículadas con el usuario registrado que se encuentran activas. Estas pueden ser las citas que son para esta misma persona
         /// ó para un menor de edad y este.
         /// </summary>
         /// <remarks>

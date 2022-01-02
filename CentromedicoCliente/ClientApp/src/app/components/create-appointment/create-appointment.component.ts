@@ -1,10 +1,10 @@
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { ChangeDetectionStrategy, Component, Inject, OnInit, OnDestroy } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
-import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
+import {  Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import * as _moment from 'moment';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
@@ -14,9 +14,10 @@ import { AccountService } from 'src/app/services/account.service';
 import { hora, UserInfo, seguro, cita, cobertura, citaResult, servicioCobertura } from 'src/app/interfaces/InterfacesDto';
 import { SeguroService } from 'src/app/services/seguro.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-const moment = _moment;
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 import { HorarioMedicoService } from '../../services/horario-medico.service';
+
+const moment = _moment;
 
 @AutoUnsubscribe()
 @Component({
@@ -125,7 +126,7 @@ export class CreateAppointmentComponent implements OnInit {
           this.secondFormGroup.get("timeControl").reset(null);
 
           this.horarioMedicoSvc.GetHoursList(value, this.medicoId)
-             .subscribe((r: any) => {
+            .subscribe((r: any) => {
               const keys = Object.keys(r);
 
               console.log(keys);
@@ -136,11 +137,11 @@ export class CreateAppointmentComponent implements OnInit {
               console.log(this.Horas)
               this.loadingDateControl = false;
 
-             }, err => {
-               this.loadingDateControl = false;
-               this.openSnackBar("Ha ocurrido un error al tratar de obtener la lista de las horas disponibles");
-                 console.error('Ha ocurrido un error al tratar de obtener la lista de las horas disponibles: ', err);
-             })
+            }, err => {
+              this.loadingDateControl = false;
+              this.openSnackBar("Ha ocurrido un error al tratar de obtener la lista de las horas disponibles");
+              console.error('Ha ocurrido un error al tratar de obtener la lista de las horas disponibles: ', err);
+            })
         }
       });
 
@@ -181,13 +182,11 @@ export class CreateAppointmentComponent implements OnInit {
 
 
 
-
   SetSegurosByServicio(servicioID: number) {
     this.coberturas = this.servicios.find(r => r.id == servicioID).coberturas;
     this.firstFormGroup.get("insuranceControl").reset(null, { onlySelf: true, emitEvent: false });
     this.setCostos();
   }
-
 
 
 
@@ -197,7 +196,6 @@ export class CreateAppointmentComponent implements OnInit {
     config.duration = 5000;
     this._snackBar.open(message, null, config);
   }
-
 
 
 
@@ -254,7 +252,7 @@ export class CreateAppointmentComponent implements OnInit {
         };
 
         this.accountSvc.setUserInfo(userInfo).subscribe(arg => { },
-          err =>  this.loading = false,
+          err => this.loading = false,
           () => {
             console.log(_cita)
             this.citaSvc.CreateCita(_cita).subscribe((r: citaResult) => {
@@ -320,7 +318,7 @@ export class CreateAppointmentComponent implements OnInit {
       if (regExp.test(re.doc_identidad))
         this.thirdFormGroup.get("typeIdentityDocControl").setValue(1);
 
-    }, err => { 
+    }, err => {
       console.error(err)
     });
   }
@@ -344,8 +342,10 @@ export class CreateAppointmentComponent implements OnInit {
     private coberturaSvc: CoberturaService,
     private horarioMedicoSvc: HorarioMedicoService,
     private seguroSvc: SeguroService,
-    public citaSvc: CitaService, private accountSvc: AccountService,
-    private _formBuilder: FormBuilder, breakpointObserver: BreakpointObserver) {
+    public citaSvc: CitaService,
+    private accountSvc: AccountService,
+    private _formBuilder: FormBuilder,
+    breakpointObserver: BreakpointObserver) {
 
     this.loading = true;
 

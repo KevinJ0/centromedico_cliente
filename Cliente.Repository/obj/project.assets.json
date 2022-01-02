@@ -6779,19 +6779,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\KevinJ\\.nuget\\packages\\": {}
+    "C:\\Users\\Pc\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
+      "projectUniqueName": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
       "projectName": "Cliente.Repository",
-      "projectPath": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
-      "packagesPath": "C:\\Users\\KevinJ\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.Repository\\obj\\",
+      "projectPath": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
+      "packagesPath": "C:\\Users\\Pc\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\KevinJ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -6805,11 +6805,11 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\CentromedicoDatabase\\Centromedico.Database.csproj": {
-              "projectPath": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\CentromedicoDatabase\\Centromedico.Database.csproj"
+            "C:\\Users\\Pc\\source\\repos\\Centro Medico\\CentromedicoDatabase\\Centromedico.Database.csproj": {
+              "projectPath": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\CentromedicoDatabase\\Centromedico.Database.csproj"
             },
-            "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {
-              "projectPath": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj"
+            "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {
+              "projectPath": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj"
             }
           }
         }
@@ -6880,7 +6880,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
       }
     }
   }

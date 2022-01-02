@@ -11,6 +11,7 @@ namespace Cliente.Repository.Repositories.Interfaces
     public interface IMedicoRepository
     {
         public medicos getById(int medicoID);
+        public medicos getMedicoServices(int medicoID);
 
 
     }

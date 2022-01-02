@@ -19,11 +19,8 @@ export class NavMenuComponent {
     this.currentUserName$.subscribe(r => {
       this.userName = r; 
     });
-
     this.loadScript('../../../assets/js/main.js');
   }
-
-
 
   public loadScript(url: string) {
     const body = <HTMLDivElement>document.body;
@@ -44,7 +41,7 @@ export class NavMenuComponent {
     this.accountSvc.logout();
     console.log("logout")
               
-      this.router.navigate(['/']);
+      this.router.navigate(['/login']);
   
   }
 

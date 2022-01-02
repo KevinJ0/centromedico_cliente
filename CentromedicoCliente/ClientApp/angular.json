@@ -24,11 +24,8 @@
               "./node_modules/@angular/material/prebuilt-themes/custom.css",
               "src/styles.css",
               "src/assets/css/heartbeat.css"
-
             ],
-            "scripts": [
-             
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {

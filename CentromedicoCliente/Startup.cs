@@ -1,4 +1,3 @@
-using Amazon.Runtime;
 using Amazon.S3;
 using AutoMapper;
 using Centromedico.Database.DbModels;
@@ -15,7 +14,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -63,7 +61,7 @@ namespace CentromedicoCliente
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ICitaRepository, CitaRepository>();
-            services.AddScoped<IHorarioMedicoRepository, HorarioMedicoRepository>();
+            services.AddScoped<IHorarioMedicoRepository, HorarioMedicoRepository>(); 
             services.AddScoped<IPreguntaRepository, PreguntaRepository>();
             services.AddScoped<IMedicoRepository, MedicoRepository>();
             services.AddScoped<ICoberturaRepository, CoberturaRepository>();

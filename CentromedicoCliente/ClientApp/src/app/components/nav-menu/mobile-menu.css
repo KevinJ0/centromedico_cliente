@@ -29,7 +29,6 @@
   flex-direction: column;
   justify-content: center;
   height: 100vh;
-
   position: relative;
   z-index: 9999 !important;
   visibility: hidden;

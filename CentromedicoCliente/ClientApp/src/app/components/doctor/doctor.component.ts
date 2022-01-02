@@ -60,6 +60,7 @@ export class DoctorComponent implements OnInit {
     this.rutaActiva.params.subscribe(
       (params: Params) => {
         this.medicoId = params.id;
+
         this.doctorSvc.GetMedicoById(this.medicoId)
           .pipe(catchError(err => {
             this.loading = false;
@@ -70,6 +71,7 @@ export class DoctorComponent implements OnInit {
           }))
           .subscribe((r: medico) => {
             this._medico = r;
+
             if (r) {
 
               let arrLength: number = r.especialidades.length - 1;
@@ -80,11 +82,9 @@ export class DoctorComponent implements OnInit {
                 else
                   this._especialidades += value;
               })
-
             }
           }
           );
-
       }
     );
   }

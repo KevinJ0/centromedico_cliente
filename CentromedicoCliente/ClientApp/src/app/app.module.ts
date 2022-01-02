@@ -97,7 +97,8 @@ export const MY_FORMATS = {
     LocationComponent,
     ListAppointmentComponent,
     FaqComponent,
-    FaqExpansionPanelComponent, DialogSuccessedEmail
+    FaqExpansionPanelComponent,
+    DialogSuccessedEmail
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -110,7 +111,7 @@ export const MY_FORMATS = {
     BrowserAnimationsModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatExpansionModule,
+    MatExpansionModule, 
     MatButtonToggleModule,
     MatTableModule,
     MatListModule,

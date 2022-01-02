@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {}
+    "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {}
   },
   "projects": {
-    "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {
+    "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj",
+        "projectUniqueName": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj",
         "projectName": "Cliente.DTO",
-        "projectPath": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj",
-        "packagesPath": "C:\\Users\\KevinJ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\KevinJ\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\obj\\",
+        "projectPath": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj",
+        "packagesPath": "C:\\Users\\Pc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Pc\\source\\repos\\Centro Medico\\Cliente\\Cliente.DTO\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\KevinJ\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Pc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,7 +54,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100-rc.2.21505.57\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

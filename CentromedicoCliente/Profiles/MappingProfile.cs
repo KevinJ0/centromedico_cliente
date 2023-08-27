@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Centromedico.Database;
 using Centromedico.Database.DbModels;
 using Cliente.DTO;
 using System;
@@ -69,12 +70,12 @@ namespace CentromedicoCliente.Profiles
                 .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
                     src.especialidades_medicos.Select(x => x.especialidades.descrip).ToList()));
 
-            
+
             CreateMap<servicios, servicioDTO>();
             CreateMap<cobertura_medicos, coberturaMedicoDTO>();
             CreateMap<cobertura_medicos, coberturaDTO>()
                 .ForMember(dest => dest.descrip, opt => opt.MapFrom(src => src.seguros.descrip));
-            CreateMap<servicios_medicos, servicioDTO>(); 
+            CreateMap<servicios_medicos, servicioDTO>();
 
             CreateMap<medicos, medicoDTO>()
          .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
@@ -84,9 +85,13 @@ namespace CentromedicoCliente.Profiles
             )).ForMember(dest => dest.servicios, opt => opt.MapFrom(src =>
             src.servicios_medicos.Where(x => x.medicos.ID == src.ID).Select(x => x.servicios.descrip).ToList()
             ));
+
+            CreateMap<MyIdentityUserDto, user_info>().ReverseMap();
+            CreateMap<MyIdentityUserDto, MyIdentityUser>().ReverseMap();
+            CreateMap<MyIdentityUserDto, pacientes>().ReverseMap();
+
         }
-         
 
 
-}
+    }
 }

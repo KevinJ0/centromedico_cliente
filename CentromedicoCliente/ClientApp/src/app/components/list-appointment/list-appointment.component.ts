@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit,OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -48,6 +48,7 @@ import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 })
 export class ListAppointmentComponent implements OnInit {
 
+  showNoContent: boolean = false;
   loading: boolean = true;
   citaCardList$: Observable<citaCard[]>;
   mode: ProgressSpinnerMode = 'indeterminate';
@@ -64,22 +65,26 @@ export class ListAppointmentComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
     this.citaCardList$ = this.citaSvc.GetCitaList();
     this.citaCardList$
       .subscribe((r) => {
-          this.loading = false;
-          if (!r)
+        this.loading = false;
+        if (!r)
           this.citaCardList$ = null;
-          console.log(this.citaCardList$ )
+        console.log(this.citaCardList$)
+      }, (err) => {
+        this.loading = false;
+        this.showNoContent = true;
+        console.error(err);
       });
-
-
   }
+
   convertDate(date: string): string {
     return _moment(date).format('dddd DD MMM Y hh:mm A');
   }
-  ngOnDestroy() { 
+  ngOnDestroy() {
 
   }
 }

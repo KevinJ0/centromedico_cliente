@@ -169,6 +169,7 @@ namespace Cliente.Repository.Repositories
             while (startTime < endTime)
             {
                 var intime = startTime.CompareTo(DateTime.Now);// compare today's date in order to not allow lower date than today 
+
                 if ((startTime.TimeOfDay.CompareTo(startFreeTime.TimeOfDay) < 0 || startTime.TimeOfDay.CompareTo(endFreeTime.TimeOfDay) > 0) && intime > 0)
                 {
                     nTurn++;

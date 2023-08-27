@@ -73,7 +73,7 @@ namespace CentromedicoCliente.Controllers
             bool result = await _accountSvc.saveUserInfoAsync(formuser);
 
             if (!result)
-                return BadRequest("La fecha de nacimiento no es valida, debe ser mayor de edad.");
+                return BadRequest("La fecha de nacimiento no es valida, debe ser mayor de edad");
             else
                 return Ok();
         }

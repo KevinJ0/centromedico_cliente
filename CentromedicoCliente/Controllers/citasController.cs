@@ -113,7 +113,7 @@ namespace CentromedicoCliente.Controllers
         /// <response code="400">Hubo un problema con los datos del médico solicitado.</response>  
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = "Patient")]
         [HttpGet("[action]")]
-        public async Task<ActionResult<Object>> getCitaFormAsync(int medicoID)
+        public async Task<ActionResult<citaFormDTO>> getCitaFormAsync(int medicoID)
         {
             try
             {

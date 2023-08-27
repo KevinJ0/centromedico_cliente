@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Centromedico.Database.Context;
 using Centromedico.Database.DbModels;
 using CentromedicoCliente.Exceptions;
@@ -82,7 +83,7 @@ namespace CentromedicoCliente.Services
                     var validateB = validateBirth(formuser.fecha_nacimiento);
 
                     if (!validateB)
-                        throw new ArgumentException("Es necesario que el usuario sea mayor de edad.");
+                        throw new ArgumentException("Es necesario que el usuario sea mayor de edad");
 
                     user.nombre = formuser.nombre;
                     user.apellido = formuser.apellido;
@@ -127,6 +128,7 @@ namespace CentromedicoCliente.Services
             }
 
         }
+  
 
         private bool validateBirth(DateTime _fechaNacimiento)
         {

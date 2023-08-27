@@ -17,6 +17,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using CentromedicoCliente.Exceptions;
 using CentromedicoCliente.Services;
+using Centromedico.Database;
 
 namespace CentromedicoCliente.Services
 {
@@ -64,84 +65,123 @@ namespace CentromedicoCliente.Services
             _mapper = mapper;
             _medicoRepo = medicoRepo;
         }
-
+     
         public async Task<citaResultDTO> createCitaAsync(citaCreateDTO formdata)
         {
 
             pacientes paciente = null;
             citas cita;
             horarios_medicos_reservados horaReservacion;
-            string codVer;
+            string _email = null, codVer, docIdentidad = formdata.userinfo?.doc_identidad;
             seguros seguro;
-            MyIdentityUser user = await _userManager
-                    .FindByNameAsync(_httpContextAccessor.HttpContext.User
-                    .FindFirst(ClaimTypes.NameIdentifier)?.Value);
+            //bool isPatientRole = false;
+
+            MyIdentityUserDto userPacienteDto = null;
+            MyIdentityUser user = _userManager
+              .FindByNameAsync(_httpContextAccessor.HttpContext.User
+              .FindFirst(ClaimTypes.NameIdentifier)?.Value).Result;
+
+            userPacienteDto = _mapper.Map<MyIdentityUserDto>(user);
+
+           /* if (userPacienteDto != null)
+                isPatientRole = _userManager.IsInRoleAsync(user, "Patient").Result;
+           */
+
+
+            /*if (!isPatientRole)
+                if (docIdentidad == null)
+                    throw new BadHttpRequestException("La petición del Doctor/Secretaria no puede ser procesada ya que no se ha encontrado la cédula del paciente, por favor enviarla");
+                else
+                {
+                    userPacienteDto = _db.MyIdentityUsers
+                         .ProjectTo<MyIdentityUserDto>(_mapper.ConfigurationProvider)
+                         .FirstOrDefault(x => x.doc_identidad == docIdentidad &&
+                                              x.confirm_doc_identidad == true);*/
+
+                    // esto quiere decir que no tiene un usuario creado
+                    if (userPacienteDto == null)
+                        userPacienteDto = _db.user_info
+                            .ProjectTo<MyIdentityUserDto>(_mapper.ConfigurationProvider)
+                            .FirstOrDefault(x => x.doc_identidad == docIdentidad);
+
+                    if (userPacienteDto == null)
+                        throw new BadHttpRequestException("No se ha encontrado datos del paciente");
+
+                    _email = userPacienteDto?.email;
+                //}
+            //else
+//                _email = user.Email;
+
             try
             {
 
                 //Validate incoming data
                 medicos medico = _medicoRepo.getById(formdata.medicosID);
-                if (medico == null)
-                    throw new EntityNotFoundException("El doctor seleccionado no se encuentra habilitado en estos momentos.");
 
-                if (_citaRepo.Exist(medico, user))
+                if (medico == null)
+                    throw new EntityNotFoundException("El doctor seleccionado no se encuentra habilitado en estos momentos");
+
+                if (_citaRepo.ExistByDocIdentidadAndMedico(medico, userPacienteDto.doc_identidad))
                     throw new BadRequestException("Ya hay una cita programada con este doctor(a)");
 
                 if (formdata.segurosID == null)
                     seguro = await _seguroRepo.getByIdAsync(1);//1 by default is None-Insurace
                 else
                     seguro = await _seguroRepo.getByIdAsync(formdata.segurosID);
-                /* especialidades especialidad = await _db.especialidades.FindAsync(formdata.especialidadesID);
-                 if (especialidad == null)
-                     throw  new BadRequestException(new { InvalidEspecialidad = "La especialidad seleccionada no se encuentra en la base de datos." });*/
 
-                servicios servicio = await _servicioRepo.getByIdAsync(formdata.segurosID);
+                servicios servicio = await _servicioRepo.getByIdAsync(formdata.serviciosID);
 
                 horaReservacion = await _horarioMedicoRepo.getReservedHourAsync(formdata.medicosID, formdata.fecha_hora);
 
                 var availableDateHourlst = getAvailableDateHour(formdata.fecha_hora, formdata.medicosID);
 
-                var patientData = await getPatientAgeAsync(formdata.fecha_nacimiento, formdata.appointment_type);
-                formdata.edad = patientData.Item1;
-                formdata.menor_un_año = patientData.Item2;
+                var patientAgeData = await getPatientAgeAsync(formdata.fecha_nacimiento, formdata.appointment_type);
+                formdata.edad = patientAgeData.Item1;
+                formdata.menor_un_año = patientAgeData.Item2;
 
-                paciente = _pacienteRepo.getWithDocIdent(user);
+                paciente = _pacienteRepo.getByUser(user);
 
-                codVer = _citaRepo.Exist(user) ? _citaRepo.getCV(user) : generateCV(medico.nombre, medico.apellido);
+                if (paciente == null)
+                    paciente = _pacienteRepo.getByDocIdent(userPacienteDto.doc_identidad);
+
+                codVer = /*_citaRepo.ExistByDocIdentidad(userPacienteDto.doc_identidad) ?
+                                                                _citaRepo.getCV(userPacienteDto.doc_identidad) 
+                                                                :*/ generateCV(medico.nombre, medico.apellido);
 
                 int nTurn = getNewTurn(formdata.fecha_hora, formdata.medicosID);
 
+
                 //VALIDATORS
 
-                if (String.IsNullOrWhiteSpace(user.doc_identidad))
-                    throw new BadRequestException("Este usuario no cuenta con un documento de identidad previamente ingresado.");
+                if (String.IsNullOrWhiteSpace(userPacienteDto.doc_identidad))
+                    throw new BadRequestException("Este usuario no cuenta con un documento de identidad previamente ingresado");
 
                 //Determinar si la hora de la cita está disponible en el rango de fechas hábiles
                 if (formdata.fecha_hora < DateTime.Now || formdata.fecha_hora > DateTime.Now.AddDays(30))
                     throw new BadRequestException("El día suministrado no está en el rango de fecha disponible");
 
                 if (seguro == null)
-                    throw new BadRequestException("El seguro seleccionado no se encuentra en la base de datos.");
+                    throw new BadRequestException("El seguro seleccionado no se encuentra en la base de datos");
 
                 if (servicio == null)
-                    throw new BadRequestException("El servicio seleccionado no se encuentra en la base de datos.");
+                    throw new BadRequestException("El servicio seleccionado no se encuentra en la base de datos");
 
                 coberturaMedicoDTO cobertura = await _coberturaRepo.getAsync(formdata.medicosID, formdata.segurosID, formdata.serviciosID);
 
                 if (cobertura == null)
-                    throw new BadRequestException("Ha ocurrido un error al tratar de especificar el cobertura del servicio.");
+                    throw new BadRequestException("Ha ocurrido un error al tratar de especificar el cobertura del servicio");
 
                 if (horaReservacion != null)
-                    throw new BadRequestException("La fecha y hora para la cita programada está reservada, intente con otra por favor.");
+                    throw new BadRequestException("La fecha y hora para la cita programada está reservada, intente con otra por favor");
 
                 if (availableDateHourlst == null)
-                    throw new ArgumentException("Este doctor(a) no labora el día escogido.");
+                    throw new ArgumentException("Este doctor(a) no labora el día escogido");
 
                 if (!availableDateHourlst.Contains(formdata.fecha_hora))
-                    throw new ArgumentException("La hora provista no se encuentra en el rango de horas disponibles para ser reservada.");
+                    throw new ArgumentException("La hora provista no se encuentra en el rango de horas disponibles para ser reservada");
 
                 if (nTurn == 0)
-                    throw new Exception("Ha ocurrido un error al tratar de generar el turno para la cita.");
+                    throw new Exception("Ha ocurrido un error al tratar de generar el turno para la cita");
 
                 //Checking appoiment type
                 switch (formdata.appointment_type)
@@ -150,27 +190,42 @@ namespace CentromedicoCliente.Services
 
                         bool addNewPaciente = false;
 
-                        if (paciente == null || paciente.doc_identidad == null) //para no repetir el paciente en la db más de una vez.
+                        if (paciente == null || paciente?.doc_identidad == null) //para no repetir el paciente en la db más de una vez.
                             addNewPaciente = true;
+                        else
+                        {
+                            // si existe una cita ya realizada con este médico y hay un paciente
+                            // viculado perteneciente a este usuario
+                            cita = _db.citas.Include(x => x.pacientes)
+                                                .FirstOrDefault(
+                                                     x => x.pacientes.doc_identidad == paciente.doc_identidad ||
+                                                     x.pacientes.doc_identidad_tutor == paciente.doc_identidad_tutor &&
+                                                     x.medicosID == formdata.medicosID);
 
-                        _mapper.Map<MyIdentityUser, pacientes>(user, paciente);
+                            if (cita is null)
+                                addNewPaciente = true;
+                            else
+                                paciente = cita.pacientes;
+                        }
+
                         if (addNewPaciente)
                         {
-                            paciente = _mapper.Map<pacientes>(user);
+                            paciente = user == null ? _mapper.Map<pacientes>(userPacienteDto)
+                                                    : _mapper.Map<pacientes>(user);
                             _pacienteRepo.Add(paciente);
                         }
                         else
                             _pacienteRepo.Update(paciente);
-                        break;
 
+                        break;
                     case (int)appointment.other:
 
                         paciente = _mapper.Map<pacientes>(formdata);
 
-                        paciente.doc_identidad_tutor = user.doc_identidad;
-                        paciente.nombre_tutor = String.IsNullOrWhiteSpace(user.nombre) ? null : user.nombre;
-                        paciente.apellido_tutor = String.IsNullOrWhiteSpace(user.apellido) ? null : user.apellido;
-                        paciente.MyIdentityUsers = user;
+                        paciente.doc_identidad_tutor = userPacienteDto.doc_identidad;
+                        paciente.nombre_tutor = String.IsNullOrWhiteSpace(userPacienteDto.nombre) ? null : userPacienteDto.nombre;
+                        paciente.apellido_tutor = String.IsNullOrWhiteSpace(userPacienteDto.apellido) ? null : userPacienteDto.apellido;
+                        paciente.MyIdentityUsers = isPatientRole ? user : null;
                         _pacienteRepo.Add(paciente);
 
                         break;
@@ -192,7 +247,6 @@ namespace CentromedicoCliente.Services
                     medicos = medico,
                     seguros = seguro,
                     servicios = servicio,
-                    //especialidades = especialidad,
                     consultorio = medico.consultorio,
                     cobertura = _cobertura,
                     pago = cobertura.pago,
@@ -229,8 +283,8 @@ namespace CentromedicoCliente.Services
 
                 try
                 {
-                    _notificationService.sendTicketMail(citaResult, user.Email);
-                    _notificationService.sendTicketWhatsapp(citaResult, user.contacto);
+                    _notificationService.sendTicketMail(citaResult, _email);
+                    //_notificationService.sendTicketWhatsapp(citaResult, userPacienteDto.contacto);
 
                 }
                 catch (Exception)
@@ -255,10 +309,10 @@ namespace CentromedicoCliente.Services
 
             try
             {
-                List<citaDTO> citaslst = await _citaRepo.getCitasListAsync();
+                List<citaDTO> citaslst = await _citaRepo.getCitasListByUserAsync();
 
                 if (!citaslst.Any())
-                    throw new EntityNotFoundException("No hay contenido que mostrar.");
+                    throw new EntityNotFoundException("No tiene ninguna cita agendada");
 
                 return citaslst;
             }
@@ -277,7 +331,7 @@ namespace CentromedicoCliente.Services
                 List<citaDTO> citaslst = _citaRepo.getCitasListByCv(codVerificacion);
 
                 if (!citaslst.Any())
-                    throw new EntityNotFoundException("Este usuario no contiene citas activas.");
+                    throw new EntityNotFoundException("Este usuario no contiene citas activas");
 
                 return citaslst;
             }
@@ -288,7 +342,7 @@ namespace CentromedicoCliente.Services
         }
 
 
-        public async Task<Object> getFormCitaAsync(int medicoID)
+        public async Task<citaFormDTO> getFormCitaAsync(int medicoID)
         {
 
             medicos medico = _medicoRepo.getMedicoServices(medicoID);
@@ -301,28 +355,26 @@ namespace CentromedicoCliente.Services
             var availableDaylst = await _horarioMedicoRepo.getAvailableDayListAsync(medicoID);
 
             if (medico == null)
-                throw new EntityNotFoundException("El doctor seleccionado no se encuentra habilitado en estos momentos.");
+                throw new EntityNotFoundException("El doctor seleccionado no se encuentra habilitado en estos momentos");
 
             if (coberturaslst == null)
-                throw new BadRequestException("El doctor(a) seleccionado no tiene ninguna cobertura.");
+                throw new BadRequestException("El doctor(a) seleccionado no tiene ninguna cobertura");
 
             if (!availableDaylst.Any())
-                throw new EntityNotFoundException("No hay horario disponible para una cita con este médico.");
+                throw new EntityNotFoundException("No hay horario disponible para una cita con este médico");
 
             if (servicioslst == null)
-                throw new BadRequestException("El doctor(a) seleccionado no tiene ningún servicios asignado.");
+                throw new BadRequestException("El doctor(a) seleccionado no tiene ningún servicios asignado");
 
             return
-                new
+                new citaFormDTO
                 {
-                    medico = new
+                    medico = new medicoInfo
                     {
-                        ID = medico.ID,
+                        id = medico.ID,
                         nombre = medico.nombre,
                         apellido = medico.apellido,
                     },
-                    //seguros= coberturaslst,
-                    //especialidades = especialidadeslst,
                     servicios = servicioslst,
                     diasLaborables = availableDaylst
                 };
@@ -384,18 +436,18 @@ namespace CentromedicoCliente.Services
 
                 //Valida la fecha de nacimiento 
                 if (lessPermititted < 0 || graterThanToday > 0)
-                    throw new ArgumentException("La fecha del nacimiento está fuera de rango permitido.");
+                    throw new ArgumentException("La fecha del nacimiento está fuera de rango permitido");
 
                 int _edad = DateTime.Today.AddTicks(-fechaNacimiento.Ticks).Year - 1;
 
 
                 //Valida la edad, tipo de cita y datos de tutor
                 if (_edad < 18 && appointmentType is not (int)appointment.other)
-                    throw new ArgumentException("El tipo de cita escogido no es valido para un menor de edad.");
+                    throw new ArgumentException("El tipo de cita escogido no es valido para un menor de edad");
                 else if (_edad >= 18 && appointmentType is not (int)appointment.me)
-                    throw new ArgumentException("El tipo de cita escogido no es valido para un mayor de edad.");
+                    throw new ArgumentException("El tipo de cita escogido no es valido para un mayor de edad");
                 else if (String.IsNullOrWhiteSpace(user.nombre) && _edad < 18)
-                    throw new ArgumentException("Es requerido un nombre para el tutor del menor de edad.");
+                    throw new ArgumentException("Es requerido un nombre para el tutor del menor de edad");
 
 
                 if (_edad == 0) //si es un menor de 1 año

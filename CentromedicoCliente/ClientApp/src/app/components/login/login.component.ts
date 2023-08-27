@@ -99,13 +99,13 @@ export class LoginComponent implements OnInit {
 
   onPasswordInput() {
     if (this.signupFormGroup.hasError('passwordMismatch'))
-      this.password2.setErrors([{ 'passwordMismatch': true }]);
+    this.password2.setErrors([{ 'passwordMismatch': true }]);
     else
       this.password2.setErrors(null);
   }
 
   Login(): void {
-
+    
     if (this.loginFormGroup.valid) {
       if (!this.loading) {
         this.loading = true;
@@ -115,7 +115,7 @@ export class LoginComponent implements OnInit {
         this.accountSvc
           .Login(userLogin.loginEmailControl, userLogin.loginPasswordControl)
           .subscribe(result => {
-
+ 
             this.loading = false;
             let token = (<any>result).authToken.token;
             console.log("User Logged In Successfully");
@@ -126,7 +126,7 @@ export class LoginComponent implements OnInit {
             (error) => {
               this.invalidLogin = true;
               this.loading = false;
-
+ 
               this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
               this.openSnackBar(error);
               console.log(error);

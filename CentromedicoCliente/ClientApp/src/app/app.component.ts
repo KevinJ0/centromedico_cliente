@@ -3,7 +3,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { trigger, style, animate, transition } from '@angular/animations';
 import * as _moment from 'moment';
-const moment = _moment; import * as WebFont from 'webfontloader';
+const moment = _moment;
 
 @Component({
   selector: 'app-root',

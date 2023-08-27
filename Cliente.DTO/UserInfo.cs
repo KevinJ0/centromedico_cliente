@@ -25,6 +25,7 @@ namespace Cliente.DTO
         [Required]
         public DateTime fecha_nacimiento { get; set; }
         public bool confirm_doc_identidad { get; set; }
+        public string userName{ get; set; }
 
 
     }

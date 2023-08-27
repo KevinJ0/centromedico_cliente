@@ -106,7 +106,7 @@ namespace CentromedicoCliente.Controllers
                     ContentType = file.ContentType,
                     CannedACL = S3CannedACL.PublicRead,
 
-                };
+                }; 
 
                 // Create a CopyObject request
                 GetPreSignedUrlRequest request = new GetPreSignedUrlRequest
@@ -127,7 +127,7 @@ namespace CentromedicoCliente.Controllers
                 ||
                 amazonS3Exception.ErrorCode.Equals("InvalidSecurity")))
                 {
-                    throw new Exception("Check the provided AWS Credentials.");
+                    throw new Exception("Check the provided AWS Credentials");
                 }
 
                 throw amazonS3Exception;

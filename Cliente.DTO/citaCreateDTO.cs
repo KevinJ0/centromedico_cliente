@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Cliente.DTO
 {
     public class citaCreateDTO
     {
-        private string _docIdentidadTutor;
-        private string _docIdentidad;
         private string _sexo;
 
 
@@ -27,8 +22,6 @@ namespace Cliente.DTO
         [Required]
         public DateTime fecha_hora { get; set; }
         public int? segurosID { get; set; }
-        /*[Required]
-        public int? especialidadesID { get; set; }*/
         public string? cod_verificacionID { get; set; }
 
 
@@ -61,9 +54,7 @@ namespace Cliente.DTO
         public bool menor_un_año { get; set; }
 
         //user incoming data
-#pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public UserInfo? userinfo;
-#pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
 
     }
 }

@@ -1,5 +1,5 @@
 import { StepperOrientation } from '@angular/cdk/stepper';
-import {  Component, Inject, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -26,7 +26,6 @@ const moment = _moment;
   templateUrl: './create-appointment.component.html',
   styleUrls: ['./create-appointment.component.css'],
   providers: [
-
     {
       provide: STEPPER_GLOBAL_OPTIONS,
       useValue: { showError: true, displayDefaultIndicatorType: false }
@@ -73,6 +72,61 @@ export class CreateAppointmentComponent implements OnInit {
   identDocMask: string = "000-0000000-0";
   selectedTypeDoc: number = 0;
 
+
+  constructor(
+    private router: Router,
+    private rutaActiva: ActivatedRoute,
+    private _snackBar: MatSnackBar,
+    private horarioMedicoSvc: HorarioMedicoService,
+    public citaSvc: CitaService,
+    private accountSvc: AccountService,
+    private _formBuilder: FormBuilder,
+    breakpointObserver: BreakpointObserver) {
+
+    this.loading = true;
+
+    this.medicoId = Number.parseInt(this.rutaActiva.snapshot.queryParamMap.get('medicoId'));
+    if (!this.medicoId) {
+      this.router.navigate(['']);
+    }
+
+
+    this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => matches ? 'horizontal' : 'vertical'));
+
+    //inicializa las fechas permitidas
+    this.citaSvc.GetCitaForm(this.medicoId)
+      .pipe(
+        catchError(err => {
+          console.error('Error al tratar de acceder a los pre-datos de la cita');
+          return of([]);
+        })).subscribe(r => {
+          console.log(r)
+          this.servicios = r.servicios;
+          this.diasLaborables = r.diasLaborables.map(r => {
+            return new Date(r)
+          });
+
+          this.dateFilter = (d: Date): boolean => {
+            const _date = new Date(d);
+
+            return this.diasLaborables.find(x => _moment.utc(x).format("l") ==
+              _moment.utc(_date).format("l")) ? true : false;
+          }
+          this.loading = false;
+          console.table(this.diasLaborables);
+        })
+
+    //Establezco las fechas minimas permitidas en las fechas de nacimientos
+    this.minDBDDate = new Date(Date.now() + -6574 * 24 * 3600 * 1000);
+    this.maxDBDDate = new Date(Date.now() + -31 * 24 * 3600 * 1000);
+    this.minBDDate = new Date(Date.now() + -43825 * 24 * 3600 * 1000);
+    this.maxBDDate = new Date(Date.now() + -6575 * 24 * 3600 * 1000);
+
+    //Relleno los datos del usuario si existe
+    this.setUserInfo();
+
+  }
 
 
   ngOnInit() {
@@ -269,7 +323,6 @@ export class CreateAppointmentComponent implements OnInit {
           });
       }
     }
-
   }
 
 
@@ -303,24 +356,25 @@ export class CreateAppointmentComponent implements OnInit {
 
 
   setUserInfo() {
-    this.accountSvc.getUserInfo().subscribe((re: UserInfo) => {
+    this.accountSvc.getUserInfo()
+      .subscribe((re: UserInfo) => {
 
-      console.log(re);
-      this.isUserConfirmed = re.confirm_doc_identidad;
-      this.thirdFormGroup.get("userNameControl").setValue(re.nombre);
-      this.thirdFormGroup.get("userLastNameControl").setValue(re.apellido);
-      this.thirdFormGroup.get("birthDateControl").setValue(re.fecha_nacimiento);
-      this.thirdFormGroup.get("contactControl").setValue(re.contacto);
-      this.thirdFormGroup.get("userSexControl").setValue(re.sexo);
-      this.thirdFormGroup.get("identityDocControl").setValue(re.doc_identidad);
-      var regExp = /[a-zA-Z]/i;
+        console.log(re);
+        this.isUserConfirmed = re.confirm_doc_identidad;
+        this.thirdFormGroup.get("userNameControl").setValue(re.nombre);
+        this.thirdFormGroup.get("userLastNameControl").setValue(re.apellido);
+        this.thirdFormGroup.get("birthDateControl").setValue(re.fecha_nacimiento);
+        this.thirdFormGroup.get("contactControl").setValue(re.contacto);
+        this.thirdFormGroup.get("userSexControl").setValue(re.sexo);
+        this.thirdFormGroup.get("identityDocControl").setValue(re.doc_identidad);
+        var regExp = /[a-zA-Z]/i;
 
-      if (regExp.test(re.doc_identidad))
-        this.thirdFormGroup.get("typeIdentityDocControl").setValue(1);
+        if (regExp.test(re.doc_identidad))
+          this.thirdFormGroup.get("typeIdentityDocControl").setValue(1);
 
-    }, err => {
-      console.error(err)
-    });
+      }, err => {
+        console.error(err)
+      });
   }
 
 
@@ -332,65 +386,6 @@ export class CreateAppointmentComponent implements OnInit {
     return this.thirdFormGroup.get("userSexControl").hasError('required') ? 'Debe seleccionar una opción' : "";
   }
 
-
-
-  constructor(
-
-    private router: Router,
-    private rutaActiva: ActivatedRoute,
-    private _snackBar: MatSnackBar,
-    private coberturaSvc: CoberturaService,
-    private horarioMedicoSvc: HorarioMedicoService,
-    private seguroSvc: SeguroService,
-    public citaSvc: CitaService,
-    private accountSvc: AccountService,
-    private _formBuilder: FormBuilder,
-    breakpointObserver: BreakpointObserver) {
-
-    this.loading = true;
-
-    this.medicoId = Number.parseInt(this.rutaActiva.snapshot.queryParamMap.get('medicoId'));
-    if (!this.medicoId) {
-      this.router.navigate(['']);
-    }
-
-
-    this.stepperOrientation = breakpointObserver.observe('(min-width: 800px)')
-      .pipe(map(({ matches }) => matches ? 'horizontal' : 'vertical'));
-
-    //inicializa las fechas permitidas
-    this.citaSvc.GetCitaForm(this.medicoId)
-      .pipe(
-        catchError(err => {
-          console.error('Error al tratar de acceder a los pre-datos de la cita');
-          return of([]);
-        })).subscribe(r => {
-          console.log(r)
-          this.servicios = r.servicios;
-          this.diasLaborables = r.diasLaborables.map(r => {
-            return new Date(r)
-          });
-
-          this.dateFilter = (d: Date): boolean => {
-            const _date = new Date(d);
-
-            return this.diasLaborables.find(x => _moment.utc(x).format("l") ==
-              _moment.utc(_date).format("l")) ? true : false;
-          }
-          this.loading = false;
-          console.table(this.diasLaborables);
-        })
-
-    //Establezco las fechas minimas permitidas en las fechas de nacimientos
-    this.minDBDDate = new Date(Date.now() + -6574 * 24 * 3600 * 1000);
-    this.maxDBDDate = new Date(Date.now() + -31 * 24 * 3600 * 1000);
-    this.minBDDate = new Date(Date.now() + -43825 * 24 * 3600 * 1000);
-    this.maxBDDate = new Date(Date.now() + -6575 * 24 * 3600 * 1000);
-
-    //Relleno los datos del usuario si existe
-    this.setUserInfo();
-
-  }
 
 
 

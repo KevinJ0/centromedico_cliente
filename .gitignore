@@ -26,6 +26,8 @@ Bin/
 obj/
 Obj/
 
+CentromedicoCliente/ClientApp/node_modules
+
 # Visual Studio 2015 cache/options directory
 .vs/
 
@@ -231,5 +233,5 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-.\CentromedicoCliente\ClientApp\node_modules
-.\CentromedicoCliente\Cliente.Repository\obj
+./ClientApp/node_modules
+./Cliente.Repository/obj

@@ -13,22 +13,31 @@ namespace Cliente.Repository.Repositories
     {
         private readonly MyDbContext _db;
 
-        public PacienteRepository( MyDbContext db)
+        public PacienteRepository(MyDbContext db)
         {
             _db = db;
         }
 
-        public void Add(pacientes entity) {
-
+        public void Add(pacientes entity)
+        {
             _db.pacientes.Add(entity);
         }
 
 
-        public pacientes getWithDocIdent(MyIdentityUser user)
+        public pacientes getByDocIdent(string docIdentidad)
         {
             var r = _db.pacientes
-                     .FirstOrDefault(p => p.MyIdentityUsers == user && !String.IsNullOrWhiteSpace(p.doc_identidad)); //this is for add another row with the same ID tutor.
-           
+                     .FirstOrDefault(p => p./*MyIdentityUsers.*/doc_identidad == docIdentidad &&
+                                          !String.IsNullOrWhiteSpace(p.doc_identidad)); //this is for add another row with the same ID tutor.
+
+            return r;
+        }
+
+        public pacientes getByUser(MyIdentityUser user)
+        {
+            var r = _db.pacientes
+                     .FirstOrDefault(p => p.MyIdentityUsers == user &&
+                                          !String.IsNullOrWhiteSpace(p.doc_identidad)); //this is for add another row with the same ID tutor.
             return r;
         }
 

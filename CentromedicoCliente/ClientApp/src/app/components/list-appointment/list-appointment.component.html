@@ -1,4 +1,7 @@
   <main>
+
+
+
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -10,6 +13,11 @@
       <mat-divider style="margin-bottom:1rem;">
       </mat-divider>
       <mat-card-content>
+        <div class="no-content" *ngIf="showNoContent">
+          <h3>No tiene cita agendada</h3>
+          <img src="../../../assets/icons/no-task.png" alt="">
+        </div>
+
         <mat-accordion class="example-headers-align" *ngIf="!loading else load" [@inOutAnimation]>
           <div *ngIf="citaCardList$!=null else noAppointment">
             <mat-expansion-panel *ngFor="let cita of citaCardList$ | async">
@@ -98,7 +106,6 @@
 
               <mat-action-row>
                 <button mat-button color="warn">Posponer</button>
-                <button mat-button>Cerrar</button>
               </mat-action-row>
             </mat-expansion-panel>
           </div>

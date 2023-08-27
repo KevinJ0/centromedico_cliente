@@ -26,7 +26,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using CentromedicoCliente.Profiles; 
+using CentromedicoCliente.Profiles;
+using CentromedicoCliente.Interfaces.Services;
 
 namespace CentromedicoCliente
 
@@ -55,13 +56,13 @@ namespace CentromedicoCliente
             services.AddScoped<IAccountService, AccountService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IMedicoService, MedicoService>();
-            services.AddScoped<ISeguroService,  SeguroService>();
+            services.AddScoped<ISeguroService, SeguroService>();
             services.AddScoped<IPreguntaService, PreguntaService>();
 
             services.AddScoped<IAccountRepository, AccountRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<ICitaRepository, CitaRepository>();
-            services.AddScoped<IHorarioMedicoRepository, HorarioMedicoRepository>(); 
+            services.AddScoped<IHorarioMedicoRepository, HorarioMedicoRepository>();
             services.AddScoped<IPreguntaRepository, PreguntaRepository>();
             services.AddScoped<IMedicoRepository, MedicoRepository>();
             services.AddScoped<ICoberturaRepository, CoberturaRepository>();
@@ -112,7 +113,7 @@ namespace CentromedicoCliente
                     var modelState = actionContext.ModelState;
                     return new BadRequestObjectResult(new
                     {
-                        error = new[] { errorsList[0]},
+                        error = new[] { errorsList[0] },
                     })
                     ;
                 };
@@ -183,7 +184,7 @@ namespace CentromedicoCliente
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequireLoggedIn",
-                    policy => policy.RequireRole("Client", "Patient").RequireAuthenticatedUser());
+                    policy => policy.RequireRole("Client", "Patient", "Secretary", "Doctor").RequireAuthenticatedUser());
 
             });
             services.AddSwaggerGen(c =>
@@ -192,7 +193,7 @@ namespace CentromedicoCliente
                 {
                     Title = "Centro Medico Cliente Api",
                     Version = "v1",
-                    Description = "Esta api describe las funciones de los diferentes endpoint que trabajan en la applicación que da vista al cliente.",
+                    Description = "Esta api describe las funciones de los diferentes endpoint que trabajan en la applicación que da vista al cliente",
                 });
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

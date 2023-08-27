@@ -46,7 +46,7 @@ namespace Cliente.Repository.Repositories
             if (r.Succeeded)
             {
                 // set user role
-                identityRole = new IdentityRole { Name = "Secretary" }; // en caso de ser la primera vez
+                identityRole = new IdentityRole { Name = "Patient" }; // en caso de ser la primera vez
                 await _roleManager.CreateAsync(identityRole);
                 await _userManager.AddToRoleAsync(user, identityRole.Name);
 

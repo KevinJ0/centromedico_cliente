@@ -69,3 +69,12 @@ mat-card-content {
 .progress-content{
     padding: clamp(2rem, 5vw, 3rem);
 }
+
+.no-content{
+  text-align: center;
+}
+
+.no-content h3{
+  font-size: 20px;
+    font-weight: 400;
+}

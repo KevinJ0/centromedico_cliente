@@ -10,12 +10,11 @@
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
-      "launchBrowser": true,
       "environmentVariables": {
         "TWILIO_AUTH_TOKEN": "e089e3d7f13f938af66e0d11466bec51",
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "LlaveSecreta": "asdfasdfok34mrF@$#F$@H@#G245G@$%GQ@$GERGERGerGE",
-        "TWILIO_ACCOUNT_SID": "AC8333955ad662b4dd4d537ca87e2b4522"
+        "TWILIO_ACCOUNT_SID": "AC8333955ad662b4dd4d537ca87e2b4522",
+        "LlaveSecreta": "asdfasdfok34mrF@$#F$@H@#G245G@$%GQ@$GERGERGerGE"
       }
     },
     "CentromedicoCliente": {

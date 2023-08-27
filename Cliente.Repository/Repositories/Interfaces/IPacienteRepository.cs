@@ -11,6 +11,7 @@ namespace Cliente.Repository.Repositories.Interfaces
     {
         public void Add(pacientes entity);
         public void Update(pacientes entity);
-        pacientes getWithDocIdent(MyIdentityUser user);
+        pacientes getByDocIdent(string docIdentidad);
+        pacientes getByUser(MyIdentityUser userPacienteDto);
     }
 }

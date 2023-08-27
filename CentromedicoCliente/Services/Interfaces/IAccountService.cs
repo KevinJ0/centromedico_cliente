@@ -1,4 +1,5 @@
-﻿using Cliente.DTO;
+﻿using Centromedico.Database.DbModels;
+using Cliente.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;

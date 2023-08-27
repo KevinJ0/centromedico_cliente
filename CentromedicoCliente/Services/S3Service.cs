@@ -1,4 +1,5 @@
 ﻿using Amazon.S3;
+using CentromedicoCliente.Interfaces.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;

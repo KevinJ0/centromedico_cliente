@@ -1,4 +1,5 @@
-﻿using Cliente.DTO;
+﻿using Centromedico.Database.DbModels;
+using Cliente.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,10 @@ namespace CentromedicoCliente.Services.Interfaces
 {
     public interface ICitaService
     {
-        Task<Object> getFormCitaAsync(int medicoID);
+        Task<citaFormDTO> getFormCitaAsync(int medicoID);
         List<citaDTO> getCitasListByCv(string codVerificacion);
         Task<List<citaDTO>> getCitasListAsync();
         Task<citaResultDTO> createCitaAsync(citaCreateDTO formdata);
+
     }
 }

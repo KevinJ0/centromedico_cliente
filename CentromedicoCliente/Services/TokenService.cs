@@ -47,9 +47,9 @@ namespace CentromedicoCliente.Services
                 // Will hold all the errors related to registration
                 string _error = "";
                 IdentityResult result = await _tokenRepo.Add(formdata);
+
                 if (result.Succeeded)
                     return true;
-
                 else
                 {
                     foreach (var error in result.Errors)
@@ -98,7 +98,7 @@ namespace CentromedicoCliente.Services
                     if (_userManager.IsInRoleAsync(user, "Patient").Result)
                     {
                         token newRtoken = CreateRefreshToken(_configuration["Authorization:ClientId"], user.Id, mobile);
-                        
+
                         IQueryable oldrtoken = _tokenRepo.getAllByUserId(user.Id);
 
                         if (oldrtoken != null)
@@ -118,7 +118,7 @@ namespace CentromedicoCliente.Services
                         return new OkObjectResult(new { authToken = accessToken });
                     }
                 }
-               throw new BadRequestException("El usuario o ontraseña son invalidos, por favor verifique sus credenciales.");
+                throw new BadRequestException("El usuario o ontraseña son invalidos, por favor verifique sus credenciales");
 
             }
             catch (Exception)
@@ -213,13 +213,13 @@ namespace CentromedicoCliente.Services
                 if (rt == null)
                 {
                     // refresh token not found or invalid (or invalid clientId)
-                    throw new UnauthorizedException("El refresh token no se ha encontrado o es inválido.");
+                    throw new UnauthorizedException("El refresh token no se ha encontrado o es inválido");
                 }
 
                 // check if refresh token is expired
                 if (rt.ExpiryTime < DateTime.UtcNow)
                 {
-                    throw new UnauthorizedException("El resfresh token ha expirado.");
+                    throw new UnauthorizedException("El resfresh token ha expirado");
                 }
 
                 // check if there's an user with the refresh token's userId
@@ -229,7 +229,7 @@ namespace CentromedicoCliente.Services
                 if (user == null)
                 {
                     // UserId not found or invalid
-                    throw new UnauthorizedException("El userId no es valido.");
+                    throw new UnauthorizedException("El userId no es valido");
 
                 }
 

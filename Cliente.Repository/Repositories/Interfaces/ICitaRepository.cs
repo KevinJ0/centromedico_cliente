@@ -11,11 +11,11 @@ namespace Cliente.Repository.Repositories.Interfaces
 {
     public interface ICitaRepository
     {
-        public Task<List<citaDTO>> getCitasListAsync();
+        public Task<List<citaDTO>> getCitasListByUserAsync();
         public List<citaDTO> getCitasListByCv(string codVerificacion);
-        public bool Exist(medicos medico, MyIdentityUser user);
-        public bool Exist(MyIdentityUser user);
+        public bool ExistByDocIdentidadAndMedico(medicos medico, string docIdentidad);
+        public bool ExistByDocIdentidad(string docIdentidad);
         public void Add(citas entity);
-        public string getCV(MyIdentityUser user);
+        public string getCV(string docIdentidad);
     }
 }

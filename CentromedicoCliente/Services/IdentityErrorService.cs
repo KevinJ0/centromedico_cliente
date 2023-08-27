@@ -15,25 +15,25 @@ namespace CentromedicoCliente.Services
             switch (identityErrorCode)
             {
                 case IdentityErrorCodes.DuplicateEmail:
-                    _error = "Este email ya ha sido tomado.";
+                    _error = "Este email ya ha sido tomado";
                     break;
                 case IdentityErrorCodes.DuplicateUserName:
-                    _error = "Este usuario ya está registrado.";
+                    _error = "Este usuario ya está registrado";
                     break;
                 case IdentityErrorCodes.InvalidEmail:
-                    _error = "Este correo es invalido.";
+                    _error = "Este correo es invalido";
                     break;
                 case IdentityErrorCodes.PasswordMismatch:
-                    _error = "Las contraseñas no coinciden.";
+                    _error = "Las contraseñas no coinciden";
                     break;
                 case IdentityErrorCodes.PasswordRequireDigit:
-                    _error = "La contraseña requiere digitos.";
+                    _error = "La contraseña requiere digitos";
                     break;
                 case IdentityErrorCodes.PasswordRequireLower:
-                    _error = "La contraseña requiere letra en minuscula.";
+                    _error = "La contraseña requiere letra en minuscula";
                     break;
                 case IdentityErrorCodes.PasswordTooShort:
-                    _error = "La contraseña es muy corta.";
+                    _error = "La contraseña es muy corta";
                     break;
                 default:
                     _error = "Ha ocurrido un error";

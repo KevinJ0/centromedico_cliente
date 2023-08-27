@@ -29,8 +29,12 @@ namespace Cliente.DTO
         public string url_instagram { get; set; }
         [StringLength(10)]
         public string telefono1 { get; set; }
+        [StringLength(2)]
+        public string telefono1_contact { get; set; }
         [StringLength(10)]
         public string telefono2 { get; set; }
+        [StringLength(2)]
+        public string telefono2_contact { get; set; }
         public int? consultorio { get; set; }
         [Required]
         public bool? estado { get; set; }

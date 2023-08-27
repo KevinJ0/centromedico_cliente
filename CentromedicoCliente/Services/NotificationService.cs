@@ -68,9 +68,9 @@ namespace CentromedicoCliente.Services
 
         public void sendTicketMail(citaResultDTO citaResult, string to)
         {
-
+            /*
             _retryPolicy.Execute(() =>
-            {
+            {*/
                 StringBuilder message = new StringBuilder("");
                 var reader = new System.IO.StreamReader("wwwroot/assets/TicketTemplateFirst.html", System.Text.Encoding.UTF8);
                 var firstTicket = reader.ReadToEnd();
@@ -113,7 +113,7 @@ namespace CentromedicoCliente.Services
                 message.Append(secondTicket);
 
                 _emailService.Send(to, "Cita Médica - Hospital Salvador", message.ToString(), _configuration["EmailSettings:EmailFrom"]);
-            });
+            //});
         }
     }
 }

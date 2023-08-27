@@ -135,7 +135,11 @@ mat-card-actions {
   }
 }
 @media screen and (max-width: 550px) {
-  .name {
+
+  .form-wrapper {
+    padding: 1rem;
+  }
+    .name {
     flex-direction: column;
   }
 }

@@ -3,7 +3,12 @@
   max-width: 1600px;
   margin: auto;
 } */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -29,12 +34,12 @@ main {
   margin-bottom: 1rem;
 }
 
-  .background img {
-    height: 100%;
-    width: 100%;
-    object-fit: contain;
-    max-width: 1920px;
-  }
+.background img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  max-width: 1920px;
+}
 
 .message-intro {
   display: flex;
@@ -65,26 +70,26 @@ main {
   width: 100%;
   display: flex;
   justify-content: center;
- }
+}
 
-  .short-menu .short-menu-grid {
-    text-align: center;
-    width: 100%;
-    gap: 1rem;
-    display: grid;
-    justify-content: center;
-    align-items: stretch;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    justify-items: center;
-    align-content: center;
-    margin: 4rem 0rem;
-  }
+.short-menu .short-menu-grid {
+  text-align: center;
+  width: 100%;
+  gap: 1rem;
+  display: grid;
+  justify-content: center;
+  align-items: stretch;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-content: center;
+  margin: 4rem 0rem;
+}
 
-    .short-menu .short-menu-grid > img {
-      width: 100%;
-      grid-row-start: 1;
-      grid-row-end: 3;
-    }
+.short-menu .short-menu-grid>img {
+  width: 100%;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
 
 .item {
   padding: 20px 10px;
@@ -100,77 +105,78 @@ main {
   background-color: hsl(0deg 0% 97%);
 }
 
-  .item:hover {
-    background-color: hsl(210, 100%, var(--bg-color));
-  }
+.item:hover {
+  background-color: hsl(210, 100%, var(--bg-color));
+}
 
-    .item:hover mat-icon {
-      fill: white;
-    }
+.item:hover mat-icon {
+  fill: white;
+}
 
-    .item:hover p {
-      color: whitesmoke;
-      font-weight: 400;
-    }
+.item:hover p {
+  color: whitesmoke;
+  font-weight: 400;
+}
 
-  .item mat-icon {
-    width: clamp(40px, 5vw, 75px);
-    height: 70px;
-    fill: var(--primary-color);
-  }
+.item mat-icon {
+  width: clamp(40px, 5vw, 75px);
+  height: 70px;
+  fill: var(--primary-color);
+}
 
-  .item p {
-    margin: 1rem 0 0 0;
-    color: rgb(53, 53, 53);
-    font-weight: 200;
-    font-size: 17px;
-  }
+.item p {
+  margin: 1rem 0 0 0;
+  color: rgb(53, 53, 53);
+  font-weight: 200;
+  font-size: 17px;
+}
 
 .about {
   margin: 4rem 0;
   position: relative;
 }
 
-.about-content {
-  padding: 2rem;
-  color: #222222;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: var(--max-width);
-  margin: auto;
-}
-
 .about-bg {
   position: absolute;
-  background-image: linear-gradient(to top, #f7f7f7bf, rgba(255,0,0,0));
-  width: 100vw;
+  background-image: linear-gradient(to top, #f7f7f7bf, rgba(255, 0, 0, 0));
+  width: 100%;
   height: 100%;
   top: 0;
   z-index: -1;
 }
 
+.about-content {
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: var(--max-width);
+  margin: auto;
+  color: rgb(49, 49, 49);
+}
+
 .about-content p {
-  line-height: 24px;
+  font-size: 17px;
+  font-weight: 100;
+  text-align: center;
 }
 
 .about h3 {
-  font-size: clamp(1rem,8vw,3.5rem);
+  font-size: clamp(1rem, 8vw, 1.8rem);
   text-align: center;
-  color: #222222;
-  margin: 2rem;
+  font-weight: 400;
+  margin: 2rem 0 0 0;
 }
 
 .info-1 {
   overflow: auto;
 }
 
-  .info-1 p > img {
-    width: clamp(15rem, 46vw, 38rem);
-    float: left;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-  }
+.about-content img {
+  margin-top: 2rem;
+
+  width: clamp(24rem, 70vw, 58rem);
+}
 
 .question-barner {
   max-width: var(--max-width);
@@ -183,18 +189,20 @@ main {
   align-content: center;
 }
 
-  .question-barner p {
-    display: inline-block;
-  }
+.question-barner p {
+  display: inline-block;
+  font-weight: 300;
+}
 
-  .question-barner img {
-    width: 100px;
-  }
-    
-  .question-barner h6 {
-    font-size: x-large;
-    color: #222222;
-  }
+.question-barner img {
+  width: 100px;
+}
+
+.question-barner h6 {
+  font-size: x-large;
+  color: #222222;
+  font-weight: 500;
+}
 
 .highlight-text {
   font-style: none;
@@ -220,6 +228,8 @@ main {
   align-items: center;
   flex-direction: row;
   align-content: center;
+  
+  background: #F7F7F7;
 }
 
 .location-content {
@@ -280,7 +290,7 @@ app-barner {
     height: 150px;
     background-position: center;
   }
-      
+
   .content-wrapper {
     text-align: center;
     padding: 0 clamp(0.5rem, 4vw, 6rem);
@@ -297,9 +307,11 @@ app-barner {
     justify-content: center;
   }
 }
+
 @media screen and (max-width: 880px) {
 
- 
-    .short-menu .short-menu-grid {
-    grid-template-columns: 1fr 1fr ;
-  }  }
+
+  .short-menu .short-menu-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

@@ -47,7 +47,7 @@ namespace Cliente.Repository.Repositories
 
         }
 
-        public async Task<List<citaDTO>> getCitasListAsync()
+        public async Task<List<citaDTO>> getCitasListByUserAsync()
         {
 
             try
@@ -69,26 +69,48 @@ namespace Cliente.Repository.Repositories
         }
 
 
-        public string getCV(MyIdentityUser user)
+        public string getCV(string docIdentidad)
         {
             cod_verificacion codV = _db.cod_verificacion
                 .Include("citas")
-                .Where(x => x.citas.pacientes.MyIdentityUsers == user && x.citas.estado == true)
+                .Where(x => x.citas.pacientes.MyIdentityUsers.doc_identidad == docIdentidad 
+                            && x.citas.estado == true)
                 .FirstOrDefault();
 
-            return codV.value;
+            return codV?.value;
         }
 
         public void Add(citas entity)
         {
             _db.citas.Add(entity);
         }
-            public bool Exist(medicos medico, MyIdentityUser user)
+        public bool ExistByUser(medicos medico, MyIdentityUser user)
         {
             try
             {
-                if (_db.citas.FirstOrDefault(x => x.medicos == medico
-                  && x.pacientes.MyIdentityUsers == user && x.estado == true) != null)
+                citas result = _db.citas.FirstOrDefault(x => x.medicos == medico
+                  && x.pacientes.MyIdentityUsers == user && x.estado == true);
+
+                if (result != null)
+                    return true;
+
+                return false;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public bool ExistByDocIdentidadAndMedico(medicos medico, string docIdentidad)
+        {
+            try
+            {
+                citas result = _db.citas.FirstOrDefault(x => x.medicos == medico
+                  && x.pacientes.doc_identidad == docIdentidad && x.estado == true);
+
+                if (result != null)
                     return true;
 
                 return false;
@@ -102,12 +124,14 @@ namespace Cliente.Repository.Repositories
         }
 
 
-        public bool Exist(MyIdentityUser user)
+
+        public bool ExistByDocIdentidad(string docIdentidad)
         {
 
             try
             {
-                if (_db.citas.FirstOrDefault(x => x.pacientes.MyIdentityUsers == user && x.estado == true) != null)
+                if (_db.citas.FirstOrDefault(x => x.pacientes.doc_identidad == docIdentidad 
+                                                  && x.estado == true) != null)
                 {
                     return true;
                 }

@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'rxjs/operators';
 import * as _moment from 'moment';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'; 
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
 import { trigger, style, animate, transition } from '@angular/animations';
@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
     public citaSvc: CitaService,
     private accountSvc: AccountService,
     private _formBuilder: FormBuilder) {
-//go back user is already logged in
+    //go back user is already logged in
     if (this.accountSvc.checkLoginStatus())
       this.router.navigate(['..']);
   }
@@ -99,13 +99,13 @@ export class LoginComponent implements OnInit {
 
   onPasswordInput() {
     if (this.signupFormGroup.hasError('passwordMismatch'))
-    this.password2.setErrors([{ 'passwordMismatch': true }]);
+      this.password2.setErrors([{ 'passwordMismatch': true }]);
     else
       this.password2.setErrors(null);
   }
 
   Login(): void {
-    
+
     if (this.loginFormGroup.valid) {
       if (!this.loading) {
         this.loading = true;
@@ -115,18 +115,22 @@ export class LoginComponent implements OnInit {
         this.accountSvc
           .Login(userLogin.loginEmailControl, userLogin.loginPasswordControl)
           .subscribe(result => {
- 
+
             this.loading = false;
             let token = (<any>result).authToken.token;
             console.log("User Logged In Successfully");
             this.invalidLogin = false;
-            this.router.navigateByUrl(this.returnUrl);
+
+            if (this.returnUrl == '/')
+              this.router.navigateByUrl('/mis-citas');
+            else
+              this.router.navigateByUrl(this.returnUrl);
 
           },
             (error) => {
               this.invalidLogin = true;
               this.loading = false;
- 
+
               this.ErrorMessage = "Ha ocurrido un error al intentar iniciar sessión";
               this.openSnackBar(error);
               console.log(error);
@@ -166,7 +170,7 @@ export class LoginComponent implements OnInit {
     }
 
   }
-  ngOnDestroy() { 
+  ngOnDestroy() {
 
   }
 }

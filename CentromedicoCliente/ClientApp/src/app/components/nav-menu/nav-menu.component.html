@@ -3,7 +3,7 @@
   <nav id="nav" class="nav" role="navigation">
     <div class="mobile-container-logo">
       <a [routerLink]="['/']">
-        <img src="../../../assets/imgs/header_logo.png" class="mobile-main-logo" alt="Logo">
+        <img src="../../../assets/imgs/footer_logo.png" class="mobile-main-logo" alt="Logo">
       </a>
     </div>
 
@@ -17,12 +17,12 @@
       <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
       <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
       <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li>
-      <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicación</a></li>
-      <li [hidden]="!userName" class="nav__item">
+      <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicaciones</a></li>
+      <li class="nav__item" [hidden]="!userName">
         <a class="nav__link">{{userName}}</a>
       </li>
       <li [hidden]="userName" class="nav__item">
-        <a  class="nav__link" [routerLink]="['/paciente-login']">Paciente Login </a>
+        <a class="nav__link" [routerLink]="['/paciente-login']">Paciente Login </a>
       </li>
       <li class="nav__item" [hidden]="!userName">
         <a class="nav__link" (click)="logOut()">Cerrar sesión</a>
@@ -102,7 +102,7 @@
         <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
         <li><a [routerLink]="['/contactos']">Contactos</a></li>
         <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li>
-        <li><a [routerLink]="['/ubicacion']">Ubicación</a></li>
+        <li><a [routerLink]="['/ubicacion']">Ubicaciones</a></li>
       </ul>
     </nav>
   </div>

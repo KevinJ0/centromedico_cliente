@@ -28,7 +28,6 @@ namespace Cliente.Repository.Repositories
 
             coberturaMedicoDTO r = await _db.cobertura_medicos.ProjectTo<coberturaMedicoDTO>(_mapper.ConfigurationProvider)
                                 .FirstOrDefaultAsync(x =>
-                               //  x.especialidadesID == formdata.especialidadesID &&
                                x.medicosID == medicosID &&
                                x.segurosID == segurosID &&
                                x.serviciosID == serviciosID);

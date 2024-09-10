@@ -1,7 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 import { MapInfoWindow, MapMarker, GoogleMap } from '@angular/google-maps';
-import { SwiperOptions } from 'swiper';
 
 
 @AutoUnsubscribe()
@@ -46,7 +45,7 @@ export class LocationComponent implements OnInit, AfterViewInit {
       },
       name: 'La Romana'
     })
-     
+
     this.markers.push({
       position: {
         lat: 18.4296925,

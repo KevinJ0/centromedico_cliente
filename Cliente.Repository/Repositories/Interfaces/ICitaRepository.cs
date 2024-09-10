@@ -17,5 +17,6 @@ namespace Cliente.Repository.Repositories.Interfaces
         public bool ExistByDocIdentidad(string docIdentidad);
         public void Add(citas entity);
         public string getCV(string docIdentidad);
+        public bool ExistByUser(medicos medico, MyIdentityUser user);
     }
 }

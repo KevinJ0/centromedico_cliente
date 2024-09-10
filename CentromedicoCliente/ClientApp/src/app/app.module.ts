@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -9,7 +9,6 @@ import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NewHomeComponent } from './components/home/new-home/new-home.component';
 import { BarnerComponent } from './components/barner/barner.component';
 import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 import { LoginComponent } from './components/login/login.component';
@@ -57,14 +56,14 @@ import { FaqExpansionPanelComponent } from './components/faq/faq-expansion-panel
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SwiperModule } from 'ngx-swiper-wrapper';
 import { NgxPrintModule } from 'ngx-print';
-import { PreguntaService  } from './services/pregunta.service';
+import { PreguntaService } from './services/pregunta.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginator } from './shared/CustomPaginatorConfiguration';
 
 export function tokenGetter() {
   //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
-  return sessionStorage.getItem("jwt");
+  return localStorage.getItem("jwt");
 }
 export const MY_FORMATS = {
   // parse: {
@@ -84,7 +83,6 @@ export const MY_FORMATS = {
     NavMenuComponent,
     HomeComponent,
     FooterComponent,
-    NewHomeComponent,
     BarnerComponent,
     CreateAppointmentComponent,
     LoginComponent,
@@ -100,6 +98,7 @@ export const MY_FORMATS = {
     FaqExpansionPanelComponent,
     DialogSuccessedEmail
   ],
+  schemas: [NO_ERRORS_SCHEMA],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
@@ -111,12 +110,12 @@ export const MY_FORMATS = {
     BrowserAnimationsModule,
     MatButtonModule,
     MatFormFieldModule,
-    MatExpansionModule, 
+    MatExpansionModule,
     MatButtonToggleModule,
     MatTableModule,
     MatListModule,
     MatDialogModule,
-    MatDividerModule, 
+    MatDividerModule,
     MatRadioModule,
     MatNativeDateModule,
     MatPaginatorModule,
@@ -135,7 +134,7 @@ export const MY_FORMATS = {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:4211', 'CentromedicoCliente-001-site1.htempurl.com'],
+        allowedDomains: ['localhost:4211', 'kevinj9-001-site1.etempurl.com'],
         disallowedRoutes: [],
         authScheme: "Bearer ",
       }
@@ -170,5 +169,3 @@ export const MY_FORMATS = {
   entryComponents: [DialogSuccessedEmail]
 })
 export class AppModule { }
-
-

@@ -1,0 +1,70 @@
+<div class="map-wrapper" style=" position: relative;">
+  <button class="button-center-map" color="primary" (click)="setCenter(18.436234,-69.46064)" mat-flat-button>País
+    completo</button>
+  <google-map width="100vw" height="450px" [(zoom)]="zoom" [(center)]="center" [options]="options">
+    <map-marker #marker="mapMarker" *ngFor="let hospital of markers; let i = index" (mapClick)="openInfoWindow(marker)"
+      [position]="hospital.position">
+      <map-info-window>
+        <h4>{{ hospital.name }}</h4>
+        <p>lat: {{ hospital.position.lat }}</p>
+        <p>long: {{ hospital.position.lng }}</p>
+        <p>Teléfono: 809-555-8754</p>
+      </map-info-window>
+    </map-marker>
+
+  </google-map>
+</div>
+<main>
+  <mat-card>
+
+    <mat-card-content>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide romana container">
+            <p class="title">La Romana</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4296925,-68.9656023)" id="romana" class="romana" class="button-locate">
+              <a>Ubicar</a>
+            </div>
+            <div class="button-open-map">
+              <a target="_blank"
+                 href="https://www.google.com/maps/place/18%C2%B026'00.5%22N+68%C2%B057'54.2%22W/@18.4334841,-68.9672327,17z/data=!3m1!4b1!4m6!3m5!1s0x0:0x0!7e2!8m2!3d18.4334794!4d-68.9650441?hl=en-US">
+                Abrir
+                mapa
+              </a>
+            </div>
+          </div>
+
+          <div class="swiper-slide sd container">
+            <p class="title">Santo Domingo</p>
+            <div class="overlay"></div>
+            <div (click)="setFocus(18.4634403,-69.9499557)" class="button-locate"><a>Ubicar</a></div>
+            <div class="button-open-map">
+              <a target="_blank"
+                 href="https://www.google.com/maps/@18.455369,-69.9643642,13.94z?hl=en-US">Abrir mapa</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Arrows -->
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </mat-card-content>
+
+  </mat-card>
+  <h2>
+    Atención excepcional y accesible a todas horas
+  </h2>
+  <mat-divider style="margin-bottom:1rem;">
+  </mat-divider>
+  <p>
+    El Hospital Salvador es uno de los sistemas de atención médica académica integrados más completos del país, más de 5
+    clínicas y grupos médicos de atención primaria y especializada, y una variedad de servicios de telemedicina. Con
+    ubicaciones en la Ciudad de La Romana, contamos con especialistas líderes en todos los campos de la medicina que
+    brindan atención conveniente y de alta calidad a nuestros pacientes.
+  </p>
+
+
+</main>

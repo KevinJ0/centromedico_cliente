@@ -65,6 +65,9 @@ export class ListAppointmentComponent implements OnInit {
 
   }
 
+  navigateToMedicos() {
+    this.router.navigate(['/medicos']); // Cambia '/ruta-deseada' por la ruta a la que quieras redirigir
+  }
 
   ngOnInit(): void {
     this.citaCardList$ = this.citaSvc.GetCitaList();
@@ -81,8 +84,14 @@ export class ListAppointmentComponent implements OnInit {
       });
   }
 
-  convertDate(date: string): string {
+  convertDateFull(date: string): string {
     return _moment(date).format('dddd DD MMM Y hh:mm A');
+  }
+  convertDateHours(date: string): string {
+    return _moment(date).format('hh:mm A');
+  }
+  convertDate(date: string): string {
+    return _moment(date).format('dddd DD MMM Y');
   }
   ngOnDestroy() {
 

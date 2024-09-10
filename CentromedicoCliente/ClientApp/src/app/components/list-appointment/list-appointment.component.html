@@ -1,115 +1,170 @@
   <main>
-
-
-
     <mat-card>
       <mat-card-header>
         <mat-card-title>
           <h2 style="margin-bottom:0; margin-top:0;">Mis citas</h2>
         </mat-card-title>
-        <mat-card-subtitle>Listado de todas mis citas realizadas.</mat-card-subtitle>
+        <mat-card-subtitle>Listado de todas mis citas a realizar.</mat-card-subtitle>
 
       </mat-card-header>
       <mat-divider style="margin-bottom:1rem;">
       </mat-divider>
       <mat-card-content>
+
         <div class="no-content" *ngIf="showNoContent">
           <h3>No tiene cita agendada</h3>
           <img src="../../../assets/icons/no-task.png" alt="">
+
+          <button (click)="navigateToMedicos()" mat-flat-button>Realizar un cita <mat-icon>event_upcoming</mat-icon>
+          </button>
         </div>
 
-        <mat-accordion class="example-headers-align" *ngIf="!loading else load" [@inOutAnimation]>
-          <div *ngIf="citaCardList$!=null else noAppointment">
-            <mat-expansion-panel *ngFor="let cita of citaCardList$ | async">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  {{cita.medico_nombre+" "+cita.medico_apellido}}
-                </mat-panel-title>
-                <mat-panel-description>
-                  {{convertDate(cita.fecha_hora)}}
-                  <mat-icon>date_range</mat-icon>
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-              <div class="content">
-                <div class="first-row">
-                  <div><span>ID: </span><span><b>{{cita.id}}</b></span></div>
-                  <div><span>Turno: </span><span><b>{{cita.turno}}</b></span></div>
+        <div class="example-headers-align" *ngIf="!loading else load" [@inOutAnimation]>
+          <div class="cita-card-container" *ngIf="citaCardList$!=null else noAppointment">
+            <mat-card class="cita-card" *ngFor="let cita of citaCardList$ | async">
+
+              <mat-card-header>
+                <mat-action-row>
+                  <div class="title">Cita #{{cita.id}}</div>
+
+                  <button mat-stroked-button color="warn">
+                    <mat-icon>schedule</mat-icon> Posponer
+                  </button>
+                </mat-action-row>
+
+                <div class="medico-data">
+                  <center>
+                    <img class="profilePhoto" src="{{cita.medicoData.profilePhoto}}" alt="Foto de médico">
+
+                    <h3 class="title"> {{cita.medico_nombre+" "+cita.medico_apellido}}</h3>
+                    <h4 class="subtitle"> {{cita.medicoData.especialidades.join(", ") || '' }}</h4>
+                  </center>
+                </div>
+
+              </mat-card-header>
+
+              <mat-card-content>
+                <div class="fecha data-row">
                   <div>
-                    <span>
-                      Consultorio: <b>
-                        {{cita.consultorio}}
-                      </b>
-                    </span>
+                    <mat-icon>event</mat-icon>
+                    <h3>Fecha:</h3>
+                  </div>
+                  <div class="data">
+                    {{convertDate(cita.fecha_hora)}}
                   </div>
                 </div>
-                <div class="second-row">
+
+                <mat-divider [inset]="true">
+                </mat-divider>
+                <div class="hora data-row">
                   <div>
-                    <div>Paciente</div>
+                    <mat-icon>schedule</mat-icon>
+                    <h3>Hora:</h3>
+                  </div>
+                  <div class="data">
+                    {{convertDateHours(cita.fecha_hora)}}
+                  </div>
+
+
+                </div>
+                <mat-divider [inset]="true">
+                </mat-divider>
+
+                <div class="double-flex-container">
+                  <div class="data-row">
+                    <div>
+                      <mat-icon>confirmation_number</mat-icon>
+                      <h3>Turno: </h3>
+                    </div>
+
                     <div class="data">
-                      {{cita.paciente_nombre+" "+cita.paciente_apellido}}
+                      <span>{{cita.turno}}</span>
                     </div>
                   </div>
-                  <div *ngIf="cita.paciente_nombre_tutor">
-                    <div>Tutor</div>
+
+                  <mat-divider [vertical]="true" style="height: 25px;">
+                  </mat-divider>
+
+                  <div class="data-row consultorio">
+                    <div>
+                      <mat-icon>place</mat-icon>
+                      <h3>
+                        Consultorio:
+                      </h3>
+                    </div>
                     <div class="data">
                       <span>
-                        {{cita.paciente_nombre_tutor+" "+cita.paciente_apellido_tutor}}
+                        {{cita.consultorio}}
                       </span>
                     </div>
                   </div>
-
-                  <div>
-                    <div>Servicio</div>
-                    <div class="data">
-                      {{cita.servicio_descrip}}
-                    </div>
-                  </div>
-                  <div>
-                    <div>Seguro</div>
-                    <div class="data">
-                      {{cita.seguro_descrip}}
-                    </div>
-                  </div>
-                  <div>
-                    <div>Contacto</div>
-                    <div class="data">
-                      {{cita.contacto}}
-                    </div>
-                  </div>
-
-                  <div>
-                    <div>Costo</div>
-                    <div class="data">
-                      <span>RD$ </span> {{cita.pago}}
-                    </div>
-                  </div>
-                  <div>
-                    <div>Cobertura</div>
-                    <div class="data">
-                      <span>RD$ </span> {{cita.cobertura}}
-                    </div>
-                  </div>
-                  <div>
-                    <div>Descuento</div>
-                    <div class="data">
-                      <span>RD$ </span> {{cita.descuento}}
-                    </div>
-                  </div>
-                  <div>
-                    <div>Diferencia</div>
-                    <div class="data">
-                      <span>RD$ </span> {{cita.diferencia}}
-                    </div>
-                  </div>
                 </div>
-              </div>
 
-              <mat-action-row>
-                <button mat-button color="warn">Posponer</button>
-              </mat-action-row>
-            </mat-expansion-panel>
+
+                <div class="mis-datos-container">
+
+                  <div class="minicard">
+                    <div class="icon">
+                      <mat-icon>personal_injury</mat-icon>
+                    </div>
+                    <div class="title">{{cita.paciente_nombre + " " + cita.paciente_apellido}} </div>
+                    <div class="subtitle">Paciente</div>
+                  </div>
+
+                  <div *ngIf="cita.paciente_nombre_tutor" class="minicard">
+                    <div class="icon">
+                      <mat-icon>supervisor_account</mat-icon>
+                    </div>
+                    <div class="title">{{cita.paciente_nombre_tutor + " " + cita.paciente_apellido_tutor ?? ""}} </div>
+                    <div class="subtitle">Tutor</div>
+                  </div>
+
+
+
+                  <div class="minicard">
+                    <div class="icon">
+                      <mat-icon>call</mat-icon>
+                    </div>
+                    <div class="title">{{cita.contacto}} </div>
+                    <div class="subtitle">
+                      Contacto
+                    </div>
+                  </div>
+
+                  <div class="minicard">
+                    <div class="icon">
+                      <mat-icon>medical_services</mat-icon>
+                    </div>
+                    <div class="title">{{cita.servicio_descrip}} </div>
+                    <div class="subtitle">Servicio</div>
+                  </div>
+
+                  <div class="minicard">
+                    <div class="icon">
+                      <mat-icon>health_and_safety</mat-icon>
+                    </div>
+                    <div class="title">{{cita.seguro_descrip}} </div>
+                    <div class="subtitle">Seguro</div>
+                  </div>
+                  <div class="minicard">
+                    <div class="icon">
+                      <mat-icon>payments</mat-icon>
+                    </div>
+                    <div class="title">RD${{cita.diferencia}}.00 </div>
+                    <div class="subtitle">Diferencia</div>
+                  </div>
+
+                  <!-- ------------------ -->
+                </div>
+
+              </mat-card-content>
+            </mat-card>
+
           </div>
-        </mat-accordion>
+        </div>
+
+
+
         <ng-template #noAppointment>
           <h2 style="font-size: 2rem; font-weight: 300;">
             Usted no tiene citas pendiente

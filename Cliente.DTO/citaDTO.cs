@@ -35,6 +35,7 @@ namespace Cliente.DTO
 #pragma warning disable CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
         public string? paciente_apellido_tutor { get; set; }
 #pragma warning restore CS8632 // La anotación para tipos de referencia que aceptan valores NULL solo debe usarse en el código dentro de un contexto de anotaciones "#nullable".
+        public medicoDirectorioDTO medicoData { get; set; }
 
         [Column(TypeName = "text")]
         public string nota { get; set; }

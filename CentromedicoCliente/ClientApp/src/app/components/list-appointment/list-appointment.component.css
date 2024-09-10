@@ -8,7 +8,7 @@
   align-items: center;
 }
 
-.example-headers-align .mat-form-field + .mat-form-field {
+.example-headers-align .mat-form-field+.mat-form-field {
   margin-left: 8px;
 }
 
@@ -48,33 +48,198 @@ mat-card-content {
   justify-content: flex-start;
   gap: 6px;
 }
-.second-row > div {
+
+.second-row>div {
   border-left: solid #c3c3c3 1px;
   padding: 5px 10px;
 }
 
-.first-row > div {
+.first-row>div {
   flex-basis: 100%;
 }
 
-.second-row + div + div {
+.second-row+div+div {
   font-weight: 300;
 }
+
 .second-row .data {
   font-size: large;
   color: #3a3a3a;
   font-weight: 500;
 }
 
-.progress-content{
-    padding: clamp(2rem, 5vw, 3rem);
+.progress-content {
+  padding: clamp(2rem, 5vw, 3rem);
 }
 
-.no-content{
+.no-content {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  justify-content: center;
 }
 
-.no-content h3{
+.no-content h3 {
   font-size: 20px;
-    font-weight: 400;
+  font-weight: 700;
+}
+
+
+.no-content button {
+  background: var(--primary-color);
+  color: white;
+}
+
+
+
+.cita-card {
+  max-width: 30rem;
+}
+
+
+.cita-card-container {
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-content: center;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+
+mat-card-header {
+  display: flex;
+  flex-flow: column;
+}
+
+mat-action-row {
+  border-top-style: none;
+  /* esto es por un bug*/
+  border-top-width: 0px;
+  display: flex;
+  flex-flow: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+mat-action-row button {
+  border-color: #f4433671;
+}
+
+mat-card-content {
+  margin-top: clamp(1rem, 3vw, 3rem);
+}
+
+.medico-data .title,
+mat-action-row .title {
+  font-size: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 0;
+}
+
+mat-action-row .title {
+  font-weight: 700;
+}
+
+.medico-data .title {
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.medico-data .subtitle {
+  margin-top: 0;
+  margin-bottom: 0;
+  color: #545454;
+  font-weight: 400;
+}
+
+.data-row h3 {
+  font-weight: 500;
+}
+
+.profilePhoto {
+  object-fit: cover;
+  width: 8rem;
+  height: 8rem;
+  border-radius: 100%;
+}
+
+
+.data-row {
+  display: flex;
+  flex-flow: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.data-row>div {
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  gap: 5px;
+}
+
+.data-row mat-icon {
+  color: var(--primary-color);
+}
+
+.double-flex-container {
+
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+
+
+.mis-datos-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-flow: row;
+  gap: 10px;
+  flex-wrap: wrap;
+
+}
+
+
+.minicard {
+  display: flex;
+  flex-wrap: nowrap;
+  flex-flow: column;
+  min-width: 7rem;
+  min-height: 5rem;
+
+  border-radius: 10px;
+  width: fit-content;
+  padding: 10px;
+  box-shadow: #34343418 0 2px 5px;
+}
+
+
+.mis-datos-container .minicard mat-icon {
+  align-self: flex-start;
+  color: var(--primary-color)
+}
+
+.mis-datos-container .minicard .title {
+  align-self: flex-end;
+  font-size: 17px;
+  font-weight: 700;
+  margin-left: 15px;
+}
+
+.mis-datos-container .minicard .subtitle {
+  color: #7e7e7e;
+  font-size: 14px;
+  font-weight: 500;
+  align-self: flex-end;
 }

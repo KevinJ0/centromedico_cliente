@@ -74,7 +74,7 @@ namespace CentromedicoCliente.Services
             horarios_medicos_reservados horaReservacion;
             string _email = null, codVer, docIdentidad = formdata.userinfo?.doc_identidad;
             seguros seguro;
-            //bool isPatientRole = false;
+            bool isPatientRole = false;
 
             MyIdentityUserDto userPacienteDto = null;
             MyIdentityUser user = _userManager
@@ -121,8 +121,11 @@ namespace CentromedicoCliente.Services
                 if (medico == null)
                     throw new EntityNotFoundException("El doctor seleccionado no se encuentra habilitado en estos momentos");
 
+                if (_citaRepo.ExistByUser(medico, user))
+                    throw new BadRequestException("Ya tiene una cita programada con este doctor(a)");
+
                 if (_citaRepo.ExistByDocIdentidadAndMedico(medico, userPacienteDto.doc_identidad))
-                    throw new BadRequestException("Ya hay una cita programada con este doctor(a)");
+                    throw new BadRequestException("Esta cédula no está disponible para su uso");
 
                 if (formdata.segurosID == null)
                     seguro = await _seguroRepo.getByIdAsync(1);//1 by default is None-Insurace
@@ -141,9 +144,9 @@ namespace CentromedicoCliente.Services
 
                 paciente = _pacienteRepo.getByUser(user);
 
-                if (paciente == null)
+                /*if (paciente == null)
                     paciente = _pacienteRepo.getByDocIdent(userPacienteDto.doc_identidad);
-
+                */
                 codVer = /*_citaRepo.ExistByDocIdentidad(userPacienteDto.doc_identidad) ?
                                                                 _citaRepo.getCV(userPacienteDto.doc_identidad) 
                                                                 :*/ generateCV(medico.nombre, medico.apellido);
@@ -196,16 +199,16 @@ namespace CentromedicoCliente.Services
                         {
                             // si existe una cita ya realizada con este médico y hay un paciente
                             // viculado perteneciente a este usuario
-                            cita = _db.citas.Include(x => x.pacientes)
+                            bool hasCita = _db.citas.Include(x => x.pacientes)
                                                 .FirstOrDefault(
-                                                     x => x.pacientes.doc_identidad == paciente.doc_identidad ||
-                                                     x.pacientes.doc_identidad_tutor == paciente.doc_identidad_tutor &&
-                                                     x.medicosID == formdata.medicosID);
+                                                     x => x.pacientes.MyIdentityUsers == user ||
+                                                     //x.pacientes.doc_identidad_tutor == paciente.doc_identidad_tutor &&
+                                                     x.medicosID == formdata.medicosID) != null ;
 
-                            if (cita is null)
+                            if (!hasCita)
                                 addNewPaciente = true;
-                            else
-                                paciente = cita.pacientes;
+                          //  else
+                            //    paciente = cita.pacientes;
                         }
 
                         if (addNewPaciente)

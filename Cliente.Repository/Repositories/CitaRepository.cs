@@ -56,8 +56,9 @@ namespace Cliente.Repository.Repositories
                     .FindByNameAsync(_httpContextAccessor.HttpContext.User
                     .FindFirst(ClaimTypes.NameIdentifier)?.Value);
 
-                List<citaDTO> citaslst = _db.citas
+                List<citaDTO> citaslst = _db.citas.Include(x => x.medicos)
                     .Where(p => p.pacientes.MyIdentityUsers == user && p.estado == true)
+                    
                     .ProjectTo<citaDTO>(_mapper.ConfigurationProvider).ToList();
 
                 return citaslst;
@@ -108,7 +109,7 @@ namespace Cliente.Repository.Repositories
             try
             {
                 citas result = _db.citas.FirstOrDefault(x => x.medicos == medico
-                  && x.pacientes.doc_identidad == docIdentidad && x.estado == true);
+                  && x.pacientes.doc_identidad == docIdentidad && x.estado == true && x.pacientes.confirm_doc_identidad);
 
                 if (result != null)
                     return true;

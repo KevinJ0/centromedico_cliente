@@ -1,0 +1,109 @@
+<header class="header" id="menu-mobile" role="banner">
+
+  <nav id="nav" class="nav" role="navigation">
+    <div class="mobile-container-logo">
+      <a [routerLink]="['/']">
+        <img src="../../../assets/imgs/header_logo.png" class="mobile-main-logo" alt="Logo">
+      </a>
+    </div>
+
+    <!-- ACTUAL NAVIGATION MENU -->
+    <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
+      <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Inicio</a></li>
+      <li class="nav__item" [hidden]="!userName">
+        <a class="nav__link" [routerLink]="['/mis-citas']">Mis Citas</a>
+      </li>
+      <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
+      <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
+      <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
+      <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li>
+      <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicación</a></li>
+      <li [hidden]="!userName" class="nav__item">
+        <a class="nav__link">{{userName}}</a>
+      </li>
+      <li [hidden]="userName" class="nav__item">
+        <a  class="nav__link" [routerLink]="['/paciente-login']">Paciente Login </a>
+      </li>
+      <li class="nav__item" [hidden]="!userName">
+        <a class="nav__link" (click)="logOut()">Cerrar sesión</a>
+      </li>
+    </ul>
+
+    <!-- MENU TOGGLE BUTTON -->
+    <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
+      <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
+        <title>Toggle Menu</title>
+        <g>
+          <line class="menuicon__bar" x1="13" y1="16.5" x2="37" y2="16.5" />
+          <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+          <line class="menuicon__bar" x1="13" y1="24.5" x2="37" y2="24.5" />
+          <line class="menuicon__bar" x1="13" y1="32.5" x2="37" y2="32.5" />
+          <circle class="menuicon__circle" r="23" cx="25" cy="25" />
+        </g>
+      </svg>
+    </a>
+
+    <!-- ANIMATED BACKGROUND ELEMENT -->
+    <div class="splash"></div>
+
+  </nav>
+
+</header>
+
+
+<header id="menu-principal">
+  <div class="bg-container-sub">
+    <div class="header-container">
+
+      <div class="container-logo">
+        <a [routerLink]="['/']">
+          <img src="../../../assets/imgs/header_logo.png" class="main-logo" alt="Logo">
+        </a>
+      </div>
+
+      <div class="sub-menu">
+        <ul>
+          <li>
+            <a>Acerca de</a>
+          </li>
+          <li>
+            <a>Ofertas Laborales</a>
+          </li>
+          <li>
+            <a *ngIf="userName; else login">{{userName}}</a>
+            <ng-template #login>
+              <a [routerLink]="['/paciente-login']">
+                Paciente Login
+              </a>
+            </ng-template>
+          </li>
+          <li *ngIf="userName">
+            <a (click)="logOut()">Cerrar sesión</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="bg-container-menu">
+    <nav class="menu-main">
+      <ul>
+        <!--
+        <li>Citas Online<i class="fa fa-angle-down"></i>
+          <ul>
+            <li><a [routerLink]="['/medicos']" >Realizar una cita</a></li>
+            <li><a [routerLink]="['/medicos']" >Ver mi consulta</a></li>
+            <li><a [routerLink]="['/medicos']" >Realizar pre-cita para análisis</a></li>
+          </ul>
+        </li> -->
+        <li><a [routerLink]="['/']">Inicio</a></li>
+        <li *ngIf="userName"> <a [routerLink]="['/mis-citas']">Mis Citas</a></li>
+        <li><a [routerLink]="['/medicos']">Directorio Médico</a></li>
+        <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
+        <li><a [routerLink]="['/contactos']">Contactos</a></li>
+        <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li>
+        <li><a [routerLink]="['/ubicacion']">Ubicación</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>

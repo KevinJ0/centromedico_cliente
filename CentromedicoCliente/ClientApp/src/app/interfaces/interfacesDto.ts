@@ -74,7 +74,30 @@ export interface citaCard {
   pago: number;
   turno: number;
   consultorio: number;
+  medicoData?: MedicoData;
 }
+
+export interface MedicoData {
+  id: number;
+  exequatur: string;
+  colegiatura: string;
+  nombre: string;
+  apellido: string;
+  sexo: string;
+  correo: null;
+  url_twitter: null;
+  url_facebook: string;
+  url_instagram: null;
+  telefono1: null;
+  telefono2: string;
+  consultorio: number;
+  profilePhoto: string;
+  telefono1_contact: string;
+  telefono2_contact: string;
+  especialidades: string[];
+}
+
+
 export interface citaResult {
 
   cod_verificacion: string;

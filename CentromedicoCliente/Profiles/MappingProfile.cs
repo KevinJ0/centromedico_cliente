@@ -47,19 +47,7 @@ namespace CentromedicoCliente.Profiles
                 .ForMember(dest => dest.contacto, opt => opt.MapFrom(src => src.contacto))
                 .ForMember(dest => dest.correo, opt => opt.MapFrom(src => src.pacientes.MyIdentityUsers.Email))
                 .ForMember(dest => dest.turno, opt => opt.MapFrom(src => src.turno));
-
-
-            CreateMap<citas, citaDTO>()
-                .ForMember(dest => dest.medico_nombre, opt => opt.MapFrom(src => src.medicos.nombre))
-                .ForMember(dest => dest.medico_apellido, opt => opt.MapFrom(src => src.medicos.apellido))
-                .ForMember(dest => dest.paciente_nombre, opt => opt.MapFrom(src => src.pacientes.nombre))
-                .ForMember(dest => dest.paciente_apellido, opt => opt.MapFrom(src => src.pacientes.apellido))
-                .ForMember(dest => dest.paciente_nombre_tutor, opt => opt.MapFrom(src => src.pacientes.nombre_tutor))
-                .ForMember(dest => dest.paciente_apellido_tutor, opt => opt.MapFrom(src => src.pacientes.apellido_tutor))
-                .ForMember(dest => dest.servicio_descrip, opt => opt.MapFrom(src => src.servicios.descrip))
-                .ForMember(dest => dest.seguro_descrip, opt => opt.MapFrom(src => src.seguros.descrip));
-            //  .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
-
+      
 
             CreateMap<pacientes, pacienteDTO>().ReverseMap();
             CreateMap<citaCreateDTO, pacientes>();
@@ -69,6 +57,18 @@ namespace CentromedicoCliente.Profiles
             CreateMap<medicos, medicoDirectorioDTO>()
                 .ForMember(dest => dest.especialidades, opt => opt.MapFrom(src =>
                     src.especialidades_medicos.Select(x => x.especialidades.descrip).ToList()));
+
+            CreateMap<citas, citaDTO>()
+          .ForMember(dest => dest.medico_nombre, opt => opt.MapFrom(src => src.medicos.nombre))
+          .ForMember(dest => dest.medico_apellido, opt => opt.MapFrom(src => src.medicos.apellido))
+          .ForMember(dest => dest.paciente_nombre, opt => opt.MapFrom(src => src.pacientes.nombre))
+          .ForMember(dest => dest.paciente_apellido, opt => opt.MapFrom(src => src.pacientes.apellido))
+          .ForMember(dest => dest.paciente_nombre_tutor, opt => opt.MapFrom(src => src.pacientes.nombre_tutor))
+          .ForMember(dest => dest.paciente_apellido_tutor, opt => opt.MapFrom(src => src.pacientes.apellido_tutor))
+          .ForMember(dest => dest.servicio_descrip, opt => opt.MapFrom(src => src.servicios.descrip))
+          .ForMember(dest => dest.medicoData, opt => opt.MapFrom(src =>src.medicos))
+          .ForMember(dest => dest.seguro_descrip, opt => opt.MapFrom(src => src.seguros.descrip));
+            //  .ForMember(dest => dest.especialidad_descrip, opt => opt.MapFrom(src => src.especialidades.descrip));
 
 
             CreateMap<servicios, servicioDTO>();

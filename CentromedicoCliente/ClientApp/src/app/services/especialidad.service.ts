@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { doctorCard, especialidad } from '../interfaces/InterfacesDto';
-import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

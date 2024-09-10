@@ -5,7 +5,9 @@
   box-shadow: rgb(0 0 0 / 25%) 0px 0px 5px;
   align-items: center;
   justify-content: flex-start;
+  border-radius: 5px;
 }
+
 .doctor-card p {
   margin: 0 0 5px 0;
 }
@@ -15,25 +17,29 @@
   height: 120px;
   margin-right: 1rem;
   border-radius: 100px;
-      object-fit: cover;
+  object-fit: cover;
 
 }
 
 .doctor-info .contactos .numeros {
   display: flex;
   flex-wrap: wrap;
+  gap: 5px;
 }
+
 .doctor-info .contactos .telefono1,
 .telefono2 {
   font-size: 1.1rem;
   display: flex;
   margin-right: 8px;
 }
+
 .doctor-info .contactos .correo {
   font-size: 0.8rem;
   font-weight: bold;
   color: #494949;
 }
+
 .doctor-info .contactos img {
   margin-left: 5px;
   max-width: 15px;
@@ -44,11 +50,13 @@
 .doctor-card .descrip {
   margin-bottom: 1rem;
 }
+
 .nombre {
   color: #0195ff;
   font-size: 1.2rem;
   font-weight: 600;
 }
+
 .especialidades {
   color: #494949;
   font-weight: 600;
@@ -60,7 +68,7 @@ a {
 
 @media screen and (max-width: 420px) {
   .doctor-card {
-    gap:1rem;
+    gap: 1rem;
     flex-direction: column;
   }
 
@@ -68,10 +76,12 @@ a {
     align-content: center;
     align-items: center;
     text-align: center;
-}
+  }
+
   .doctor-card .doctor-img img {
     margin: auto;
   }
+
   .doctor-info .numeros {
     justify-content: center;
   }

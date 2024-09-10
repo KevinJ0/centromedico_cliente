@@ -1,8 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { doctorCard, seguro } from '../interfaces/InterfacesDto';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { BehaviorSubject, catchError, map, Observable, of, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Injectable({
@@ -18,13 +17,13 @@ export class SeguroService {
 
   GetSegurosByServicio(medicoID: number, servicioID: number): Observable<seguro[]> {
 
-    return this.http.get<seguro[]>(this.baseUrl +  
+    return this.http.get<seguro[]>(this.baseUrl +
       `api/seguros/GetSegurosByServicio?servicioID=${servicioID}&medicoID=${medicoID}`)
       .pipe(map((result: seguro[]) => {
         return result;
       }));
   }
-  
+
   GetSeguros(): Observable<seguro[]> {
 
     try {

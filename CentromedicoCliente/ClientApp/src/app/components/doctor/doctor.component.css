@@ -3,12 +3,15 @@ main {
   max-width: 1360px;
   margin: auto;
 }
+
 .progress-content {
   padding: clamp(1rem, 18vh, 10rem) 0px !important;
 }
+
 mat-card {
   margin-bottom: clamp(1rem, 7vh, 3rem);
 }
+
 mat-progress-spinner {
   margin: auto;
 }
@@ -24,7 +27,7 @@ mat-progress-spinner {
   margin-bottom: 1rem;
 }
 
-.header-info > mat-card-content {
+.header-info>mat-card-content {
   display: flex;
   padding: 0rem 1rem;
   align-items: center;
@@ -33,7 +36,7 @@ mat-progress-spinner {
   justify-content: space-between;
 }
 
-.header-info > mat-card-content img {
+.header-info>mat-card-content img {
   border-radius: 100%;
   width: clamp(8rem, 14vw, 10rem);
   height: clamp(8rem, 14vw, 10rem);
@@ -51,10 +54,12 @@ mat-progress-spinner {
   width: 10rem;
   height: 2.25rem;
 }
+
 .right-side button span {
   font-size: 1.2rem;
   font-weight: 400;
 }
+
 .right-side button mat-icon {
   font-size: 1.5rem;
   width: 1.5rem;
@@ -66,6 +71,7 @@ mat-progress-spinner {
   margin: 0;
   color: var(--primary-color);
 }
+
 .nombre h6 {
   margin: 0;
   font-size: clamp(14px, 4vw, 1rem);
@@ -77,18 +83,21 @@ mat-progress-spinner {
   width: 12rem;
   height: 3.5rem;
 }
+
 .right-side button span {
   font-size: 1.5rem;
   font-weight: 400;
 }
+
 .right-side button mat-icon {
   font-size: 2rem;
   width: 2rem;
   height: 2rem;
 }
+
 /* ---------------------- */
 
-.body-info > mat-card-content {
+.body-info>mat-card-content {
   padding: 0rem 1rem;
   display: grid;
   grid-template-columns: 1fr auto 1fr auto 1.5fr;
@@ -96,13 +105,16 @@ mat-progress-spinner {
   gap: clamp(0.5rem, 1.5vw, 1rem);
   font-weight: 500;
 }
+
 .horizontal-divider {
   display: none;
 }
+
 .icon {
   margin-right: clamp(0.8rem, 2vw, 1.1rem);
   width: 3rem;
 }
+
 .body-info h5 {
   margin: 0;
   display: flex;
@@ -129,9 +141,11 @@ mat-progress-spinner {
 .personal-info .item {
   margin-top: 1.5rem;
 }
+
 .personal-info .item p {
   margin: 0;
 }
+
 .personal-info .item span p {
   display: flex;
   align-items: center;
@@ -156,7 +170,7 @@ mat-progress-spinner {
   color: var(--primary-color);
 }
 
-.personal-info .item > p {
+.personal-info .item>p {
   font-size: 1rem;
   color: #3e3e3e;
   font-weight: 500;
@@ -175,28 +189,32 @@ mat-progress-spinner {
 .insurance li {
   margin-bottom: 1rem;
 }
-@media only screen and (max-width: 1000px) {
-  .header-info > mat-card-content {
+
+@media only screen and (max-width: 1176px) {
+  .header-info>mat-card-content {
     flex-direction: column;
   }
-  
-  .body-info > mat-card-content {
+
+  .body-info>mat-card-content {
     grid-template-columns: 1fr auto 1fr;
     grid-template-rows: 1fr;
   }
+
   .schedule-divider-v {
     display: none;
   }
+
   .schedule-divider-h {
     display: block;
   }
+
   .schedule {
     grid-column: 1 / span 3;
     margin-top: 1rem;
     grid-row: 3;
   }
 }
- 
+
 
 @media only screen and (max-width: 600px) {
   .header-info .left-side {
@@ -210,13 +228,14 @@ mat-progress-spinner {
     flex-wrap: nowrap;
   }
 
-  .header-info > mat-card-content img {
+  .header-info>mat-card-content img {
     border-radius: 100%;
     width: clamp(10rem, 47vw, 14rem);
     height: clamp(10rem, 47vw, 14rem);
     object-fit: cover;
   }
-  .body-info > mat-card-content {
+
+  .body-info>mat-card-content {
     grid-template-rows: auto auto auto;
     grid-template-columns: 1fr;
   }
@@ -224,6 +243,7 @@ mat-progress-spinner {
   .horizontal-divider {
     display: block;
   }
+
   .schedule,
   .insurance {
     grid-column: span 1;

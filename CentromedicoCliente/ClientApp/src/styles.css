@@ -22,14 +22,14 @@
 
 @font-face {
   font-family: "DancingScript";
-  src: url("assets/fonts/DancingScript.ttf")
-    format("opentype");
+  src: url("assets/fonts/DancingScript.ttf") format("opentype");
 }
 
 @font-face {
   font-family: "DancingScript-Regular";
   src: url("assets/fonts/static/DancingScript-Regular.ttf");
 }
+
 /* ----------------- */
 #loader {
   gap: 1rem;
@@ -47,6 +47,7 @@
   font-weight: bold;
   align-items: center;
 }
+
 .mat-card-header-text {
   margin: 0 !important;
 }
@@ -56,12 +57,13 @@
 }
 
 :root {
-  --primary-color: #1f8fff;
+  /* --primary-color: #1f8fff; */
+  --primary-color: #186CB2;
   --max-width: 1360px;
   --screen-width: 320px;
   --screen-height: 560px;
   --header-bg-color: #25283d;
-  --splash-bg-color: #1f8fff;
+  --splash-bg-color: #186CB2;
 }
 
 app-root {
@@ -115,7 +117,7 @@ mat-expansion-panel-header {
   height: fit-content !important;
   min-height: 3rem;
 }
-  
+
 mat-expansion-panel-header .mat-content {
   align-items: center;
   margin: 1rem 0;
@@ -130,9 +132,11 @@ mat-expansion-panel-header .mat-content {
   padding-right: 10px;
   padding-top: 5px;
 }
+
 .form-search {
   background-color: white;
 }
+
 .form-search button {
   border-radius: 0;
 }
@@ -141,7 +145,7 @@ mat-expansion-panel-header .mat-content {
   display: none;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 850px) {
   #menu-principal {
     display: none;
   }
@@ -158,9 +162,12 @@ mat-expansion-panel-header .mat-content {
   mat-expansion-panel-header .mat-content {
     flex-direction: column;
     align-items: flex-start;
-   }
   }
-.TrengoOnlineStatus__iframe, .TrengoWidgetPanel__iframe {
-  z-index: 999 !important;
+
+
 }
 
+.TrengoOnlineStatus__iframe,
+.TrengoWidgetPanel__iframe {
+  z-index: 999 !important;
+}

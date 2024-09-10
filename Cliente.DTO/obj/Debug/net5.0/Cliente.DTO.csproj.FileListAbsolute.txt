@@ -45,3 +45,15 @@ C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Clie
 C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\ref\Cliente.DTO.dll
 C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.pdb
 C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.csproj.AssemblyReference.cache
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\bin\Debug\net5.0\Cliente.DTO.deps.json
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\bin\Debug\net5.0\Cliente.DTO.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\bin\Debug\net5.0\Cliente.DTO.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.AssemblyInfoInputs.cache
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.AssemblyInfo.cs
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.csproj.CoreCompileInputs.cache
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.sourcelink.json
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\refint\Cliente.DTO.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\Cliente.DTO.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.DTO\obj\Debug\net5.0\ref\Cliente.DTO.dll

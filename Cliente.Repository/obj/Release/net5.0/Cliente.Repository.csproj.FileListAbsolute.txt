@@ -31,3 +31,21 @@ C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.Repository\obj\Release\ne
 C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.dll
 C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\ref\Cliente.Repository.dll
 C:\Users\Pc\source\repos\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Cliente.Repository.deps.json
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Cliente.Repository.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Cliente.Repository.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Centromedico.Database.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Cliente.DTO.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Centromedico.Database.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\bin\Release\net5.0\Cliente.DTO.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.csproj.AssemblyReference.cache
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.AssemblyInfoInputs.cache
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.AssemblyInfo.cs
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.csproj.CoreCompileInputs.cache
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.sourcelink.json
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente..8BA1CEB8.Up2Date
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\refint\Cliente.Repository.dll
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\Cliente.Repository.pdb
+C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Release\net5.0\ref\Cliente.Repository.dll

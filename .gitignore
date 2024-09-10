@@ -27,7 +27,7 @@ obj/
 Obj/
 
 CentromedicoCliente/ClientApp/node_modules
-
+CentromedicoDoctor/bin
 # Visual Studio 2015 cache/options directory
 .vs/
 

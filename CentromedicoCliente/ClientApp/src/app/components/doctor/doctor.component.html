@@ -22,10 +22,10 @@
             <h6>{{_especialidades}}</h6>
           </div>
         </div>
-        <div class="right-side">  
+        <div class="right-side">
           <button [routerLink]="['/crear-cita']" [queryParams]="{ medicoId: medicoId}" mat-flat-button color="primary">
-            <mat-icon matSuffix>event</mat-icon>
             <span>Hacer cita</span>
+            <mat-icon style="margin-left: 3px;" matSuffix>event</mat-icon>
           </button>
         </div>
       </mat-card-content>
@@ -96,88 +96,90 @@
           </div>
         </section>
 
-        <mat-divider class="insurance-divider-v vertical-divider" inset vertical style="height:100%; margin: 0;"></mat-divider>
+        <mat-divider class="insurance-divider-v vertical-divider" inset vertical style="height:100%; margin: 0;">
+        </mat-divider>
 
         <section class="insurance">
-          <mat-divider class="horizontal-divider" inset  style="margin: 1rem 0;"></mat-divider>
+          <mat-divider class="horizontal-divider" inset style="margin: 1rem 0;"></mat-divider>
           <h5><img class="icon" src="../../../assets/icons/credit-card.png">Aseguradoras</h5>
           <ul>
             <li *ngFor="let item of _medico.seguros">
-              {{item}}
+              {{item.descrip}}
             </li>
           </ul>
         </section>
 
-        <mat-divider class="vertical-divider schedule-divider-v" inset vertical style="height:100%; margin: 0;"></mat-divider>
+        <mat-divider class="vertical-divider schedule-divider-v" inset vertical style="height:100%; margin: 0;">
+        </mat-divider>
 
         <section class="schedule">
-        <mat-divider class="horizontal-divider schedule-divider-h" inset  style="margin: 1rem 0;"></mat-divider>
-        <h5><img class="icon" src="../../../assets/icons/calendario.png">Horarios</h5>
-            <table>
-              <tr *ngIf="_medico.horarios.Lunes">
-                <td><span class="left-item">Lunes:
+          <mat-divider class="horizontal-divider schedule-divider-h" inset style="margin: 1rem 0;"></mat-divider>
+          <h5><img class="icon" src="../../../assets/icons/calendario.png">Horarios</h5>
+          <table>
+            <tr *ngIf="_medico.horarios.Lunes">
+              <td><span class="left-item">Lunes:
 
+                </span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Lunes">
+                    {{item}}
+                  </span></span>
+              </td>
+            </tr>
+            <tr *ngIf="_medico.horarios.Martes">
+              <td><span class="left-item">Martes:</span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Martes">
+                    {{item}}
+                  </span></span>
+              </td>
+            </tr>
+            <tr *ngIf="_medico.horarios.Miercoles">
+              <td><span class="left-item">Miércoles:</span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Miercoles">
+                    {{item}}
                   </span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Lunes">
-                      {{item}}
-                    </span></span>
-                </td>
-              </tr>
-              <tr *ngIf="_medico.horarios.Martes">
-                <td><span class="left-item">Martes:</span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Martes">
-                      {{item}}
-                    </span></span>
-                </td>
-              </tr>
-              <tr *ngIf="_medico.horarios.Miercoles">
-                <td><span class="left-item">Miércoles:</span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Miercoles">
-                      {{item}}
-                    </span>
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="_medico.horarios.Jueves">
+              <td><span class="left-item">Jueves:</span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Jueves">
+                    {{item}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="_medico.horarios.Jueves">
-                <td><span class="left-item">Jueves:</span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Jueves">
-                      {{item}}
-                    </span>
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="_medico.horarios.Viernes">
+              <td><span class="left-item">Viernes:</span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Viernes">
+                    {{item}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="_medico.horarios.Viernes">
-                <td><span class="left-item">Viernes:</span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Viernes">
-                      {{item}}
-                    </span>
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="_medico.horarios.Sabados">
+              <td><span class="left-item">Sábados:</span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Sabados">
+                    {{item}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="_medico.horarios.Sabados">
-                <td><span class="left-item">Sábados:</span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Sabados">
-                      {{item}}
-                    </span>
+                </span>
+              </td>
+            </tr>
+            <tr *ngIf="_medico.horarios.Domingos">
+              <td><span class="left-item">Domingos:</span>
+                <span>
+                  <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Domingos">
+                    {{item}}
                   </span>
-                </td>
-              </tr>
-              <tr *ngIf="_medico.horarios.Domingos">
-                <td><span class="left-item">Domingos:</span>
-                  <span>
-                    <span style="margin: 0 6px;" *ngFor="let item of _medico.horarios.Domingos">
-                      {{item}}
-                    </span>
-                  </span>
-                </td>
-              </tr>
-            </table>
+                </span>
+              </td>
+            </tr>
+          </table>
         </section>
       </mat-card-content>
     </mat-card>

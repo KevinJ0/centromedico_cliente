@@ -5,7 +5,6 @@ import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { map, startWith, debounceTime, switchMap, catchError, finalize } from 'rxjs/operators';
-import * as _moment from 'moment';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { CitaService } from 'src/app/services/cita.service';
 import { AccountService } from 'src/app/services/account.service';
@@ -52,6 +51,7 @@ export class LoginComponent implements OnInit {
   returnUrl: string;
   ErrorMessage: string;
   invalidLogin: boolean = false;
+  indiceActivo: number = 0;
 
   constructor(private router: Router,
     private rutaActiva: ActivatedRoute,
@@ -62,6 +62,10 @@ export class LoginComponent implements OnInit {
     //go back user is already logged in
     if (this.accountSvc.checkLoginStatus())
       this.router.navigate(['..']);
+  }
+
+  cambiarTab(indice: number): void {
+    this.indiceActivo = indice; // Cambia el índice activo
   }
 
   openSnackBar(message: string) {

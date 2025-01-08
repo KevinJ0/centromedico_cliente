@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { HomeComponent } from './components/home/home.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BarnerComponent } from './components/barner/barner.component';
 import { CreateAppointmentComponent } from './components/create-appointment/create-appointment.component';
 import { LoginComponent } from './components/login/login.component';
@@ -23,7 +22,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDividerModule } from '@angular/material/divider';
 import { TicketAppointmentComponent } from './components/create-appointment/ticket-appointment/ticket-appointment.component';
@@ -35,7 +34,6 @@ import { CitaService } from './services/cita.service';
 import { CoberturaService } from './services/cobertura.service';
 import { DoctorService } from './services/doctor.service';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import * as _moment from 'moment';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MatNativeDateModule, MatRippleModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { DoctorCardComponent } from './components/medical-directory/doctor-card/doctor-card.component';
@@ -55,14 +53,17 @@ import { FaqComponent } from './components/faq/faq.component';
 import { FaqExpansionPanelComponent } from './components/faq/faq-expansion-panel/faq-expansion-panel.component';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { SwiperModule } from 'ngx-swiper-wrapper';
-import { NgxPrintModule } from 'ngx-print';
 import { PreguntaService } from './services/pregunta.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginator } from './shared/CustomPaginatorConfiguration';
+import { LottieModule } from 'ngx-lottie';
+import player from 'lottie-web';
 
+export function playerFactory() {
+  return player;
+}
 export function tokenGetter() {
-  //return "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJKb3NlQGdtYWlsLmNvbSIsImp0aSI6IjdjOGY5ZGIyLTAyNzYtNDJkMS1iNTc3LTUyNTg1NjhjMTdlZSIsIm5hbWVpZCI6IjAxZTNhMjJiLTI2MjctNDgyMS05ZTBlLTE0NzE1MTNhOWY5NCIsInJvbGUiOiJQYXRpZW50IiwiTG9nZ2VkT24iOiI1LzI0LzIwMjEgMTA6Mjk6NTggUE0iLCJuYmYiOjE2MjE5MDk3OTgsImV4cCI6MTcxNDYyMzcxOCwiaWF0IjoxNjIxOTA5Nzk4LCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo0NDMzNyIsImF1ZCI6Imh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3In0.Auc5Om1B4G5M5BJ31EEEtElCsBTug4WMO1ugChYdcEE";
   return localStorage.getItem("jwt");
 }
 export const MY_FORMATS = {
@@ -104,6 +105,7 @@ export const MY_FORMATS = {
     HttpClientModule,
     GoogleMapsModule,
     SwiperModule,
+    NgxMaskModule.forRoot(),
     MatStepperModule,
     MatTabsModule,
     MatCheckboxModule,
@@ -120,7 +122,6 @@ export const MY_FORMATS = {
     MatNativeDateModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    NgxMaskModule.forRoot(),
     MatRippleModule,
     MatSelectModule,
     MatProgressSpinnerModule,
@@ -129,7 +130,6 @@ export const MY_FORMATS = {
     MatCardModule,
     FormsModule,
     MatInputModule,
-    NgxPrintModule,
     ReactiveFormsModule,
     JwtModule.forRoot({
       config: {
@@ -155,6 +155,8 @@ export const MY_FORMATS = {
       { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', useHash: false }),
   ],
   providers: [
+
+
     { provide: MatPaginatorIntl, useValue: CustomPaginator() },
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     {

@@ -2,7 +2,7 @@
 <div class="background-content">
 <div class="background-linear-color"></div> -->
 <main>
-  
+
   <section class="search-wrapper">
     <div class="title">
       <a href="">&#60; INICIO</a>
@@ -15,12 +15,12 @@
     <div class="content-search">
       <form [formGroup]="searchFormGroup" (ngSubmit)="Search()" class="form-search">
         <div class="background-white">
-          <mat-form-field class="" appearance="legacy">
+          <mat-form-field class="name-input">
             <mat-label>Nombre</mat-label>
             <input formControlName="nameControl" matInput placeholder="Nombre">
           </mat-form-field>
 
-          <mat-form-field appearance="legacy">
+          <mat-form-field>
             <mat-label>Especialidad</mat-label>
             <mat-select formControlName="specialityControl">
               <mat-option [value]="0">Todas</mat-option>
@@ -30,7 +30,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field appearance="legacy">
+          <mat-form-field>
             <mat-label>Seguro</mat-label>
             <mat-select formControlName="insuranceControl">
               <mat-option [value]="0">Todos</mat-option>
@@ -79,11 +79,11 @@
           <span *ngFor="let doctor of splicedData">
             <app-doctor-card [doctorData]="doctor"></app-doctor-card>
           </span>
-        
+
         </div>
-          <mat-paginator  itemsPerPageLabel="Hola" (page)="pageChangeEvent($event)" [length]="pageLength" [pageSize]="pageSize"
-            [pageSizeOptions]="pageSizeOptions">
-          </mat-paginator>
+        <mat-paginator itemsPerPageLabel="Hola" (page)="pageChangeEvent($event)" [length]="pageLength"
+          [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions">
+        </mat-paginator>
       </div>
     </ng-template>
 

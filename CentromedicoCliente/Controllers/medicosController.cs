@@ -54,7 +54,7 @@ namespace CentromedicoCliente.Controllers
             try
             {
 
-                var r = await _medicoSvc.getById(Id);
+                var r = await _medicoSvc.getFullByIdAsync(Id);
                 return r;
 
             }

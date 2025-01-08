@@ -40,7 +40,9 @@ namespace Cliente.DTO
         public bool? estado { get; set; }
         public string ProfilePhoto { get; set; }
         public List<string> especialidades { get; set; }
-        public List<string> seguros { get; set; }
+        public List<seguroDTO> seguros { get; set; }
+        public List<coberturaMedicoDTO> cobertura_medicos{ get; set; }
+
         public List<string> servicios { get; set; }
         //public virtual horarios_medicos horarios_medicos { get; set; }
 

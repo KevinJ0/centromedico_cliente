@@ -1,7 +1,7 @@
 {
   "compileOnSave": false,
   "angularCompilerOptions": {
-    "enableIvy": false
+    "enableIvy": false //tiene que estar false para subir a la web
   },
   "compilerOptions": {
     "baseUrl": "./",

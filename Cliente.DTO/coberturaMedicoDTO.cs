@@ -16,7 +16,6 @@ namespace Cliente.DTO
         [Key]
         public int segurosID { get; set; }
         public int serviciosID { get; set; }
-       // public int? especialidadesID { get; set; }
         [Column(TypeName = "money")]
         public decimal pago { get; set; }
 

@@ -4,7 +4,7 @@
   background-size: cover;
   width: 100%;
   height: auto;
-  padding: 4rem clamp(.5rem , 4vw, 4rem);
+  padding: 4rem clamp(.5rem, 4vw, 4rem);
   display: grid;
   justify-content: space-between;
   grid-auto-columns: auto auto;
@@ -12,6 +12,7 @@
   background-color: rgba(0, 0, 0, 0.096);
   position: relative;
 }
+
 .black-screen {
   position: absolute;
   background-color: rgba(0, 0, 0, 0.096);
@@ -20,22 +21,24 @@
   top: 0;
   z-index: 1;
 }
+
 .barner-container .item {
   z-index: 2;
   display: flex;
   justify-content: center;
-  text-align:center;
+  text-align: center;
   align-items: center;
 }
+
 .btn-container {
   flex-direction: column;
   padding: 1rem;
   background-color: rgba(0, 0, 0, 0.39);
   width: clamp(4rem, 40vw, 25rem);
+
 }
 
-.btn-container
-a {
+.btn-container a {
   text-decoration: none;
   border: none;
   padding: 1rem;
@@ -45,6 +48,7 @@ a {
   font-weight: 500;
   color: white;
   width: 100%;
+  border-radius: 5px;
   max-width: 25rem;
 }
 
@@ -60,13 +64,15 @@ a {
   background-color: aliceblue;
   color: black;
 }
+
 @media screen and (max-width: 680px) {
   .item {
     width: 100%;
   }
-  .barner-container{
-  grid-auto-flow: row;
+
+  .barner-container {
+    grid-auto-flow: row;
 
   }
-  
+
 }

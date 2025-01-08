@@ -137,7 +137,7 @@ export interface medico {
   estado: Boolean,
   profilePhoto: string,
   especialidades: string[],
-  seguros: string[],
+  seguros: seguro[],
   servicios: string[];
   horarios: Object;
 }

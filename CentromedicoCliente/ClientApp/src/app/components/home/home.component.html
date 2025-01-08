@@ -1,11 +1,4 @@
-<div class="background">
-  <div class="message-intro">
-    <span class="title">CONTIGO</span>
-    <span class="sub-title">siempre</span>
-  </div>
-</div>
-
-<main>
+<!-- <div class="header-container">
   <div class="short-menu">
     <div class="short-menu-grid">
       <div [routerLink]="['/paciente-login']" class="item" style="--bg-color: 35%">
@@ -26,47 +19,285 @@
       </div>
     </div>
   </div>
+</div> -->
 
-</main>
+<div class="background">
+  <div class="message-container">
+    <div class="badge">Nuestra historia</div>
+    <h1>Salud avanzada con bienestar asequible</h1>
+    <div>
+      <p class="gray-paragraph">Tu camino para iniciar un salud mejor es aquí con atención personalizada para conocer
+        tus
+        necesidades únicas</p>
+    </div>
+    <div class="action-buttons">
+      <button mat-flat-button color="primary">Obtenlo Hoy</button>
+      <button mat-stroked-button>Aprender Más</button>
+    </div>
+  </div>
+  <div class="message-intro">
+    <span class="title">CONTIGO</span>
+    <span class="sub-title">siempre</span>
+  </div>
+</div>
+
 
 <div class="about">
-  <div class="about-content">
-    <div class="text">
-      <h3>
-        Bienvenido a Hospital Salvador
-      </h3>
+  <div class="badge">Acerca de Salvador</div>
+  <h1>
+    Hospital Salvador nació con la misión de hacer la salud accesible para todos, conectando el asesoramiento médico
+    experto con la práctica diaria, impulsados por una pasión por el bienestar y el deseo de mejorar vidas.
+  </h1>
+</div>
 
-      <div class="info-1">
-        <p>
-          Afrontamos los desafíos más difíciles, no solo para brindar los mejores resultados de salud posibles a
-          nuestros pacientes, sino también para impulsar aún más la innovación. </p>
+<!-- ------------- -->
+<div class="our-values-flex">
+  <!-- honestidad -->
+  <div class="our-values">
+    <div class="badge">Nuestros valores</div>
+    <h1>Nuestros Valores Fundamentales</h1>
+    <div class="value-container">
+      <div class="value-left-item">
+        <h5>Honestidad</h5>
+        <h3>Integridad</h3>
+        <div>
+          <p class="gray-paragraph">Nuestro compromiso inquebrantable con la honestidad y los sólidos principios morales
+            guía cada acción que tomamos, garantizando transparencia, confianza y comportamiento ético en todas nuestras
+            interacciones y decisiones.</p>
+        </div>
+      </div>
+      <div class="value-right-item">
+        <img src="../../../assets/imgs/value-1.png" alt="value 1">
       </div>
 
     </div>
-
-
-    <img src="../../../assets/imgs/hospital_front.jpg" alt="Imagen del Hospital" />
   </div>
-  <div class="about-bg"></div>
+  <!-- Apoyo -->
+  <div class="our-values">
+
+    <div class="value-container">
+      <div class="value-left-item">
+        <h5>Apoyo Inclusivo</h5>
+        <h3>Comunidad</h3>
+        <div>
+          <p class="gray-paragraph">Nos dedicamos a construir un entorno de apoyo e inclusión donde todos se sientan
+            valorados y respetados, fomentando un sentido de pertenencia y apoyo mutuo que fortalezca nuestro bienestar
+            colectivo.</p>
+        </div>
+      </div>
+      <div class="value-right-item">
+        <img src="../../../assets/imgs/value-2.png" alt="value 2">
+      </div>
+
+    </div>
+  </div>
+  <!-- empatia -->
+  <div class="our-values">
+
+    <div class="value-container">
+      <div class="value-left-item">
+        <h5>Empatía en Acción</h5>
+        <h3>Compromiso</h3>
+        <div>
+          <p class="gray-paragraph">Nos esforzamos por comprender las necesidades individuales de cada persona,
+            brindando
+            un apoyo genuino y soluciones personalizadas que promuevan el bienestar físico y emocional.</p>
+        </div>
+      </div>
+      <div class="value-right-item">
+        <img src="../../../assets/imgs/value-3.png" alt="value 3">
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- ------Doctores------- -->
+
+<div class="doctores-container">
+  <div class="badge">Nuestro Equipo</div>
+  <h1>Conoce a Nuestros Expertos</h1>
+
+  <p class="gray-paragraph">Un equipo dedicado de directores médicos, nutricionistas, entrenadores de estilo de vida y
+    otros expertos comprometidos con su salud y bienestar.</p>
+
+  <div class="cards-container">
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/D1.png" alt="">
+      <h5 class="name-doctor">Paula Suarez Rosario</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/emmanuel.jpg" alt="">
+      <h5 class="name-doctor">Carlos Enrique Mota</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/d3.jpg" alt="">
+      <h5 class="name-doctor">Humberto Salsedo Calderón</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/d4.jpg" alt="">
+      <h5 class="name-doctor">Antoia Rosario</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/d5.jpg" alt="">
+      <h5 class="name-doctor">Miguel De La Cruz Mendieta</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/d6.jpg" alt="">
+      <h5 class="name-doctor">Juan Espiritud Santo</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+    <!-- ------ -->
+    <div class="card-doctor">
+      <img src="https://centromedico-assets.s3.us-east-2.amazonaws.com/d2.jpg" alt="">
+      <h5 class="name-doctor">Claudia Martinez Mora</h5>
+      <h6 class="highlight">Doctor</h6>
+    </div>
+
+    <!-- ------ -->
+  </div>
+
+  <div class="doctor-recomendation-container">
+    <div class="left-content">
+      <h2 class="recomendation">“Una dieta equilibrada, rica en alimentos naturales, es fundamental para mantener una
+        buena salud y
+        bienestar,
+        además de ayudar a prevenir enfermedades crónicas.”</h2>
+      <div class="details">
+        <p class="name">Mario Beltré</p>
+        <p class="expertise gray-paragraph">Nutricionita Experto</p>
+      </div>
+    </div>
+    <div class="right-content">
+      <img src="../../../assets/imgs/experto-recomendacion.png" alt="Imagen de doctor">
+    </div>
+  </div>
+
 </div>
 
 
-<div class="question-barner">
-  <div class="question-content">
-    <h6> ¿Tiene alguna pregunta? </h6>
-
-    <p>
-      Para consultas de pacientes, comuníquese con nuestra oficina de Servicios Globales por teléfono ( <a
-        class="highlight-text" href="tel: 18095558877">+ 1-809-555-7788</a>) o por correo electrónico <a
-        class="highlight-text" href="mailto: servicios@CentromedicoCliente.com">Servicios</a>.
-    </p>
-    <p>
-      Su seguridad es importante para nosotros. Obtenga más información sobre nuestros procedimientos de seguridad
-      adicionales.
-    </p>
+<div class="preguntas-respuestas-container">
+  <div class="left-content">
+    <div class="badge">Para Tus Preguntas</div>
+    <h1>Preguntas y Respuestas Frecuentes</h1>
   </div>
-  <img src="../../../assets/icons/animated/question-mark.gif" />
+
+  <div class="right-content">
+
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header onclick="
+      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
+      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight'); 
+      ">
+          <mat-panel-title>
+            <h4>¿Qué es Salvador?</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider style="margin:0;" [inset]="true">
+        </mat-divider>
+        <p class="body-2 gray-paragraph">Hospital Salvador es un centro médico moderno y de vanguardia
+          dedicado a ofrecer servicios de
+          salud integrales con calidad, calidez y compromiso. Nuestra misión es brindar atención médica accesible y
+          personalizada, apoyada por tecnología avanzada y un equipo de profesionales altamente capacitados en diversas
+          especialidades.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header onclick="
+      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
+      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight');">
+          <mat-panel-title>
+            <h4>¿Cómo puedo accesar a los servicios del hospital?</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider style="margin:0;" [inset]="true">
+        </mat-divider>
+        <p class="body-2 gray-paragraph">En Salvador, no solo somos un hospital; somos una comunidad enfocada en
+          brindar atención
+          integral. Lo que nos diferencia es nuestra combinación única de tecnología avanzada, cuidado personalizado y
+          un enfoque holístico en el bienestar de nuestros pacientes. Nuestro compromiso es garantizar que cada persona
+          reciba no solo tratamiento médico, sino también apoyo emocional y educativo para lograr un estilo de vida
+          saludable y sostenible.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header onclick="
+      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
+      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight');">
+          <mat-panel-title>
+            <h4>¿Quienes son los expertos detrás del hospital Salvador?</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider style="margin:0;" [inset]="true">
+        </mat-divider>
+        <p class="body-2 gray-paragraph">El hospital Salvador está respaldado por un equipo multidisciplinario de
+          expertos reconocidos
+          a nivel nacional e internacional. Contamos con más de 150 especialistas, que incluyen médicos, cirujanos,
+          terapeutas, psicólogos, nutricionistas y tecnólogos médicos, cada uno con un mínimo de 10 años de experiencia
+          en sus campos. Entre ellos se destacan la Dra. Carolina Méndez, líder en cirugía robótica; el Dr. Juan Ortega,
+          pionero en investigaciones cardiovasculares; y la Dra. Ana Pérez, especialista en salud mental y bienestar
+          holístico. Nuestro equipo se mantiene en constante actualización participando en congresos y desarrollando
+          investigaciones para ofrecer las soluciones más innovadoras.</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header onclick="
+      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
+      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight');">
+          <mat-panel-title>
+            <h4>¿Qué hace Salvador diferente de otros plataformas de bienestar?</h4>
+          </mat-panel-title>
+          <mat-panel-description>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider style="margin:0;" [inset]="true">
+        </mat-divider>
+        <p class="body-2 gray-paragraph">En Salvador, no solo somos un hospital; somos una comunidad enfocada en
+          brindar atención
+          integral. Lo que nos diferencia es nuestra combinación única de tecnología avanzada, cuidado personalizado y
+          un enfoque holístico en el bienestar de nuestros pacientes. Nuestro compromiso es garantizar que cada persona
+          reciba no solo tratamiento médico, sino también apoyo emocional y educativo para lograr un estilo de vida
+          saludable y sostenible. Además, contamos con una plataforma digital intuitiva que permite a los pacientes
+          monitorear su salud, acceder a consultas virtuales y recibir recomendaciones personalizadas basadas en
+          inteligencia artificial.</p>
+      </mat-expansion-panel>
+
+    </mat-accordion>
+  </div>
+
+
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ------------- -->
 
 <div class="leftRightBlock">
   <div class="location-wrapper">
@@ -75,7 +306,7 @@
         <div class="cmp cmp-title">
           <h2 class="location-title">
             <mat-icon class="gps-icon" matSuffix>room</mat-icon>
-            Mire Nuestras Ubicaciones
+            Ubicaciones
           </h2>
         </div>
         <div class="contentblocktext">
@@ -89,7 +320,7 @@
         </div>
         <div class="callToAction">
           <button [routerLink]="['/ubicacion']" mat-flat-button color="primary">
-            BUSCAR UBICACIONES
+            Ver Ubicaciones
           </button>
         </div>
       </div>

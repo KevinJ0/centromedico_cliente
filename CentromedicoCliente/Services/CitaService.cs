@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Cliente.DTO;
@@ -9,15 +8,12 @@ using System.Linq;
 using Centromedico.Database.Context;
 using Centromedico.Database.DbModels;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Configuration;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using CentromedicoCliente.Exceptions;
-using CentromedicoCliente.Services;
-using Centromedico.Database;
 
 namespace CentromedicoCliente.Services
 {
@@ -33,6 +29,7 @@ namespace CentromedicoCliente.Services
         private readonly IHorarioMedicoReservaRepository _horarioMRRepo;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IMedicoRepository _medicoRepo;
+        private readonly IMedicoService _medicoSvc;
         private readonly ISeguroRepository _seguroRepo;
         private readonly INotificationService _notificationService;
         private readonly IPacienteRepository _pacienteRepo;
@@ -49,7 +46,8 @@ namespace CentromedicoCliente.Services
             IHttpContextAccessor httpContextAccessor,
             IHorarioMedicoRepository horarioMedicoRepo,
             UserManager<MyIdentityUser> userManager,
-            MyDbContext db, IMapper mapper)
+            MyDbContext db, IMapper mapper,
+            IMedicoService medicoSvc)
         {
             _horarioMRRepo = horarioMRRepo;
             _horarioMedicoRepo = horarioMedicoRepo;
@@ -64,8 +62,9 @@ namespace CentromedicoCliente.Services
             _db = db;
             _mapper = mapper;
             _medicoRepo = medicoRepo;
+            _medicoSvc = medicoSvc;
         }
-     
+
         public async Task<citaResultDTO> createCitaAsync(citaCreateDTO formdata)
         {
 
@@ -83,34 +82,19 @@ namespace CentromedicoCliente.Services
 
             userPacienteDto = _mapper.Map<MyIdentityUserDto>(user);
 
-           /* if (userPacienteDto != null)
-                isPatientRole = _userManager.IsInRoleAsync(user, "Patient").Result;
-           */
+
+            // esto quiere decir que no tiene un usuario creado
+            if (userPacienteDto == null)
+                userPacienteDto = _db.user_info
+                    .ProjectTo<MyIdentityUserDto>(_mapper.ConfigurationProvider)
+                    .FirstOrDefault(x => x.doc_identidad == docIdentidad);
+
+            if (userPacienteDto == null)
+                throw new BadHttpRequestException("No se ha encontrado datos del paciente");
+
+            _email = userPacienteDto?.email;
 
 
-            /*if (!isPatientRole)
-                if (docIdentidad == null)
-                    throw new BadHttpRequestException("La petición del Doctor/Secretaria no puede ser procesada ya que no se ha encontrado la cédula del paciente, por favor enviarla");
-                else
-                {
-                    userPacienteDto = _db.MyIdentityUsers
-                         .ProjectTo<MyIdentityUserDto>(_mapper.ConfigurationProvider)
-                         .FirstOrDefault(x => x.doc_identidad == docIdentidad &&
-                                              x.confirm_doc_identidad == true);*/
-
-                    // esto quiere decir que no tiene un usuario creado
-                    if (userPacienteDto == null)
-                        userPacienteDto = _db.user_info
-                            .ProjectTo<MyIdentityUserDto>(_mapper.ConfigurationProvider)
-                            .FirstOrDefault(x => x.doc_identidad == docIdentidad);
-
-                    if (userPacienteDto == null)
-                        throw new BadHttpRequestException("No se ha encontrado datos del paciente");
-
-                    _email = userPacienteDto?.email;
-                //}
-            //else
-//                _email = user.Email;
 
             try
             {
@@ -144,12 +128,7 @@ namespace CentromedicoCliente.Services
 
                 paciente = _pacienteRepo.getByUser(user);
 
-                /*if (paciente == null)
-                    paciente = _pacienteRepo.getByDocIdent(userPacienteDto.doc_identidad);
-                */
-                codVer = /*_citaRepo.ExistByDocIdentidad(userPacienteDto.doc_identidad) ?
-                                                                _citaRepo.getCV(userPacienteDto.doc_identidad) 
-                                                                :*/ generateCV(medico.nombre, medico.apellido);
+                codVer = generateCV(medico.nombre, medico.apellido);
 
                 int nTurn = getNewTurn(formdata.fecha_hora, formdata.medicosID);
 
@@ -203,12 +182,11 @@ namespace CentromedicoCliente.Services
                                                 .FirstOrDefault(
                                                      x => x.pacientes.MyIdentityUsers == user ||
                                                      //x.pacientes.doc_identidad_tutor == paciente.doc_identidad_tutor &&
-                                                     x.medicosID == formdata.medicosID) != null ;
+                                                     x.medicosID == formdata.medicosID) != null;
 
                             if (!hasCita)
                                 addNewPaciente = true;
-                          //  else
-                            //    paciente = cita.pacientes;
+
                         }
 
                         if (addNewPaciente)
@@ -348,7 +326,7 @@ namespace CentromedicoCliente.Services
         public async Task<citaFormDTO> getFormCitaAsync(int medicoID)
         {
 
-            medicos medico = _medicoRepo.getMedicoServices(medicoID);
+            var medico = await _medicoSvc.getFullByIdAsync(medicoID);
 
             //Tiene que existir al menos 1 cobertura por defecto que es la privada.
             var coberturaslst = await _coberturaRepo.getAllByDoctorIdAsync(medicoID);

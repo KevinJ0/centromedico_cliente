@@ -10,6 +10,14 @@ header * {
   z-index: 99;
 }
 
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fffffff7;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 .menu-principal {
   box-shadow: rgb(0 0 0 / 5%) 0px 0px 3px;
 }
@@ -21,13 +29,16 @@ header * {
   padding: 0.5rem clamp(0.5rem, 3vw, 2rem) 0;
   display: grid;
   grid-auto-flow: column;
-  grid-template-columns: auto auto;
-  align-items: end;
+  grid-template-columns: auto auto auto;
   justify-content: space-between;
+  justify-items: stretch;
+  align-items: center;
+  align-content: center;
 }
 
 .container-logo .main-logo {
-  width: clamp(235px, 56vw, 335px);
+  width: clamp(210px, 50vw, 243px);
+
 }
 
 .bg-container-menu {
@@ -118,21 +129,44 @@ header * {
   color: #25283d;
 }
 
-.sub-menu ul {
-  margin-bottom: 1rem;
-}
+
 
 .sub-menu a,
 span {
-  color: #25283d;
-  text-decoration: underline;
+  color: #454545;
   cursor: pointer;
   font-size: small;
+  text-decoration: none;
+  font-size: medium;
+  font-weight: 400;
 }
 
 .sub-menu li {
-  padding: 0 clamp(0.8rem, 2vw, 0.9rem) 0 0;
-
-  text-decoration: none;
+  padding: 0 clamp(0.7rem, 2vw, 2rem) 0 0;
   display: inline-block;
+}
+
+.login-btn-container ul li {
+  list-style-type: none;
+}
+
+.sub-menu a.active {
+  font-weight: 700;
+  color: #000;
+}
+
+.login-btn-container ul li a {
+  padding: 0.4rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.logout {
+  background-color: #f44336 !important;
 }

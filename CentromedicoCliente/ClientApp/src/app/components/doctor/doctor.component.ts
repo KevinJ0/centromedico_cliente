@@ -8,8 +8,8 @@ import { trigger, style, animate, transition } from '@angular/animations';
 import { NoProfilePhotoPipe } from '../../Pipes/no-imagen.pipe';
 import * as _moment from 'moment';
 import { catchError, finalize } from 'rxjs/operators';
-const moment = _moment;
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+const moment = _moment;
 
 @AutoUnsubscribe()
 @Component({
@@ -96,7 +96,7 @@ export class DoctorComponent implements OnInit {
       console.error(error);
     }
   }
-  ngOnDestroy() { 
+  ngOnDestroy() {
 
   }
 }

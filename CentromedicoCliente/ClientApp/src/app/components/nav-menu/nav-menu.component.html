@@ -16,7 +16,7 @@
       <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
       <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
       <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
-      <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li>
+      <!-- <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li> -->
       <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicaciones</a></li>
       <li class="nav__item" [hidden]="!userName">
         <a class="nav__link">{{userName}}</a>
@@ -61,7 +61,7 @@
         </a>
       </div>
 
-      <div class="sub-menu">
+      <!-- <div class="sub-menu">
         <ul>
           <li>
             <a>Acerca de</a>
@@ -81,14 +81,47 @@
             <a (click)="logOut()">Cerrar sesión</a>
           </li>
         </ul>
+      </div> -->
+      <div class="sub-menu">
+        <ul>
+          <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
+          </li>
+          <li *ngIf="userName"> <a [routerLink]="['/mis-citas']" routerLinkActive="active">Mis Citas</a></li>
+          <li><a [routerLink]="['/medicos']" routerLinkActive="active">Directorio Médico</a></li>
+          <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
+          <li><a [routerLink]="['/contactos']" routerLinkActive="active">Contactos</a></li>
+          <!-- <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li> -->
+          <li><a [routerLink]="['/ubicacion']" routerLinkActive="active">Ubicaciones</a></li>
+
+        </ul>
       </div>
+
+      <div class="login-btn-container">
+        <ul>
+          <li>
+
+            <a *ngIf="!userName" [routerLink]="['/paciente-login']">
+              Paciente Login <mat-icon aria-hidden="true">login</mat-icon>
+
+            </a>
+          </li>
+          <li *ngIf="userName">
+            <a class="logout" (click)="logOut()">Cerrar sesión <mat-icon>logout
+              </mat-icon>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+
     </div>
+
   </div>
 
-  <div class="bg-container-menu">
+  <!-- <div class="bg-container-menu">
     <nav class="menu-main">
       <ul>
-        <!--
+        
         <li>Citas Online<i class="fa fa-angle-down"></i>
           <ul>
             <li><a [routerLink]="['/medicos']" >Realizar una cita</a></li>
@@ -96,14 +129,26 @@
             <li><a [routerLink]="['/medicos']" >Realizar pre-cita para análisis</a></li>
           </ul>
         </li> -->
-        <li><a [routerLink]="['/']">Inicio</a></li>
-        <li *ngIf="userName"> <a [routerLink]="['/mis-citas']">Mis Citas</a></li>
-        <li><a [routerLink]="['/medicos']">Directorio Médico</a></li>
-        <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
-        <li><a [routerLink]="['/contactos']">Contactos</a></li>
-        <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li>
-        <li><a [routerLink]="['/ubicacion']">Ubicaciones</a></li>
+  <!-- <li><a [routerLink]="['/']">Inicio</a></li> -->
+  <!-- <li *ngIf="userName"> <a [routerLink]="['/mis-citas']">Mis Citas</a></li> -->
+  <!-- <li><a [routerLink]="['/medicos']">Directorio Médico</a></li> -->
+  <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
+  <!-- <li><a [routerLink]="['/contactos']">Contactos</a></li> -->
+  <!-- <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li> -->
+  <!-- <li><a [routerLink]="['/ubicacion']">Ubicaciones</a></li> -->
+
+  <!-- <li>
+          <a *ngIf="userName; else login">{{userName}}</a>
+          <ng-template #login>
+            <a [routerLink]="['/paciente-login']">
+              Paciente Login
+            </a>
+          </ng-template>
+        </li>
+        <li *ngIf="userName">
+          <a (click)="logOut()">Cerrar sesión</a>
+        </li>
       </ul>
     </nav>
-  </div>
+  </div> -->
 </header>

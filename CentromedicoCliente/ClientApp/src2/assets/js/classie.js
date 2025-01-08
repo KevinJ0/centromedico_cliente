@@ -1,6 +1,0 @@
-(
-
-  function initMap() {
-    delete map;
-  }
-)();

@@ -7,7 +7,7 @@ namespace CentromedicoCliente.Services.Interfaces
 {
     public interface IMedicoService
     {
-        Task<ActionResult<medicoDTO>> getById(int id);
+        Task<medicoDTO> getFullByIdAsync(int id);
         ActionResult<List<medicoDirectorioDTO>> getAllMedical(string nombre, string especialidadID, string seguroID);
     }
 }

@@ -1,21 +1,51 @@
 main {
   min-width: 16rem;
   margin: auto;
-  max-width: 34rem;
+  /* max-width: 34rem; */
 }
-mat-card {
+
+.content-wrapper>mat-card {
   min-height: 450px;
-  margin-bottom: clamp(1rem, 7vh, 3rem);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
+  padding: 0;
+  max-height: 37rem;
+
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: center;
+  width: 5rem;
+}
+
+mat-card mat-card-header {
+  justify-content: center;
 }
 
 mat-card-content {
   padding: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
+mat-card-content form {
+  width: 20rem;
+}
 
 
 mat-form-field {
@@ -25,8 +55,9 @@ mat-form-field {
 
 mat-card-title {
   margin-top: 2rem;
-  font-size: 28px;
-  color: #4e4e4e;
+  font-size: 2rem !important;
+  color: #2a2a2a;
+
 }
 
 .login-form {
@@ -38,18 +69,103 @@ mat-card-title {
   display: flex;
   flex-direction: column;
 }
+
 form button {
-  margin-top: clamp(1rem, 10vh, 2rem);
   justify-content: flex-end;
-  align-self: flex-end;
+  align-self: center;
   font-weight: 300;
   padding: 3px 1.2rem;
   text-transform: uppercase;
+  background-color: var(--primary-color);
+  font-weight: 400;
+  padding: auto 15px;
+  width: 100%;
+  min-width: 9rem;
+  margin-top: 1rem;
 }
 
 .forgotpass {
   margin-top: 0;
+  font-size: 13px;
 }
+
 .forgotpass a {
-  color: #0254ec;
+  color: black;
+  text-decoration-line: none;
+}
+
+.forgotpass a:hover {
+  color: var(--primary-color);
+}
+
+
+
+.content-wrapper>mat-card>img {
+  width: 60%;
+  border-radius: 5px 0 0 5px;
+  object-fit: cover;
+}
+
+.content-wrapper>mat-card>.flex-container {
+  width: 40%;
+  max-width: 37rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-wrapper mat-tab div.mat-tab-labels {
+  display: none !important;
+}
+
+::ng-deep .mat-tab-header {
+  display: none !important;
+}
+
+.question {
+  color: #4a4a4a;
+  font-size: 13px;
+  text-align: center;
+  margin-top: clamp(1rem, 12vh, 8rem);
+
+}
+
+.question .question-action {
+  color: black;
+  font-weight: 600;
+}
+
+.question .question-action:hover {
+  text-decoration-line: underline;
+  color: var(--primary-color);
+  cursor: pointer;
+}
+
+::ng-deep .mat-form-field {
+  margin-top: 0em !important;
+}
+
+@media screen and (max-width: 960px) {
+  .content-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  mat-card {
+    justify-content: center !important;
+    max-width: 40rem;
+    box-shadow: none !important;
+    height: 74vh;
+
+  }
+
+  .content-wrapper>mat-card>img {
+    display: none;
+  }
+
+  .content-wrapper>mat-card>.flex-container {
+    padding: 1rem 2rem;
+    width: 100%;
+  }
+
+
 }

@@ -10,7 +10,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace CentromedicoCliente.Services
@@ -66,18 +65,18 @@ namespace CentromedicoCliente.Services
 
 
 
-        public async Task<ActionResult<medicoDTO>> getById(int Id)
+        public async Task<medicoDTO> getFullByIdAsync(int Id)
         {
             try
             {
 
                 var horarios = await _db.horarios_medicos.FirstOrDefaultAsync(x => x.medicosID == Id);
 
-                medicoDTO _medicoDTO = _mapper.Map<medicoDTO>(_medicoRepos.getMedicoServices(Id));
+                medicoDTO _medicoDTO = _medicoRepos.getMedicoDtoWithExtras(Id);
 
 
-                if (horarios == null || _medicoDTO is null)
-                    return new NoContentResult();
+                 if (horarios == null || _medicoDTO is null)
+                    return null;
 
                 Dictionary<string, List<string>> schedulelst = new Dictionary<string, List<string>>();
 

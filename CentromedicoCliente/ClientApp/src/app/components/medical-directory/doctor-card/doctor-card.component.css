@@ -6,6 +6,8 @@
   align-items: center;
   justify-content: flex-start;
   border-radius: 5px;
+  flex-direction: column;
+
 }
 
 .doctor-card p {
@@ -52,7 +54,7 @@
 }
 
 .nombre {
-  color: #0195ff;
+  color: var(--primary-color);
   font-size: 1.2rem;
   font-weight: 600;
 }
@@ -66,7 +68,34 @@ a {
   text-decoration: none;
 }
 
+.flex-container {
+  display: flex;
+}
+
+.action-buttons {
+  display: flex;
+  align-content: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-top: 1rem;
+  gap: 10px;
+}
+
+.action-buttons button {
+  color: var(--primary-color);
+
+
+}
+
+
 @media screen and (max-width: 420px) {
+  .flex-container {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .doctor-card {
     gap: 1rem;
     flex-direction: column;

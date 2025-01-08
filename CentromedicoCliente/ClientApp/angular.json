@@ -13,6 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": ["ngx-mask"],
             "progress": false,
             "outputPath": "dist",
             "index": "src/index.html",
@@ -121,6 +122,7 @@
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
             "devServerTarget": "CentromedicoCliente:serve"
+
           }
         },
         "lint": {

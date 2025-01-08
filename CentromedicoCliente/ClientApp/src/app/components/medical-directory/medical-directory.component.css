@@ -73,10 +73,17 @@ h6 {
 .form-search {
   background: transparent;
   display: flex;
+  border-radius: 5px;
+
 }
 
 .form-search button {
-  border-radius: 0;
+  border-radius: 0 5px 5px 0;
+
+}
+
+.form-search .name-input {
+  border-radius: 5px 0 0 5px;
 }
 
 .content-search {
@@ -101,12 +108,13 @@ h6 {
   align-content: stretch;
   justify-content: space-around;
   text-align: center;
-  gap: 1rem;
+  gap: clamp(0rem, 4vw, 1rem);
   align-items: center;
   color: white;
   flex-wrap: wrap;
   flex-direction: row;
-  font-size: 1.3rem;
+  font-size: clamp(1rem, 4vw, 1.3rem);
+  border-radius: 0 0 10px 10px;
 }
 
 .doctors-wrapper>h2 {
@@ -165,10 +173,22 @@ mat-progress-spinner {
 
   .form-search button {
     height: 50px;
+    border-radius: 5px;
   }
 
   .doctor-cards-list {
     display: grid;
     grid-template-columns: auto;
   }
+
+  .form-search button {
+    border-radius: 5px;
+
+  }
+
+  .form-search mat-form-field {
+    border-radius: 5px !important;
+  }
+
+
 }

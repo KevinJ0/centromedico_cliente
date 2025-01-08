@@ -1,5 +1,7 @@
+import { AnimationItem, AnimationOptions } from 'ngx-lottie/lib/symbols';
 import './home.component.css';
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatAccordion } from '@angular/material/expansion';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -7,4 +9,13 @@ import { Component } from '@angular/core';
 
 })
 export class HomeComponent {
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+
+  options: AnimationOptions = {
+    path: 'assets/icons/animated/question.json',
+  };
+
+  animationCreated(animationItem: AnimationItem): void {
+    console.log(animationItem);
+  }
 }

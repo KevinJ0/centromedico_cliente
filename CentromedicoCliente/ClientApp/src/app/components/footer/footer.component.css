@@ -23,7 +23,7 @@ footer {
 
 .list-unstyled li {
   list-style: none;
-
+  margin-bottom: 5px;
 }
 
 .row {

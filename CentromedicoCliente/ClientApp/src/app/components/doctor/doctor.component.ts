@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { medico } from 'src/app/interfaces/InterfacesDto';
 import { DoctorService } from 'src/app/services/doctor.service';
 import { trigger, style, animate, transition } from '@angular/animations';
-import { NoProfilePhotoPipe } from '../../Pipes/no-imagen.pipe';
 import * as _moment from 'moment';
 import { catchError, finalize } from 'rxjs/operators';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
-const moment = _moment;
 
 @AutoUnsubscribe()
 @Component({

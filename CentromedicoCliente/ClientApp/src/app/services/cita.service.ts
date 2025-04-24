@@ -1,7 +1,7 @@
-import { HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { cita, citaCard, citaResult, UserInfo } from '../interfaces/InterfacesDto';
-import {  Observable, of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -14,9 +14,9 @@ export class CitaService {
   prueba: string;
   // Url to access our Web API’s
 
-    constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
-      this.baseUrl = baseUrl;
-    }
+  constructor(private router: Router, private http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
+    this.baseUrl = baseUrl;
+  }
 
 
   GetCitaForm(medicoID: number): Observable<any> {
@@ -68,5 +68,5 @@ export class CitaService {
       return throwError(err);
     }
   }
-  
+
 }

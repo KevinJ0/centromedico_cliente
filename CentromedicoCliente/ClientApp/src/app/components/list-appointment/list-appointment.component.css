@@ -96,6 +96,7 @@ mat-card-content {
 
 .cita-card {
   max-width: 30rem;
+  width: 70%;
 }
 
 
@@ -121,14 +122,23 @@ mat-action-row {
   /* esto es por un bug*/
   border-top-width: 0px;
   display: flex;
-  flex-flow: row;
+  flex-flow: column;
+  gap: 1rem;
   flex-wrap: nowrap;
   justify-content: space-between;
-  align-items: center;
+  align-items: end;
   margin-bottom: 1rem;
 }
 
-mat-action-row button {
+.mat-action-subcontainer {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.ver-turno-btn {}
+
+mat-action-row .pospone {
   border-color: #f4433671;
 }
 
@@ -158,6 +168,7 @@ mat-action-row .title {
   color: #545454;
   font-weight: 400;
 }
+
 
 .data-row h3 {
   font-weight: 500;
@@ -242,4 +253,91 @@ mat-action-row .title {
   font-size: 14px;
   font-weight: 500;
   align-self: flex-end;
+}
+
+
+/* Turnos */
+.turnos-container-flex {
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
+
+.turnos-container-flex img {
+  margin-top: 2rem;
+
+}
+
+.turnos-container-flex .turno-title {
+  margin: 1rem auto auto auto;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+
+}
+
+.turnos-container-flex .turno-number {
+  margin: auto auto 1rem auto;
+  font-size: 2.7rem;
+  color: var(--primary-color);
+}
+
+.turnos-container-flex .mi-turno-title {
+  margin: 1rem auto auto auto;
+  font-size: 1.3rem;
+  font-weight: 400;
+
+}
+
+.turnos-container-flex .mi-turno-number {
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 400;
+}
+
+
+.turnos-container-flex .patient-cant,
+.aprox-time {
+  margin: 1rem auto 1rem auto;
+  font-weight: 300;
+  color: #3a3a3a;
+}
+
+
+@keyframes bouncePause {
+  0% {
+    transform: translateY(0);
+  }
+
+  10% {
+    transform: translateY(-10px);
+  }
+
+  20% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.ticket-icon {
+  animation: bouncePause 3s infinite;
+  animation-timing-function: ease-in-out;
+}
+
+
+
+.ticket-icon:hover {
+  animation: bounceTicket 0.8s;
+}
+
+
+@media only screen and (max-width: 750px) {
+  .cita-card {
+    width: 100%;
+  }
 }

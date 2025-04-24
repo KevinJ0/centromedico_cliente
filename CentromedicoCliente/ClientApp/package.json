@@ -26,6 +26,7 @@
     "@angular/platform-server": "12.2.17",
     "@angular/router": "12.2.17",
     "@auth0/angular-jwt": "^5.0.2",
+    "@microsoft/signalr": "^6.0.10",
     "@ngtools/webpack": "^1.2.4",
     "@nguniversal/module-map-ngfactory-loader": "^8.2.6",
     "@types/googlemaps": "^3.43.3",

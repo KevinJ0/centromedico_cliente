@@ -5,18 +5,26 @@ import { environment } from './environments/environment';
 
 export function getBaseUrl() {
 
-  //return "https://localhost:44337/";
+  return "https://localhost:44337/";
   return document.getElementsByTagName('base')[0].href;
 
 }
 
+export function getDoctorApiUrl() {
+
+  return "https://localhost:44327/";
+
+}
+
 const providers = [
-  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
+  { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
+  { provide: 'DOCTOR_URL', useFactory: getDoctorApiUrl, deps: [] }
 ];
 
 if (environment.production) {
   enableProdMode();
 }
+
 
 platformBrowserDynamic(providers).bootstrapModule(AppModule)
   .catch(err => console.log(err));

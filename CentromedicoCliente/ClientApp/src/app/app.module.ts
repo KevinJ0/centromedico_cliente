@@ -59,6 +59,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { CustomPaginator } from './shared/CustomPaginatorConfiguration';
 import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
+import { SignalrCustomService } from './services/signalr-custom.service';
+import { TurnosMedicoService } from './services/turnos-medico.service';
 
 export function playerFactory() {
   return player;
@@ -97,7 +99,7 @@ export const MY_FORMATS = {
     ListAppointmentComponent,
     FaqComponent,
     FaqExpansionPanelComponent,
-    DialogSuccessedEmail
+    DialogSuccessedEmail,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   imports: [
@@ -166,7 +168,7 @@ export const MY_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    AccountService, CitaService, DoctorService, CoberturaService, AuthGuardService, PreguntaService],
+    AccountService, CitaService, DoctorService, CoberturaService, AuthGuardService, PreguntaService, SignalrCustomService, TurnosMedicoService],
   bootstrap: [AppComponent],
   entryComponents: [DialogSuccessedEmail]
 })

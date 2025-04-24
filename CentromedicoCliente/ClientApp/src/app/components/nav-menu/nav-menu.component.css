@@ -169,4 +169,5 @@ span {
 
 .logout {
   background-color: #f44336 !important;
+  cursor: pointer;
 }

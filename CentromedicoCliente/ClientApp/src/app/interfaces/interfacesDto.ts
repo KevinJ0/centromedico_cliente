@@ -21,6 +21,31 @@ export interface seguro {
   id: number;
   descrip: string;
 }
+export interface group {
+  id: number;
+  group_name: string;
+  type: string;
+  medicosID: number;
+}
+
+export interface turno_paciente {
+  tiempo_aprox: any;
+  medicosID: number;
+  turno_actual: number;
+  turno_atendido: number;
+  cant_pacientes_adelante: number;
+  fecha: Date;
+  ultima_entrada: Date;
+  primera_entrada: Date;
+
+}
+
+export interface turno {
+  medicosID: number;
+  turno_actual: number;
+  turno_atendido: number;
+  fecha: Date;
+}
 
 export interface cobertura {
   segurosID: number;
@@ -73,6 +98,7 @@ export interface citaCard {
   descuento: number;
   pago: number;
   turno: number;
+  turno_paciente: turno_paciente;
   consultorio: number;
   medicoData?: MedicoData;
 }

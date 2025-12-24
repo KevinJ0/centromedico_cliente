@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { trigger, style, animate, transition } from '@angular/animations';
 import * as _moment from 'moment';
+import * as AOS from 'aos';
 const moment = _moment;
 
 @Component({
@@ -33,8 +34,8 @@ const moment = _moment;
   ]
 })
 
-export class AppComponent {
-  title = 'app';
+export class AppComponent implements OnInit {
+  title = 'CentromedicoCliente';
   constructor(
     private domSanitizer: DomSanitizer,
     private matIconRegistry: MatIconRegistry) {
@@ -60,5 +61,8 @@ export class AppComponent {
       this.domSanitizer.bypassSecurityTrustResourceUrl("./assets/icons/medical-team.svg")
     );
   }
-}
 
+  ngOnInit() {
+    AOS.init({ once: true });
+  }
+}

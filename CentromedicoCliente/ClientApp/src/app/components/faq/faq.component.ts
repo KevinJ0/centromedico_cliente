@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import {MatAccordion} from '@angular/material/expansion';
+import { MatAccordion } from '@angular/material/expansion';
 
 @Component({
   selector: 'app-faq',
@@ -9,7 +9,7 @@ import {MatAccordion} from '@angular/material/expansion';
     ::ng-deep .specific-class > .mat-expansion-indicator::after {
       color: blue;
     }
-  `],
+  `]
 })
 export class FaqComponent implements OnInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
@@ -17,7 +17,7 @@ export class FaqComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    
+
   }
 
 }

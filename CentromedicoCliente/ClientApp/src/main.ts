@@ -5,7 +5,7 @@ import { environment } from './environments/environment';
 
 export function getBaseUrl() {
 
-  return "https://localhost:44337/";
+  //return "https://localhost:44337/";
   return document.getElementsByTagName('base')[0].href;
 
 }

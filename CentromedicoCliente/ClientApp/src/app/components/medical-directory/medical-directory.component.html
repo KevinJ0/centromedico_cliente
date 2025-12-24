@@ -1,19 +1,17 @@
-<!-- 
-<div class="background-content">
-<div class="background-linear-color"></div> -->
 <main>
 
   <section class="search-wrapper">
-    <div class="title">
+    <div class="title" data-aos="fade">
       <a href="">&#60; INICIO</a>
       <h1>Directorio Médico</h1>
     </div>
 
-    <h3>Encuentra tu especialista y haz tu cita</h3>
-    <h5>Cientos de médicos profesionales están aquí para ayudarte.</h5>
+    <h3 data-aos="fade" data-aos-delay="50">Encuentra tu especialista y haz tu cita</h3>
+    <h5 data-aos="fade" data-aos-delay="100">Cientos de médicos profesionales están aquí para ayudarte.</h5>
 
     <div class="content-search">
-      <form [formGroup]="searchFormGroup" (ngSubmit)="Search()" class="form-search">
+      <form data-aos="fade" data-aos-delay="150" [formGroup]="searchFormGroup" (ngSubmit)="Search()"
+        class="form-search">
         <div class="background-white">
           <mat-form-field class="name-input">
             <mat-label>Nombre</mat-label>
@@ -30,7 +28,7 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field>
+          <mat-form-field class="insurance-input">
             <mat-label>Seguro</mat-label>
             <mat-select formControlName="insuranceControl">
               <mat-option [value]="0">Todos</mat-option>
@@ -40,7 +38,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <button type="submit" [disabled]="isSent" mat-flat-button color="primary">
+        <button class="search-btn" type="submit" [disabled]="isSent" mat-flat-button color="primary">
           <mat-icon matSuffix>search</mat-icon>
         </button>
       </form>
@@ -49,25 +47,26 @@
 
 
   <section class="doctors-wrapper">
-    <div class="help">
-      <div>
-        <p>
-          Total de médicos encontrados: {{doctorsCount}}
-        </p>
-      </div>
-      <div>
-        <p>
-          ¿Necesita ayuda? Llame al 1-809-555-8811
-        </p>
+    <div class="directory-stats">
+      <div class="stat-card" data-aos="zoom-in" data-aos-delay="200">
+        <mat-icon class="stat-icon">groups</mat-icon>
+        <div class="stat-info">
+          <span class="count">{{ displayDoctorsCount }}</span>
+          <span class="label">Médicos Disponibles</span>
+        </div>
       </div>
 
+      <div class="help-badge" data-aos="fade-left" data-aos-delay="400">
+        <mat-icon>support_agent</mat-icon>
+        <span>¿Ayuda? <b>809-555-8811</b></span>
+      </div>
     </div>
 
     <h2>Lista de médicos</h2>
     <mat-divider></mat-divider>
 
     <div class="list-wrapper" *ngIf="isSent else DoctorsLst">
-      <div class="progress-content" *ngIf="isSent" [@inOutAnimation]>
+      <div class="progress-content" data-aos="fade-in">
         <mat-progress-spinner [mode]="mode">
         </mat-progress-spinner>
       </div>
@@ -75,10 +74,10 @@
 
     <ng-template #DoctorsLst>
       <div class="doctors-list" *ngIf="!showNoContent else NoContent">
-        <div class="doctor-cards-list">
-          <span *ngFor="let doctor of splicedData">
-            <app-doctor-card [doctorData]="doctor"></app-doctor-card>
-          </span>
+        <div class="cards-doctors-list" #DoctorsLst *ngIf="!loading else load">
+          <app-doctor-card *ngFor="let doctor of splicedData; let i = index" [doctorData]="doctor" data-aos="fade-up"
+            [data-aos-delay]="i * 100" class="card-doctor-wrapper">
+          </app-doctor-card>
 
         </div>
         <mat-paginator itemsPerPageLabel="Hola" (page)="pageChangeEvent($event)" [length]="pageLength"
@@ -88,8 +87,15 @@
     </ng-template>
 
     <ng-template #NoContent>
-      <div class="no-content">
+      <div class="search-section" data-aos="fade-down">
         <h5>NO SE ENCONTRÓ MÉDICO</h5>
+      </div>
+    </ng-template>
+
+    <ng-template #load>
+      <div class="progress-content" data-aos="fade-in">
+        <mat-progress-spinner [mode]="mode">
+        </mat-progress-spinner>
       </div>
     </ng-template>
   </section>

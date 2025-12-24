@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as _moment from 'moment';
 import { CitaService } from 'src/app/services/cita.service';
@@ -7,20 +7,19 @@ import { citaCard } from 'src/app/interfaces/InterfacesDto';
 import { NgZone } from '@angular/core';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
-import { BehaviorSubject, catchError } from 'rxjs';
-import { inOutAnimation, turnoChangedAnimation } from 'src/app/animations/animations';
+import { BehaviorSubject, catchError, Observable } from 'rxjs';
 import { group, turno_paciente } from 'src/app/interfaces/InterfacesDto';
 import { SignalrCustomService } from 'src/app/services/signalr-custom.service';
 import { TurnosMedicoService } from 'src/app/services/turnos-medico.service';
 import { HubConnectionState } from '@microsoft/signalr';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogPosponeAppointmentComponent } from './dialog-pospone-appointment/dialog-pospone-appointment.component';
 
 @AutoUnsubscribe()
 @Component({
   selector: 'app-list-appointment',
   templateUrl: './list-appointment.component.html',
-  styleUrls: ['./list-appointment.component.css'],
-  animations: [inOutAnimation, turnoChangedAnimation]
-
+  styleUrls: ['./list-appointment.component.css']
 })
 export class ListAppointmentComponent implements OnInit {
 
@@ -42,7 +41,8 @@ export class ListAppointmentComponent implements OnInit {
     private turnosSvc: TurnosMedicoService,
     private signalRSvc: SignalrCustomService,
     private zone: NgZone,
-    public citaSvc: CitaService) {
+    public citaSvc: CitaService,
+    public dialog: MatDialog) {
 
   }
 
@@ -131,8 +131,25 @@ export class ListAppointmentComponent implements OnInit {
   }
 
   trackByCita(index: number, item: citaCard): any {
-    return item.id; // o cualquier identificador único que tengas
+    console.log(item)
+    return item.id;
   }
+
+  toggleDialogPospone(cita: citaCard) {
+    const dialogRef = this.dialog.open(DialogPosponeAppointmentComponent, {
+      width: '400px',
+      data: { cita: cita }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result?.confirmed) {
+        console.log('Cita pospuesta', result.reason);
+        // Here you would typically call a service to update the appointment status
+      }
+    });
+  }
+
+
   getTurnoKey(cita: any): string {
     return 'turno-' + cita.turno;
   }

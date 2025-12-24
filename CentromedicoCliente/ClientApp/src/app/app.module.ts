@@ -46,6 +46,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { ListAppointmentComponent } from './components/list-appointment/list-appointment.component';
 import { LocationComponent } from './components/location/location.component';
 import { ContactComponent, DialogSuccessedEmail } from './components/contact/contact.component';
+import { DialogPosponeAppointmentComponent } from './components/list-appointment/dialog-pospone-appointment/dialog-pospone-appointment.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
@@ -61,6 +62,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { SignalrCustomService } from './services/signalr-custom.service';
 import { TurnosMedicoService } from './services/turnos-medico.service';
+import { ImageLoaderComponent } from './components/image-loader/image-loader.component';
 
 export function playerFactory() {
   return player;
@@ -100,6 +102,8 @@ export const MY_FORMATS = {
     FaqComponent,
     FaqExpansionPanelComponent,
     DialogSuccessedEmail,
+    ImageLoaderComponent,
+    DialogPosponeAppointmentComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   imports: [
@@ -108,6 +112,7 @@ export const MY_FORMATS = {
     GoogleMapsModule,
     SwiperModule,
     NgxMaskModule.forRoot(),
+    LottieModule.forRoot({ player: playerFactory }),
     MatStepperModule,
     MatTabsModule,
     MatCheckboxModule,
@@ -170,6 +175,6 @@ export const MY_FORMATS = {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     AccountService, CitaService, DoctorService, CoberturaService, AuthGuardService, PreguntaService, SignalrCustomService, TurnosMedicoService],
   bootstrap: [AppComponent],
-  entryComponents: [DialogSuccessedEmail]
+  entryComponents: [DialogSuccessedEmail, DialogPosponeAppointmentComponent]
 })
 export class AppModule { }

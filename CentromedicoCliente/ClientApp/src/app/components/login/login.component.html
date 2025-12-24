@@ -12,7 +12,7 @@
 
         <mat-tab-group class="invisible-tabs" [selectedIndex]="indiceActivo">
           <mat-tab label="Acceso">
-            <mat-card-content class="acceso" *ngIf="!loading else load" [@inOutAnimation]>
+            <mat-card-content class="acceso" *ngIf="!loading else load" data-aos="fade-up">
               <form [formGroup]="loginFormGroup" (ngSubmit)="Login()" class="login-form">
                 <mat-card-header>
                   <mat-card-title>Acceso</mat-card-title>
@@ -53,7 +53,7 @@
           </mat-tab>
 
           <mat-tab>
-            <mat-card-content class="registro" *ngIf="!loading else load" class="registro">
+            <mat-card-content class="registro" *ngIf="!loading else load" class="registro" data-aos="fade-up">
 
               <form [formGroup]="signupFormGroup" (ngSubmit)="Signup()" class="signup-form">
                 <mat-card-header>

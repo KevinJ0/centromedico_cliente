@@ -18,5 +18,7 @@ namespace Cliente.Repository.Repositories.Interfaces
         public void Add(citas entity);
         public string getCV(string docIdentidad);
         public bool ExistByUser(medicos medico, MyIdentityUser user);
+        int getCantCitasPendientes(DateTime fecha_hora_cita, int medicosID);
+
     }
 }

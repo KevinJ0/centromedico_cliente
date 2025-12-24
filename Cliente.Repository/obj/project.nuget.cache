@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "6+Oxy14956VqjKmpaHZOFGmS6Tw3jQ8vEya1HK+DnHW1LrWRkRXSDadqXzZqPSiEPfsXkkcwtEKmSnXb5o7kCQ==",
+  "dgSpecHash": "cIHiYJ8iVwk=",
   "success": true,
   "projectFilePath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
   "expectedPackageFiles": [
@@ -145,8 +145,10 @@
     {
       "code": "NU1902",
       "level": "Warning",
-      "warningLevel": 1,
       "message": "Package 'Microsoft.AspNetCore.Authentication.JwtBearer' 5.0.5 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-q7cg-43mg-qp69",
+      "projectPath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
       "libraryId": "Microsoft.AspNetCore.Authentication.JwtBearer",
       "targetGraphs": [
         "net5.0"

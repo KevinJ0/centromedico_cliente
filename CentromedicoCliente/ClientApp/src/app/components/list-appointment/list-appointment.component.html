@@ -1,219 +1,220 @@
-  <main>
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>
-          <h2 style="margin-bottom:0; margin-top:0;">Mis citas</h2>
-        </mat-card-title>
-        <mat-card-subtitle>Listado de todas mis citas a realizar.</mat-card-subtitle>
+<main>
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h2 style="margin-bottom:0; margin-top:0;">Mis citas</h2>
+      </mat-card-title>
+      <mat-card-subtitle>Listado de todas mis citas a realizar.</mat-card-subtitle>
 
-      </mat-card-header>
-      <mat-divider style="margin-bottom:1rem;">
-      </mat-divider>
-      <mat-card-content>
+    </mat-card-header>
+    <mat-divider style="margin-bottom:1rem;">
+    </mat-divider>
+    <mat-card-content>
 
-        <div class="no-content" *ngIf="showNoContent">
-          <h3>No tiene cita agendada</h3>
-          <img src="../../../assets/icons/no-task.png" alt="">
+      <div class="no-content" *ngIf="showNoContent">
+        <h3>No tiene cita agendada</h3>
+        <img src="../../../assets/icons/no-task.png" alt="">
 
-          <button (click)="navigateToMedicos()" mat-flat-button>Realizar un cita <mat-icon>event_upcoming</mat-icon>
-          </button>
-        </div>
+        <button (click)="navigateToMedicos()" mat-flat-button>Realizar un cita <mat-icon>event_upcoming</mat-icon>
+        </button>
+      </div>
 
-        <div class="example-headers-align" *ngIf="!loading else load" [@inOutAnimation]>
-          <div class="cita-card-container" *ngIf="citaCardList$!=null else noAppointment">
-            <mat-card class="cita-card" *ngFor="let cita of citaCardList$ | async; trackBy: trackByCita">
+      <div class="example-headers-align" *ngIf="!loading else load" data-aos="fade-up">
+        <div class="cita-card-container" *ngIf="citaCardList$!=null else noAppointment">
+          <mat-card class="cita-card" *ngFor="let cita of citaCardList$ | async; trackBy: trackByCita">
 
-              <mat-card-header>
-                <mat-action-row>
-                  <!-- <div class="title">Cita #{{cita.id}}</div> -->
-                  <div class="mat-action-subcontainer">
-                    <button mat-stroked-button class="pospone" color="warn">
-                      <mat-icon>schedule</mat-icon> Posponer
-                    </button>
-                  </div>
-                </mat-action-row>
-
-                <div class="medico-data">
-                  <center>
-                    <img class="profilePhoto" src="{{cita.medicoData.profilePhoto}}" alt="Foto de médico">
-
-                    <h3 class="title"> {{cita.medico_nombre+" "+cita.medico_apellido}}</h3>
-                    <h4 class="subtitle"> {{cita.medicoData.especialidades.join(", ") || '' }}</h4>
-
-                  </center>
+            <mat-card-header>
+              <mat-action-row>
+                <!-- <div class="title">Cita #{{cita.id}}</div> -->
+                <div class="mat-action-subcontainer">
+                  <button mat-stroked-button class="pospone" color="warn" (click)="toggleDialogPospone(cita)">
+                    <mat-icon>schedule</mat-icon> Posponer
+                  </button>
                 </div>
+              </mat-action-row>
 
-              </mat-card-header>
+              <div class="medico-data">
+                <center>
+                  <img class="profilePhoto" src="{{cita.medicoData.profilePhoto}}" alt="Foto de médico">
 
-              <mat-card-content>
-                <mat-tab-group animationDuration="0ms">
+                  <h3 class="title"> {{cita.medico_nombre+" "+cita.medico_apellido}}</h3>
+                  <h4 class="subtitle"> {{cita.medicoData.especialidades.join(", ") || '' }}</h4>
 
-                  <mat-tab label="Turnos">
-                    <div class="turnos-container-flex">
-                      <div class="pulse-wrapper">
+                </center>
+              </div>
 
-                        <img class="turno-image ticket-icon" width="80" src="../../../assets/icons/turno_icono.png"
-                          alt="Turnos icono">
-                      </div>
-                      <h2 class="turno-title">Turno actual</h2>
-                      <h1 class="turno-number">{{cita.turno_paciente.turno_actual}}</h1>
-                      <mat-divider [inset]="true">
-                      </mat-divider>
-                      <h2 class="mi-turno-title">Mi turno</h2>
-                      <h1 class="mi-turno-number">{{cita.turno}}</h1>
-                      <p style="font-weight: 300; margin: 0; margin-bottom: 1rem;">
-                        ({{cita.fecha_hora | date:'shortTime'}})</p>
+            </mat-card-header>
 
-                      <h4 class="patient-cant">Pacientes adelante: <span style="font-weight: 500; color: black;">
-                          {{cita.turno_paciente.cant_pacientes_adelante}}</span>
-                      </h4>
-                      <mat-divider [inset]="true">
-                      </mat-divider>
-                      <h4 class="aprox-time">Tiempo apróximado por paciente: <span
-                          style="font-weight: 500; color: black;">{{cita.turno_paciente.tiempo_aprox}}</span></h4>
+            <mat-card-content>
+              <mat-tab-group animationDuration="0ms">
 
+                <mat-tab label="Turnos">
+                  <div class="turnos-container-flex">
+                    <div class="pulse-wrapper">
+
+                      <img class="turno-image ticket-icon" width="80" src="../../../assets/icons/turno_icono.png"
+                        alt="Turnos icono">
                     </div>
-
-                  </mat-tab>
-                  <mat-tab label="Información de la cita">
-                    <div class="fecha data-row">
-                      <div>
-                        <mat-icon>event</mat-icon>
-                        <h3>Fecha:</h3>
-                      </div>
-                      <div class="data">
-                        {{convertDate(cita.fecha_hora)}}
-                      </div>
-                    </div>
-
+                    <h2 class="turno-title">Turno actual</h2>
+                    <h1 class="turno-number">{{cita.turno_paciente.turno_actual}}</h1>
                     <mat-divider [inset]="true">
                     </mat-divider>
-                    <div class="hora data-row">
-                      <div>
-                        <mat-icon>schedule</mat-icon>
-                        <h3>Hora:</h3>
-                      </div>
-                      <div class="data">
-                        {{convertDateHours(cita.fecha_hora)}}
-                      </div>
+                    <h2 class="mi-turno-title">Mi turno</h2>
+                    <h1 class="mi-turno-number">{{cita.turno}}</h1>
+                    <p style="font-weight: 300; margin: 0; margin-bottom: 1rem;">
+                      ({{cita.fecha_hora | date:'shortTime'}})</p>
 
-
-                    </div>
+                    <h4 class="patient-cant">Pacientes adelante: <span style="font-weight: 500; color: black;">
+                        {{cita.turno_paciente.cant_pacientes_adelante}}</span>
+                    </h4>
                     <mat-divider [inset]="true">
                     </mat-divider>
+                    <h4 class="aprox-time">Tiempo apróximado por paciente: <span
+                        style="font-weight: 500; color: black;">{{cita.turno_paciente.tiempo_aprox}}</span></h4>
 
-                    <div class="double-flex-container">
-                      <div class="data-row">
-                        <div>
-                          <mat-icon>confirmation_number</mat-icon>
-                          <h3>Turno: </h3>
-                        </div>
+                  </div>
 
-                        <div class="data">
-                          <span>{{cita.turno}}</span>
-                        </div>
-                      </div>
+                </mat-tab>
+                <!-- Información de la cita -->
+                <mat-tab label="Información de la cita">
+                  <div class="fecha data-row">
+                    <div>
+                      <mat-icon>event</mat-icon>
+                      <h3>Fecha:</h3>
+                    </div>
+                    <div class="data">
+                      {{convertDate(cita.fecha_hora)}}
+                    </div>
+                  </div>
 
-                      <mat-divider [vertical]="true" style="height: 25px;">
-                      </mat-divider>
-
-                      <div class="data-row consultorio">
-                        <div>
-                          <mat-icon>place</mat-icon>
-                          <h3>
-                            Consultorio:
-                          </h3>
-                        </div>
-                        <div class="data">
-                          <span>
-                            {{cita.consultorio}}
-                          </span>
-                        </div>
-                      </div>
+                  <mat-divider [inset]="true">
+                  </mat-divider>
+                  <div class="hora data-row">
+                    <div>
+                      <mat-icon>schedule</mat-icon>
+                      <h3>Hora:</h3>
+                    </div>
+                    <div class="data">
+                      {{convertDateHours(cita.fecha_hora)}}
                     </div>
 
 
-                    <div class="mis-datos-container">
+                  </div>
+                  <mat-divider [inset]="true">
+                  </mat-divider>
 
-                      <div class="minicard">
-                        <div class="icon">
-                          <mat-icon>personal_injury</mat-icon>
-                        </div>
-                        <div class="title">{{cita.paciente_nombre + " " + cita.paciente_apellido}} </div>
-                        <div class="subtitle">Paciente</div>
+                  <div class="double-flex-container">
+                    <div class="data-row">
+                      <div>
+                        <mat-icon>confirmation_number</mat-icon>
+                        <h3>Turno: </h3>
                       </div>
 
-                      <div *ngIf="cita.paciente_nombre_tutor" class="minicard">
-                        <div class="icon">
-                          <mat-icon>supervisor_account</mat-icon>
-                        </div>
-                        <div class="title">{{cita.paciente_nombre_tutor + " " + cita.paciente_apellido_tutor ?? ""}}
-                        </div>
-                        <div class="subtitle">Tutor</div>
+                      <div class="data">
+                        <span>{{cita.turno}}</span>
                       </div>
-
-
-
-                      <div class="minicard">
-                        <div class="icon">
-                          <mat-icon>call</mat-icon>
-                        </div>
-                        <div class="title">{{cita.contacto}} </div>
-                        <div class="subtitle">
-                          Contacto
-                        </div>
-                      </div>
-
-                      <div class="minicard">
-                        <div class="icon">
-                          <mat-icon>medical_services</mat-icon>
-                        </div>
-                        <div class="title">{{cita.servicio_descrip}} </div>
-                        <div class="subtitle">Servicio</div>
-                      </div>
-
-                      <div class="minicard">
-                        <div class="icon">
-                          <mat-icon>health_and_safety</mat-icon>
-                        </div>
-                        <div class="title">{{cita.seguro_descrip}} </div>
-                        <div class="subtitle">Seguro</div>
-                      </div>
-                      <div class="minicard">
-                        <div class="icon">
-                          <mat-icon>payments</mat-icon>
-                        </div>
-                        <div class="title">RD${{cita.diferencia}}.00 </div>
-                        <div class="subtitle">Diferencia</div>
-                      </div>
-
-                      <!-- ------------------ -->
                     </div>
-                  </mat-tab>
 
-                </mat-tab-group>
+                    <mat-divider [vertical]="true" style="height: 25px;">
+                    </mat-divider>
+
+                    <div class="data-row consultorio">
+                      <div>
+                        <mat-icon>place</mat-icon>
+                        <h3>
+                          Consultorio:
+                        </h3>
+                      </div>
+                      <div class="data">
+                        <span>
+                          {{cita.consultorio}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
 
 
-              </mat-card-content>
-            </mat-card>
+                  <div class="mis-datos-container">
 
-          </div>
+                    <div class="minicard">
+                      <div class="icon">
+                        <mat-icon>personal_injury</mat-icon>
+                      </div>
+                      <div class="title">{{cita.paciente_nombre + " " + cita.paciente_apellido}} </div>
+                      <div class="subtitle">Paciente</div>
+                    </div>
+
+                    <div *ngIf="cita.paciente_nombre_tutor" class="minicard">
+                      <div class="icon">
+                        <mat-icon>supervisor_account</mat-icon>
+                      </div>
+                      <div class="title">{{cita.paciente_nombre_tutor + " " + cita.paciente_apellido_tutor ?? ""}}
+                      </div>
+                      <div class="subtitle">Tutor</div>
+                    </div>
+
+
+
+                    <div class="minicard">
+                      <div class="icon">
+                        <mat-icon>call</mat-icon>
+                      </div>
+                      <div class="title">{{cita.contacto}} </div>
+                      <div class="subtitle">
+                        Contacto
+                      </div>
+                    </div>
+
+                    <div class="minicard">
+                      <div class="icon">
+                        <mat-icon>medical_services</mat-icon>
+                      </div>
+                      <div class="title">{{cita.servicio_descrip}} </div>
+                      <div class="subtitle">Servicio</div>
+                    </div>
+
+                    <div class="minicard">
+                      <div class="icon">
+                        <mat-icon>health_and_safety</mat-icon>
+                      </div>
+                      <div class="title">{{cita.seguro_descrip}} </div>
+                      <div class="subtitle">Seguro</div>
+                    </div>
+                    <div class="minicard">
+                      <div class="icon">
+                        <mat-icon>payments</mat-icon>
+                      </div>
+                      <div class="title">RD${{cita.diferencia}}.00 </div>
+                      <div class="subtitle">Diferencia</div>
+                    </div>
+
+                    <!-- ------------------ -->
+                  </div>
+                </mat-tab>
+
+              </mat-tab-group>
+
+
+            </mat-card-content>
+          </mat-card>
+
         </div>
+      </div>
 
 
 
-        <ng-template #noAppointment>
-          <h2 style="font-size: 2rem; font-weight: 300;">
-            Usted no tiene citas pendiente
-          </h2>
-        </ng-template>
-        <ng-template #load>
-          <div class="progress-content">
-            <mat-progress-spinner style="margin:auto;" [mode]="mode">
-            </mat-progress-spinner>
-          </div>
-        </ng-template>
+      <ng-template #noAppointment>
+        <h2 style="font-size: 2rem; font-weight: 300;">
+          Usted no tiene citas pendiente
+        </h2>
+      </ng-template>
+      <ng-template #load>
+        <div class="progress-content">
+          <mat-progress-spinner style="margin:auto;" [mode]="mode">
+          </mat-progress-spinner>
+        </div>
+      </ng-template>
 
-      </mat-card-content>
-    </mat-card>
-  </main>
+    </mat-card-content>
+  </mat-card>
+</main>

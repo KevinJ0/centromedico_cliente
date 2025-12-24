@@ -1,5 +1,5 @@
 <main>
-  <mat-card>
+  <mat-card data-aos="fade-in">
     <mat-stepper [orientation]="(stepperOrientation | async)!" *ngIf="!loading else load">
 
       <mat-step [stepControl]="firstFormGroup" label="Servicio y Seguro" state="payments"
@@ -256,7 +256,7 @@
           <div class="btn-container">
             <button mat-button matStepperPrevious>Volver</button>
             <button (click)="scrollToTop()" id="scrollToTop" mat-flat-button color="primary" [disabled]="loading"
-              type="submit">Confirmar</button>
+              type="submit">Terminar</button>
 
           </div>
         </form>

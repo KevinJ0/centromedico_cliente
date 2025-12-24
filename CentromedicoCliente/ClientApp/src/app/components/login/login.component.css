@@ -1,171 +1,243 @@
 main {
-  min-width: 16rem;
-  margin: auto;
-  /* max-width: 34rem; */
+  min-height: calc(100vh - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative background shapes */
+main::before,
+main::after {
+  content: '';
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  z-index: 0;
+  filter: blur(80px);
+  opacity: 0.6;
+}
+
+main::before {
+  background: #c3e0ff;
+  top: -100px;
+  left: -100px;
+}
+
+main::after {
+  background: #dbeafe;
+  bottom: -100px;
+  right: -100px;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1100px;
+  z-index: 1;
 }
 
 .content-wrapper>mat-card {
-  min-height: 450px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-  padding: 0;
-  max-height: 37rem;
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  min-height: 650px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
+.content-wrapper>mat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 30px 60px -15px rgba(24, 108, 178, 0.15);
+}
+
+.content-wrapper>mat-card>img {
+  width: 50%;
+  object-fit: cover;
+  border-radius: 0;
+  filter: brightness(0.95) contrast(1.05);
 }
 
 .flex-container {
+  width: 50%;
+  padding: 4rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.6);
 }
 
 .logo {
-  margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  align-self: center;
-  width: 5rem;
+  width: 8rem;
+  margin-bottom: 2rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
 }
 
-mat-card mat-card-header {
-  justify-content: center;
+.logo:hover {
+  transform: scale(1.05) rotate(-2deg);
 }
 
-mat-card-content {
-  padding: 1rem;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-
-mat-card-content form {
-  width: 20rem;
-}
-
-
-mat-form-field {
+mat-tab-group {
   width: 100%;
-  margin-top: 1rem;
+}
+
+mat-card-header {
+  margin-bottom: 2rem;
+  text-align: center;
+  justify-content: center;
+  padding: 0;
 }
 
 mat-card-title {
-  margin-top: 2rem;
-  font-size: 2rem !important;
-  color: #2a2a2a;
-
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+  color: #1e293b;
+  letter-spacing: -1px;
+  line-height: 1.2;
 }
 
-.login-form {
+/* Form Styles */
+form {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
 
-.signup-form {
-  display: flex;
-  flex-direction: column;
-}
-
-form button {
-  justify-content: flex-end;
-  align-self: center;
-  font-weight: 300;
-  padding: 3px 1.2rem;
-  text-transform: uppercase;
-  background-color: var(--primary-color);
-  font-weight: 400;
-  padding: auto 15px;
+mat-form-field {
   width: 100%;
-  min-width: 9rem;
-  margin-top: 1rem;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(148, 163, 184, 0.4) !important;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+}
+
+::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: var(--primary-color) !important;
 }
 
 .forgotpass {
-  margin-top: 0;
-  font-size: 13px;
+  text-align: right;
+  margin: 0.5rem 0 2rem;
 }
 
 .forgotpass a {
-  color: black;
-  text-decoration-line: none;
+  font-size: 0.9rem;
+  color: #64748b;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+  padding: 5px;
+  border-radius: 6px;
 }
 
 .forgotpass a:hover {
   color: var(--primary-color);
+  background-color: rgba(24, 108, 178, 0.05);
 }
 
-
-
-.content-wrapper>mat-card>img {
-  width: 60%;
-  border-radius: 5px 0 0 5px;
-  object-fit: cover;
+form button {
+  width: 100%;
+  padding: 0.8rem !important;
+  height: auto;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  box-shadow: 0 10px 20px -5px rgba(24, 108, 178, 0.4);
+  margin-top: 1rem;
 }
 
-.content-wrapper>mat-card>.flex-container {
-  width: 40%;
-  max-width: 37rem;
-  justify-content: center;
-  align-items: center;
+form button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 30px -5px rgba(24, 108, 178, 0.5);
 }
 
-.content-wrapper mat-tab div.mat-tab-labels {
-  display: none !important;
+.question {
+  margin-top: 2.5rem;
+  font-size: 0.95rem;
+  color: #64748b;
+  text-align: center;
 }
 
+.question-action {
+  color: var(--primary-color) !important;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  margin-left: 5px;
+  transition: opacity 0.2s;
+}
+
+.question-action:hover {
+  opacity: 0.8;
+  text-decoration: none;
+}
+
+/* Animations using AOS */
+.acceso,
+.registro {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media screen and (max-width: 960px) {
+  main {
+    padding: 1rem;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+
+  .content-wrapper>mat-card {
+    flex-direction: column;
+    min-height: auto;
+    border-radius: 16px;
+  }
+
+  .content-wrapper>mat-card>img {
+    width: 100%;
+    height: 200px;
+    display: block;
+  }
+
+  .flex-container {
+    width: 100%;
+    padding: 2rem 1.5rem;
+  }
+
+  .logo {
+    width: 6rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Hide tab header */
 ::ng-deep .mat-tab-header {
   display: none !important;
 }
 
-.question {
-  color: #4a4a4a;
-  font-size: 13px;
-  text-align: center;
-  margin-top: clamp(1rem, 12vh, 8rem);
-
-}
-
-.question .question-action {
-  color: black;
-  font-weight: 600;
-}
-
-.question .question-action:hover {
-  text-decoration-line: underline;
-  color: var(--primary-color);
-  cursor: pointer;
-}
-
-::ng-deep .mat-form-field {
-  margin-top: 0em !important;
-}
-
-@media screen and (max-width: 960px) {
-  .content-wrapper {
-    display: flex;
-    justify-content: center;
-  }
-
-  mat-card {
-    justify-content: center !important;
-    max-width: 40rem;
-    box-shadow: none !important;
-    height: 74vh;
-
-  }
-
-  .content-wrapper>mat-card>img {
-    display: none;
-  }
-
-  .content-wrapper>mat-card>.flex-container {
-    padding: 1rem 2rem;
-    width: 100%;
-  }
-
-
+.progress-content {
+  display: flex;
+  justify-content: center;
+  padding: 4rem;
 }

@@ -1,117 +1,158 @@
 .doctor-card {
-  margin: 1rem;
+  margin: 0;
   display: flex;
-  padding: 1rem;
-  box-shadow: rgb(0 0 0 / 25%) 0px 0px 5px;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  /* Subtle border */
   align-items: center;
-  justify-content: flex-start;
-  border-radius: 5px;
+  justify-content: space-between;
+  /* Better space distribution */
+  border-radius: 12px;
+  /* Consistency */
   flex-direction: column;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
+  /* Fill grid height */
+  box-sizing: border-box;
+}
 
+.doctor-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: var(--primary-color);
 }
 
 .doctor-card p {
   margin: 0 0 5px 0;
 }
 
-.doctor-img img {
-  width: 120px;
-  height: 120px;
-  margin-right: 1rem;
-  border-radius: 100px;
-  object-fit: cover;
+/* Image container */
+.flex-container {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
 
+.doctor-img img {
+  width: 100px;
+  height: 100px;
+  border-radius: 100%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.doctor-card:hover .doctor-img img {
+  transform: scale(1.05);
+  border-color: var(--primary-color);
+}
+
+/* Info Section */
+.doctor-info {
+  flex: 1;
 }
 
 .doctor-info .contactos .numeros {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 10px;
+  margin-top: 0.5rem;
 }
 
 .doctor-info .contactos .telefono1,
 .telefono2 {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   display: flex;
-  margin-right: 8px;
+  align-items: center;
+  color: #4a5568;
 }
 
 .doctor-info .contactos .correo {
-  font-size: 0.8rem;
-  font-weight: bold;
-  color: #494949;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #718096;
+  margin-top: 5px;
 }
 
 .doctor-info .contactos img {
-  margin-left: 5px;
-  max-width: 15px;
-  width: 15px;
-
+  margin-left: 6px;
+  width: 16px;
+  height: 16px;
+  opacity: 0.8;
+  vertical-align: middle;
 }
 
 .doctor-card .descrip {
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .nombre {
+  color: #1a202c;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+  transition: color 0.2s;
+  display: block;
+}
+
+.doctor-card:hover .nombre {
   color: var(--primary-color);
-  font-size: 1.2rem;
-  font-weight: 600;
 }
 
 .especialidades {
-  color: #494949;
+  color: #718096;
+  font-size: 0.9rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: #f7fafc;
+  padding: 4px 8px;
+  border-radius: 6px;
+  display: inline-block;
+  margin-top: 4px;
 }
 
 a {
   text-decoration: none;
 }
 
-.flex-container {
-  display: flex;
-}
-
+/* Actions */
 .action-buttons {
-  display: flex;
-  align-content: center;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   width: 100%;
-  margin-top: 1rem;
-  gap: 10px;
+  margin-top: 1.5rem;
+  gap: 1rem;
+  border-top: 1px solid #f7fafc;
+  padding-top: 1.25rem;
 }
 
 .action-buttons button {
-  color: var(--primary-color);
-
-
+  width: 100%;
 }
 
-
-@media screen and (max-width: 420px) {
+/* Responsive */
+@media screen and (max-width: 480px) {
   .flex-container {
-
-    display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    gap: 1rem;
   }
 
   .doctor-card {
-    gap: 1rem;
-    flex-direction: column;
+    padding: 1.25rem;
   }
 
-  .doctor-info {
-    align-content: center;
-    align-items: center;
-    text-align: center;
-  }
-
-  .doctor-card .doctor-img img {
-    margin: auto;
-  }
-
-  .doctor-info .numeros {
+  .doctor-info .contactos .numeros {
     justify-content: center;
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
   }
 }

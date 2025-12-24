@@ -1,6 +1,5 @@
 .nav {
-  position: fixed;
-  top: 0;
+  position: relative;
   width: 100%;
   z-index: 9999 !important;
   background: var(--header-bg-color);
@@ -225,7 +224,16 @@ body {
   background-color: white;
 }
 
-menu-mobile {
-  height: 5rem;
-  background-color: var(--header-bg-color);
+@media only screen and (max-width: 1000px) {
+  #menu-mobile {
+    height: 5rem;
+    background-color: var(--header-bg-color);
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 1001px) {
+  #menu-mobile {
+    display: none !important;
+  }
 }

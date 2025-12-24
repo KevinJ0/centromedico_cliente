@@ -14,6 +14,7 @@
     <!-- Set this to true if you enable server-side prerendering -->
     <BuildServerSideRenderer>false</BuildServerSideRenderer>
     <UserSecretsId>fde519a7-e6b0-423e-a42b-7d4f43b5562e</UserSecretsId>
+    <Configurations>Debug;Release;Both</Configurations>
   </PropertyGroup>
   
   <ItemGroup>

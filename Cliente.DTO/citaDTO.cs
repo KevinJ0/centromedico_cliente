@@ -61,6 +61,7 @@ namespace Cliente.DTO
         public string especialidad_descrip { get; set; }*/
         public int consultorio { get; set; }
         public int turno { get; set; }
+        public turnoDTO turno_paciente { get; set; }
 
 
     }

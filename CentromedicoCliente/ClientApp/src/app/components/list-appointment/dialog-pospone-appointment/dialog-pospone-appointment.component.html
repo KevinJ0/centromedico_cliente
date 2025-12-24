@@ -1,0 +1,15 @@
+<h2 mat-dialog-title>Posponer Cita</h2>
+<mat-dialog-content class="mat-typography">
+    <p>¿Está seguro que desea posponer su cita?</p>
+    <p>Esta acción notificará al personal médico para reagendar.</p>
+
+    <mat-form-field appearance="outline" class="reason-field">
+        <mat-label>Motivo (Opcional)</mat-label>
+        <textarea matInput [(ngModel)]="reason" placeholder="Ej. Imprevisto familiar" rows="3"></textarea>
+    </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-flat-button color="primary" (click)="confirm()">Confirmar</button>
+</mat-dialog-actions>

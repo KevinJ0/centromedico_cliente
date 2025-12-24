@@ -12,6 +12,16 @@
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 0
+            },
+            640: {
+                slidesPerView: 'auto',
+                spaceBetween: 20
+            }
+        }
     });
 
 

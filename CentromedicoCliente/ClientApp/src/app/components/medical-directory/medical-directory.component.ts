@@ -9,38 +9,17 @@ import { SeguroService } from 'src/app/services/seguro.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+import { fadeInAnimation } from '../../animations/animations';
 
 @AutoUnsubscribe()
 @Component({
   selector: 'app-medical-directory',
   templateUrl: './medical-directory.component.html',
-  styleUrls: ['./medical-directory.component.css'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate('300ms ease-out',
-              style({ opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave',
-          [
-            style({ opacity: 1, position: "absolute" }),
-            animate('300ms ease-in',
-              style({ opacity: 0, position: "relative" }))
-          ]
-        )
-      ]
-    )
-  ]
+  styleUrls: ['./medical-directory.component.css']
 })
 export class MedicalDirectoryComponent implements OnInit {
   isSent: Boolean = false;
+  loading: boolean = true;
 
   constructor(
     private doctorSvc: DoctorService,
@@ -55,6 +34,7 @@ export class MedicalDirectoryComponent implements OnInit {
   especialidades$: Observable<especialidad[]>;
   searchFormGroup: FormGroup;
   doctorsCount: number;
+  displayDoctorsCount: number = 0;
   pageLength: number;
   pageSize: number = 10;
   pageSizeOptions = [10, 25, 50, 100];
@@ -103,23 +83,47 @@ export class MedicalDirectoryComponent implements OnInit {
               //console.table(this.splicedData)
               this.doctorCardList = r;
               this.showNoContent = false;
+              this.animateCount(this.doctorsCount);
             } else {
               this.doctorsCount = 0;
               this.pageLength = 0;
               this.splicedData = [];
               this.doctorCardList = [];
               this.showNoContent = true;
+              this.displayDoctorsCount = 0;
             }
           }, err => {
             console.error('Error al intentar acceder a la lista de médicos: ' + err);
           }, () => {
             this.isSent = false;
+            this.loading = false;
           });
 
       } catch (error) {
         console.error('Error al intentar acceder a la lista de médicos: ' + error);
       }
     }
+  }
+
+  animateCount(target: number) {
+    let start = 0;
+    const duration = 1500; // 1.5 seconds
+    const stepTime = Math.abs(Math.floor(duration / target));
+
+    // Fallback for very small targets or 0
+    if (target === 0) {
+      this.displayDoctorsCount = 0;
+      return;
+    }
+
+    const timer = setInterval(() => {
+      start += 1;
+      this.displayDoctorsCount = start;
+      if (start >= target) {
+        this.displayDoctorsCount = target;
+        clearInterval(timer);
+      }
+    }, Math.max(stepTime, 20)); // Minimum 20ms to avoid freezing
   }
 
 

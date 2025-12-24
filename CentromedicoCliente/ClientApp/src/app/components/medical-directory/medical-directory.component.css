@@ -2,7 +2,6 @@ main {
   margin: auto;
   padding: 0;
   max-width: var(--max-width);
-  box-shadow: rgb(0 0 0 / 5%) 0px 0px 3px;
 }
 
 h1,
@@ -32,12 +31,11 @@ h6 {
   height: 410px;
   background-size: cover;
   background-position: right;
-  background-image: url("../../../assets/imgs/search-background1.jpg");
+  background-image: url("../../../assets/imgs/search-background.jpg");
 }
 
 .search-wrapper .title h1 {
   font-size: clamp(2rem, 10vw, 3rem);
-  font-weight: 500;
   margin: 1rem 0rem 4rem 0rem;
   text-shadow: 0px 0px 4px rgb(0 0 0 / 31%);
   color: white;
@@ -86,6 +84,14 @@ h6 {
   border-radius: 5px 0 0 5px;
 }
 
+.form-search .insurance-input {
+  border-radius: 0 5px 5px 0;
+}
+
+.search-btn {
+  margin-left: 5px;
+}
+
 .content-search {
   display: flex;
   align-items: center;
@@ -99,22 +105,79 @@ h6 {
 
 .doctors-wrapper {
   margin-bottom: 1rem;
+  padding: 0 clamp(1rem, 5vw, 32px);
 }
 
-.doctors-wrapper .help {
-  background: #25283d;
-  padding: 10px 1rem;
+.directory-stats {
   display: flex;
-  align-content: stretch;
-  justify-content: space-around;
-  text-align: center;
-  gap: clamp(0rem, 4vw, 1rem);
+  justify-content: space-between;
   align-items: center;
-  color: white;
+  margin: 3rem auto 1.5rem auto;
   flex-wrap: wrap;
-  flex-direction: row;
-  font-size: clamp(1rem, 4vw, 1.3rem);
-  border-radius: 0 0 10px 10px;
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background: white;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.03);
+  transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+}
+
+.stat-icon {
+  font-size: 2.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
+  color: var(--primary-color);
+}
+
+.stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-info .count {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #2d3748;
+  line-height: 1;
+}
+
+.stat-info .label {
+  font-size: 0.85rem;
+  color: #718096;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.help-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f7fafc;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
+  color: #4a5568;
+  font-size: 0.95rem;
+  border: 1px solid #e2e8f0;
+}
+
+.help-badge mat-icon {
+  color: var(--accent-color, #667eea);
+}
+
+.help-badge b {
+  color: #2d3748;
 }
 
 .doctors-wrapper>h2 {
@@ -134,9 +197,11 @@ h6 {
   text-align: center;
 }
 
-.doctor-cards-list {
+.cards-doctors-list {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  padding: 1rem 0;
 }
 
 .progress-content {
@@ -176,9 +241,10 @@ mat-progress-spinner {
     border-radius: 5px;
   }
 
-  .doctor-cards-list {
+  .cards-doctors-list {
     display: grid;
-    grid-template-columns: auto;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 
   .form-search button {
@@ -188,6 +254,10 @@ mat-progress-spinner {
 
   .form-search mat-form-field {
     border-radius: 5px !important;
+  }
+
+  .search-btn {
+    margin-left: 0;
   }
 
 

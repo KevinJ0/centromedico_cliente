@@ -4,7 +4,6 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { medico } from 'src/app/interfaces/InterfacesDto';
 import { DoctorService } from 'src/app/services/doctor.service';
-import { trigger, style, animate, transition } from '@angular/animations';
 import * as _moment from 'moment';
 import { catchError, finalize } from 'rxjs/operators';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
@@ -13,30 +12,7 @@ import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 @Component({
   selector: 'app-doctor',
   templateUrl: './doctor.component.html',
-  styleUrls: ['./doctor.component.css'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate('300ms ease-out',
-              style({ opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave',
-          [
-            style({ opacity: 1, position: "absolute" }),
-            animate('300ms ease-in',
-              style({ opacity: 0, position: "relative" }))
-          ]
-        )
-      ]
-    )
-  ]
+  styleUrls: ['./doctor.component.css']
 })
 export class DoctorComponent implements OnInit {
 

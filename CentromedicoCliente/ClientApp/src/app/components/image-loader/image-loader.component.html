@@ -1,0 +1,6 @@
+<div class="image-container">
+    <img [src]="lowResSrc" [alt]="alt" class="low-res" [class.fade-out-img]="isLoaded" loading="lazy">
+
+    <img [src]="highResSrc" [alt]="alt" (load)="onHighResLoad()" class="high-res" [class.fade-in-img]="isLoaded"
+        loading="lazy">
+</div>

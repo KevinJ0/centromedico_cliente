@@ -12,162 +12,187 @@ header * {
 
 header {
   position: sticky;
-  top: 0;
+  top: 0 !important;
+  margin-top: 0 !important;
   z-index: 1000;
-  background-color: #fffffff7;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.menu-principal {
-  box-shadow: rgb(0 0 0 / 5%) 0px 0px 3px;
+header.header-shrunk {
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(1, 149, 255, 0.1);
 }
 
 .header-container {
   width: 100%;
   max-width: var(--max-width);
   margin: auto;
-  padding: 0.5rem clamp(0.5rem, 3vw, 2rem) 0;
-  display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: auto auto auto;
+  padding: 0.75rem clamp(1rem, 5vw, 2.5rem);
+  display: flex;
   justify-content: space-between;
-  justify-items: stretch;
   align-items: center;
-  align-content: center;
+  transition: padding 0.4s ease;
+}
+
+.header-shrunk .header-container {
+  padding: 0.4rem clamp(1rem, 3vw, 2rem);
 }
 
 .container-logo .main-logo {
-  width: clamp(210px, 50vw, 243px);
-
+  width: clamp(180px, 40vw, 220px);
+  transition: all 0.4s ease;
 }
 
-.bg-container-menu {
-  width: 100%;
-  background-color: var(--header-bg-color);
+.header-shrunk .main-logo {
+  width: clamp(144px, 32vw, 176px);
+  /* 20% smaller */
 }
 
-.menu-main {
-  margin: auto;
-  max-width: var(--max-width);
-  box-shadow: 0 8px 8px rgb(0 0 0 / 3%);
-  padding: 0 clamp(0.5rem, 3vw, 2rem) 0;
-  margin-top: 0em;
+.container-logo .main-logo:hover {
+  transform: scale(1.02);
+}
+
+.sub-menu ul {
+  list-style: none;
   display: flex;
-  justify-content: flex-end;
-  flex-wrap: nowrap;
-  flex-direction: row;
   align-items: center;
-  margin-bottom: 0rem;
+  gap: clamp(0.5rem, 2vw, 2.5rem);
 }
 
-.menu-main ul {
-  float: right;
-  font-size: 0;
-  list-style-type: none;
-}
-
-.menu-main ul li {
-  font-size: clamp(0.8rem, 2vw, 0.9rem);
-  font-weight: 400;
-  color: rgb(255, 255, 255);
-  display: inline-block;
+.sub-menu a {
+  color: #4a5568;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 0.5rem 0.2rem;
   position: relative;
 }
 
-.menu-main ul li a {
-  display: block;
-  padding: 1em clamp(0.8rem, 2vw, 0.9rem);
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.menu-main ul li ul {
-  display: none;
-}
-
-.menu-main ul li:hover {
-  cursor: pointer;
-  background-color: #f8f8f8;
-}
-
-.menu-main ul li:hover ul {
-  display: block;
-  margin-top: 15px;
-  width: 200px;
-  left: 0;
+.sub-menu a:not(.special-link)::after {
+  content: '';
   position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width 0.3s ease;
+  border-radius: 2px;
 }
 
-.menu-main ul li:hover ul li {
-  display: block;
-  background-color: #f8f8f8;
-}
-
-.menu-main ul li:hover ul li span {
-  float: right;
-  color: #f9f9f9;
-  background-color: #f03861;
-  padding: 2px 5px;
-  text-align: center;
-  font-size: 0.8rem;
-  border-radius: 3px;
-}
-
-.menu-main ul li:hover ul li:hover {
-  background-color: #e0e0e0;
-}
-
-.menu-main ul li:hover ul li:hover span {
-  background-color: #ee204e;
-}
-
-.menu-main ul li:hover {
-  color: #25283d;
-}
-
-.menu-main ul li:hover a {
-  color: #25283d;
-}
-
-
-
-.sub-menu a,
-span {
-  color: #454545;
-  cursor: pointer;
-  font-size: small;
-  text-decoration: none;
-  font-size: medium;
-  font-weight: 400;
-}
-
-.sub-menu li {
-  padding: 0 clamp(0.7rem, 2vw, 2rem) 0 0;
-  display: inline-block;
-}
-
-.login-btn-container ul li {
-  list-style-type: none;
+.sub-menu a:not(.special-link):hover::after,
+.sub-menu a.active:not(.special-link)::after {
+  width: 100%;
 }
 
 .sub-menu a.active {
-  font-weight: 700;
-  color: #000;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+/* Special Design for Mis Citas */
+.special-link {
+  background-color: rgba(1, 149, 255, 0.1);
+  color: var(--primary-color) !important;
+  padding: 0.6rem 1.2rem !important;
+  border-radius: 12px;
+  border: 1px solid rgba(1, 149, 255, 0.2);
+  font-weight: 600 !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  animation: subtle-glow 2s infinite alternate;
+}
+
+.special-link:hover {
+  background-color: var(--primary-color);
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(1, 149, 255, 0.2);
+}
+
+@keyframes subtle-glow {
+  from {
+    box-shadow: 0 0 0px rgba(1, 149, 255, 0);
+  }
+
+  to {
+    box-shadow: 0 0 8px rgba(1, 149, 255, 0.15);
+  }
+}
+
+.login-btn-container ul {
+  list-style: none;
 }
 
 .login-btn-container ul li a {
-  padding: 0.4rem 1rem;
+  padding: 0.6rem 1.2rem;
   background-color: var(--primary-color);
   color: white;
-  border-radius: 5px;
+  border-radius: 12px;
   text-decoration: none;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 8px;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 4px 10px rgba(1, 149, 255, 0.2);
+}
+
+.login-btn-container ul li a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(1, 149, 255, 0.3);
+  filter: brightness(1.1);
+}
+
+@media screen and (max-width: 1200px) {
+  .sub-menu a {
+    font-size: 0.85rem;
+  }
+
+  .special-link,
+  .login-btn-container ul li a {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  #menu-principal {
+    display: none !important;
+  }
 }
 
 .logout {
-  background-color: #f44336 !important;
-  cursor: pointer;
+  background-color: #ff4d4d !important;
+  box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2) !important;
+}
+
+.logout:hover {
+  box-shadow: 0 6px 15px rgba(255, 77, 77, 0.3) !important;
+}
+
+/* Hide legacy styles that are no longer used */
+.menu-main,
+.bg-container-menu,
+.sub-menu li {
+  display: none;
+}
+
+/* But make sure our new structure is visible */
+.header-container .sub-menu {
+  display: block;
+}
+
+.header-container .sub-menu li {
+  display: block;
 }

@@ -12,332 +12,379 @@
   margin-left: 8px;
 }
 
+/* Main Container */
 main {
   min-height: 70vh;
+  padding-bottom: 3rem;
+  background-color: #f8fafc;
+  padding-top: 1rem;
+  /* Softer background for the page */
 }
 
-mat-panel-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #343434;
+/* Page Header */
+.mat-card-header {
+  text-align: center;
+  flex-direction: column;
 }
 
-
-
-mat-card-content {
-  margin-top: clamp(2rem, 5vw, 3rem);
+mat-card-title h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+  letter-spacing: -0.5px;
 }
 
-.mat-expansion-panel-header-description {
-  gap: 5px;
+mat-card-subtitle {
+  font-size: 1rem;
+  color: #64748b;
+  margin-top: 0.5rem;
+  margin-bottom: 0;
 }
 
-.first-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  text-align: left;
-}
-
-.second-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  justify-content: space-between;
-  margin-top: 1rem;
-  justify-content: flex-start;
-  gap: 6px;
-}
-
-.second-row>div {
-  border-left: solid #c3c3c3 1px;
-  padding: 5px 10px;
-}
-
-.first-row>div {
-  flex-basis: 100%;
-}
-
-.second-row+div+div {
-  font-weight: 300;
-}
-
-.second-row .data {
-  font-size: large;
-  color: #3a3a3a;
-  font-weight: 500;
-}
-
-.progress-content {
-  padding: clamp(2rem, 5vw, 3rem);
-}
-
+/* No Content State */
 .no-content {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   justify-content: center;
+  padding: 4rem 1rem;
+  opacity: 0.8;
 }
 
 .no-content h3 {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #475569;
 }
-
 
 .no-content button {
   background: var(--primary-color);
   color: white;
+  padding: 0.8rem 1.5rem;
+  font-weight: 600;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 12px rgba(24, 108, 178, 0.3);
 }
 
-
-
-.cita-card {
-  max-width: 30rem;
-  width: 70%;
-}
-
-
+/* Card Container */
 .cita-card-container {
   width: 100%;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
   flex-wrap: wrap;
   flex-direction: row;
   align-content: center;
   align-items: flex-start;
-  justify-content: space-evenly;
+  justify-content: center;
+  padding: 1rem;
 }
 
+/* Cita Card Design */
+.cita-card {
+  max-width: 28rem;
+  width: 100%;
+  border-radius: 24px !important;
+  background: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.08), 0 10px 15px -5px rgba(0, 0, 0, 0.04) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
 
+.cita-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 25px 50px -10px rgba(24, 108, 178, 0.15) !important;
+}
+
+/* Card Header & Doctor Info */
 mat-card-header {
   display: flex;
   flex-flow: column;
-}
-
-mat-action-row {
-  border-top-style: none;
-  /* esto es por un bug*/
-  border-top-width: 0px;
-  display: flex;
-  flex-flow: column;
-  gap: 1rem;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: end;
+  padding: 0;
   margin-bottom: 1rem;
 }
 
-.mat-action-subcontainer {
+.medico-data {
   display: flex;
-  gap: 10px;
-  margin-bottom: 1rem;
-}
-
-.ver-turno-btn {}
-
-mat-action-row .pospone {
-  border-color: #f4433671;
-}
-
-mat-card-content {
-  margin-top: clamp(1rem, 3vw, 3rem);
-}
-
-.medico-data .title,
-mat-action-row .title {
-  font-size: 1.5rem;
-  font-size: 1.5rem;
-  margin-bottom: 0;
-}
-
-mat-action-row .title {
-  font-weight: 700;
-}
-
-.medico-data .title {
-  color: var(--primary-color);
-  font-weight: 500;
-}
-
-.medico-data .subtitle {
-  margin-top: 0;
-  margin-bottom: 0;
-  color: #545454;
-  font-weight: 400;
-}
-
-
-.data-row h3 {
-  font-weight: 500;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 1rem;
 }
 
 .profilePhoto {
   object-fit: cover;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 100%;
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
 }
 
-
-.data-row {
-  display: flex;
-  flex-flow: row;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+.medico-data .title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  text-align: center;
 }
 
-.data-row>div {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  gap: 5px;
+.medico-data .subtitle {
+  font-size: 0.95rem;
+  color: var(--primary-color);
+  font-weight: 500;
+  margin: 0.2rem 0 0 0;
+  text-align: center;
+  background: rgba(24, 108, 178, 0.08);
+  /* Light primary bg */
+  padding: 4px 12px;
+  border-radius: 6px;
+  /* User requested specific radius */
 }
 
-.data-row mat-icon {
+/* Action Row (Posponer) */
+mat-action-row {
+  border: none;
+  padding: 0;
+  margin-bottom: 1rem;
+  justify-content: flex-end;
+}
+
+.pospone {
+  border-radius: 12px !important;
+  /* Consistent with app style */
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid #fee2e2;
+  color: #ef4444 !important;
+  background-color: #fef2f2;
+}
+
+/* Customizing Mat-Tabs */
+::ng-deep .cita-card .mat-tab-label {
+  font-family: inherit;
+  font-weight: 600;
+  color: #94a3b8;
+  opacity: 1 !important;
+  min-width: 0 !important;
+  padding: 0 1.5rem !important;
+}
+
+::ng-deep .cita-card .mat-tab-label-active {
   color: var(--primary-color);
 }
 
-.double-flex-container {
-
-  display: flex;
-  flex-flow: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
+::ng-deep .cita-card .mat-ink-bar {
+  background-color: var(--primary-color) !important;
+  height: 3px !important;
+  border-radius: 3px 3px 0 0;
 }
 
-
-
-.mis-datos-container {
-  margin-top: 2rem;
-  display: flex;
-  flex-flow: row;
-  gap: 10px;
-  flex-wrap: wrap;
-
+::ng-deep .cita-card .mat-tab-header {
+  border-bottom: 1px solid #f1f5f9;
+  margin-bottom: 1.5rem;
 }
 
-
-.minicard {
-  display: flex;
-  flex-wrap: nowrap;
-  flex-flow: column;
-  min-width: 7rem;
-  min-height: 5rem;
-
-  border-radius: 10px;
-  width: fit-content;
-  padding: 10px;
-  box-shadow: #34343418 0 2px 5px;
+/* Tab Content */
+mat-card-content {
+  padding: 1.5rem 1rem 1.5rem 1rem !important;
 }
 
-
-.mis-datos-container .minicard mat-icon {
-  align-self: flex-start;
-  color: var(--primary-color)
-}
-
-.mis-datos-container .minicard .title {
-  align-self: flex-end;
-  font-size: 17px;
-  font-weight: 700;
-  margin-left: 15px;
-}
-
-.mis-datos-container .minicard .subtitle {
-  color: #7e7e7e;
-  font-size: 14px;
-  font-weight: 500;
-  align-self: flex-end;
-}
-
-
-/* Turnos */
+/* "Turnos" Tab */
 .turnos-container-flex {
-
   display: flex;
   align-items: center;
   flex-direction: column;
   width: 100%;
 }
 
-.turnos-container-flex img {
-  margin-top: 2rem;
-
+.pulse-wrapper {
+  margin-top: 1rem;
 }
 
-.turnos-container-flex .turno-title {
-  margin: 1rem auto auto auto;
-  font-size: 1.5rem;
+.ticket-icon {
+  width: 70px;
+  filter: drop-shadow(0 4px 6px rgba(24, 108, 178, 0.2));
+}
+
+.turno-title,
+.mi-turno-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 1.5rem;
+}
+
+.turno-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--primary-color);
+  line-height: 1;
+  margin: 0.5rem 0 1.5rem 0;
+  text-shadow: 0 4px 10px rgba(24, 108, 178, 0.15);
+}
+
+.mi-turno-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #334155;
+  margin: 0.5rem 0;
+}
+
+.patient-cant,
+.aprox-time {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+.patient-cant span,
+.aprox-time span {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* "Información" Tab */
+.data-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 0;
+}
+
+.data-row>div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #64748b;
+}
+
+.data-row mat-icon {
+  color: var(--primary-color);
+  font-size: 1.2rem;
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.data-row h3 {
+  margin: 0;
+  font-size: 0.95rem;
   font-weight: 500;
-
-
 }
 
-.turnos-container-flex .turno-number {
-  margin: auto auto 1rem auto;
-  font-size: 2.7rem;
+.data-row .data {
+  font-weight: 600;
+  color: #334155;
+  text-align: right;
+}
+
+.double-flex-container {
+  display: flex;
+  gap: 1rem;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 16px;
+  margin: 1rem 0;
+  justify-content: space-around;
+}
+
+.double-flex-container .data-row {
+  flex-direction: column;
+  padding: 0;
+  gap: 0.5rem;
+}
+
+.double-flex-container .data-row .data {
+  font-size: 1.2rem;
   color: var(--primary-color);
 }
 
-.turnos-container-flex .mi-turno-title {
-  margin: 1rem auto auto auto;
-  font-size: 1.3rem;
-  font-weight: 400;
-
+/* Mini Cards Grid */
+.mis-datos-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
 
-.turnos-container-flex .mi-turno-number {
-  margin: 0;
-  font-size: 1.7rem;
-  font-weight: 400;
+.minicard {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 5.5rem;
+  transition: all 0.2s;
 }
 
-
-.turnos-container-flex .patient-cant,
-.aprox-time {
-  margin: 1rem auto 1rem auto;
-  font-weight: 300;
-  color: #3a3a3a;
+.minicard:hover {
+  border-color: var(--primary-color);
+  background: rgba(24, 108, 178, 0.02);
 }
 
+.minicard .icon mat-icon {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+}
 
+.minicard .title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin-top: auto;
+  line-height: 1.2;
+}
+
+.minicard .subtitle {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 0.2rem;
+}
+
+/* Animations */
 @keyframes bouncePause {
-  0% {
+
+  0%,
+  10%,
+  20%,
+  100% {
     transform: translateY(0);
   }
 
   10% {
-    transform: translateY(-10px);
+    transform: translateY(-3px);
   }
 
   20% {
     transform: translateY(0);
   }
-
-  100% {
-    transform: translateY(0);
-  }
 }
 
 .ticket-icon {
-  animation: bouncePause 3s infinite;
-  animation-timing-function: ease-in-out;
+  animation: bouncePause 3s infinite ease-in-out;
 }
-
-
 
 .ticket-icon:hover {
   animation: bounceTicket 0.8s;
 }
 
-
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 600px) {
   .cita-card {
-    width: 100%;
+    border-radius: 20px;
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0;
   }
 }

@@ -47,7 +47,7 @@ export class DoctorService {
       return this.http.get<medico>(this.baseUrl +
         `api/medicos/${medicoId}`)
         .pipe(map(result => {
-          console.log(result)
+          console.log(Object.keys(result.horarios))
           return result;
         }), catchError(err => {
           console.log('Ha ocurrido un error al tratar de obtener al médico: ', err);

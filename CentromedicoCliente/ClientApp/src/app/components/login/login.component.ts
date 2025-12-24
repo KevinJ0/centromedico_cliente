@@ -11,35 +11,13 @@ import { AccountService } from 'src/app/services/account.service';
 import { trigger, style, animate, transition } from '@angular/animations';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
+import { fadeInAnimation } from '../../animations/animations';
 
 @AutoUnsubscribe()
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  animations: [
-    trigger(
-      'inOutAnimation',
-      [
-        transition(
-          ':enter',
-          [
-            style({ opacity: 0 }),
-            animate('30ms ease-out',
-              style({ opacity: 1 }))
-          ]
-        ),
-        transition(
-          ':leave',
-          [
-            style({ opacity: 1, position: "absolute" }),
-            animate('10ms ease-in',
-              style({ opacity: 0, position: "relative" }))
-          ]
-        )
-      ]
-    )
-  ]
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
 

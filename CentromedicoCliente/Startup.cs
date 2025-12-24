@@ -1,4 +1,4 @@
-using Amazon.S3;
+﻿using Amazon.S3;
 using AutoMapper;
 using Centromedico.Database.DbModels;
 using Centromedico.Database.Context;
@@ -28,6 +28,7 @@ using System.Reflection;
 using System.Text;
 using CentromedicoCliente.Profiles;
 using CentromedicoCliente.Interfaces.Services;
+using System.Net;
 
 namespace CentromedicoCliente
 
@@ -41,10 +42,17 @@ namespace CentromedicoCliente
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // configure strongly typed settings object
+
+
+
+            var secretKey = Configuration["Authorization:LlaveSecreta"];
+            if (string.IsNullOrEmpty(secretKey))
+            {
+                throw new Exception("La clave secreta de JWT no está configurada.");
+            }
+
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<TwilioSettings>();
 
@@ -152,34 +160,32 @@ namespace CentromedicoCliente
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
+
                 // Lockout settings.
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
             }).AddEntityFrameworkStores<MyDbContext>().
-                 AddDefaultTokenProviders(); ;
+                 AddDefaultTokenProviders();
 
             services.AddDbContext<MyDbContext>(option => option.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddAuthentication(op =>
-            {
-                op.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                op.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-                op.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).
-                AddJwtBearer(o =>
-                o.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Authorization:Issuer"],
-                    ValidAudience = Configuration["Authorization:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authorization:LlaveSecreta"])),
-                    ClockSkew = TimeSpan.Zero
-                });
+            services.AddAuthentication()
+     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, o =>
+     {
+         o.TokenValidationParameters = new TokenValidationParameters
+         {
+             ValidateIssuer = true,
+             ValidateAudience = true,
+             ValidateLifetime = true,
+             ValidateIssuerSigningKey = true,
+             ValidIssuer = Configuration["Authorization:Issuer"],
+             ValidAudience = Configuration["Authorization:Audience"],
+             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authorization:LlaveSecreta"])),
+             ClockSkew = TimeSpan.Zero
+         };
+     });
 
             services.AddAuthorization(options =>
             {
@@ -193,7 +199,7 @@ namespace CentromedicoCliente
                 {
                     Title = "Centro Medico Cliente Api",
                     Version = "v1",
-                    Description = "Esta api describe las funciones de los diferentes endpoint que trabajan en la applicaci�n que da vista al cliente",
+                    Description = "Esta api describe las funciones de los diferentes endpoint que trabajan en la applicación que da vista al cliente",
                 });
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";

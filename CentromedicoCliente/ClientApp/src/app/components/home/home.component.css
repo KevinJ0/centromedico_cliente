@@ -421,15 +421,15 @@ h6 {
 }
 
 .cards-container .card-doctor {
-  max-width: 280px;
+  width: 280px;
+  max-width: 100%;
   background-color: white;
   display: flex;
   align-items: center;
   flex-direction: column;
-  border-radius: 100%;
+  border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.06);
   padding: 2rem 1.5rem;
-  min-width: 240px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   transition: all 0.3s ease;
 }
@@ -698,6 +698,11 @@ app-barner {}
     order: 2;
     justify-content: center;
   }
+
+  .location-title {
+    justify-content: center;
+    width: 100%;
+  }
 }
 
 
@@ -860,5 +865,18 @@ app-barner {}
   .message-intro {
     display: flex;
     padding-left: clamp(0.3rem, 9vw, 5rem);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .about {
+    margin: 2rem 1rem;
+    padding: 2rem 1rem;
+  }
+
+  .about h1 {
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    font-weight: 600;
   }
 }

@@ -24,14 +24,7 @@
           <mat-card class="cita-card" *ngFor="let cita of citaCardList$ | async; trackBy: trackByCita">
 
             <mat-card-header>
-              <mat-action-row>
-                <!-- <div class="title">Cita #{{cita.id}}</div> -->
-                <div class="mat-action-subcontainer">
-                  <button mat-stroked-button class="pospone" color="warn" (click)="toggleDialogPospone(cita)">
-                    <mat-icon>schedule</mat-icon> Posponer
-                  </button>
-                </div>
-              </mat-action-row>
+
 
               <div class="medico-data">
                 <center>
@@ -196,6 +189,14 @@
 
 
             </mat-card-content>
+            <mat-action-row>
+              <!-- <div class="title">Cita #{{cita.id}}</div> -->
+              <div class="mat-action-subcontainer">
+                <button mat-stroked-button class="pospone" color="warn" (click)="toggleDialogPospone(cita)">
+                  <mat-icon>schedule</mat-icon> Posponer
+                </button>
+              </div>
+            </mat-action-row>
           </mat-card>
 
         </div>

@@ -141,6 +141,9 @@ main>h2 {
   transition-property: transform;
   flex-shrink: 0;
   max-width: 100%;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  max-width: 100%;
   /* Prevent overflow */
 }
 
@@ -152,7 +155,12 @@ main>h2 {
 
   .swiper-slide {
     width: 100% !important;
+    box-sizing: border-box;
     /* Force full width on mobile */
+  }
+
+  .title {
+    padding: 0 1rem;
   }
 
   .location-slide {

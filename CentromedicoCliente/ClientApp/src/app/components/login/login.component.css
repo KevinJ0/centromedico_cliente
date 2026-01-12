@@ -49,7 +49,11 @@ main::after {
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.8);
-  min-height: 650px;
+  /* Fixed height to prevent image from stretching the card */
+  height: 550px;
+  min-height: unset;
+  max-height: 90vh;
+  /* Safety for very small screens */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -60,6 +64,8 @@ main::after {
 
 .content-wrapper>mat-card>img {
   width: 50%;
+  height: 100%;
+  /* Force image to match card height */
   object-fit: cover;
   border-radius: 0;
   filter: brightness(0.95) contrast(1.05);
@@ -67,7 +73,7 @@ main::after {
 
 .flex-container {
   width: 50%;
-  padding: 4rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -76,8 +82,8 @@ main::after {
 }
 
 .logo {
-  width: 8rem;
-  margin-bottom: 2rem;
+  width: 6rem;
+  margin-bottom: 0.5rem;
   filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
   transition: transform 0.3s ease;
 }
@@ -91,7 +97,7 @@ mat-tab-group {
 }
 
 mat-card-header {
-  margin-bottom: 2rem;
+  margin-bottom: 0.5rem;
   text-align: center;
   justify-content: center;
   padding: 0;
@@ -109,7 +115,7 @@ mat-card-title {
 form {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.25rem;
 }
 
 mat-form-field {
@@ -127,8 +133,8 @@ mat-form-field {
 }
 
 .forgotpass {
-  text-align: right;
-  margin: 0.5rem 0 2rem;
+  text-align: center;
+  margin: 0.25rem 0 1rem;
 }
 
 .forgotpass a {
@@ -162,7 +168,7 @@ form button:hover {
 }
 
 .question {
-  margin-top: 2.5rem;
+  margin-top: 1rem;
   font-size: 0.95rem;
   color: #64748b;
   text-align: center;
@@ -203,31 +209,36 @@ form button:hover {
 /* Responsive */
 @media screen and (max-width: 960px) {
   main {
-    padding: 1rem;
-    align-items: flex-start;
-    padding-top: 2rem;
+    padding: 0.5rem;
+    padding: 0.5rem;
+    align-items: center;
+    padding-top: 0;
   }
 
   .content-wrapper>mat-card {
     flex-direction: column;
+    height: auto;
     min-height: auto;
     border-radius: 16px;
+    margin: 1.5rem 0;
   }
 
   .content-wrapper>mat-card>img {
-    width: 100%;
-    height: 200px;
-    display: block;
+    display: none;
   }
 
   .flex-container {
     width: 100%;
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1rem;
   }
 
   .logo {
-    width: 6rem;
-    margin-bottom: 1.5rem;
+    width: 5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  mat-card-title {
+    font-size: 1.8rem !important;
   }
 }
 

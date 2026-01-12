@@ -149,15 +149,23 @@ mat-card-header {
 /* Action Row (Posponer) */
 mat-action-row {
   border: none;
-  padding: 0;
-  margin-bottom: 1rem;
-  justify-content: flex-end;
+  padding: 0 1rem 1rem 1rem;
+  margin-bottom: 0;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.mat-action-subcontainer {
+  width: 100%;
 }
 
 .pospone {
+  width: 100%;
   border-radius: 12px !important;
   /* Consistent with app style */
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  padding: 0.5rem !important;
   font-weight: 600;
   border: 1px solid #fee2e2;
   color: #ef4444 !important;
@@ -386,5 +394,13 @@ mat-card-content {
     border-radius: 20px;
     box-shadow: none !important;
     border: 1px solid #e2e8f0;
+  }
+
+  .cita-card-container {
+    padding: 1rem 0 0 0;
+  }
+
+  mat-card-content {
+    padding: 1rem 0 0 0 !important;
   }
 }

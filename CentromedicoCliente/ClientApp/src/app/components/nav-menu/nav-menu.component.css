@@ -23,36 +23,27 @@ header {
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-header.header-shrunk {
-  background-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  border-bottom: 1px solid rgba(1, 149, 255, 0.1);
-}
+
 
 .header-container {
   width: 100%;
   max-width: var(--max-width);
   margin: auto;
-  padding: 0.75rem clamp(1rem, 5vw, 2.5rem);
+  padding: 0.4rem clamp(1rem, 3vw, 2rem);
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: padding 0.4s ease;
 }
 
-.header-shrunk .header-container {
-  padding: 0.4rem clamp(1rem, 3vw, 2rem);
-}
+
 
 .container-logo .main-logo {
-  width: clamp(180px, 40vw, 220px);
+  width: clamp(144px, 32vw, 176px);
   transition: all 0.4s ease;
 }
 
-.header-shrunk .main-logo {
-  width: clamp(144px, 32vw, 176px);
-  /* 20% smaller */
-}
+
 
 .container-logo .main-logo:hover {
   transform: scale(1.02);

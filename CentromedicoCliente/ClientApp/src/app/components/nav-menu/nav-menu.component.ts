@@ -1,4 +1,4 @@
-import { Component, OnDestroy, HostListener } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccountService } from 'src/app/services/account.service';
 import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
@@ -12,12 +12,6 @@ import { AutoUnsubscribe } from "ngx-auto-unsubscribe";
 export class NavMenuComponent {
   userName: string;
   userRole: string;
-  isShrunk = false;
-
-  @HostListener('window:scroll', [])
-  onWindowScroll() {
-    this.isShrunk = window.scrollY > 40;
-  }
 
   constructor(private accountSvc: AccountService, private router: Router) {
   }
@@ -41,6 +35,10 @@ export class NavMenuComponent {
   isExpanded = false;
   currentUserName$ = this.accountSvc.currentUserName;
   currentUserRole$ = this.accountSvc.currentUserRole;
+
+  get isLoginRoute() {
+    return this.router.url.includes('/paciente-login');
+  }
 
 
   logOut() {

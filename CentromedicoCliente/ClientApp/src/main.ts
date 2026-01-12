@@ -5,6 +5,7 @@ import { environment } from './environments/environment';
 
 export function getBaseUrl() {
 
+  //return "https://centromedicoxx1-001-site1.ktempurl.com/";
   //return "https://localhost:44337/";
   return document.getElementsByTagName('base')[0].href;
 

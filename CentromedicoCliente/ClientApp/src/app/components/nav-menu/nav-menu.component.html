@@ -21,7 +21,7 @@
       <li class="nav__item" [hidden]="!userName">
         <a class="nav__link">{{userName}}</a>
       </li>
-      <li [hidden]="userName" class="nav__item">
+      <li [hidden]="userName || isLoginRoute" class="nav__item">
         <a class="nav__link" [routerLink]="['/paciente-login']">Paciente Login </a>
       </li>
       <li class="nav__item" [hidden]="!userName">
@@ -51,7 +51,7 @@
 </header>
 
 
-<header id="menu-principal" [class.header-shrunk]="isShrunk">
+<header id="menu-principal">
   <div class="bg-container-sub">
     <div class="header-container">
 
@@ -86,7 +86,8 @@
         <ul>
           <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
           </li>
-          <li *ngIf="userName"> <a [routerLink]="['/mis-citas']" routerLinkActive="active" class="special-link">Mis Citas</a></li>
+          <li *ngIf="userName"> <a [routerLink]="['/mis-citas']" routerLinkActive="active" class="special-link">Mis
+              Citas</a></li>
           <li><a [routerLink]="['/medicos']" routerLinkActive="active">Directorio Médico</a></li>
           <li><a [routerLink]="['/contactos']" routerLinkActive="active">Contactos</a></li>
           <li><a [routerLink]="['/ubicacion']" routerLinkActive="active">Ubicaciones</a></li>
@@ -96,10 +97,8 @@
       <div class="login-btn-container">
         <ul>
           <li>
-
-            <a *ngIf="!userName" [routerLink]="['/paciente-login']">
+            <a *ngIf="!userName && !isLoginRoute" [routerLink]="['/paciente-login']">
               Paciente Login <mat-icon aria-hidden="true">login</mat-icon>
-
             </a>
           </li>
           <li *ngIf="userName">

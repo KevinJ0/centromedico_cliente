@@ -1,3 +1,5 @@
+/* You can add global styles to this file, and also import other style files */
+/* This is a tag that I need to override some of its properties */
 @font-face {
   font-family: "Lato";
   src: url("assets/fonts/Lato-Regular.ttf");
@@ -28,7 +30,7 @@
   src: url("assets/fonts/static/DancingScript-Regular.ttf");
 }
 
-/* --------Variables --------- */
+/* ----------------- */
 #loader {
   gap: 1rem;
   position: absolute;
@@ -54,116 +56,61 @@
   box-sizing: border-box;
 }
 
-[class*="btn"] {
-  border-radius: var(--border-radius-btn) !important;
-}
-
-/* --------Variables Globales --------- */
 :root {
-  /* Colors */
   --primary-color: #186CB2;
-  --primary-dark: #12528a;
-  --secondary-color: #f8fafc;
-  --accent-color: #3b82f6;
-  --text-color: #1e293b;
-  --subtitle-color: #64748b;
-
-  /* Typography */
-  --font-heading: 'Montserrat', sans-serif;
-  --font-body: 'Roboto', sans-serif;
-  --text-size-base: 16px;
-
-  /* Legacy Variables (Restored) */
+  --secondary-color: #f5f5f5;
+  --subtitle-color: #666;
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --max-width: 1360px;
+  --border-radius: 5px;
+  --screen-width: 320px;
+  --screen-height: 560px;
   --header-bg-color: #25283d;
   --splash-bg-color: #186CB2;
+  --main-padding: 2rem;
+  --text-color: #343a40;
   --highlight-color: #6c757d;
-
-  /* Layout & Spacing */
-  --main-padding: clamp(1rem, 5vw, 4rem);
-  --border-radius-card: 12px;
-  --border-radius-btn: 12px;
-  /* Reverted to 12px per user request */
-  --card-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.08);
-  --max-width: 1400px;
 }
 
-/* Global Reset & Base Styles */
+
+app-root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.background-red {
+  background-color: rgb(153, 50, 50);
+  color: white;
+}
+
 html,
 body {
   height: 100%;
+}
+
+body {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--text-size-base);
-  color: var(--text-color);
-  -webkit-font-smoothing: antialiased;
-  background-color: #fdfdfd;
-}
-
-/* Typography Standardization */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  color: #0f172a;
-  /* Slate 900 */
-  margin-top: 0 0 1rem 0;
-  line-height: 1.2;
-}
-
-h1 {
-  font-size: clamp(2rem, 5vw, 3rem);
-}
-
-h2 {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-}
-
-h3 {
-  font-size: clamp(1.5rem, 3vw, 2rem);
-}
-
-p {
-  line-height: 1.6;
-  margin-bottom: 1rem;
-  color: var(--subtitle-color);
-}
-
-/* Buttons Standardization */
-button,
-.btn,
-.mat-button,
-.mat-raised-button,
-.mat-stroked-button,
-.mat-flat-button {
-  font-family: var(--font-body) !important;
-  font-weight: 500 !important;
-  letter-spacing: 0.5px !important;
-  border-radius: var(--border-radius-btn) !important;
-  text-transform: none !important;
-  /* Avoid aggressive uppercase */
-  padding: 0.5rem 1.5rem !important;
-}
-
-.card-doctor {
-  border-radius: var(--border-radius-btn) !important;
-}
-
-/* Material Design Overrides for Consistency */
-.mat-card {
-  border-radius: var(--border-radius-card) !important;
-  box-shadow: var(--card-shadow) !important;
-  font-family: var(--font-body) !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 /* this is to avoid nav and footer's main */
 main main {
   max-width: 1360px;
   margin: auto;
-  padding: 8rem clamp(0.5rem, 2vw, 4rem) 3rem clamp(0.5rem, 2vw, 4rem);
+  padding: 3rem clamp(0.5rem, 2vw, 4rem);
 }
 
 /* this is to center progress-bar container */
@@ -197,19 +144,21 @@ mat-expansion-panel-header .mat-content {
   background-color: white;
 }
 
+.form-search button {
+  border-radius: 0;
+}
 
 #menu-mobile {
   display: none;
 }
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 850px) {
   #menu-principal {
     display: none;
   }
 
   .main {
-    margin-top: 0 !important;
-
+    margin-top: 5rem !important;
   }
 
   #menu-mobile {

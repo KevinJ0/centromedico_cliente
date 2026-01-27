@@ -164,8 +164,8 @@ export class AccountService {
 
 
   get isLoggesIn() {
-    if(localStorage.getItem("loginStatus"))
-    this.loginStatus.next((localStorage.getItem("loginStatus").toLowerCase() == '1'));
+    if (localStorage.getItem("loginStatus"))
+      this.loginStatus.next((localStorage.getItem("loginStatus").toLowerCase() == '1'));
     console.log(localStorage.getItem("loginStatus"));
     return this.loginStatus.asObservable();
   }

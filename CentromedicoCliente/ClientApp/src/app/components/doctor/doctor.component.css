@@ -88,7 +88,7 @@
 .cta-button {
   padding: 1.5rem 2.5rem !important;
   font-size: 1.1rem !important;
-  border-radius: var(--border-radius-btn) !important;
+  border-radius: 12px !important;
   display: flex;
   align-items: center;
   gap: 12px;

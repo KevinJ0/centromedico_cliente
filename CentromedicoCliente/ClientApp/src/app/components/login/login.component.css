@@ -160,6 +160,7 @@ form button {
   font-weight: 700 !important;
   box-shadow: 0 10px 20px -5px rgba(24, 108, 178, 0.4);
   margin-top: 1rem;
+  border-radius: 12px;
 }
 
 form button:hover {

@@ -52,6 +52,10 @@ export class ListAppointmentComponent implements OnInit {
     this.router.navigate(['/ver-turnos/' + medicoId]); // Cambia '/ruta-deseada' por la ruta a la que quieras redirigir
   }
 
+  navigateToMedicos() {
+    this.router.navigate(['/medicos']);
+  }
+
   ngOnInit(): void {
     this.citaSvc.GetCitaList().subscribe((r) => {
       this.loading = false;

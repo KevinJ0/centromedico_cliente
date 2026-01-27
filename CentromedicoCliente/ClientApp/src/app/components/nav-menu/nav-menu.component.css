@@ -6,9 +6,6 @@
   box-sizing: border-box;
 }
 
-header * {
-  z-index: 99;
-}
 
 header {
   position: sticky;
@@ -137,6 +134,7 @@ header {
   gap: 8px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 10px rgba(1, 149, 255, 0.2);
+  cursor: pointer;
 }
 
 .login-btn-container ul li a:hover {
@@ -165,7 +163,10 @@ header {
 
 .logout {
   background-color: #ff4d4d !important;
+  color: white !important;
   box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2) !important;
+  display: flex !important;
+  align-items: center;
 }
 
 .logout:hover {

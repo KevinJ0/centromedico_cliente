@@ -63,6 +63,7 @@ import player from 'lottie-web';
 import { SignalrCustomService } from './services/signalr-custom.service';
 import { TurnosMedicoService } from './services/turnos-medico.service';
 import { ImageLoaderComponent } from './components/image-loader/image-loader.component';
+import { A11yModule } from "@angular/cdk/a11y";
 
 export function playerFactory() {
   return player;
@@ -158,8 +159,8 @@ export const MY_FORMATS = {
       { path: 'contactos', component: ContactComponent },
       { path: 'faq', component: FaqComponent },
       { path: '**', component: HomeComponent },
-    ],
-      { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', useHash: false }),
+    ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', useHash: false }),
+    A11yModule
   ],
   providers: [
 

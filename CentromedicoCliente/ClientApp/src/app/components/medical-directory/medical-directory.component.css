@@ -85,11 +85,11 @@ h6 {
 }
 
 .form-search .insurance-input {
-  border-radius: 0 5px 5px 0;
+  border-radius: 0;
 }
 
 .search-btn {
-  margin-left: 5px;
+  margin-left: 0px;
 }
 
 .content-search {
@@ -253,8 +253,9 @@ mat-progress-spinner {
   }
 
   .form-search mat-form-field {
-    border-radius: 5px !important;
+    border-radius: 5px;
   }
+
 
   .search-btn {
     margin-left: 0;

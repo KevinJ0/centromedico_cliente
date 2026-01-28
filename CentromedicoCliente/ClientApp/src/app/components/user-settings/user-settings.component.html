@@ -1,0 +1,182 @@
+<div class="settings-container" data-aos="fade-up">
+    <div class="settings-header">
+        <div class="title-section">
+            <mat-icon class="header-icon">manage_accounts</mat-icon>
+            <h1>Datos de usuario</h1>
+        </div>
+        <p class="subtitle">Administra tu información personal y seguridad de la cuenta.</p>
+    </div>
+
+    <div class="settings-grid" *ngIf="!loading; else loader">
+        <div class="main-column">
+            <mat-card class="settings-card">
+                <mat-card-header>
+                    <mat-icon mat-card-avatar>person</mat-icon>
+                    <mat-card-title>Perfil Personal</mat-card-title>
+                    <mat-card-subtitle>Información básica de tu cuenta</mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <form [formGroup]="userForm" class="user-form">
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nombre</mat-label>
+                                <input matInput formControlName="nombre">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Apellido</mat-label>
+                                <input matInput formControlName="apellido">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>ID / Cédula</mat-label>
+                                <input matInput formControlName="doc_identidad">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Teléfono</mat-label>
+                                <input matInput formControlName="contacto" mask="000-000-0000">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Fecha de Nacimiento</mat-label>
+                                <input matInput [matDatepicker]="picker" formControlName="fecha_nacimiento">
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Sexo</mat-label>
+                                <mat-select formControlName="sexo">
+                                    <mat-option value="m">
+                                        <div class="option-content">
+                                            <mat-icon class="male-icon">male</mat-icon> Masculino
+                                        </div>
+                                    </mat-option>
+                                    <mat-option value="f">
+                                        <div class="option-content">
+                                            <mat-icon class="female-icon">female</mat-icon> Femenino
+                                        </div>
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Correo Electrónico</mat-label>
+                            <input matInput formControlName="correo">
+                            <mat-icon matSuffix>lock</mat-icon>
+                            <mat-hint>El correo no puede ser modificado</mat-hint>
+                        </mat-form-field>
+                    </form>
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                    <button mat-flat-button color="primary" class="save-btn form-action-btn" (click)="saveUserInfo()"
+                        [disabled]="saving || userForm.invalid">
+                        <mat-icon *ngIf="!saving">save</mat-icon>
+                        <mat-spinner diameter="20" *ngIf="saving"></mat-spinner>
+                        <span>Guardar Cambios</span>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+
+            <mat-card class="settings-card security-card">
+                <mat-card-header>
+                    <mat-icon mat-card-avatar>security</mat-icon>
+                    <mat-card-title>Seguridad</mat-card-title>
+                    <mat-card-subtitle>Cambia tu contraseña de acceso</mat-card-subtitle>
+                </mat-card-header>
+
+                <mat-card-content>
+                    <form [formGroup]="passwordForm" class="password-form">
+                        <mat-form-field appearance="outline" class="full-width">
+                            <mat-label>Contraseña Actual</mat-label>
+                            <input matInput type="password" formControlName="currentPassword">
+                        </mat-form-field>
+
+                        <div class="form-row">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Nueva Contraseña</mat-label>
+                                <input matInput type="password" formControlName="newPassword">
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline">
+                                <mat-label>Confirmar Nueva Contraseña</mat-label>
+                                <input matInput type="password" formControlName="confirmPassword">
+                            </mat-form-field>
+                        </div>
+                    </form>
+                </mat-card-content>
+
+                <mat-card-actions align="end">
+                    <button mat-stroked-button color="primary" class="form-action-btn" (click)="changePassword()"
+                        [disabled]="passwordForm.invalid">
+                        <mat-icon>lock_open</mat-icon>
+                        <span>Actualizar Contraseña</span>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+        </div>
+
+        <div class="side-column">
+            <mat-card class="info-card meta-card">
+                <div class="user-preview">
+                    <div class="avatar-container" [class.male]="userInfo.sexo === 'm'"
+                        [class.female]="userInfo.sexo === 'f'">
+                        <mat-icon>{{ userInfo.sexo === 'm' ? 'male' : 'female' }}</mat-icon>
+                    </div>
+                    <h3>{{ userInfo.nombre }} {{ userInfo.apellido }}</h3>
+                    <span class="user-badge">{{ accountType }}</span>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div class="meta-list">
+                    <div class="meta-item">
+                        <mat-icon>calendar_today</mat-icon>
+                        <div class="meta-content">
+                            <span class="label">Fecha de creación</span>
+                            <span class="value">{{ accountCreationDate | date:'dd MMM, yyyy' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="meta-item">
+                        <mat-icon>history</mat-icon>
+                        <div class="meta-content">
+                            <span class="label">Último acceso</span>
+                            <span class="value">{{ lastLogin | date:'short' }}</span>
+                        </div>
+                    </div>
+
+                    <div class="meta-item">
+                        <mat-icon>verified</mat-icon>
+                        <div class="meta-content">
+                            <span class="label">Estado de cuenta</span>
+                            <span class="value status-active">{{ accountStatus }}</span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <div class="help-box" data-aos="fade-up">
+                <mat-icon>help_outline</mat-icon>
+                <h4>¿Necesitas ayuda?</h4>
+                <p>Si tienes problemas con tu cuenta, contacta a soporte técnico.</p>
+                <button mat-button color="primary">Contactar Soporte</button>
+            </div>
+        </div>
+    </div>
+
+    <ng-template #loader>
+        <div class="loader-container">
+            <mat-spinner diameter="50"></mat-spinner>
+            <p>Cargando información...</p>
+        </div>
+    </ng-template>
+</div>

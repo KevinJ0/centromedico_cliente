@@ -1,0 +1,353 @@
+.settings-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.settings-header {
+    margin-bottom: 2.5rem;
+    text-align: left;
+}
+
+.title-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-icon {
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    color: var(--primary-color);
+}
+
+.settings-header h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0;
+    letter-spacing: -0.5px;
+}
+
+.settings-header .subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 2rem;
+}
+
+.settings-card {
+    border-radius: 20px !important;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03) !important;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+mat-card-header {
+    padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+    background: rgba(24, 108, 178, 0.02);
+}
+
+
+mat-card-header mat-icon[mat-card-avatar] {
+    color: var(--primary-color);
+    background: white;
+    padding: 10px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    margin-right: 16px !important;
+}
+
+mat-card-title {
+    font-weight: 700 !important;
+    color: #334155;
+}
+
+mat-card-content {
+    padding: 1.5rem !important;
+}
+
+mat-card-actions {
+    padding: 0 0 1.5rem 0 !important;
+    margin: 0 !important;
+}
+
+.user-form,
+.password-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.form-action-btn {
+    padding: 0 1.5rem !important;
+    height: 3.2rem;
+    border-radius: 12px !important;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-width: 180px;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+
+mat-icon[matSuffix] {
+    margin-left: 8px;
+    color: #94a3b8;
+}
+
+::ng-deep .mat-form-field-suffix {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+    padding: 1em 0 1em 0 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-suffix {
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+mat-datepicker-toggle {
+    margin-left: 4px;
+}
+
+/* Side Column Styles */
+.info-card {
+    padding: 2rem !important;
+    border-radius: 20px !important;
+    text-align: center;
+}
+
+.user-preview {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.avatar-container {
+    width: 90px;
+    height: 90px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.avatar-container mat-icon {
+    font-size: 3.5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    color: white;
+}
+
+.avatar-container.male {
+    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+}
+
+.avatar-container.female {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+}
+
+.user-preview h3 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 0.5rem 0;
+}
+
+.user-badge {
+    background: rgba(24, 108, 178, 0.1);
+    color: var(--primary-color);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.meta-list {
+    margin-top: 1.5rem;
+    padding-top: 2rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.form-action-btn mat-icon {
+    margin-right: 8px !important;
+    margin-left: 0 !important;
+}
+
+.meta-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.meta-item mat-icon {
+    color: #94a3b8;
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 4px;
+}
+
+.meta-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.meta-content .label {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.meta-content .value {
+    font-size: 0.95rem;
+    color: #334155;
+    font-weight: 600;
+}
+
+.status-active {
+    color: #10b981 !important;
+}
+
+.help-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 20px;
+    margin-top: 2rem;
+    border: 1px dashed #cbd5e1;
+    text-align: center;
+}
+
+.help-box mat-icon {
+    color: #94a3b8;
+    margin-bottom: 0.5rem;
+}
+
+.help-box h4 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+}
+
+.help-box p {
+    font-size: 0.9rem;
+    color: #64748b;
+    line-height: 1.4;
+    margin-bottom: 1rem;
+}
+
+.loader-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 1rem;
+    color: #64748b;
+}
+
+@media screen and (max-width: 960px) {
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .side-column {
+        order: -1;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+
+    .settings-header h1 {
+        font-size: 1.8rem;
+    }
+
+    .form-action-btn {
+        width: 100% !important;
+        margin: 0.5rem 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .settings-container {
+        padding: 0 0.75rem;
+        margin: 1rem auto;
+    }
+
+    mat-card-header {
+        padding: 1rem 1rem 0.5rem 1rem;
+    }
+
+    mat-card-content {
+        padding: 1rem !important;
+    }
+
+    .settings-header .subtitle {
+        font-size: 1rem;
+    }
+}
+
+/* Option Icons */
+.option-content {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.option-content mat-icon {
+    margin-right: 4px;
+}
+
+.male-icon {
+    color: #3b82f6;
+}
+
+.female-icon {
+    color: #ec4899;
+}

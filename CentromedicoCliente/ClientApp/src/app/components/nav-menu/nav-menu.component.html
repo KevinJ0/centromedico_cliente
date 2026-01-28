@@ -7,7 +7,6 @@
       </a>
     </div>
 
-    <!-- ACTUAL NAVIGATION MENU -->
     <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
       <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Inicio</a></li>
       <li class="nav__item" [hidden]="!userName">
@@ -16,20 +15,18 @@
       <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
       <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
       <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
-      <!-- <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li> -->
       <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicaciones</a></li>
-      <li class="nav__item" [hidden]="!userName">
-        <a class="nav__link">{{userName}}</a>
-      </li>
       <li [hidden]="userName || isLoginRoute" class="nav__item">
         <a class="nav__link" [routerLink]="['/paciente-login']">Paciente Login </a>
+      </li>
+      <li class="nav__item" [hidden]="!userName">
+        <a class="nav__link" [routerLink]="['/ajustes-usuario']">Ajustes</a>
       </li>
       <li class="nav__item" [hidden]="!userName">
         <a class="nav__link" (click)="logOut()">Cerrar sesión</a>
       </li>
     </ul>
 
-    <!-- MENU TOGGLE BUTTON -->
     <a href="#nav" class="nav__toggle" role="button" aria-expanded="false" aria-controls="menu">
       <svg class="menuicon" xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50">
         <title>Toggle Menu</title>
@@ -43,7 +40,6 @@
       </svg>
     </a>
 
-    <!-- ANIMATED BACKGROUND ELEMENT -->
     <div class="splash"></div>
 
   </nav>
@@ -96,15 +92,30 @@
 
       <div class="login-btn-container">
         <ul>
-          <li>
-            <a *ngIf="!userName && !isLoginRoute" [routerLink]="['/paciente-login']">
+          <li *ngIf="!userName && !isLoginRoute">
+            <a [routerLink]="['/paciente-login']">
               Paciente Login <mat-icon aria-hidden="true">login</mat-icon>
             </a>
           </li>
-          <li *ngIf="userName">
-            <a class="logout" (click)="logOut()">Cerrar sesión <mat-icon>logout
-              </mat-icon>
-            </a>
+          <li *ngIf="userName" style="line-height: 0;">
+            <button [matMenuTriggerFor]="userMenu" class="settings-btn" matTooltip="Mi cuenta">
+              <mat-icon style="margin: 0 !important;">account_circle</mat-icon>
+            </button>
+
+            <mat-menu #userMenu="matMenu" xPosition="before" class="custom-user-menu">
+              <div class="menu-user-info">
+                <span class="user-name-label">{{userName}}</span>
+              </div>
+              <mat-divider></mat-divider>
+              <a mat-menu-item [routerLink]="['/ajustes-usuario']">
+                <mat-icon color="primary">settings</mat-icon>
+                <span>Ajustes</span>
+              </a>
+              <button mat-menu-item (click)="logOut()">
+                <mat-icon color="warn">logout</mat-icon>
+                <span>Cerrar sesión</span>
+              </button>
+            </mat-menu>
           </li>
         </ul>
       </div>

@@ -1,7 +1,5 @@
-
-
-  <main class="main">
-    <app-nav-menu></app-nav-menu>
-    <router-outlet></router-outlet>
-  </main>
-  <app-footer></app-footer> 
+<main class="main" [class.page-bg]="!isHome">
+  <app-nav-menu></app-nav-menu>
+  <router-outlet></router-outlet>
+</main>
+<app-footer></app-footer>

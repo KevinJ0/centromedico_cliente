@@ -38,6 +38,7 @@ header {
 .container-logo .main-logo {
   width: clamp(144px, 32vw, 176px);
   transition: all 0.4s ease;
+  display: block;
 }
 
 
@@ -86,7 +87,6 @@ header {
   font-weight: 600;
 }
 
-/* Special Design for Mis Citas */
 .special-link {
   background-color: rgba(1, 149, 255, 0.1);
   color: var(--primary-color) !important;
@@ -119,6 +119,10 @@ header {
 
 .login-btn-container ul {
   list-style: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
 }
 
 .login-btn-container ul li a {
@@ -135,6 +139,7 @@ header {
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 4px 10px rgba(1, 149, 255, 0.2);
   cursor: pointer;
+  height: fit-content;
 }
 
 .login-btn-container ul li a:hover {
@@ -167,10 +172,64 @@ header {
   box-shadow: 0 4px 10px rgba(255, 77, 77, 0.2) !important;
   display: flex !important;
   align-items: center;
+  height: fit-content;
 }
 
 .logout:hover {
   box-shadow: 0 6px 15px rgba(255, 77, 77, 0.3) !important;
+}
+
+.settings-btn {
+  background-color: rgba(24, 108, 178, 0.05) !important;
+  color: var(--primary-color) !important;
+  margin-left: 1rem;
+  padding: 0 !important;
+  width: 42px !important;
+  height: 42px !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  line-height: 0 !important;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-btn:hover {
+  background-color: var(--primary-color) !important;
+  color: white !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(1, 149, 255, 0.2) !important;
+}
+
+.settings-btn mat-icon {
+  margin: 0 !important;
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+::ng-deep .custom-user-menu {
+  border-radius: 12px !important;
+  margin-top: 8px !important;
+  min-width: 180px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+}
+
+.menu-user-info {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name-label {
+  font-weight: 700;
+  color: #334155;
+  font-size: 0.95rem;
 }
 
 /* Hide legacy styles that are no longer used */

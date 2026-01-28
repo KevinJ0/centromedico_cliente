@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { trigger, style, animate, transition } from '@angular/animations';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 import * as _moment from 'moment';
 import * as AOS from 'aos';
 const moment = _moment;
@@ -36,10 +38,22 @@ const moment = _moment;
 
 export class AppComponent implements OnInit {
   title = 'CentromedicoCliente';
+  isHome: boolean = true;
+
   constructor(
     private domSanitizer: DomSanitizer,
-    private matIconRegistry: MatIconRegistry) {
+    private matIconRegistry: MatIconRegistry,
+    private router: Router) {
     moment.locale('es');
+
+    this.isHome = window.location.pathname === '/' || window.location.pathname === '';
+
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      const currentRoute = event.urlAfterRedirects.split('?')[0];
+      this.isHome = currentRoute === '/' || currentRoute === '';
+    });
 
     this.matIconRegistry.addSvgIcon(
       "twitter",

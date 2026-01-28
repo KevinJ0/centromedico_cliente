@@ -50,6 +50,7 @@ import { DialogPosponeAppointmentComponent } from './components/list-appointment
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { FaqComponent } from './components/faq/faq.component';
 import { FaqExpansionPanelComponent } from './components/faq/faq-expansion-panel/faq-expansion-panel.component';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -64,6 +65,7 @@ import { SignalrCustomService } from './services/signalr-custom.service';
 import { TurnosMedicoService } from './services/turnos-medico.service';
 import { ImageLoaderComponent } from './components/image-loader/image-loader.component';
 import { A11yModule } from "@angular/cdk/a11y";
+import { UserSettingsComponent } from './components/user-settings/user-settings.component';
 
 export function playerFactory() {
   return player;
@@ -105,6 +107,7 @@ export const MY_FORMATS = {
     DialogSuccessedEmail,
     ImageLoaderComponent,
     DialogPosponeAppointmentComponent,
+    UserSettingsComponent,
   ],
   schemas: [NO_ERRORS_SCHEMA],
   imports: [
@@ -134,6 +137,7 @@ export const MY_FORMATS = {
     MatSelectModule,
     MatProgressSpinnerModule,
     MatIconModule,
+    MatMenuModule,
     MatDatepickerModule,
     MatCardModule,
     FormsModule,
@@ -158,6 +162,7 @@ export const MY_FORMATS = {
       { path: 'ubicacion', component: LocationComponent },
       { path: 'contactos', component: ContactComponent },
       { path: 'faq', component: FaqComponent },
+      { path: 'ajustes-usuario', component: UserSettingsComponent, canActivate: [AuthGuardService] },
       { path: '**', component: HomeComponent },
     ], { scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled', useHash: false }),
     A11yModule

@@ -144,6 +144,10 @@ mat-expansion-panel-header .mat-content {
   background-color: white;
 }
 
+.page-bg {
+  background-color: #fbfcfd;
+}
+
 .form-search button {
   border-radius: 0;
 }

@@ -53,6 +53,15 @@
                             <mat-form-field appearance="outline">
                                 <mat-label>Sexo</mat-label>
                                 <mat-select formControlName="sexo">
+                                    <mat-select-trigger>
+                                        <div class="option-content">
+                                            <mat-icon [class.male-icon]="userForm.get('sexo').value === 'm'"
+                                                [class.female-icon]="userForm.get('sexo').value === 'f'">
+                                                {{ userForm.get('sexo').value === 'm' ? 'male' : 'female' }}
+                                            </mat-icon>
+                                            {{ userForm.get('sexo').value === 'm' ? 'Masculino' : 'Femenino' }}
+                                        </div>
+                                    </mat-select-trigger>
                                     <mat-option value="m">
                                         <div class="option-content">
                                             <mat-icon class="male-icon">male</mat-icon> Masculino

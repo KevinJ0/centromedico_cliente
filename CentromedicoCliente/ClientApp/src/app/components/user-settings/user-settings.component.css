@@ -80,7 +80,7 @@ mat-card-content {
 }
 
 mat-card-actions {
-    padding: 0 0 1.5rem 0 !important;
+    padding: 0 1.5rem 1.5rem 1.5rem !important;
     margin: 0 !important;
 }
 

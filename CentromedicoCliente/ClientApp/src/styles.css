@@ -161,10 +161,6 @@ mat-expansion-panel-header .mat-content {
     display: none;
   }
 
-  .main {
-    margin-top: 5rem !important;
-  }
-
   #menu-mobile {
     background-color: #e0e0e0;
     display: block;

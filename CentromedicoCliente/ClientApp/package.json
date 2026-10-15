@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "prod": "ng build -c production --base-href /centromedicocliente/",
-    "build:ssr": "ng run CentromedicoCliente:server:dev",
-    "test": "ng test",
+    "start": "node --openssl-legacy-provider node_modules/@angular/cli/bin/ng serve",
+    "build": "node --openssl-legacy-provider node_modules/@angular/cli/bin/ng build",
+    "prod": "node --openssl-legacy-provider node_modules/@angular/cli/bin/ng build -c production --base-href /centromedicocliente/",
+    "build:ssr": "node --openssl-legacy-provider node_modules/@angular/cli/bin/ng run CentromedicoCliente:server:dev",
+    "test": "node --openssl-legacy-provider node_modules/@angular/cli/bin/ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },

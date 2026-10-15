@@ -39,6 +39,7 @@ import { DateAdapter, MatNativeDateModule, MatRippleModule, MAT_DATE_FORMATS, MA
 import { DoctorCardComponent } from './components/medical-directory/doctor-card/doctor-card.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { NoProfilePhotoPipe } from './Pipes/no-imagen.pipe';
+import { CutTextPipe } from './Pipes/cut-text.pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DoctorComponent } from './components/doctor/doctor.component';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -96,6 +97,7 @@ export const MY_FORMATS = {
     LoginComponent,
     MedicalDirectoryComponent,
     NoProfilePhotoPipe,
+    CutTextPipe,
     TicketAppointmentComponent,
     DoctorCardComponent,
     DoctorComponent,

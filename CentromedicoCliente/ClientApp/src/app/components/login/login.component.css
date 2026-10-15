@@ -1,84 +1,85 @@
+/* Login shell: full-bleed background photo with a floating card on the right.
+   The photo keeps its negative space on the centre-right, so that is where
+   the login card goes. */
 main {
-  min-height: calc(100vh - 80px);
+  /* The global `main main` rule in styles.css caps nested mains at 1360px and
+     centres them. On the login that would leave dead gutters beside a
+     full-bleed photo, so opt out. Emulated encapsulation gives this rule
+     (0,1,1) against that (0,0,2), so no !important is needed. */
+  max-width: none;
+  margin: 0;
+
+  /* Only the sticky nav sits above the login, and it occupies 46px of flow.
+     Sizing against 100vh would push the photo 46px past the fold. */
+  min-height: calc(100vh - 46px);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f0f7ff 0%, #e6f0fa 100%);
   padding: 2rem;
+
+  /* Fallback tone while the photo loads */
+  background-color: #eef4fb;
+
+  background-image: url('../../../assets/imgs/login-bg-pos.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   position: relative;
   overflow: hidden;
 }
 
-/* Decorative background shapes */
-main::before,
+/* Soft light wash on the right so the card keeps contrast without darkening
+   the photo. The counter stays crisp on the lower left. */
 main::after {
   content: '';
   position: absolute;
-  width: 500px;
-  height: 500px;
-  border-radius: 50%;
+  inset: 0;
   z-index: 0;
-  filter: blur(80px);
-  opacity: 0.6;
-}
-
-main::before {
-  background: #c3e0ff;
-  top: -100px;
-  left: -100px;
-}
-
-main::after {
-  background: #dbeafe;
-  bottom: -100px;
-  right: -100px;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0.45) 72%,
+      rgba(255, 255, 255, 0.68) 100%);
 }
 
 .content-wrapper {
   width: 100%;
-  max-width: 1100px;
+  max-width: 1180px;
   z-index: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .content-wrapper>mat-card {
   display: flex;
-  flex-direction: row;
-  border-radius: 24px;
-  overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1), 0 10px 20px -5px rgba(0, 0, 0, 0.04);
-  background-color: rgba(255, 255, 255, 0.85);
+  flex-direction: column;
+  width: 100%;
+  max-width: 430px;
+  border-radius: 28px;
+  box-shadow: 0 25px 50px -12px rgba(24, 108, 178, 0.2), 0 10px 20px -5px rgba(24, 108, 178, 0.08);
+  background-color: rgba(255, 255, 255, 0.93);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  /* Fixed height to prevent image from stretching the card */
-  height: 550px;
-  min-height: unset;
+  border: 1px solid rgba(255, 255, 255, 0.9);
   max-height: 90vh;
-  /* Safety for very small screens */
+  overflow-y: auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .content-wrapper>mat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 30px 60px -15px rgba(24, 108, 178, 0.15);
-}
-
-.content-wrapper>mat-card>img {
-  width: 50%;
-  height: 100%;
-  /* Force image to match card height */
-  object-fit: cover;
-  border-radius: 0;
-  filter: brightness(0.95) contrast(1.05);
+  transform: translateY(-4px);
+  box-shadow: 0 30px 60px -15px rgba(24, 108, 178, 0.25);
 }
 
 .flex-container {
-  width: 50%;
-  padding: 1.5rem;
+  width: 100%;
+  padding: 2rem 2rem 1.75rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.6);
+  /* Keeps the card from jumping when switching between Acceso and Registro */
+  min-height: 470px;
 }
 
 .logo {
@@ -122,10 +123,34 @@ mat-form-field {
   width: 100%;
 }
 
+/* === Pill inputs (border-radius: 9999px) ===
+   A Material 12 outlined field is drawn with three pieces: start / gap / end.
+   Rounding only the two outer pieces yields a true pill while keeping the
+   label cut-out (the gap) intact. min-width must be at least half the field
+   height, otherwise the browser clamps the radius and you get a small corner
+   instead of a semicircle. */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start {
+  border-radius: 9999px 0 0 9999px !important;
+  min-width: 27px !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  border-radius: 0 9999px 9999px 0 !important;
+  min-width: 27px !important;
+}
+
+/* Clear the text and the floating label away from the semicircular ends.
+   The field's font-size base is 14px, so 1.75em (24.5px) left both the label
+   and the input text ~2px inside the 25.6px left curve. 2.25em (31.5px) clears
+   it with room to spare. */
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+  padding: 0 2.25em !important;
+}
+
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: rgba(148, 163, 184, 0.4) !important;
-  background-color: rgba(255, 255, 255, 0.5);
-  border-radius: 12px;
+  color: rgba(148, 163, 184, 0.45) !important;
+  background-color: rgba(255, 255, 255, 0.72);
+  border-radius: 9999px;
 }
 
 ::ng-deep .mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
@@ -143,8 +168,8 @@ mat-form-field {
   text-decoration: none;
   font-weight: 500;
   transition: all 0.2s;
-  padding: 5px;
-  border-radius: 6px;
+  padding: 5px 12px;
+  border-radius: 9999px;
 }
 
 .forgotpass a:hover {
@@ -160,7 +185,7 @@ form button {
   font-weight: 700 !important;
   box-shadow: 0 10px 20px -5px rgba(24, 108, 178, 0.4);
   margin-top: 1rem;
-  border-radius: 12px;
+  border-radius: 9999px !important;
 }
 
 form button:hover {
@@ -210,27 +235,33 @@ form button:hover {
 /* Responsive */
 @media screen and (max-width: 960px) {
   main {
-    padding: 0.5rem;
-    padding: 0.5rem;
+    padding: 1rem;
     align-items: center;
-    padding-top: 0;
+    justify-content: center;
+  }
+
+  /* On narrow viewports the card covers the photo, so lighten it top-to-bottom
+     instead of left-to-right and raise the card opacity for legibility. */
+  main::after {
+    background: linear-gradient(180deg,
+        rgba(255, 255, 255, 0.35) 0%,
+        rgba(255, 255, 255, 0.72) 55%,
+        rgba(255, 255, 255, 0.85) 100%);
+  }
+
+  .content-wrapper {
+    justify-content: center;
   }
 
   .content-wrapper>mat-card {
-    flex-direction: column;
-    height: auto;
-    min-height: auto;
-    border-radius: 16px;
-    margin: 1.5rem 0;
-  }
-
-  .content-wrapper>mat-card>img {
-    display: none;
+    max-width: 100%;
+    border-radius: 24px;
+    background-color: rgba(255, 255, 255, 0.96);
   }
 
   .flex-container {
-    width: 100%;
     padding: 1.5rem 1rem;
+    min-height: auto;
   }
 
   .logo {
@@ -240,6 +271,15 @@ form button:hover {
 
   mat-card-title {
     font-size: 1.8rem !important;
+  }
+}
+
+/* Below 850px the nav swaps to the mobile header (#menu-mobile), which is 80px
+   tall instead of the desktop 46px. Reusing the desktop value here overflows
+   the fold by 34px. */
+@media screen and (max-width: 850px) {
+  main {
+    min-height: calc(100vh - 80px);
   }
 }
 

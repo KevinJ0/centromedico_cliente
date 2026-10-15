@@ -1,17 +1,14 @@
-<div>
+<div class="home">
   <div class="background">
     <div class="message-container">
       <div class="badge" data-aos="fade-right">Nuestra historia</div>
       <h1 data-aos="fade-right">Salud avanzada con bienestar asequible</h1>
       <div>
-        <p class="gray-paragraph" data-aos="fade-right">Tu camino para iniciar un salud mejor es aquí con atención
-          personalizada para conocer
-          tus
-          necesidades únicas</p>
+        <p class="gray-paragraph" data-aos="fade-right">Tu camino para iniciar una salud mejor es aquí, con atención personalizada para conocer tus necesidades únicas</p>
       </div>
       <div class="action-buttons" data-aos="fade-up">
-        <button mat-flat-button color="primary">Obtenlo Hoy</button>
-        <button mat-stroked-button>Aprender Más</button>
+        <a mat-flat-button color="primary" [routerLink]="['/medicos']">Ver directorio de médicos</a>
+        <a mat-stroked-button [routerLink]="['/contactos']">Contactar al centro</a>
       </div>
     </div>
     <div class="message-intro">
@@ -23,10 +20,8 @@
 
   <div class="about" data-aos="fade-up" data-aos-duration="1000">
     <div class="badge">Acerca de Salvador</div>
-    <h1>Cuidado compasivo para ti y tu familiador nació con la misión de hacer la salud accesible para todos, conectando
-      el asesoramiento médico
-      experto con la práctica diaria, impulsados por una pasión por el bienestar y el deseo de mejorar vidas.
-    </h1>
+    <h2>Cuidado compasivo para ti y tu familia. Salvador nació con la misión de hacer la salud accesible para todos, conectando el asesoramiento médico experto con la práctica diaria, impulsados por una pasión por el bienestar y el deseo de mejorar vidas.
+    </h2>
   </div>
 
   <!-- ------------- -->
@@ -167,119 +162,22 @@
 
   </div>
 
-
-  <div class="preguntas-respuestas-container" data-aos="fade-up">
-    <div class="sub-container-up">
-
-      <div class="badge">Para Tus Preguntas</div>
-
-    </div>
-    <div class="sub-container-down">
-      <div class="left-content">
-        <h1 class="section-title" style="text-align: left;">Preguntas y Respuestas Frecuentes</h1>
+  <section class="queue-section">
+    <div class="queue-card">
+      <div class="queue-card-head">
+        <mat-icon class="queue-status-icon" aria-hidden="true">hourglass_empty</mat-icon>
+        <h2 class="queue-title">Espera en tiempo real</h2>
       </div>
-
-      <div class="right-content">
-
-        <mat-accordion class="example-headers-align" multi>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header onclick="
-      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
-      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight'); 
-      ">
-              <mat-panel-title>
-                <h4>¿Qué es Salvador?</h4>
-              </mat-panel-title>
-              <mat-panel-description>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-divider style="margin:0;" [inset]="true">
-            </mat-divider>
-            <p class="body-2 gray-paragraph">Hospital Salvador es un centro médico moderno y de vanguardia
-              dedicado a ofrecer servicios de
-              salud integrales con calidad, calidez y compromiso. Nuestra misión es brindar atención médica accesible y
-              personalizada, apoyada por tecnología avanzada y un equipo de profesionales altamente capacitados en
-              diversas
-              especialidades.</p>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header onclick="
-      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
-      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight');">
-              <mat-panel-title>
-                <h4>¿Cómo puedo accesar a los servicios del hospital?</h4>
-              </mat-panel-title>
-              <mat-panel-description>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-divider style="margin:0;" [inset]="true">
-            </mat-divider>
-            <p class="body-2 gray-paragraph">En Salvador, no solo somos un hospital; somos una comunidad enfocada en
-              brindar atención
-              integral. Lo que nos diferencia es nuestra combinación única de tecnología avanzada, cuidado personalizado
-              y
-              un enfoque holístico en el bienestar de nuestros pacientes. Nuestro compromiso es garantizar que cada
-              persona
-              reciba no solo tratamiento médico, sino también apoyo emocional y educativo para lograr un estilo de vida
-              saludable y sostenible.</p>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header onclick="
-      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
-      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight');">
-              <mat-panel-title>
-                <h4>¿Quienes son los expertos detrás del hospital Salvador?</h4>
-              </mat-panel-title>
-              <mat-panel-description>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-divider style="margin:0;" [inset]="true">
-            </mat-divider>
-            <p class="body-2 gray-paragraph">El hospital Salvador está respaldado por un equipo multidisciplinario de
-              expertos reconocidos
-              a nivel nacional e internacional. Contamos con más de 150 especialistas, que incluyen médicos, cirujanos,
-              terapeutas, psicólogos, nutricionistas y tecnólogos médicos, cada uno con un mínimo de 10 años de
-              experiencia
-              en sus campos. Entre ellos se destacan la Dra. Carolina Méndez, líder en cirugía robótica; el Dr. Juan
-              Ortega,
-              pionero en investigaciones cardiovasculares; y la Dra. Ana Pérez, especialista en salud mental y bienestar
-              holístico. Nuestro equipo se mantiene en constante actualización participando en congresos y desarrollando
-              investigaciones para ofrecer las soluciones más innovadoras.</p>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header onclick="
-      this.getElementsByTagName('h4')[0].classList.toggle('hightlight');
-      this.parentNode.getElementsByTagName('mat-divider')[0].classList.toggle('hightlight');">
-              <mat-panel-title>
-                <h4>¿Qué hace Salvador diferente de otros plataformas de bienestar?</h4>
-              </mat-panel-title>
-              <mat-panel-description>
-              </mat-panel-description>
-            </mat-expansion-panel-header>
-            <mat-divider style="margin:0;" [inset]="true">
-            </mat-divider>
-            <p class="body-2 gray-paragraph">En Salvador, no solo somos un hospital; somos una comunidad enfocada en
-              brindar atención
-              integral. Lo que nos diferencia es nuestra combinación única de tecnología avanzada, cuidado personalizado
-              y
-              un enfoque holístico en el bienestar de nuestros pacientes. Nuestro compromiso es garantizar que cada
-              persona
-              reciba no solo tratamiento médico, sino también apoyo emocional y educativo para lograr un estilo de vida
-              saludable y sostenible. Además, contamos con una plataforma digital intuitiva que permite a los pacientes
-              monitorear su salud, acceder a consultas virtuales y recibir recomendaciones personalizadas basadas en
-              inteligencia artificial.</p>
-          </mat-expansion-panel>
-
-        </mat-accordion>
+      <p class="gray-paragraph queue-message">
+        El tiempo de espera en vivo no está disponible en este momento. Puedes consultar los médicos registrados y
+        reservar tu cita desde el directorio.
+      </p>
+      <div class="queue-actions">
+        <a mat-flat-button color="primary" [routerLink]="['/medicos']">Ver médicos disponibles</a>
       </div>
-
-
     </div>
+  </section>
 
-  </div>
 
   <!-- ------------- -->
 
@@ -302,11 +200,11 @@
               </div>
             </div>
           </div>
-          <div class="callToAction">
-            <button [routerLink]="['/ubicacion']" mat-flat-button color="primary">
-              Ver Ubicaciones
-            </button>
-          </div>
+            <div class="callToAction">
+              <a [routerLink]="['/ubicacion']" mat-flat-button color="primary">
+                Ver Ubicaciones
+              </a>
+            </div>
         </div>
       </section>
       <section data-aos="fade-right" class="feature">

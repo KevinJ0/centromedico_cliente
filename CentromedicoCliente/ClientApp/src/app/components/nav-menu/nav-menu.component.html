@@ -17,7 +17,7 @@
       <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
       <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicaciones</a></li>
       <li [hidden]="userName || isLoginRoute" class="nav__item">
-        <a class="nav__link" [routerLink]="['/paciente-login']">Paciente Login </a>
+        <a class="nav__link" [routerLink]="['/paciente-login']">Acceso de pacientes</a>
       </li>
       <li class="nav__item" [hidden]="!userName">
         <a class="nav__link" [routerLink]="['/ajustes-usuario']">Ajustes</a>
@@ -69,7 +69,7 @@
             <a *ngIf="userName; else login">{{userName}}</a>
             <ng-template #login>
               <a [routerLink]="['/paciente-login']">
-                Paciente Login
+                Acceso de pacientes
               </a>
             </ng-template>
           </li>
@@ -94,7 +94,7 @@
         <ul>
           <li *ngIf="!userName && !isLoginRoute">
             <a [routerLink]="['/paciente-login']">
-              Paciente Login <mat-icon aria-hidden="true">login</mat-icon>
+              Acceso de pacientes <mat-icon aria-hidden="true">login</mat-icon>
             </a>
           </li>
           <li *ngIf="userName" style="line-height: 0;">
@@ -148,7 +148,7 @@
           <a *ngIf="userName; else login">{{userName}}</a>
           <ng-template #login>
             <a [routerLink]="['/paciente-login']">
-              Paciente Login
+              Acceso de pacientes
             </a>
           </ng-template>
         </li>

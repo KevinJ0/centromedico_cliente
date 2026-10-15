@@ -1,13 +1,52 @@
+/* ---------------------------------------------------------------------------
+   Documented spacing scale: 4-unit base.
+   Rhythm comes from choosing a step, not from inventing a value.
+   --space-1 tight grouping, --space-4 band padding, --space-7 between bands
+   --------------------------------------------------------------------------- */
+.home {
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4.5rem;
+  --space-8: 6rem;
+}
+
+/* Type rhythm: the interval above a heading always exceeds the one below it,
+   and both grow with the level, so hierarchy reads before weight does. */
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
+h1 {
+  margin-block: var(--space-6) var(--space-4);
+}
+
+h2 {
+  margin-block: var(--space-6) var(--space-3);
+}
+
+h3 {
+  margin-block: var(--space-5) var(--space-2);
+}
+
+h4,
+h5,
+h6 {
+  margin-block: var(--space-4) var(--space-2);
+}
+
+/* Kept deliberately. It is load-bearing for every element that sets no explicit
+   color, and changing that is a color decision, not a layout one. Reported in
+   the handoff rather than silently altered. */
 * {
   color: rgb(40, 40, 40);
 }
@@ -21,12 +60,16 @@ h6 {
   background-position: center;
   max-width: 1580px;
   display: flex;
-  height: clamp(150px, 40vw, 500px);
+  /* min-height, not height: the pitch must be able to grow this band on narrow
+     viewports instead of overflowing a fixed box. */
+  min-height: clamp(340px, 44vw, 560px);
   position: relative;
   flex-direction: column;
   justify-content: center;
   background-image: url(../../../assets/imgs/home.jpg);
-  margin-bottom: 1rem;
+  /* Band intervals are owned by each band's own padding. No margin here, or
+     the gap to the next band doubles. */
+  margin-bottom: 0;
 }
 
 .background img {
@@ -37,26 +80,29 @@ h6 {
 }
 
 .message-container {
-  padding: 2rem;
-  margin: 2rem;
+  padding: var(--space-5);
+  margin: var(--space-5);
   background-color: white;
   display: flex;
   flex-flow: column;
-  max-width: 30rem;
+  max-width: min(30rem, calc(100% - 2 * var(--space-5)));
   border-radius: 5px;
 }
 
 .message-container>h1 {
-  font-size: 3rem;
+  font-size: clamp(1.9rem, 5.2vw, 3rem);
+  line-height: 1.15;
   font-weight: 400;
   color: rgb(40, 40, 40);
+  margin-block: 0 var(--space-3);
 }
 
 
 
 .action-buttons {
   display: flex;
-  gap: 1.5rem;
+  flex-wrap: wrap;
+  gap: var(--space-4);
 }
 
 .message-intro {
@@ -83,81 +129,20 @@ h6 {
   transform: translate(-64%, 74%);
 }
 
-.short-menu {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.short-menu .short-menu-grid {
-  text-align: center;
-  width: 100%;
-  gap: 1rem;
-  display: grid;
-  justify-content: center;
-  align-items: stretch;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  justify-items: center;
-  align-content: center;
-  margin: 4rem 0rem;
-}
-
-.short-menu .short-menu-grid>img {
-  width: 100%;
-  grid-row-start: 1;
-  grid-row-end: 3;
-}
-
-.item {
-  padding: 20px 10px;
-  width: 100%;
-  min-width: 150px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  transition: all 400ms ease;
-  cursor: pointer;
-  box-shadow: rgb(13 12 13 / 10%) 0 0 3px 0px;
-  background-color: hsl(0deg 0% 97%);
-}
-
-.item:hover {
-  background-color: hsl(210, 100%, var(--bg-color));
-}
-
-.item:hover mat-icon {
-  fill: white;
-}
-
-.item:hover p {
-  color: whitesmoke;
-  font-weight: 400;
-}
-
-.item mat-icon {
-  width: clamp(40px, 5vw, 75px);
-  height: 70px;
-  fill: var(--primary-color);
-}
-
-.item p {
-  margin: 1rem 0 0 0;
-  color: rgb(53, 53, 53);
-  font-weight: 200;
-  font-size: 17px;
-}
+/* Removed: .short-menu and .item blocks. Neither class exists in this
+   template. The .item:hover rule also referenced var(--bg-color), which is
+   never defined in :root, so that hsl() could never resolve. */
 
 /* About Section Redesign */
 .about {
-  margin: 6rem var(--main-padding);
+  margin: 0;
+  padding: var(--space-7) var(--main-padding);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   position: relative;
-  padding: 4rem 2rem;
   background: radial-gradient(circle at center, rgba(24, 108, 178, 0.03) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
@@ -187,7 +172,7 @@ h6 {
 
 /* Values Section Redesign */
 .our-values-section {
-  padding: 4rem var(--main-padding);
+  padding: var(--space-7) var(--main-padding);
   background: #ffffff;
   display: flex;
   flex-direction: column;
@@ -210,7 +195,7 @@ h6 {
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.06);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.4s ease-out;
   border: 1px solid #f1f5f9;
   height: 100%;
 }
@@ -248,7 +233,7 @@ h6 {
 }
 
 .value-content {
-  padding: 2.5rem 2rem;
+  padding: var(--space-6) var(--space-5);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -310,33 +295,13 @@ h6 {
 }
 
 
-.alternate-layout {
-  flex-direction: row-reverse;
-}
-
-.default-bg {
-  background: linear-gradient(135deg, #ffffff 0%, #f7fafc 100%);
-}
-
-.alternate-bg {
-  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-}
-
-/* --- SEPARADOR ESTILIZADO --- */
-.card-separator {
-  width: 100px;
-  max-width: 70%;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-  margin: 10px 0;
-  border-radius: 2px;
-  opacity: 0.3;
-}
+/* Removed: .alternate-layout, .default-bg, .alternate-bg, .card-separator.
+   None of these classes exist in this template. */
 
 /* --- MEDIA QUERIES (PARA MÓVILES) --- */
 @media (max-width: 768px) {
   .our-values-section {
-    padding: 50px 1rem;
+    padding: var(--space-6) var(--space-4);
   }
 
   .value-card {
@@ -363,15 +328,6 @@ h6 {
     border-radius: 8px;
   }
 
-  .alternate-layout {
-    flex-direction: column;
-  }
-
-  .card-separator {
-    margin: 25px 0;
-    width: 80px;
-  }
-
   .value-title {
     font-size: 1.5rem;
   }
@@ -390,13 +346,13 @@ h6 {
 
 
 .doctores-container {
-  padding: 3rem var(--main-padding) 2rem var(--main-padding);
+  padding: var(--space-7) var(--main-padding);
   background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 0;
 }
 
 .doctores-container .gray-paragraph {
@@ -410,13 +366,18 @@ h6 {
 .doctores-container .cards-container {
   display: flex;
   flex-direction: row;
-  margin-bottom: 4rem;
+  /* width:100% makes this a definite axis, so max-width centres it and the
+     quote block below can align to the same left/right edges. Without it the
+     band renders three unrelated measures (45rem lede, 1300px grid, 1580px
+     quote) that never share an edge. */
+  width: 100%;
+  margin-bottom: var(--space-7);
   align-content: center;
   align-items: stretch;
   flex-wrap: wrap;
-  margin-top: 2.5rem;
+  margin-top: var(--space-6);
   justify-content: center;
-  gap: 1.5rem;
+  gap: var(--space-4);
   max-width: 1300px;
 }
 
@@ -427,9 +388,12 @@ h6 {
   display: flex;
   align-items: center;
   flex-direction: column;
+  /* Sibling rhythm lives on the container: the card is already a column flex,
+     so gap states the relationship once instead of a child-by-child margin. */
+  gap: var(--space-3);
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.06);
-  padding: 2rem 1.5rem;
+  padding: var(--space-5) var(--space-4);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
   transition: all 0.3s ease;
 }
@@ -439,8 +403,12 @@ h6 {
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
 }
 
-.card-doctor * {
-  margin: 0.5rem 0;
+/* Scoped heading reset: without it the page-level h4/h5/h6 rule
+   (margin-block: var(--space-4) var(--space-2)) leaks into the card and
+   swamps the gap rhythm with 1.5rem above every label. */
+.card-doctor h5,
+.card-doctor h6 {
+  margin: 0;
 }
 
 .card-doctor img {
@@ -448,12 +416,9 @@ h6 {
   height: 140px;
   object-fit: cover;
   border-radius: 100%;
-  margin-bottom: 1.25rem;
   border: 2px solid #fff;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-
-
 }
 
 .card-doctor:hover img {
@@ -475,31 +440,41 @@ h6 {
   letter-spacing: 0.5px;
 }
 
-.doctores-container>h1 {
-  font-weight: 400;
-}
 
 .doctor-recomendation-container {
   display: flex;
   flex-wrap: nowrap;
   align-items: flex-end;
   height: fit-content;
-  max-width: 1580px;
-
+  /* Definite width so the 65%/35% children below resolve against a real box.
+     At width:auto they resolve against an indefinite, image-driven box, which
+     made the quote's proportions depend on the PNG's intrinsic size. */
+  width: 100%;
+  max-width: 1300px;
 }
 
 
 .doctor-recomendation-container .left-content {
   width: 65%;
-  margin: 0 0 1rem 4rem;
+  /* Aligned to the band's own left edge: the 4rem indent it carried put the
+     quote a full main-padding out of line with the roster grid above it. */
+  margin: 0 0 var(--space-3) 0;
   text-align: left;
-  height: 300px;
+  /* min-height, not height: space-between still parks .details at the bottom
+     of the box, but a longer quote now grows the block instead of overflowing
+     a fixed 300px. */
+  min-height: 300px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
+/* margin:0 reclaims the page-level h2 margin-block. Without it the quote
+   inherited space-6 above and space-3 below, stacking an unowned 3rem onto the
+   space-7 gap the grid already set and landing the real interval on 7.5rem —
+   a value that exists on no scale. */
 .left-content>.recomendation {
+  margin: 0;
   font-size: 2rem;
   font-weight: 400;
 }
@@ -514,11 +489,12 @@ h6 {
   margin: 0;
 }
 
+/* 10px sat half the band's own label step and below every other type size in
+   this file; 0.8rem matches the subordinate-label step .value-subtitle uses. */
 .details .expertise {
-  font-size: 10px;
+  font-size: 0.8rem;
   font-weight: 400;
   display: inline;
-
 }
 
 .doctor-recomendation-container .right-content {
@@ -530,80 +506,78 @@ h6 {
 
 }
 
-.preguntas-respuestas-container {
+/* Band headings are peers of .about h1: same level, same rhythm, same face.
+   This selector previously had NO rule at all, so the directory heading fell
+   back to the browser default h2: visibly smaller and lighter than the .about
+   statement sitting one band above it, inverting the hierarchy. */
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  line-height: 1.25;
+  font-weight: 700;
+  color: #1a202c;
+  letter-spacing: -0.5px;
+  max-width: 24ch;
+  margin: 0 auto var(--space-3);
+  text-wrap: balance;
+}
 
+/* Removed: .directory-cta. No element carries it — the roster's "Ver
+   directorio" button was dropped in the content pass, and the rule was
+   orphaned by that same change. */
+
+.queue-section {
+  /* Top spacing is owned by .doctores-container's bottom padding: the queue
+     card belongs to the same band as the directory it belongs with. */
+  padding: 0 var(--main-padding) var(--space-7);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 6rem var(--main-padding);
-  max-width: 1580px;
+  justify-content: center;
 }
 
-.preguntas-respuestas-container .sub-container-up {
-  align-self: center;
+.queue-card {
+  width: 100%;
+  max-width: 38rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(24, 108, 178, 0.18);
+  border-radius: 14px;
+  padding: 2rem;
+  text-align: left;
 }
 
-.preguntas-respuestas-container .sub-container-down {
-  margin-top: 1rem;
+.queue-card-head {
   display: flex;
-  justify-content: space-between;
-}
-
-.preguntas-respuestas-container .left-content {
-  width: 40%;
-}
-
-
-.preguntas-respuestas-container .left-content>h1 {
-  font-size: clamp(1.4rem, 7vw, 2rem);
-}
-
-
-
-.preguntas-respuestas-container .right-content {
-  width: 60%;
-
-}
-
-
-
-
-.example-headers-align .mat-expansion-panel-header-description {
-  justify-content: space-between;
   align-items: center;
+  gap: var(--space-2);
+  margin-bottom: 1rem;
 }
 
-.example-headers-align {
-  margin-left: 8px;
-}
-
-mat-panel-title {
-  flex-basis: unset;
-}
-
-mat-panel-title>h4 {
-  margin: 13px 0;
-  font-size: clamp(15px, 4vw, 1.1rem);
-}
-
-.hightlight {
-  color: var(--primary-color);
-  border-top-color: #0195ff;
-}
-
-mat-expansion-panel-header {
-  height: fit-content;
-}
-
-.body-2 {
-  margin: 1rem 0;
-  font-size: clamp(13px, 4vw, 1.1rem);
-
-}
-
-.mat-expansion-indicator::after {
+.queue-status-icon {
+  font-size: 1.75rem;
+  width: 1.75rem;
+  height: 1.75rem;
   color: var(--primary-color);
 }
+
+.queue-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a202c;
+}
+
+.queue-message {
+  margin-bottom: 1.5rem;
+}
+
+.queue-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Removed: .doctor-recomendation-container, .left-content, .right-content,
+   .details, .expertise, the whole .preguntas-respuestas-container FAQ, and the
+   mat-panel / mat-expansion-panel rules that styled its accordion. None of
+   these elements exist in this template any more. */
 
 
 
@@ -616,7 +590,7 @@ mat-expansion-panel-header {
 }
 
 .location-wrapper {
-  margin: 5rem 0;
+  margin: 0 0 var(--space-7);
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -664,18 +638,11 @@ mat-expansion-panel-header {
 
 app-barner {}
 
-@media screen and (max-width: 500px) {
-  .background img {
-    object-fit: cover;
-    min-height: 300px;
-  }
-}
+/* Removed: @media (max-width: 500px) styling the hero image node. The hero
+   uses a CSS background-image; there is no image element inside .background,
+   so it never applied. It implied a mobile hero treatment that does not exist. */
 
 @media screen and (max-width: 680px) {
-
-  .question-barner {
-    flex-direction: column;
-  }
 
   .location-bg {
     background-image: url(../../../assets/imgs/location-search-mobile.jpg);
@@ -706,92 +673,54 @@ app-barner {}
 }
 
 
-@media screen and (max-width: 880px) {
+/* Removed: two duplicate 880px blocks.
+   One carried the last transform: scale(0.7) rung on .message-container.
+   The other targeted .short-menu and .our-values .value-*; neither class
+   exists in this template. Reflow is handled at 850px. */
 
+/* Removed: @media (max-width: 1040px). Every selector in it targeted markup
+   that does not exist: .about-content, .about p and .about h3 (that band
+   contains only a badge and an h1), and .preguntas-respuestas-container from
+   the FAQ. The doctor roster was restored later and now owns the 1040px block
+   further down; this comment no longer refers to it. */
 
-  .short-menu .short-menu-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
+/* ---------------------------------------------------------------------------
+   Reflow, not scale.
 
-@media screen and (max-width: 880px) {
-
-  .message-container {
-    transform: scale(0.7);
-  }
-
-  .preguntas-respuestas-container .sub-container-down .left-content,
-  .preguntas-respuestas-container .sub-container-down .right-content {
-    width: 100%;
-  }
-
-  .our-values .value-container {
-    display: flex;
-    flex-direction: column;
-    gap: 12%;
-  }
-
-  .our-values .value-left-item {
-    width: 100%;
-  }
-
-  .our-values .value-right-item {
-    width: 100%;
-  }
-
-}
-
+   The pitch used to be transform: scale()d through four descending breakpoints
+   and then set display:none below 850px, which deleted the headline, the
+   description and BOTH calls to action on every phone, leaving only the
+   wordmark over the photo. Type is now fluid via clamp(), so this band simply
+   reflows and the conversion path survives every viewport.
+   --------------------------------------------------------------------------- */
 @media screen and (max-width: 1040px) {
-
-  .about-content {
-    padding: 1rem 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center;
-    margin: auto;
-    color: rgb(49, 49, 49);
-  }
-
-  .about p {
-    text-align: center;
-  }
-
-  .about h3 {
-    text-align: center;
-  }
-
-  .about-content img {
-    width: 100%;
-    max-width: 600px;
-  }
-
   .doctor-recomendation-container {
     flex-direction: column;
     height: fit-content;
     align-items: center;
   }
 
+  /* One rule, not two: this selector was declared twice back to back. */
   .doctor-recomendation-container .left-content {
     order: 2;
     text-align: center;
-
+    margin: 0 0 var(--space-3);
+    width: 100%;
+    /* Cancels the base min-height: 300px. `height: auto` did not, so the
+       stacked layout inherited a 300px floor it should not have. */
+    min-height: 0;
   }
 
   .left-content .details {
     text-align: center;
   }
 
-  .doctor-recomendation-container .left-content {
-    margin: 0;
-    margin-bottom: 1rem;
-    width: 100%;
-    height: auto;
-  }
-
 
   .doctor-recomendation-container .right-content {
     width: 100%;
+    /* The img is inline and capped at max-width:20rem, so in this stacked
+       layout it sat hard left while the quote above it was centred. */
+    text-align: center;
   }
 
   .doctor-recomendation-container .right-content img {
@@ -806,77 +735,66 @@ app-barner {}
   .doctores-container .right-content {
     order: 1;
   }
-
-  .preguntas-respuestas-container .sub-container-down {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .preguntas-respuestas-container .sub-container-down .left-content {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-  }
-
-  .preguntas-respuestas-container .sub-container-down .left-content * {
-    text-align: center;
-  }
-
-}
-
-@media screen and (max-width: 1164px) {
-
-  .message-container {
-    transform: scale(0.8);
-  }
-
-}
-
-@media screen and (max-width: 1000px) {
-
-  .message-container {
-    transform: scale(0.8);
-  }
-
-}
-
-
-@media screen and (max-width: 900px) {
-
-  .message-container {
-    transform: scale(0.75);
-  }
-
 }
 
 @media screen and (max-width: 850px) {
 
   .message-container {
-    display: none;
+    margin: var(--space-4);
+    padding: var(--space-4);
+    text-align: center;
+    align-items: center;
   }
 
-  .background {
-    justify-content: end;
-
+  .message-container>h1 {
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
   }
 
+  .action-buttons {
+    justify-content: center;
+  }
+
+  /* The wordmark becomes a secondary mark BENEATH the pitch, never a
+     replacement for it. */
   .message-intro {
     display: flex;
-    padding-left: clamp(0.3rem, 9vw, 5rem);
+    justify-content: center;
+    padding: 0 var(--space-4) var(--space-5);
+  }
+
+  /* Keep the interlock. These transforms are percentages of each element's own
+     box, so they travel with the type instead of drifting apart. */
+  .title {
+    font-size: clamp(2.5rem, 13vw, 5rem);
+  }
+
+  .sub-title {
+    font-size: clamp(1.5rem, 8vw, 2.5rem);
   }
 }
 
 @media screen and (max-width: 600px) {
+  /* Band rhythm still owns the vertical interval here; only the inline padding
+     tightens for a phone. Re-introducing a margin here would double the gap. */
   .about {
-    margin: 2rem 1rem;
-    padding: 2rem 1rem;
+    padding: var(--space-6) var(--space-4);
   }
 
+  /* Deliberately no font-size/font-weight override. The clamp() above already
+     resolves to a legible size at this width; the old fixed 1.3rem/600 override
+     made this band heading render smaller and lighter than the paragraph under
+     it, inverting the hierarchy on exactly the screens that need it most. */
   .about h1 {
-    font-size: 1.3rem;
-    margin-top: 1rem;
-    font-weight: 600;
+    margin-top: var(--space-3);
   }
 }
+.leftRightBlock {
+  display: block;
+  width: 100%;
+}
+
+.cmp { display: block; }
+.cmp-title { display: block; }
+.contentblocktext { display: block; }
+.callToAction { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+

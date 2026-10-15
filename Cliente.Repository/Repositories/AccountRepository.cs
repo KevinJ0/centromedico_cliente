@@ -42,9 +42,9 @@ namespace Cliente.Repository.Repositories
             if (r.Succeeded)
             {
                 // set user role
-                identityRole = new IdentityRole { Name = "Pacient" };
+                identityRole = new IdentityRole { Name = "Patient" };
                 await _roleManager.CreateAsync(identityRole);
-                await _userManager.AddToRoleAsync(user, "Pacient");
+                await _userManager.AddToRoleAsync(user, identityRole.Name);
 
             }
             return r;

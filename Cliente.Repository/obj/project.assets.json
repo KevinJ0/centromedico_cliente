@@ -2382,21 +2382,6 @@
           "lib/netstandard1.3/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "Centromedico.Database/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v5.0",
-        "dependencies": {
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.4",
-          "Microsoft.EntityFrameworkCore": "5.0.11",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.11"
-        },
-        "compile": {
-          "bin/placeholder/Centromedico.Database.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Centromedico.Database.dll": {}
-        }
-      },
       "Cliente.DTO/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v5.0",
@@ -7158,11 +7143,6 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "Centromedico.Database/1.0.0": {
-      "type": "project",
-      "path": "../../CentromedicoDatabase/Centromedico.Database.csproj",
-      "msbuildProject": "../../CentromedicoDatabase/Centromedico.Database.csproj"
-    },
     "Cliente.DTO/1.0.0": {
       "type": "project",
       "path": "../Cliente.DTO/Cliente.DTO.csproj",
@@ -7172,7 +7152,6 @@
   "projectFileDependencyGroups": {
     "net5.0": [
       "AutoMapper >= 10.1.1",
-      "Centromedico.Database >= 1.0.0",
       "Cliente.DTO >= 1.0.0",
       "Microsoft.AspNetCore.Authentication.JwtBearer >= 5.0.5",
       "Microsoft.AspNetCore.Identity >= 2.2.0",
@@ -7186,26 +7165,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Kevin\\.nuget\\packages\\": {},
-    "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages": {},
+    "C:\\Users\\PC\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
+      "projectUniqueName": "C:\\Users\\PC\\Documents\\Hospital Salvador\\Cliente\\centromedico_cliente\\Cliente.Repository\\Cliente.Repository.csproj",
       "projectName": "Cliente.Repository",
-      "projectPath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.Repository\\Cliente.Repository.csproj",
-      "packagesPath": "C:\\Users\\Kevin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.Repository\\obj\\",
+      "projectPath": "C:\\Users\\PC\\Documents\\Hospital Salvador\\Cliente\\centromedico_cliente\\Cliente.Repository\\Cliente.Repository.csproj",
+      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\PC\\Documents\\Hospital Salvador\\Cliente\\centromedico_cliente\\Cliente.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Kevin\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
+        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7214,19 +7190,14 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
-        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\CentromedicoDatabase\\Centromedico.Database.csproj": {
-              "projectPath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\CentromedicoDatabase\\Centromedico.Database.csproj"
-            },
-            "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj": {
-              "projectPath": "C:\\Users\\Kevin\\Documents\\New folder\\Centro Medico\\Cliente\\Cliente.DTO\\Cliente.DTO.csproj"
+            "C:\\Users\\PC\\Documents\\Hospital Salvador\\Cliente\\centromedico_cliente\\Cliente.DTO\\Cliente.DTO.csproj": {
+              "projectPath": "C:\\Users\\PC\\Documents\\Hospital Salvador\\Cliente\\centromedico_cliente\\Cliente.DTO\\Cliente.DTO.csproj"
             }
           }
         }
@@ -7241,7 +7212,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net5.0": {
@@ -7304,17 +7275,37 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203\\RuntimeIdentifierGraph.json"
       }
     }
   },
   "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'AutoMapper' 10.1.1 has a known high severity vulnerability, https://github.com/advisories/GHSA-rvv3-g6hj-g44x",
+      "libraryId": "AutoMapper",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
     {
       "code": "NU1902",
       "level": "Warning",
       "warningLevel": 1,
       "message": "Package 'Microsoft.AspNetCore.Authentication.JwtBearer' 5.0.5 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-q7cg-43mg-qp69",
       "libraryId": "Microsoft.AspNetCore.Authentication.JwtBearer",
+      "targetGraphs": [
+        "net5.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MimeKit' 2.15.1 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-g7hc-96xr-gvvx",
+      "libraryId": "MimeKit",
       "targetGraphs": [
         "net5.0"
       ]

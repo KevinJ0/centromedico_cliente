@@ -148,13 +148,13 @@ h6 {
 .stat-info .count {
   font-size: 1.8rem;
   font-weight: 800;
-  color: #2d3748;
+  color: var(--color-text);
   line-height: 1;
 }
 
 .stat-info .label {
   font-size: 0.85rem;
-  color: #718096;
+  color: var(--color-text-muted);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -164,12 +164,12 @@ h6 {
   display: flex;
   align-items: center;
   gap: 8px;
-  background: #f7fafc;
+  background: var(--color-surface);
   padding: 0.75rem 1.25rem;
   border-radius: 12px;
-  color: #4a5568;
+  color: var(--color-text-muted);
   font-size: 0.95rem;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--color-border);
 }
 
 .help-badge mat-icon {
@@ -177,17 +177,17 @@ h6 {
 }
 
 .help-badge b {
-  color: #2d3748;
+  color: var(--color-text);
 }
 
 .doctors-wrapper>h2 {
   text-align: center;
-  color: #262626;
+  color: var(--color-text-strong);
   margin: 5rem auto 0.5rem auto;
 }
 
 .doctors-wrapper .no-content {
-  color: #262626;
+  color: var(--color-text-strong);
   padding: clamp(6rem, 19vh, 8rem);
 }
 

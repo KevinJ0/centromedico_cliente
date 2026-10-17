@@ -2,7 +2,7 @@
 
   <div class="flex-container">
     <div class="doctor-img">
-      <img [src]="doctorData.profilePhoto | noProfilePhoto" alt="" srcset="">
+      <img [src]="doctorData.profilePhoto | noProfilePhoto" [alt]="'Foto de ' + doctorData.nombre + ' ' + doctorData.apellido" srcset="" loading="lazy">
     </div>
 
     <div class="doctor-info">
@@ -18,12 +18,12 @@
         <div class="numeros">
           <p *ngIf="doctorData.telefono1" class="telefono1">{{doctorData.telefono1 | mask: '000-000-0000'}}
             <img class="contact-icon" *ngIf="doctorData.telefono1_contact.includes('w')"
-              src="../../../../assets/icons/whatsapp.svg" />
-            <img *ngIf="doctorData.telefono1_contact.includes('t')" src="../../../../assets/icons/phone-call.svg" />
+              src="../../../../assets/icons/whatsapp.svg" / loading="lazy">
+            <img *ngIf="doctorData.telefono1_contact.includes('t')" src="../../../../assets/icons/phone-call.svg" / loading="lazy">
           </p>
           <p *ngIf="doctorData.telefono2" class="telefono2">{{doctorData.telefono2 | mask: '000-000-0000'}}
-            <img *ngIf="doctorData.telefono2_contact.includes('w')" src="../../../../assets/icons/whatsapp.svg" />
-            <img *ngIf="doctorData.telefono2_contact.includes('t')" src="../../../../assets/icons/phone-call.svg" />
+            <img *ngIf="doctorData.telefono2_contact.includes('w')" src="../../../../assets/icons/whatsapp.svg" / loading="lazy">
+            <img *ngIf="doctorData.telefono2_contact.includes('t')" src="../../../../assets/icons/phone-call.svg" / loading="lazy">
           </p>
         </div>
         <p class="correo">{{doctorData.correo}}</p>

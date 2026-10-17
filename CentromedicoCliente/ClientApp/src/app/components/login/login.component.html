@@ -5,7 +5,7 @@
 
     <mat-card>
       <div class="flex-container">
-        <img class="logo" *ngIf="!loading" src="../../../assets/imgs/logo-alone.png" alt="">
+        <img class="logo" *ngIf="!loading" src="../../../assets/imgs/logo-alone.png" alt="" loading="lazy">
 
 
         <mat-tab-group class="invisible-tabs" [selectedIndex]="indiceActivo">
@@ -40,7 +40,7 @@
                   </mat-error>
                 </mat-form-field>
 
-                <h5 class="forgotpass"><a href="#">Olvidé mi contraseña</a></h5>
+                <h5 class="forgotpass"><a href="javascript:void(0)">Olvidé mi contraseña</a></h5>
                 <button type="submit" mat-flat-button color="primary">
                   <span>Entrar</span>
                 </button>

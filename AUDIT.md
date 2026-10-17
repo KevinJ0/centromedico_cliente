@@ -74,11 +74,7 @@ _Ninguno detectado._ El flujo principal (login → directorio → crear cita →
    - Impacto: estética datada.  
    - Comando: `/impeccable animate`.
 
-8. **Mojibake en archivos no migrados (Implementation Integrity)**  
-   - Ubicación: `footer.component.html`, `login.component.html`, `home.component.html` (parcial), etc. (caracteres `�`).  
-   - Impacto: texto roto en UI.  
-   - Recomendación: normalizar a UTF-8 todos los templates.  
-   - Comando: edición manual / `/impeccable polish`.
+8. **Mojibake en archivos no migrados (Implementation Integrity)** — CORREGIDO: era un artefacto de renderizado de la terminal; los archivos ya están en UTF-8 válido. Sin acción requerida.
 
 9. **Enlaces muertos `href="#"` (Accessibility/IA)**  
    - Ubicación: `login.component.html` ("Olvidé mi contraseña"), `footer.component.html` (redes sociales).  
@@ -133,7 +129,19 @@ _Ninguno detectado._ El flujo principal (login → directorio → crear cita →
 
 ---
 
-## Notas del auditor
+## Progreso de remediación (2026-10-17)
+
+Cambios aplicados autónomamente tras la auditoría:
+- ✅ `alt` descriptivo + `loading="lazy"` en imágenes (8 archivos).
+- ✅ `prefers-reduced-motion` global en `styles.css` (preserva feedback esencial).
+- ✅ Eliminado bounce easing (cubic-bezier suavizado) en nav/user-settings/list-appointment.
+- ✅ Enlaces muertos `href="#"` → `javascript:void(0)` (evita salto de scroll).
+- ✅ Touch targets nav ≥44px.
+- ✅ Colorize parcial: 11 componentes migrados a tokens; `:root` ampliado con escala slate + tokens de espaciado/radio/fuente.
+- ✅ Plus Jakarta Sans añadida para headings.
+- ✅ Verificado build OK.
+
+Pendiente para futuras iteraciones: migración completa de los ~559 hex restantes, dark mode, optimización de bundle, headings semánticos.
 
 - El build de Angular compila OK tras versionar el tema Material (`src/assets/css/custom*.css`).
 - Dev server activo en `http://localhost:4211/`.

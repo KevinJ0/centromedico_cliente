@@ -83,3 +83,5 @@ C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj
 C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Debug\net5.0\refint\Cliente.Repository.dll
 C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Debug\net5.0\Cliente.Repository.pdb
 C:\Users\Kevin\Documents\New folder\Centro Medico\Cliente\Cliente.Repository\obj\Debug\net5.0\ref\Cliente.Repository.dll
+C:\Users\PC\Documents\Hospital Salvador\Cliente\centromedico_cliente\Cliente.Repository\obj\Debug\net5.0\Cliente.Repository.dll
+C:\Users\PC\Documents\Hospital Salvador\Cliente\centromedico_cliente\Cliente.Repository\obj\Debug\net5.0\Cliente.Repository.pdb

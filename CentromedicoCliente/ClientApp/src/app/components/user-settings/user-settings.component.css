@@ -26,13 +26,13 @@
 .settings-header h1 {
     font-size: 2.5rem;
     font-weight: 800;
-    color: #1e293b;
+    color: var(--color-text-strong);
     margin: 0;
     letter-spacing: -0.5px;
 }
 
 .settings-header .subtitle {
-    color: #64748b;
+    color: var(--color-text-muted);
     font-size: 1.1rem;
 }
 
@@ -72,7 +72,7 @@ mat-card-header mat-icon[mat-card-avatar] {
 
 mat-card-title {
     font-weight: 700 !important;
-    color: #334155;
+    color: var(--color-text);
 }
 
 mat-card-content {
@@ -121,7 +121,7 @@ mat-form-field {
 
 mat-icon[matSuffix] {
     margin-left: 8px;
-    color: #94a3b8;
+    color: var(--color-text-subtle);
 }
 
 ::ng-deep .mat-form-field-suffix {
@@ -167,7 +167,7 @@ mat-datepicker-toggle {
     justify-content: center;
     margin-bottom: 1.25rem;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .avatar-container mat-icon {
@@ -178,7 +178,7 @@ mat-datepicker-toggle {
 }
 
 .avatar-container.male {
-    background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+    background: linear-gradient(135deg, var(--color-info) 0%, #1e40af 100%);
 }
 
 .avatar-container.female {
@@ -188,7 +188,7 @@ mat-datepicker-toggle {
 .user-preview h3 {
     font-size: 1.4rem;
     font-weight: 700;
-    color: #1e293b;
+    color: var(--color-text-strong);
     margin: 0 0 0.5rem 0;
 }
 
@@ -223,7 +223,7 @@ mat-datepicker-toggle {
 }
 
 .meta-item mat-icon {
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     font-size: 1.25rem;
     width: 1.25rem;
     height: 1.25rem;
@@ -237,14 +237,14 @@ mat-datepicker-toggle {
 
 .meta-content .label {
     font-size: 0.75rem;
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     text-transform: uppercase;
     font-weight: 600;
 }
 
 .meta-content .value {
     font-size: 0.95rem;
-    color: #334155;
+    color: var(--color-text);
     font-weight: 600;
 }
 
@@ -257,12 +257,12 @@ mat-datepicker-toggle {
     padding: 1.5rem;
     border-radius: 20px;
     margin-top: 2rem;
-    border: 1px dashed #cbd5e1;
+    border: 1px dashed var(--color-border-strong);
     text-align: center;
 }
 
 .help-box mat-icon {
-    color: #94a3b8;
+    color: var(--color-text-subtle);
     margin-bottom: 0.5rem;
 }
 
@@ -273,7 +273,7 @@ mat-datepicker-toggle {
 
 .help-box p {
     font-size: 0.9rem;
-    color: #64748b;
+    color: var(--color-text-muted);
     line-height: 1.4;
     margin-bottom: 1rem;
 }
@@ -285,7 +285,7 @@ mat-datepicker-toggle {
     justify-content: center;
     min-height: 400px;
     gap: 1rem;
-    color: #64748b;
+    color: var(--color-text-muted);
 }
 
 @media screen and (max-width: 960px) {
@@ -345,7 +345,7 @@ mat-datepicker-toggle {
 }
 
 .male-icon {
-    color: #3b82f6;
+    color: var(--color-info);
 }
 
 .female-icon {

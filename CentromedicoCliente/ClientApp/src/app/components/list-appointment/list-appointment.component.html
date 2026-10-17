@@ -13,7 +13,7 @@
 
       <div class="no-content" *ngIf="showNoContent">
         <h3>No tiene cita agendada</h3>
-        <img src="../../../assets/icons/no-task.png" alt="">
+        <img src="../../../assets/icons/no-task.png" alt="" loading="lazy">
 
         <button (click)="navigateToMedicos()" mat-flat-button>Realizar cita <mat-icon>event_upcoming</mat-icon>
         </button>
@@ -28,7 +28,7 @@
 
               <div class="medico-data">
                 <center>
-                  <img class="profilePhoto" src="{{cita.medicoData.profilePhoto}}" alt="Foto de médico">
+                  <img class="profilePhoto" src="{{cita.medicoData.profilePhoto}}" alt="Foto de médico" loading="lazy">
 
                   <h3 class="title"> {{cita.medico_nombre+" "+cita.medico_apellido}}</h3>
                   <h4 class="subtitle"> {{cita.medicoData.especialidades.join(", ") || '' }}</h4>
@@ -46,7 +46,7 @@
                     <div class="pulse-wrapper">
 
                       <img class="turno-image ticket-icon" width="80" src="../../../assets/icons/turno_icono.png"
-                        alt="Turnos icono">
+                        alt="Turnos icono" loading="lazy">
                     </div>
                     <h2 class="turno-title">Turno actual</h2>
                     <h1 class="turno-number">{{cita.turno_paciente.turno_actual}}</h1>

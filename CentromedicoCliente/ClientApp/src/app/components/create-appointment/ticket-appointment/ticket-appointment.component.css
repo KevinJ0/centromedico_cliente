@@ -3,7 +3,7 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #f1f5f9;
+  background-color: var(--color-surface-alt);
   min-height: 80vh;
 }
 
@@ -90,7 +90,7 @@ main {
 
 .info-group label {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   font-weight: 600;
   letter-spacing: 0.5px;
   margin-bottom: 0.2rem;
@@ -99,7 +99,7 @@ main {
 .info-group p {
   font-size: 1rem;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--color-text-strong);
   margin: 0;
 }
 
@@ -121,7 +121,7 @@ main {
 
 /* Dashed Lines */
 .dashed-line {
-  border-top: 2px dashed #e2e8f0;
+  border-top: 2px dashed var(--color-border);
   margin: 1.5rem 0;
   position: relative;
 }
@@ -129,7 +129,7 @@ main {
 /* Ticket Cutouts */
 .ticket-cutout {
   position: absolute;
-  background-color: #f1f5f9;
+  background-color: var(--color-surface-alt);
   /* Matches main bg */
   width: 40px;
   height: 40px;
@@ -149,22 +149,22 @@ main {
 
 /* Footer */
 .ticket-footer {
-  background-color: #f8fafc;
+  background-color: var(--color-surface);
   padding: 1.5rem;
-  border-top: 2px dashed #e2e8f0;
+  border-top: 2px dashed var(--color-border);
   text-align: center;
 }
 
 .disclaimer {
   font-size: 0.8rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   line-height: 1.4;
   margin: 0 0 1rem 0;
 }
 
 .barcode-strip {
   height: 30px;
-  background-image: linear-gradient(to right, #333 3%, white 3%, white 6%, #333 6%, #333 9%, white 9%, white 12%, #333 12%, #333 20%, white 20%, white 25%, #333 25%, #333 30%, white 30%, white 40%, #333 40%, #333 50%, white 50%, white 55%, #333 55%, #333 60%, white 60%, white 70%, #333 70%, #333 80%, white 80%);
+  background-image: linear-gradient(to right, var(--color-text) 3%, white 3%, white 6%, var(--color-text) 6%, var(--color-text) 9%, white 9%, white 12%, var(--color-text) 12%, var(--color-text) 20%, white 20%, white 25%, var(--color-text) 25%, var(--color-text) 30%, white 30%, white 40%, var(--color-text) 40%, var(--color-text) 50%, white 50%, white 55%, var(--color-text) 55%, var(--color-text) 60%, white 60%, white 70%, var(--color-text) 70%, var(--color-text) 80%, white 80%);
   width: 80%;
   margin: auto;
   opacity: 0.7;

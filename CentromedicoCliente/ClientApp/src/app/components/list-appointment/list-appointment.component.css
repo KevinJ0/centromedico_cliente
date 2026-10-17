@@ -29,14 +29,14 @@ main {
 mat-card-title h2 {
   font-size: 2rem;
   font-weight: 800;
-  color: #1e293b;
+  color: var(--color-text-strong);
   margin: 0;
   letter-spacing: -0.5px;
 }
 
 mat-card-subtitle {
   font-size: 1rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   margin-top: 0.5rem;
   margin-bottom: 0;
 }
@@ -86,7 +86,7 @@ mat-card-subtitle {
   max-width: 28rem;
   width: 100%;
   border-radius: 24px !important;
-  background: #ffffff;
+  background: var(--color-white);
   border: 1px solid rgba(255, 255, 255, 0.8);
   box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.08), 0 10px 15px -5px rgba(0, 0, 0, 0.04) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -127,7 +127,7 @@ mat-card-header {
 .medico-data .title {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text-strong);
   margin: 0;
   text-align: center;
 }
@@ -167,7 +167,7 @@ mat-action-row {
   padding: 0.5rem !important;
   font-weight: 600;
   border: 1px solid #fee2e2;
-  color: #ef4444 !important;
+  color: var(--color-danger) !important;
   background-color: #fef2f2;
 }
 
@@ -175,7 +175,7 @@ mat-action-row {
 ::ng-deep .cita-card .mat-tab-label {
   font-family: inherit;
   font-weight: 600;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   opacity: 1 !important;
   min-width: 0 !important;
   padding: 0 1.5rem !important;
@@ -192,7 +192,7 @@ mat-action-row {
 }
 
 ::ng-deep .cita-card .mat-tab-header {
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid var(--color-surface-alt);
   margin-bottom: 1.5rem;
 }
 
@@ -222,7 +222,7 @@ mat-card-content {
 .mi-turno-title {
   font-size: 1rem;
   font-weight: 600;
-  color: #64748b;
+  color: var(--color-text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-top: 1.5rem;
@@ -240,21 +240,21 @@ mat-card-content {
 .mi-turno-number {
   font-size: 2rem;
   font-weight: 700;
-  color: #334155;
+  color: var(--color-text);
   margin: 0.5rem 0;
 }
 
 .patient-cant,
 .aprox-time {
   font-size: 0.9rem;
-  color: #64748b;
+  color: var(--color-text-muted);
   margin: 1rem 0;
   text-align: center;
 }
 
 .patient-cant span,
 .aprox-time span {
-  color: #0f172a;
+  color: var(--color-text-strong);
   font-weight: 700;
 }
 
@@ -270,7 +270,7 @@ mat-card-content {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #64748b;
+  color: var(--color-text-muted);
 }
 
 .data-row mat-icon {
@@ -288,14 +288,14 @@ mat-card-content {
 
 .data-row .data {
   font-weight: 600;
-  color: #334155;
+  color: var(--color-text);
   text-align: right;
 }
 
 .double-flex-container {
   display: flex;
   gap: 1rem;
-  background: #f8fafc;
+  background: var(--color-surface);
   padding: 1rem;
   border-radius: 16px;
   margin: 1rem 0;
@@ -322,8 +322,8 @@ mat-card-content {
 }
 
 .minicard {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
   border-radius: 16px;
   padding: 1rem;
   display: flex;
@@ -348,14 +348,14 @@ mat-card-content {
 .minicard .title {
   font-size: 0.95rem;
   font-weight: 700;
-  color: #0f172a;
+  color: var(--color-text-strong);
   margin-top: auto;
   line-height: 1.2;
 }
 
 .minicard .subtitle {
   font-size: 0.75rem;
-  color: #94a3b8;
+  color: var(--color-text-subtle);
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-top: 0.2rem;
@@ -392,7 +392,7 @@ mat-card-content {
   .cita-card {
     border-radius: 20px;
     box-shadow: none !important;
-    border: 1px solid #e2e8f0;
+    border: 1px solid var(--color-border);
   }
 
   .cita-card-container {

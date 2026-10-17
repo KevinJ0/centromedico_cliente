@@ -9,13 +9,14 @@
 
     <ul class="nav__menu" id="menu" tabindex="-1" aria-label="main navigation" hidden>
       <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Inicio</a></li>
+      <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
+      <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link nav__link--cta">Agendar cita</a></li>
       <li class="nav__item" [hidden]="!userName">
         <a class="nav__link" [routerLink]="['/mis-citas']">Mis Citas</a>
       </li>
-      <!-- <li class="nav__item"><a [routerLink]="['/']" class="nav__link">Pre-cita de análisis</a></li> -->
-      <li class="nav__item"><a [routerLink]="['/medicos']" class="nav__link">Directorio Médico</a></li>
-      <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
       <li class="nav__item"><a [routerLink]="['/ubicacion']" class="nav__link">Ubicaciones</a></li>
+      <li class="nav__item"><a [routerLink]="['/contactos']" class="nav__link">Contactos</a></li>
+      <li class="nav__item"><a [routerLink]="['/faq']" class="nav__link">Preguntas Frecuentes</a></li>
       <li [hidden]="userName || isLoginRoute" class="nav__item">
         <a class="nav__link" [routerLink]="['/paciente-login']">Acceso de pacientes</a>
       </li>
@@ -57,36 +58,15 @@
         </a>
       </div>
 
-      <!-- <div class="sub-menu">
-        <ul>
-          <li>
-            <a>Acerca de</a>
-          </li>
-          <li>
-            <a>Ofertas Laborales</a>
-          </li>
-          <li>
-            <a *ngIf="userName; else login">{{userName}}</a>
-            <ng-template #login>
-              <a [routerLink]="['/paciente-login']">
-                Acceso de pacientes
-              </a>
-            </ng-template>
-          </li>
-          <li *ngIf="userName">
-            <a (click)="logOut()">Cerrar sesión</a>
-          </li>
-        </ul>
-      </div> -->
       <div class="sub-menu">
         <ul>
-          <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
-          </li>
-          <li *ngIf="userName"> <a [routerLink]="['/mis-citas']" routerLinkActive="active" class="special-link">Mis
-              Citas</a></li>
+          <li><a [routerLink]="['/']" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Inicio</a></li>
           <li><a [routerLink]="['/medicos']" routerLinkActive="active">Directorio Médico</a></li>
-          <li><a [routerLink]="['/contactos']" routerLinkActive="active">Contactos</a></li>
+          <li><a [routerLink]="['/medicos']" routerLinkActive="active" class="special-link">Agendar cita</a></li>
+          <li *ngIf="userName"><a [routerLink]="['/mis-citas']" routerLinkActive="active">Mis Citas</a></li>
           <li><a [routerLink]="['/ubicacion']" routerLinkActive="active">Ubicaciones</a></li>
+          <li><a [routerLink]="['/contactos']" routerLinkActive="active">Contactos</a></li>
+          <li><a [routerLink]="['/faq']" routerLinkActive="active">Preguntas Frecuentes</a></li>
         </ul>
       </div>
 
@@ -120,42 +100,6 @@
         </ul>
       </div>
 
-
     </div>
-
   </div>
-
-  <!-- <div class="bg-container-menu">
-    <nav class="menu-main">
-      <ul>
-        
-        <li>Citas Online<i class="fa fa-angle-down"></i>
-          <ul>
-            <li><a [routerLink]="['/medicos']" >Realizar una cita</a></li>
-            <li><a [routerLink]="['/medicos']" >Ver mi consulta</a></li>
-            <li><a [routerLink]="['/medicos']" >Realizar pre-cita para análisis</a></li>
-          </ul>
-        </li> -->
-  <!-- <li><a [routerLink]="['/']">Inicio</a></li> -->
-  <!-- <li *ngIf="userName"> <a [routerLink]="['/mis-citas']">Mis Citas</a></li> -->
-  <!-- <li><a [routerLink]="['/medicos']">Directorio Médico</a></li> -->
-  <!-- <li><a [routerLink]="['/resultados']">Resultados</a></li> -->
-  <!-- <li><a [routerLink]="['/contactos']">Contactos</a></li> -->
-  <!-- <li><a [routerLink]="['/faq']">Preguntas Frecuentes</a></li> -->
-  <!-- <li><a [routerLink]="['/ubicacion']">Ubicaciones</a></li> -->
-
-  <!-- <li>
-          <a *ngIf="userName; else login">{{userName}}</a>
-          <ng-template #login>
-            <a [routerLink]="['/paciente-login']">
-              Acceso de pacientes
-            </a>
-          </ng-template>
-        </li>
-        <li *ngIf="userName">
-          <a (click)="logOut()">Cerrar sesión</a>
-        </li>
-      </ul>
-    </nav>
-  </div> -->
 </header>
